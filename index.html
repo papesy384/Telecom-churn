@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictive Churn Intelligence PoC</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-orange': '#F97316', // Orange from Tailwind 500
+                        'dark-bg': '#171717',
+                        'dark-card': '#262626',
+                        'light-text': '#f5f5f5',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        body {
+            /* Set font and dark theme background */
+            font-family: 'Inter', sans-serif;
+            background-color: #171717;
+            color: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        /* Custom scrollbar for the high-risk list */
+        .scroll-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scroll-container::-webkit-scrollbar-thumb {
+            background-color: #F97316;
+            border-radius: 4px;
+        }
+
+        .scroll-container::-webkit-scrollbar-track {
+            background-color: #262626;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-7xl mx-auto space-y-8">
+        <!-- Header -->
+        <header class="text-center pb-4 border-b border-gray-700">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-primary-orange">
+                Churn Intelligence PoC Dashboard
+            </h1>
+            <p class="text-gray-400 mt-1">Prescriptive Retention Platform for CSMs (Simulated ML)</p>
+        </header>
+
+        <!-- Main Grid Layout (Three-Panel View) -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- SECTION 1: High-Risk Overview (Action Card Focus) -->
+            <div class="lg:col-span-2">
+                <div id="high-risk-overview" class="p-6 rounded-xl shadow-2xl bg-dark-card border border-primary-orange/50">
+                    <h2 class="text-2xl font-bold mb-4 text-primary-orange">
+                        🚨 Triage: Top High-Value Churn Risks
+                    </h2>
+                    <p class="text-gray-400 mb-4">
+                        Customers with **Risk Score $\ge 80\%$** AND **$\text{LTV} \ge \text{\$7,000}$** (70th Percentile).
+                    </p>
+
+                    <div id="action-list-container" class="scroll-container h-80 overflow-y-auto pr-2 space-y-3">
+                        <!-- High-Risk Customer Action Cards will be injected here -->
+                        <p class="text-center text-gray-500 pt-10" id="loading-list">Loading and simulating ML scores...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: Simulated ROI Summary (Focus on Business Value) -->
+            <div class="lg:col-span-1">
+                <div id="roi-summary" class="h-full p-6 rounded-xl shadow-2xl bg-dark-card border border-gray-700 flex flex-col justify-between">
+                    <h2 class="text-2xl font-bold mb-4 text-light-text">
+                        📈 PoC Simulated ROI Summary
+                    </h2>
+                    <div class="space-y-4">
+                        <!-- ROI Metrics will be injected here -->
+                        <div id="roi-metrics">
+                            <p class="text-center text-gray-500">Calculating hypothetical savings...</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-700">
+                        <p class="text-sm text-gray-400">
+                            Based on **$72\%$ Precision** and **$75\%$ Recall** targets.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: Root Cause Distribution & Playbook -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div id="root-cause-distribution" class="p-6 rounded-xl shadow-2xl bg-dark-card border border-gray-700">
+                <h2 class="text-2xl font-bold mb-4 text-light-text">
+                    💡 Root Cause Distribution
+                </h2>
+                <p class="text-gray-400 mb-4">
+                    Breakdown of **Root Cause Tags** for the entire High-Risk pool.
+                </p>
+                <div id="cause-chart" class="h-64 flex items-center justify-center">
+                    <!-- Cause breakdown will be injected here -->
+                </div>
+            </div>
+
+            <div id="prescriptive-playbook" class="p-6 rounded-xl shadow-2xl bg-dark-card border border-gray-700">
+                <h2 class="text-2xl font-bold mb-4 text-light-text">
+                    📚 Prescriptive Playbook Map
+                </h2>
+                <p class="text-gray-400 mb-4">
+                    Targeted $\text{CSM}$ actions based on the top two root cause drivers.
+                </p>
+                <div class="space-y-6" id="playbook-content">
+                    <!-- Playbook content will be injected here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Engage Customer Action -->
+    <div id="action-modal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center p-4 z-50">
+        <div class="bg-dark-card p-6 md:p-8 rounded-xl max-w-lg w-full border-2 border-primary-orange shadow-2xl">
+            <h3 class="text-2xl font-bold text-primary-orange mb-4">Intervention Triggered!</h3>
+            <p class="text-light-text mb-4">
+                You have initiated a targeted intervention for: <span id="modal-customer-id" class="font-mono bg-primary-orange/20 px-2 py-0.5 rounded text-sm"></span>
+            </p>
+            <div id="modal-details" class="space-y-2 text-gray-300 mb-6">
+                <!-- Details injected here -->
+            </div>
+            <p class="text-sm text-gray-400">
+                In a production system, this would trigger an automated offer email or create a high-priority task in the $\text{CSM}$'s $\text{CRM}$ queue.
+            </p>
+            <button onclick="closeModal()" class="mt-6 w-full bg-primary-orange hover:bg-orange-600 text-dark-bg font-semibold py-3 rounded-lg transition duration-200 shadow-md">
+                Acknowledge & Close
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. MOCK CUSTOMER DATA (ILLUSTRATIVE SUBSET OF 800 RECORDS) ---
+        const MOCK_CUSTOMERS = [
+            { Customer_ID: 'C-1001', Contract_Type: 'Month-to-Month', Monthly_Charge: 110.50, LTV: 850, Has_Early_Termination_Fee: 0, Total_Data_Usage: 150, Days_Since_Last_Login: 2, Support_Tickets_Last_90_Days: 4, Call_Failure_Rate: 0.07, Recent_Pricing_Page_Views: 3, Device_Upgrade_Inquiry: false, Last_Survey_Score: 2, Churn_Flag: true },
+            { Customer_ID: 'C-1002', Contract_Type: '2-Year', Monthly_Charge: 55.90, LTV: 14500, Has_Early_Termination_Fee: 1, Total_Data_Usage: 25, Days_Since_Last_Login: 15, Support_Tickets_Last_90_Days: 0, Call_Failure_Rate: 0.01, Recent_Pricing_Page_Views: 0, Device_Upgrade_Inquiry: false, Last_Survey_Score: 5, Churn_Flag: false },
+            { Customer_ID: 'C-1003', Contract_Type: 'Month-to-Month', Monthly_Charge: 89.00, LTV: 1200, Has_Early_Termination_Fee: 0, Total_Data_Usage: 100, Days_Since_Last_Login: 8, Support_Tickets_Last_90_Days: 2, Call_Failure_Rate: 0.05, Recent_Pricing_Page_Views: 1, Device_Upgrade_Inquiry: true, Last_Survey_Score: 3, Churn_Flag: true },
+            { Customer_ID: 'C-1004', Contract_Type: '1-Year', Monthly_Charge: 78.10, LTV: 4500, Has_Early_Termination_Fee: 1, Total_Data_Usage: 80, Days_Since_Last_Login: 3, Support_Tickets_Last_90_Days: 1, Call_Failure_Rate: 0.02, Recent_Pricing_Page_Views: 0, Device_Upgrade_Inquiry: false, Last_Survey_Score: 4, Churn_Flag: false },
+            { Customer_ID: 'C-1005', Contract_Type: 'Month-to-Month', Monthly_Charge: 105.20, LTV: 600, Has_Early_Termination_Fee: 0, Total_Data_Usage: 180, Days_Since_Last_Login: 1, Support_Tickets_Last_90_Days: 5, Call_Failure_Rate: 0.09, Recent_Pricing_Page_Views: 2, Device_Upgrade_Inquiry: false, Last_Survey_Score: 1, Churn_Flag: true },
+            { Customer_ID: 'C-1006', Contract_Type: '2-Year', Monthly_Charge: 35.45, LTV: 12100, Has_Early_Termination_Fee: 1, Total_Data_Usage: 10, Days_Since_Last_Login: 30, Support_Tickets_Last_90_Days: 0, Call_Failure_Rate: 0.00, Recent_Pricing_Page_Views: 0, Device_Upgrade_Inquiry: false, Last_Survey_Score: 5, Churn_Flag: false },
+            { Customer_ID: 'C-1007', Contract_Type: 'Month-to-Month', Monthly_Charge: 99.95, LTV: 950, Has_Early_Termination_Fee: 0, Total_Data_Usage: 130, Days_Since_Last_Login: 5, Support_Tickets_Last_90_Days: 3, Call_Failure_Rate: 0.06, Recent_Pricing_Page_Views: 4, Device_Upgrade_Inquiry: true, Last_Survey_Score: 2, Churn_Flag: true },
+            { Customer_ID: 'C-1008', Contract_Type: '1-Year', Monthly_Charge: 60.00, LTV: 3200, Has_Early_Termination_Fee: 1, Total_Data_Usage: 50, Days_Since_Last_Login: 10, Support_Tickets_Last_90_Days: 1, Call_Failure_Rate: 0.03, Recent_Pricing_Page_Views: 0, Device_Upgrade_Inquiry: false, Last_Survey_Score: 4, Churn_Flag: false },
+            { Customer_ID: 'C-1009', Contract_Type: 'Month-to-Month', Monthly_Charge: 115.00, LTV: 700, Has_Early_Termination_Fee: 0, Total_Data_Usage: 200, Days_Since_Last_Login: 1, Support_Tickets_Last_90_Days: 6, Call_Failure_Rate: 0.08, Recent_Pricing_Page_Views: 5, Device_Upgrade_Inquiry: false, Last_Survey_Score: 1, Churn_Flag: true },
+            { Customer_ID: 'C-1010', Contract_Type: '2-Year', Monthly_Charge: 40.75, LTV: 10500, Has_Early_Termination_Fee: 1, Total_Data_Usage: 20, Days_Since_Last_Login: 25, Support_Tickets_Last_90_Days: 0, Call_Failure_Rate: 0.01, Recent_Pricing_Page_Views: 0, Device_Upgrade_Inquiry: false, Last_Survey_Score: 5, Churn_Flag: false },
+             { Customer_ID: 'C-1011', Contract_Type: 'Month-to-Month', Monthly_Charge: 105.00, LTV: 8000, Has_Early_Termination_Fee: 0, Total_Data_Usage: 160, Days_Since_Last_Login: 3, Support_Tickets_Last_90_Days: 2, Call_Failure_Rate: 0.04, Recent_Pricing_Page_Views: 5, Device_Upgrade_Inquiry: true, Last_Survey_Score: 3, Churn_Flag: true },
+            { Customer_ID: 'C-1012', Contract_Type: '1-Year', Monthly_Charge: 95.00, LTV: 9500, Has_Early_Termination_Fee: 1, Total_Data_Usage: 120, Days_Since_Last_Login: 1, Support_Tickets_Last_90_Days: 1, Call_Failure_Rate: 0.01, Recent_Pricing_Page_Views: 0, Device_Upgrade_Inquiry: false, Last_Survey_Score: 4, Churn_Flag: false },
+            { Customer_ID: 'C-1013', Contract_Type: 'Month-to-Month', Monthly_Charge: 75.00, LTV: 1500, Has_Early_Termination_Fee: 0, Total_Data_Usage: 90, Days_Since_Last_Login: 15, Support_Tickets_Last_90_Days: 0, Call_Failure_Rate: 0.00, Recent_Pricing_Page_Views: 1, Device_Upgrade_Inquiry: false, Last_Survey_Score: 5, Churn_Flag: false },
+            { Customer_ID: 'C-1014', Contract_Type: 'Month-to-Month', Monthly_Charge: 100.00, LTV: 5500, Has_Early_Termination_Fee: 0, Total_Data_Usage: 140, Days_Since_Last_Login: 7, Support_Tickets_Last_90_Days: 3, Call_Failure_Rate: 0.08, Recent_Pricing_Page_Views: 2, Device_Upgrade_Inquiry: true, Last_Survey_Score: 2, Churn_Flag: true },
+            { Customer_ID: 'C-1015', Contract_Type: '2-Year', Monthly_Charge: 65.00, LTV: 11000, Has_Early_Termination_Fee: 1, Total_Data_Usage: 70, Days_Since_Last_Login: 5, Support_Tickets_Last_90_Days: 1, Call_Failure_Rate: 0.02, Recent_Pricing_Page_Views: 0, Device_Upgrade_Inquiry: false, Last_Survey_Score: 4, Churn_Flag: false },
+            { Customer_ID: 'C-1016', Contract_Type: 'Month-to-Month', Monthly_Charge: 112.00, LTV: 7500, Has_Early_Termination_Fee: 0, Total_Data_Usage: 180, Days_Since_Last_Login: 1, Support_Tickets_Last_90_Days: 4, Call_Failure_Rate: 0.09, Recent_Pricing_Page_Views: 6, Device_Upgrade_Inquiry: false, Last_Survey_Score: 1, Churn_Flag: true },
+            { Customer_ID: 'C-1017', Contract_Type: '1-Year', Monthly_Charge: 88.00, LTV: 5000, Has_Early_Termination_Fee: 1, Total_Data_Usage: 110, Days_Since_Last_Login: 12, Support_Tickets_Last_90_Days: 0, Call_Failure_Rate: 0.03, Recent_Pricing_Page_Views: 1, Device_Upgrade_Inquiry: true, Last_Survey_Score: 5, Churn_Flag: false },
+            { Customer_ID: 'C-1018', Contract_Type: 'Month-to-Month', Monthly_Charge: 120.00, LTV: 900, Has_Early_Termination_Fee: 0, Total_Data_Usage: 190, Days_Since_Last_Login: 2, Support_Tickets_Last_90_Days: 5, Call_Failure_Rate: 0.10, Recent_Pricing_Page_Views: 4, Device_Upgrade_Inquiry: false, Last_Survey_Score: 1, Churn_Flag: true },
+            { Customer_ID: 'C-1019', Contract_Type: '2-Year', Monthly_Charge: 50.00, LTV: 13000, Has_Early_Termination_Fee: 1, Total_Data_Usage: 30, Days_Since_Last_Login: 20, Support_Tickets_Last_90_Days: 0, Call_Failure_Rate: 0.01, Recent_Pricing_Page_Views: 0, Device_Upgrade_Inquiry: false, Last_Survey_Score: 5, Churn_Flag: false },
+            { Customer_ID: 'C-1020', Contract_Type: 'Month-to-Month', Monthly_Charge: 80.00, LTV: 4000, Has_Early_Termination_Fee: 0, Total_Data_Usage: 100, Days_Since_Last_Login: 9, Support_Tickets_Last_90_Days: 1, Call_Failure_Rate: 0.05, Recent_Pricing_Page_Views: 3, Device_Upgrade_Inquiry: true, Last_Survey_Score: 3, Churn_Flag: true }
+        ];
+
+        // --- 2. CONFIGURATION & SIMULATED ML LOGIC ---
+        
+        // Hypothetical ROI Variables (as specified in the PoC Summary Plan)
+        const ROI_CONFIG = {
+            AVG_LTV_HV: 5000,           // Average LTV of High-Value Customer
+            COST_INTERVENTION: 100,     // Cost of Intervention per Customer
+            SIMULATED_SAVE_RATE: 0.40,  // Assumed success rate of root-cause driven intervention (40%)
+            TARGET_PRECISION: 0.72,     // PoC Success Target
+            TARGET_RECALL: 0.75,        // PoC Success Target
+            LTV_70TH_PERCENTILE: 7000,  // Threshold for High-Value Customer filter (Simulated)
+        };
+
+        /**
+         * Simulated Random Forest Logic: Calculates Risk Score and Root Cause Tag.
+         * This uses simple heuristics based on feature importance:
+         * 1. Call_Failure_Rate & Contract_Type -> Service Quality
+         * 2. Pricing_Page_Views & Monthly_Charge -> Cost Sensitivity
+         * 3. Days_Since_Last_Login & Last_Survey_Score -> Product Disengagement
+         */
+        function runSimulatedML(customer) {
+            let risk = 0;
+            let cause = "Low Risk";
+
+            // Base Risk based on Contract Type (Month-to-Month is high risk)
+            if (customer.Contract_Type === 'Month-to-Month') {
+                risk += 30;
+            }
+
+            // 1. Service Quality Risk (Feature: Call_Failure_Rate)
+            if (customer.Call_Failure_Rate >= 0.05) {
+                risk += 40;
+                cause = "Service Quality";
+            } else if (customer.Call_Failure_Rate >= 0.03) {
+                risk += 20;
+            }
+
+            // 2. Cost Sensitivity Risk (Feature: Recent_Pricing_Page_Views & Monthly_Charge)
+            if (customer.Recent_Pricing_Page_Views >= 3 && customer.Monthly_Charge >= 100) {
+                risk += 30;
+                cause = "Cost Sensitivity";
+            }
+
+            // 3. Product Disengagement Risk (Feature: Days_Since_Last_Login & Last_Survey_Score)
+            if (customer.Days_Since_Last_Login >= 20 && customer.Last_Survey_Score <= 2) {
+                risk += 20;
+                // Only override cause if the primary service quality cause wasn't triggered
+                if (cause === "Low Risk") {
+                    cause = "Product Disengagement";
+                }
+            }
+
+            // Cap risk score at 100
+            risk = Math.min(100, Math.round(risk));
+            
+            // Adjust cause for very high risk regardless of initial logic
+            if (risk >= 85 && cause === "Low Risk") {
+                cause = "Service Quality"; // Assume core failure for extreme cases
+            }
+
+            // Override low risk customers who are not month-to-month to ensure Low Risk tag
+            if (risk < 50 && customer.Contract_Type !== 'Month-to-Month') {
+                cause = "Low Risk";
+            }
+            
+            return {
+                riskScore: risk,
+                rootCauseTag: cause,
+            };
+        }
+
+        // --- 3. DATA PROCESSING & UTILITIES ---
+
+        // Apply ML simulation to all customers
+        const processedCustomers = MOCK_CUSTOMERS.map(customer => {
+            const mlResult = runSimulatedML(customer);
+            return {
+                ...customer,
+                ...mlResult,
+                isHighValue: customer.LTV >= ROI_CONFIG.LTV_70TH_PERCENTILE,
+                isHighRisk: mlResult.riskScore >= 80,
+            };
+        });
+
+        // Filter for the Actionable Triage List
+        const actionableTriageList = processedCustomers
+            .filter(c => c.isHighRisk && c.isHighValue)
+            .sort((a, b) => b.riskScore - a.riskScore); // Sort by highest risk first
+
+        // Calculate Root Cause Distribution
+        function calculateRootCauseDistribution(customers) {
+            const highRiskCustomers = customers.filter(c => c.isHighRisk);
+            const totalHighRisk = highRiskCustomers.length;
+            const counts = highRiskCustomers.reduce((acc, c) => {
+                const cause = c.rootCauseTag === 'Low Risk' ? 'Other' : c.rootCauseTag;
+                acc[cause] = (acc[cause] || 0) + 1;
+                return acc;
+            }, {});
+
+            const distribution = Object.keys(counts).map(cause => ({
+                cause,
+                count: counts[cause],
+                percentage: totalHighRisk > 0 ? Math.round((counts[cause] / totalHighRisk) * 100) : 0,
+            })).sort((a, b) => b.percentage - a.percentage);
+
+            return distribution;
+        }
+
+        const causeDistribution = calculateRootCauseDistribution(processedCustomers);
+
+
+        // --- 4. UI RENDERING FUNCTIONS ---
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(amount);
+        }
+
+        function getTagClass(tag) {
+            switch (tag) {
+                case 'Service Quality': return 'bg-red-700 text-white';
+                case 'Cost Sensitivity': return 'bg-primary-orange text-dark-bg';
+                case 'Product Disengagement': return 'bg-blue-700 text-white';
+                case 'Low Risk':
+                default: return 'bg-gray-700 text-gray-300';
+            }
+        }
+
+        function renderActionList() {
+            const container = document.getElementById('action-list-container');
+            document.getElementById('loading-list').remove(); 
+            
+            if (actionableTriageList.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-500 pt-10">No high-value customers currently flagged for immediate triage.</p>';
+                return;
+            }
+
+            actionableTriageList.forEach(customer => {
+                const tagClass = getTagClass(customer.rootCauseTag);
+                const html = `
+                    <div class="flex flex-col md:flex-row items-center p-4 bg-dark-bg rounded-lg shadow-md hover:ring-2 hover:ring-primary-orange transition duration-150">
+                        <!-- Customer Info -->
+                        <div class="flex-grow space-y-1 mb-3 md:mb-0 md:mr-4 w-full md:w-auto">
+                            <p class="text-lg font-semibold text-light-text">${customer.Customer_ID} <span class="text-xs font-normal text-gray-400">| ${customer.Contract_Type}</span></p>
+                            <p class="text-sm font-medium text-primary-orange">${formatCurrency(customer.LTV)} <span class="text-gray-400">LTV</span></p>
+                        </div>
+                        
+                        <!-- Score & Cause Tag -->
+                        <div class="flex items-center space-x-4 w-full md:w-auto mb-3 md:mb-0">
+                            <div class="text-center">
+                                <span class="text-2xl font-extrabold text-primary-orange">${customer.riskScore}%</span>
+                                <p class="text-xs text-gray-400 uppercase">Risk Score</p>
+                            </div>
+                            <div class="text-center">
+                                <span class="px-3 py-1 text-sm font-bold rounded-full ${tagClass}">${customer.rootCauseTag}</span>
+                                <p class="text-xs text-gray-400 uppercase mt-1">Root Cause</p>
+                            </div>
+                        </div>
+
+                        <!-- Action Button -->
+                        <div class="ml-0 md:ml-auto w-full md:w-auto">
+                            <button onclick="openModal('${customer.Customer_ID}')" 
+                                class="w-full md:w-auto bg-primary-orange hover:bg-orange-600 text-dark-bg font-semibold py-2 px-4 rounded-lg transition duration-200">
+                                Engage Customer
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        function renderROISummary() {
+            const container = document.getElementById('roi-metrics');
+            
+            // --- SIMULATED ROI CALCULATION ---
+            // High-Value Customers (HVC) total
+            const hvcCount = processedCustomers.filter(c => c.isHighValue).length;
+            // Simulated Churners in HVC pool (Total HVC * Churn Rate, approximated)
+            const simulatedHVCChurners = Math.round(hvcCount * 0.15); // Assume 15% HVC churn rate
+            
+            // Customers we flag as High-Risk *who are also HVC*
+            const flaggedHVC = actionableTriageList.length;
+
+            // 1. Calculate TRUE POSITIVES (Simulated customers we successfully target who were going to churn)
+            // TP = Total HVC Churners * Recall Target
+            const truePositives = Math.round(simulatedHVCChurners * ROI_CONFIG.TARGET_RECALL);
+            
+            // 2. Calculate TOTAL INTERVENTIONS (The total number of customers we must flag to hit the TP target)
+            // Total Flagged = TP / Precision Target (this is the simulated number of customers we send the CSM to)
+            const totalInterventions = Math.round(truePositives / ROI_CONFIG.TARGET_PRECISION);
+
+            // 3. Calculate VALUE SAVED (Simulated Net Value)
+            // Gross Savings = TP * Save Rate * Avg LTV
+            const grossSavings = truePositives * ROI_CONFIG.SIMULATED_SAVE_RATE * ROI_CONFIG.AVG_LTV_HV;
+            
+            // Total Cost = Total Interventions * Cost per Intervention
+            const totalCost = totalInterventions * ROI_CONFIG.COST_INTERVENTION;
+
+            // Net Savings
+            const netSavings = grossSavings - totalCost;
+
+            const html = `
+                <div class="text-center">
+                    <p class="text-6xl font-extrabold text-primary-orange mb-2">${formatCurrency(netSavings).replace('$', '$ ')}</p>
+                    <p class="text-xl font-medium text-light-text">Hypothetical Net LTV Saved</p>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4 text-center mt-6">
+                    <div>
+                        <p class="text-2xl font-bold text-green-400">${Math.round(truePositives * ROI_CONFIG.SIMULATED_SAVE_RATE)}</p>
+                        <p class="text-sm text-gray-400">Customers Retained</p>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-bold text-red-400">${formatCurrency(totalCost)}</p>
+                        <p class="text-sm text-gray-400">Total Intervention Cost</p>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function renderRootCauseDistribution() {
+            const container = document.getElementById('cause-chart');
+            const colorMap = {
+                'Service Quality': '#EF4444', // Red for urgency
+                'Cost Sensitivity': '#F97316', // Primary Orange
+                'Product Disengagement': '#3B82F6', // Blue
+                'Other': '#A1A1AA' // Gray
+            };
+            
+            const totalPercentage = causeDistribution.reduce((sum, item) => sum + item.percentage, 0);
+
+            let chartSegments = '';
+            let currentOffset = 0;
+
+            causeDistribution.forEach(item => {
+                const color = colorMap[item.cause] || colorMap['Other'];
+                const dashoffset = 100 - currentOffset;
+                const dasharray = item.percentage;
+                
+                chartSegments += `
+                    <circle cx="50%" cy="50%" r="40%" fill="none" 
+                        stroke="${color}" stroke-width="20" 
+                        stroke-dasharray="${dasharray} ${100 - dasharray}" 
+                        stroke-dashoffset="${dashoffset}" 
+                        transform="rotate(-90, 50, 50)" />
+                `;
+                currentOffset += item.percentage;
+            });
+            
+            // Use SVG to simulate a donut chart
+            const chartHtml = `
+                <svg viewBox="0 0 100 100" class="w-full h-full max-w-xs transform -rotate-90">
+                    <circle cx="50" cy="50" r="40" fill="transparent" stroke="#374151" stroke-width="20"/>
+                    ${chartSegments}
+                    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="text-4xl font-extrabold" fill="#f5f5f5" transform="rotate(90, 50, 50)">${totalPercentage > 0 ? totalPercentage : 100}%</text>
+                </svg>
+            `;
+            container.innerHTML = chartHtml;
+
+
+            // Render Legend and Playbook
+            const playbookContainer = document.getElementById('playbook-content');
+            let playbookHtml = '';
+            
+            // Top 2 causes for prescriptive map
+            const topCauses = causeDistribution.slice(0, 2);
+
+            topCauses.forEach(item => {
+                let action = '';
+                let icon = '';
+                let color = colorMap[item.cause];
+
+                if (item.cause === 'Service Quality') {
+                    action = 'Offer Proactive Network Credit (Prevent Outage Churn).';
+                    icon = 'M13.5 10.5V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v1.259a4.5 4.5 0 0 1 1.48-1.087l.376-.118A3 3 0 0 1 9 7.5c0 .879.44 1.63 1.107 2.057l.362.229a1 1 1 0 0 0 .54.122h1.365l1.378 2.067a2.5 2.5 0 0 1 .665 1.87v.61h-.293l-1.428-2.142A2.5 2.5 0 0 0 9.75 12V7.5a1.5 1.5 0 0 0-1.5-1.5h-1.5a.75.75 0 0 0-.75.75V11.5a.75.75 0 0 0 1.5 0V7.5h1.5a.75.75 0 0 0 0 1.5h-.75v1.5a.75.75 0 0 0 1.5 0V9h1.5a.75.75 0 0 0 0 1.5h-.75v1.5a.75.75 0 0 0 1.5 0v-1.5h.75a.75.75 0 0 0 .75-.75Z';
+                } else if (item.cause === 'Cost Sensitivity') {
+                    action = 'Offer Loyalty Discount (Move to a 1-year Contract).';
+                    icon = 'M2.25 18.75a4.5 4.5 0 0 0 4.5 4.5h8.25a4.5 4.5 0 0 0 4.5-4.5V5.25a4.5 4.5 0 0 0-4.5-4.5H6.75a4.5 4.5 0 0 0-4.5 4.5v13.5ZM13.5 6a.75.75 0 0 0-.75-.75H7.5a.75.75 0 0 0 0 1.5h5.25a.75.75 0 0 0 .75-.75Zm0 2.25a.75.75 0 0 0-.75-.75H7.5a.75.75 0 0 0 0 1.5h5.25a.75.75 0 0 0 .75-.75Zm0 2.25a.75.75 0 0 0-.75-.75H7.5a.75.75 0 0 0 0 1.5h5.25a.75.75 0 0 0 .75-.75Zm0 2.25a.75.75 0 0 0-.75-.75H7.5a.75.75 0 0 0 0 1.5h5.25a.75.75 0 0 0 .75-.75Z';
+                } else if (item.cause === 'Product Disengagement') {
+                    action = 'Schedule a Product Deep Dive Call (Renew feature engagement).';
+                    icon = 'M12 2.25a.75.75 0 0 1 .75.75v6.59l4.58-4.148a.75.75 0 0 1 1.19.782l-5.753 10.963a.75.75 0 0 1-1.42.062L9 16.5V9.41l-4.58 4.148a.75.75 0 0 1-1.19-.782l5.753-10.963a.75.75 0 0 1 1.42-.062L12 7.5V3a.75.75 0 0 1 .75-.75Z';
+                }
+
+                playbookHtml += `
+                    <div class="p-4 rounded-lg border-l-4" style="border-color: ${color}; background-color: ${color}20;">
+                        <div class="flex items-center space-x-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="${color}" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="${icon}" />
+                            </svg>
+                            <span class="text-xl font-semibold text-light-text">${item.cause} (${item.percentage}%)</span>
+                        </div>
+                        <p class="text-gray-300 mt-2 ml-9">${action}</p>
+                    </div>
+                `;
+            });
+
+            playbookContainer.innerHTML = playbookHtml;
+        }
+
+        // --- 5. MODAL LOGIC ---
+
+        function openModal(customerId) {
+            const customer = processedCustomers.find(c => c.Customer_ID === customerId);
+            if (!customer) return;
+
+            document.getElementById('modal-customer-id').textContent = customerId;
+
+            const tagClass = getTagClass(customer.rootCauseTag);
+            
+            const detailsHtml = `
+                <p><strong>LTV:</strong> ${formatCurrency(customer.LTV)}</p>
+                <p><strong>Risk Score:</strong> <span class="text-primary-orange font-bold">${customer.riskScore}%</span></p>
+                <p><strong>Root Cause:</strong> <span class="px-2 py-0.5 rounded ${tagClass} font-bold">${customer.rootCauseTag}</span></p>
+                <p><strong>Key Driver:</strong> ${customer.rootCauseTag === 'Service Quality' ? `Call Failure Rate: ${(customer.Call_Failure_Rate * 100).toFixed(1)}%` : 
+                                                customer.rootCauseTag === 'Cost Sensitivity' ? `Pricing Page Views: ${customer.Recent_Pricing_Page_Views}` : 
+                                                `Days Since Login: ${customer.Days_Since_Last_Login}`}</p>
+            `;
+            document.getElementById('modal-details').innerHTML = detailsHtml;
+
+            document.getElementById('action-modal').classList.remove('hidden');
+            document.getElementById('action-modal').classList.add('flex');
+        }
+
+        function closeModal() {
+            document.getElementById('action-modal').classList.add('hidden');
+            document.getElementById('action-modal').classList.remove('flex');
+        }
+
+
+        // --- 6. INITIALIZATION ---
+
+        window.onload = () => {
+            console.log("PoC Dashboard Initializing...");
+            renderActionList();
+            renderROISummary();
+            renderRootCauseDistribution();
+            console.log("PoC Dashboard Ready.");
+        };
+    </script>
+</body>
+</html>
