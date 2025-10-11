@@ -480,7 +480,7 @@
             <!-- SECTION 1: High-Risk Overview (Action Card Focus) -->
             <div class="lg:col-span-2">
                 <div id="high-risk-overview" class="p-4 rounded-xl shadow-xl bg-dark-card border border-primary-orange/50">
-                    <h2 class="text-xl font-bold mb-2 text-primary-orange">
+                    <h2 id="triage-list-title" class="text-xl font-bold mb-2 text-primary-orange">
                         🚨 Triage: Top High-Value Churn Risks
                     </h2>
                     <p class="text-sm text-gray-400 mb-3">
@@ -518,7 +518,7 @@
         <!-- SECTION 1.5: All High-Risk Customers Table -->
         <div class="mt-4">
             <div class="p-4 rounded-xl shadow-xl bg-dark-card border border-gray-700">
-                <h2 class="text-xl font-bold mb-2 text-light-text">
+                <h2 id="high-risk-table-title" class="text-xl font-bold mb-2 text-light-text">
                     📊 All High-Risk Customers (Risk Score ≥ 80%)
                 </h2>
                 <p class="text-sm text-gray-400 mb-3">
@@ -1234,6 +1234,12 @@
             const tbody = document.getElementById('all-high-risk-tbody');
             const allHighRisk = processedCustomers.filter(c => c.isHighRisk);
             
+            // Update the section title with the count
+            const tableTitle = document.getElementById('high-risk-table-title');
+            if (tableTitle) {
+                tableTitle.innerHTML = `📊 All High-Risk Customers <span class="text-primary-orange">(${allHighRisk.length} found)</span>`;
+            }
+            
             if (allHighRisk.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="9" class="text-center py-10 text-gray-500">No high-risk customers detected.</td></tr>';
                 return;
@@ -1264,7 +1270,13 @@
         function renderActionList() {
             const container = document.getElementById('action-list-container');
             const loadingEl = document.getElementById('loading-list');
-            if (loadingEl) loadingEl.remove(); 
+            if (loadingEl) loadingEl.remove();
+            
+            // Update the triage list title with the count
+            const triageTitle = document.getElementById('triage-list-title');
+            if (triageTitle) {
+                triageTitle.innerHTML = `🚨 Triage: Top High-Value Churn Risks <span class="text-light-text">(<span class="text-primary-orange font-black">${actionableTriageList.length}</span> customers)</span>`;
+            }
             
             if (actionableTriageList.length === 0) {
                 container.innerHTML = '<p class="text-center text-gray-500 pt-10">No high-value customers currently flagged for immediate triage. Check the table below for all high-risk customers.</p>';
