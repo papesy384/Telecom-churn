@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>AI Prediction Engine [v7.1 - 92% Fixed]</title>
+    <title>AI Prediction Engine [v7.2 - Compact Demo]</title>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -462,32 +462,32 @@
     </section>
 
     <!-- Live Demo Section -->
-    <section id="live-demo" class="spa-section py-20 px-4 md:px-8 bg-dark-bg">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl md:text-5xl font-extrabold text-light-text mb-6">
+    <section id="live-demo" class="spa-section h-screen flex items-center px-4 md:px-8 bg-dark-bg overflow-y-auto" style="padding-top: 6rem; padding-bottom: 2rem;">
+        <div class="max-w-7xl mx-auto w-full">
+            <div class="text-center mb-6">
+                <h2 class="section-title font-extrabold text-light-text mb-3">
                     Live Application Demo
                 </h2>
-                <div class="w-24 h-1 bg-primary-orange mx-auto mb-6"></div>
-                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-                    See exactly how our AI Prediction Engine delivers critical value and immediate, prescriptive actions for your CSM team.
+                <div class="w-20 h-0.5 bg-primary-orange mx-auto mb-3"></div>
+                <p class="body-text text-gray-300 max-w-2xl mx-auto">
+                    See how our AI delivers critical value and prescriptive actions for your CSM team.
                 </p>
             </div>
 
         <!-- Main Grid Layout (Three-Panel View) -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
             
             <!-- SECTION 1: High-Risk Overview (Action Card Focus) -->
             <div class="lg:col-span-2">
-                <div id="high-risk-overview" class="p-6 rounded-xl shadow-2xl bg-dark-card border border-primary-orange/50">
-                    <h2 class="text-2xl font-bold mb-4 text-primary-orange">
+                <div id="high-risk-overview" class="p-4 rounded-xl shadow-xl bg-dark-card border border-primary-orange/50">
+                    <h2 class="text-xl font-bold mb-2 text-primary-orange">
                         🚨 Triage: Top High-Value Churn Risks
                     </h2>
-                    <p class="text-gray-400 mb-4">
-                        Customers with <strong>Risk Score ≥ 80%</strong> AND <strong>LTV ≥ $4,000</strong> (High-Value Threshold).
+                    <p class="text-sm text-gray-400 mb-3">
+                        Customers with <strong>Risk Score ≥ 80%</strong> AND <strong>LTV ≥ $4,000</strong>.
                     </p>
 
-                    <div id="action-list-container" class="scroll-container h-80 overflow-y-auto pr-2 space-y-3">
+                    <div id="action-list-container" class="scroll-container h-64 overflow-y-auto pr-2 space-y-2">
                         <!-- High-Risk Customer Action Cards will be injected here -->
                         <p class="text-center text-gray-500 pt-10" id="loading-list">Loading and simulating ML scores...</p>
                     </div>
@@ -496,9 +496,9 @@
 
             <!-- SECTION 3: Simulated ROI Summary (Focus on Business Value) -->
             <div class="lg:col-span-1">
-                <div id="roi-summary" class="h-full p-6 rounded-xl shadow-2xl bg-dark-card border border-gray-700 flex flex-col justify-between">
-                    <h2 class="text-2xl font-bold mb-4 text-light-text">
-                        📈 PoC Simulated ROI Summary
+                <div id="roi-summary" class="h-full p-4 rounded-xl shadow-xl bg-dark-card border border-gray-700 flex flex-col justify-between">
+                    <h2 class="text-xl font-bold mb-3 text-light-text">
+                        📈 ROI Summary
                     </h2>
                     <div class="space-y-4">
                         <!-- ROI Metrics will be injected here -->
@@ -516,12 +516,12 @@
         </div>
 
         <!-- SECTION 1.5: All High-Risk Customers Table -->
-        <div class="mt-8">
-            <div class="p-6 rounded-xl shadow-2xl bg-dark-card border border-gray-700">
-                <h2 class="text-2xl font-bold mb-4 text-light-text">
+        <div class="mt-4">
+            <div class="p-4 rounded-xl shadow-xl bg-dark-card border border-gray-700">
+                <h2 class="text-xl font-bold mb-2 text-light-text">
                     📊 All High-Risk Customers (Risk Score ≥ 80%)
                 </h2>
-                <p class="text-gray-400 mb-4">
+                <p class="text-sm text-gray-400 mb-3">
                     Complete list of all customers flagged as high-risk by the AI model.
                 </p>
                 <div class="overflow-x-auto">
@@ -548,27 +548,27 @@
         </div>
 
         <!-- SECTION 2: Root Cause Distribution & Playbook -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-            <div id="root-cause-distribution" class="p-6 rounded-xl shadow-2xl bg-dark-card border border-gray-700">
-                <h2 class="text-2xl font-bold mb-4 text-light-text">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <div id="root-cause-distribution" class="p-4 rounded-xl shadow-xl bg-dark-card border border-gray-700">
+                <h2 class="text-lg font-bold mb-2 text-light-text">
                     💡 Root Cause Distribution
                 </h2>
-                <p class="text-gray-400 mb-4">
-                    Breakdown of **Root Cause Tags** for the entire High-Risk pool.
+                <p class="text-sm text-gray-400 mb-2">
+                    Breakdown of Root Cause Tags for High-Risk customers.
                 </p>
-                <div id="cause-chart" class="h-64 flex items-center justify-center">
+                <div id="cause-chart" class="h-48 flex items-center justify-center">
                     <!-- Cause breakdown will be injected here -->
                 </div>
             </div>
 
-            <div id="prescriptive-playbook" class="p-6 rounded-xl shadow-2xl bg-dark-card border border-gray-700">
-                <h2 class="text-2xl font-bold mb-4 text-light-text">
-                    📚 Prescriptive Playbook Map
+            <div id="prescriptive-playbook" class="p-4 rounded-xl shadow-xl bg-dark-card border border-gray-700">
+                <h2 class="text-lg font-bold mb-2 text-light-text">
+                    📚 Prescriptive Playbook
                 </h2>
-                <p class="text-gray-400 mb-4">
-                    Targeted $\text{CSM}$ actions based on the top two root cause drivers.
+                <p class="text-sm text-gray-400 mb-2">
+                    Targeted CSM actions based on root cause drivers.
                 </p>
-                <div class="space-y-6" id="playbook-content">
+                <div class="space-y-3" id="playbook-content">
                     <!-- Playbook content will be injected here -->
                 </div>
             </div>
@@ -1274,30 +1274,29 @@
             actionableTriageList.forEach(customer => {
                 const tagClass = getTagClass(customer.rootCauseTag);
                 const html = `
-                    <div class="flex flex-col md:flex-row items-center p-4 bg-dark-bg rounded-lg shadow-md hover:ring-2 hover:ring-primary-orange transition duration-150">
+                    <div class="flex flex-col md:flex-row items-center p-2 bg-dark-bg rounded-lg shadow-md hover:ring-1 hover:ring-primary-orange transition duration-150">
                         <!-- Customer Info -->
-                        <div class="flex-grow space-y-1 mb-3 md:mb-0 md:mr-4 w-full md:w-auto">
-                            <p class="text-lg font-semibold text-light-text">${customer.Customer_ID} <span class="text-xs font-normal text-gray-400">| ${customer.Contract_Type}</span></p>
-                            <p class="text-sm font-medium text-primary-orange">${formatCurrency(customer.LTV)} <span class="text-gray-400">LTV</span></p>
+                        <div class="flex-grow space-y-0.5 mb-2 md:mb-0 md:mr-3 w-full md:w-auto">
+                            <p class="text-base font-semibold text-light-text">${customer.Customer_ID} <span class="text-xs font-normal text-gray-400">| ${customer.Contract_Type}</span></p>
+                            <p class="text-sm font-medium text-primary-orange">${formatCurrency(customer.LTV)} <span class="text-gray-400 text-xs">LTV</span></p>
                         </div>
                         
                         <!-- Score & Cause Tag -->
-                        <div class="flex items-center space-x-4 w-full md:w-auto mb-3 md:mb-0">
+                        <div class="flex items-center space-x-3 w-full md:w-auto mb-2 md:mb-0">
                             <div class="text-center">
-                                <span class="text-2xl font-extrabold text-primary-orange">${customer.riskScore}%</span>
-                                <p class="text-xs text-gray-400 uppercase">Risk Score</p>
+                                <span class="text-xl font-extrabold text-primary-orange">${customer.riskScore}%</span>
+                                <p class="text-xs text-gray-400">Risk</p>
                             </div>
                             <div class="text-center">
-                                <span class="px-3 py-1 text-sm font-bold rounded-full ${tagClass}">${customer.rootCauseTag}</span>
-                                <p class="text-xs text-gray-400 uppercase mt-1">Root Cause</p>
+                                <span class="px-2 py-0.5 text-xs font-bold rounded-full ${tagClass}">${customer.rootCauseTag}</span>
                             </div>
                         </div>
 
                         <!-- Action Button -->
                         <div class="ml-0 md:ml-auto w-full md:w-auto">
                             <button onclick="openModal('${customer.Customer_ID}')" 
-                                class="w-full md:w-auto bg-primary-orange hover:bg-orange-600 text-dark-bg font-semibold py-2 px-4 rounded-lg transition duration-200">
-                                Engage Customer
+                                class="w-full md:w-auto bg-primary-orange hover:bg-orange-600 text-dark-bg font-semibold py-1.5 px-3 rounded-lg text-sm transition duration-200">
+                                Engage
                             </button>
                         </div>
                     </div>
