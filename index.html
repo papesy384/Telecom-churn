@@ -256,6 +256,7 @@
                     <a data-section="problem" class="nav-link text-sm font-medium text-gray-300 pb-1">Problem</a>
                     <a data-section="solution" class="nav-link text-sm font-medium text-gray-300 pb-1">Solution</a>
                     <a data-section="live-demo" class="nav-link text-sm font-medium text-gray-300 pb-1">Live Demo</a>
+                    <a data-section="customer-dashboard" class="nav-link text-sm font-medium text-gray-300 pb-1">Customer Dashboard</a>
                     <a data-section="how-it-works" class="nav-link text-sm font-medium text-gray-300 pb-1">How It Works</a>
                     <a data-section="scaling" class="nav-link text-sm font-medium text-gray-300 pb-1">What's Next</a>
                     <a data-section="live-demo" class="bg-primary-orange hover:bg-orange-600 text-dark-bg font-semibold px-6 py-2 rounded-lg transition duration-200">See Demo</a>
@@ -276,6 +277,7 @@
                     <a data-section="problem" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">Problem</a>
                     <a data-section="solution" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">Solution</a>
                     <a data-section="live-demo" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">Live Demo</a>
+                    <a data-section="customer-dashboard" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">Customer Dashboard</a>
                     <a data-section="how-it-works" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">How It Works</a>
                     <a data-section="scaling" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">What's Next</a>
                 </div>
@@ -802,6 +804,82 @@
             <button onclick="closeModal()" class="mt-6 w-full bg-primary-orange hover:bg-orange-600 text-dark-bg font-semibold py-3 rounded-lg transition duration-200 shadow-md">
                 Acknowledge & Close
             </button>
+        </div>
+    </div>
+
+    <!-- Customer Dashboard Section -->
+    <section id="customer-dashboard" class="spa-section h-screen flex items-center px-4 md:px-8 bg-gray-50 overflow-y-auto" style="padding-top: 5rem; padding-bottom: 2rem;">
+        <div class="max-w-4xl mx-auto w-full">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Churn Intervention Dashboard</h2>
+                <p class="text-gray-600">Prioritize high-value customers at risk of churning</p>
+            </div>
+
+            <!-- Filter Controls -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <div class="flex flex-col sm:flex-row items-center gap-4">
+                    <label for="valueThreshold" class="text-sm font-medium text-gray-700">Minimum ARR Threshold (Filter):</label>
+                    <input 
+                        type="number" 
+                        id="valueThreshold" 
+                        value="5000" 
+                        min="0" 
+                        step="1000"
+                        class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                        oninput="updateCustomerList()"
+                    >
+                    <button 
+                        onclick="applyFilters()" 
+                        class="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors"
+                    >
+                        Apply Filter
+                    </button>
+                    <button 
+                        onclick="resetFilters()" 
+                        class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors"
+                    >
+                        Reset
+                    </button>
+                </div>
+                <div id="filterStatus" class="mt-3 text-sm text-gray-600"></div>
+            </div>
+
+            <!-- Customer List Container -->
+            <div id="customerListContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Customer cards will be rendered here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Detail Modal -->
+    <div id="detailModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center p-6 border-b border-gray-200">
+                <h2 id="modalTitle" class="text-xl font-semibold text-gray-900">Customer Details</h2>
+                <button onclick="closeDetailModal()" class="text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
+            </div>
+            
+            <!-- Modal Content -->
+            <div class="p-6">
+                <div id="modalContent">
+                    <!-- Content will be generated here -->
+                </div>
+            </div>
+            
+            <!-- Modal Footer -->
+            <div class="flex justify-between items-center p-6 border-t border-gray-200">
+                <div id="saveConfirmation" class="text-green-600 font-medium hidden"></div>
+                <div class="flex gap-3">
+                    <button onclick="closeDetailModal()" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors">
+                        Close
+                    </button>
+                    <button onclick="saveNoteLocally(window.currentCustomerId)" class="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors">
+                        Save Intervention
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1484,7 +1562,204 @@
             console.log("✅ SPA Dashboard Ready!");
             console.log("📌 Click navigation items to switch between sections");
             console.log("📊 Click 'Live Demo' to see customer data table");
+            
+            // Initialize customer display
+            renderCustomerList(customerData);
         };
+
+        // --- CUSTOMER DISPLAY FUNCTIONS (as originally requested) ---
+        
+        function renderCustomerList(data) {
+            const container = document.getElementById('customerListContainer');
+            if (!container) {
+                console.error('customerListContainer element not found');
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            data.forEach(customer => {
+                const cardHTML = `
+                    <div class="customer-card bg-white rounded-lg shadow-md p-4 border border-gray-200 hover:shadow-lg hover:border-primary-orange transition-all duration-200 cursor-pointer" 
+                         onclick="showCustomerDetail(${customer.id})">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-semibold text-gray-900">${customer.name}</h3>
+                            <span class="px-3 py-1 rounded-full text-sm font-bold ${
+                                customer.riskScore >= 80 ? 'bg-red-100 text-red-800' : 
+                                customer.riskScore >= 60 ? 'bg-orange-100 text-orange-800' : 
+                                'bg-green-100 text-green-800'
+                            }">
+                                ${customer.riskScore}% Risk
+                            </span>
+                        </div>
+                        <div class="text-sm text-gray-600">
+                            <p><span class="font-medium">ARR:</span> $${customer.arr.toLocaleString()}</p>
+                            <p><span class="font-medium">ID:</span> ${customer.id}</p>
+                        </div>
+                        <div class="mt-2">
+                            <div class="text-xs text-gray-500">
+                                Click to view details
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', cardHTML);
+            });
+        }
+
+        function showCustomerDetail(customerId) {
+            const customer = customerData.find(c => c.id === customerId);
+            if (!customer) {
+                console.error(`Customer with ID ${customerId} not found`);
+                return;
+            }
+            
+            document.getElementById('modalTitle').textContent = `${customer.name} - Details`;
+            const modalContent = generateModalContent(customer);
+            document.getElementById('modalContent').innerHTML = modalContent;
+            
+            const actionLogInput = document.getElementById('actionLogInput');
+            if (actionLogInput) {
+                actionLogInput.value = customer.notes || '';
+            }
+            
+            window.currentCustomerId = customerId;
+            
+            const modal = document.getElementById('detailModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function generateModalContent(customer) {
+            const driverElements = customer.topDrivers.map(driver => {
+                if (driver.includes('[Actionable]')) {
+                    return `<div class="inline-flex items-center px-3 py-2 rounded-lg bg-green-100 border border-green-200 mr-2 mb-2">
+                        <span class="text-sm font-bold text-green-800">${driver}</span>
+                    </div>`;
+                } else if (driver.includes('[Ignore]')) {
+                    return `<div class="inline-flex items-center px-3 py-2 rounded-lg bg-gray-100 border border-gray-200 mr-2 mb-2">
+                        <span class="text-sm text-gray-700">${driver}</span>
+                    </div>`;
+                } else {
+                    return `<div class="inline-flex items-center px-3 py-2 rounded-lg bg-blue-100 border border-blue-200 mr-2 mb-2">
+                        <span class="text-sm text-blue-800">${driver}</span>
+                    </div>`;
+                }
+            }).join('');
+
+            return `
+                <div class="space-y-6">
+                    <!-- Customer Details -->
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Customer Details</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm font-medium text-gray-500">Name:</span>
+                                <span class="text-lg font-semibold text-gray-900">${customer.name}</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm font-medium text-gray-500">Risk Score:</span>
+                                <span class="text-lg font-bold ${customer.riskScore >= 80 ? 'text-red-600' : customer.riskScore >= 60 ? 'text-orange-600' : 'text-green-600'}">${customer.riskScore}%</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm font-medium text-gray-500">ARR:</span>
+                                <span class="text-lg font-semibold text-gray-900">$${customer.arr.toLocaleString()}</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm font-medium text-gray-500">Customer ID:</span>
+                                <span class="text-lg font-mono text-gray-900">${customer.id}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Top Drivers -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3">Top Drivers</h3>
+                        <div class="flex flex-wrap">
+                            ${driverElements}
+                        </div>
+                        <p class="text-sm text-gray-500 mt-3">
+                            <span class="font-bold text-green-600">Green badges</span> indicate actionable items that require immediate attention.
+                        </p>
+                    </div>
+
+                    <!-- Action Log Input -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3">Action Log</h3>
+                        <textarea 
+                            id="actionLogInput" 
+                            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-primary-orange"
+                            rows="4"
+                            placeholder="Log actions taken for this customer..."
+                        ></textarea>
+                    </div>
+                </div>
+            `;
+        }
+
+        function closeDetailModal() {
+            const modal = document.getElementById('detailModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        function saveNoteLocally(customerId) {
+            const actionLogInput = document.getElementById('actionLogInput');
+            if (!actionLogInput) return;
+            
+            const noteText = actionLogInput.value;
+            const customer = customerData.find(c => c.id === customerId);
+            
+            if (customer) {
+                customer.notes = noteText;
+                localStorage.setItem('customerData', JSON.stringify(customerData));
+                
+                // Show confirmation
+                const confirmation = document.getElementById('saveConfirmation');
+                if (confirmation) {
+                    confirmation.textContent = 'Intervention Logged!';
+                    confirmation.classList.remove('hidden');
+                    setTimeout(() => {
+                        confirmation.classList.add('hidden');
+                    }, 3000);
+                }
+            }
+        }
+
+        // --- FILTER AND PRIORITIZATION FUNCTIONS ---
+        
+        function prioritizeCustomers() {
+            const threshold = parseInt(document.getElementById('valueThreshold').value) || 5000;
+            const filtered = customerData.filter(customer => customer.arr >= threshold);
+            const sorted = filtered.sort((a, b) => b.riskScore - a.riskScore);
+            return sorted.slice(0, 10); // Top 10
+        }
+
+        function updateCustomerList() {
+            const prioritized = prioritizeCustomers();
+            renderCustomerList(prioritized);
+            updateFilterStatus();
+        }
+
+        function applyFilters() {
+            updateCustomerList();
+        }
+
+        function resetFilters() {
+            document.getElementById('valueThreshold').value = 5000;
+            updateCustomerList();
+        }
+
+        function updateFilterStatus() {
+            const threshold = parseInt(document.getElementById('valueThreshold').value) || 5000;
+            const filtered = customerData.filter(customer => customer.arr >= threshold);
+            const status = document.getElementById('filterStatus');
+            if (status) {
+                status.textContent = `Showing ${filtered.length} customers with ARR ≥ $${threshold.toLocaleString()}, sorted by risk score (highest first)`;
+            }
+        }
     </script>
 </body>
 </html>
