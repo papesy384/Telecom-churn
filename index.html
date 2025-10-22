@@ -806,156 +806,47 @@
     </div>
 
     <script>
-        // --- 1. GENERATE 800 MOCK CUSTOMER RECORDS WITH REALISTIC PATTERNS ---
-        // Key Features for 92%+ Prediction Accuracy:
-        // 1. Contract_Type (strongest predictor - Month-to-Month = high risk)
-        // 2. Call_Failure_Rate (Service Quality indicator)
-        // 3. Recent_Pricing_Page_Views (Cost Sensitivity indicator)
-        // 4. Days_Since_Last_Login + Last_Survey_Score (Product Disengagement)
-        // 5. Monthly_Charge, LTV, Support_Tickets_Last_90_Days (supporting features)
+        // --- 1. MOCK CUSTOMER DATA (15 customers as requested) ---
+        const customerData = [
+            { id: 1, name: "Acme Corporation", arr: 8500, riskScore: 85, topDrivers: ["Inactivity on Key Feature [Actionable]", "Low API Usage [Actionable]", "Support ticket spike"], notes: "" },
+            { id: 2, name: "TechStart Inc", arr: 12000, riskScore: 65, topDrivers: ["Contract renewal approaching", "Feature adoption decline"], notes: "" },
+            { id: 3, name: "Global Solutions Ltd", arr: 18500, riskScore: 92, topDrivers: ["Low API Usage [Actionable]", "Billing issue [Ignore]", "Competitor evaluation"], notes: "" },
+            { id: 4, name: "Enterprise Dynamics", arr: 22000, riskScore: 55, topDrivers: ["Usage pattern change", "Team expansion"], notes: "" },
+            { id: 5, name: "Innovation Labs", arr: 6500, riskScore: 78, topDrivers: ["Inactivity on Key Feature [Actionable]", "Support response time"], notes: "" },
+            { id: 6, name: "Digital Ventures", arr: 15000, riskScore: 60, topDrivers: ["Feature request backlog", "Integration complexity"], notes: "" },
+            { id: 7, name: "Cloud Systems Co", arr: 3200, riskScore: 88, topDrivers: ["Low API Usage [Actionable]", "Billing issue [Ignore]", "Platform migration"], notes: "" },
+            { id: 8, name: "Data Analytics Pro", arr: 19500, riskScore: 52, topDrivers: ["Performance optimization", "Custom reporting needs"], notes: "" },
+            { id: 9, name: "Mobile Solutions", arr: 7800, riskScore: 82, topDrivers: ["Inactivity on Key Feature [Actionable]", "Mobile app usage decline"], notes: "" },
+            { id: 10, name: "Security First Corp", arr: 16800, riskScore: 58, topDrivers: ["Compliance requirements", "Security audit"], notes: "" },
+            { id: 11, name: "AI Innovations", arr: 4200, riskScore: 75, topDrivers: ["Low API Usage [Actionable]", "Model performance issues"], notes: "" },
+            { id: 12, name: "E-commerce Platform", arr: 23500, riskScore: 50, topDrivers: ["Seasonal usage patterns", "Integration updates"], notes: "" },
+            { id: 13, name: "Healthcare Systems", arr: 9200, riskScore: 90, topDrivers: ["Inactivity on Key Feature [Actionable]", "Billing issue [Ignore]", "Regulatory compliance"], notes: "" },
+            { id: 14, name: "Financial Services", arr: 18200, riskScore: 62, topDrivers: ["Audit requirements", "Data retention policies"], notes: "" },
+            { id: 15, name: "Manufacturing Co", arr: 5600, riskScore: 80, topDrivers: ["Low API Usage [Actionable]", "IoT integration challenges"], notes: "" }
+        ];
 
-        function generateMockCustomers(count = 800) {
-            const customers = [];
-            const contractTypes = ['Month-to-Month', '1-Year', '2-Year'];
-            
-            // Seed for more predictable data patterns
-            let seed = 12345;
-            function seededRandom() {
-                seed = (seed * 9301 + 49297) % 233280;
-                return seed / 233280;
-            }
-
-            function randomChoice(arr) {
-                return arr[Math.floor(seededRandom() * arr.length)];
-            }
-
-            function randomInt(min, max) {
-                return Math.floor(seededRandom() * (max - min + 1)) + min;
-            }
-
-            function randomFloat(min, max, decimals = 2) {
-                return parseFloat((seededRandom() * (max - min) + min).toFixed(decimals));
-            }
-
-            for (let i = 1; i <= count; i++) {
-                const customerId = `C${i}`;
-                
-                // Generate realistic customer profile based on archetypes
-                const archetypeRoll = seededRandom();
-                let customer;
-
-                if (archetypeRoll < 0.20) {
-                    // ARCHETYPE 1: High-Risk Churner (Service Quality Issues) - 20%
-                    customer = {
-                        Customer_ID: customerId,
-                        Contract_Type: 'Month-to-Month',
-                        Monthly_Charge: randomFloat(90, 120),
-                        LTV: randomInt(500, 2500),
-                        Has_Early_Termination_Fee: 0,
-                        Total_Data_Usage: randomInt(100, 200),
-                        Days_Since_Last_Login: randomInt(1, 5),
-                        Support_Tickets_Last_90_Days: randomInt(3, 8),
-                        Call_Failure_Rate: randomFloat(0.06, 0.12),
-                        Recent_Pricing_Page_Views: randomInt(1, 3),
-                        Device_Upgrade_Inquiry: seededRandom() < 0.3,
-                        Last_Survey_Score: randomInt(1, 2),
-                        Churn_Flag: true
-                    };
-                } else if (archetypeRoll < 0.35) {
-                    // ARCHETYPE 2: Cost-Sensitive Churner - 15%
-                    customer = {
-                        Customer_ID: customerId,
-                        Contract_Type: 'Month-to-Month',
-                        Monthly_Charge: randomFloat(95, 125),
-                        LTV: randomInt(600, 3000),
-                        Has_Early_Termination_Fee: 0,
-                        Total_Data_Usage: randomInt(80, 150),
-                        Days_Since_Last_Login: randomInt(1, 10),
-                        Support_Tickets_Last_90_Days: randomInt(0, 3),
-                        Call_Failure_Rate: randomFloat(0.02, 0.05),
-                        Recent_Pricing_Page_Views: randomInt(4, 8),
-                        Device_Upgrade_Inquiry: seededRandom() < 0.6,
-                        Last_Survey_Score: randomInt(2, 4),
-                        Churn_Flag: true
-                    };
-                } else if (archetypeRoll < 0.45) {
-                    // ARCHETYPE 3: Disengaged Churner - 10%
-                    customer = {
-                        Customer_ID: customerId,
-                        Contract_Type: randomChoice(['Month-to-Month', '1-Year']),
-                        Monthly_Charge: randomFloat(70, 100),
-                        LTV: randomInt(1000, 4000),
-                        Has_Early_Termination_Fee: seededRandom() < 0.3 ? 1 : 0,
-                        Total_Data_Usage: randomInt(20, 80),
-                        Days_Since_Last_Login: randomInt(15, 45),
-                        Support_Tickets_Last_90_Days: randomInt(0, 2),
-                        Call_Failure_Rate: randomFloat(0.01, 0.04),
-                        Recent_Pricing_Page_Views: randomInt(0, 2),
-                        Device_Upgrade_Inquiry: false,
-                        Last_Survey_Score: randomInt(1, 3),
-                        Churn_Flag: true
-                    };
-                } else if (archetypeRoll < 0.55) {
-                    // ARCHETYPE 4: At-Risk but Saveable (Mixed signals) - 10%
-                    customer = {
-                        Customer_ID: customerId,
-                        Contract_Type: randomChoice(['Month-to-Month', '1-Year']),
-                        Monthly_Charge: randomFloat(80, 110),
-                        LTV: randomInt(2000, 6000),
-                        Has_Early_Termination_Fee: seededRandom() < 0.4 ? 1 : 0,
-                        Total_Data_Usage: randomInt(60, 140),
-                        Days_Since_Last_Login: randomInt(5, 15),
-                        Support_Tickets_Last_90_Days: randomInt(2, 5),
-                        Call_Failure_Rate: randomFloat(0.03, 0.06),
-                        Recent_Pricing_Page_Views: randomInt(2, 5),
-                        Device_Upgrade_Inquiry: seededRandom() < 0.5,
-                        Last_Survey_Score: randomInt(2, 4),
-                        Churn_Flag: seededRandom() < 0.5 // 50/50 churn
-                    };
-                } else if (archetypeRoll < 0.75) {
-                    // ARCHETYPE 5: Stable Customers (Happy, engaged) - 20%
-                    customer = {
-                        Customer_ID: customerId,
-                        Contract_Type: randomChoice(['1-Year', '2-Year']),
-                        Monthly_Charge: randomFloat(50, 90),
-                        LTV: randomInt(6000, 15000),
-                        Has_Early_Termination_Fee: 1,
-                        Total_Data_Usage: randomInt(40, 120),
-                        Days_Since_Last_Login: randomInt(1, 10),
-                        Support_Tickets_Last_90_Days: randomInt(0, 2),
-                        Call_Failure_Rate: randomFloat(0.00, 0.02),
-                        Recent_Pricing_Page_Views: randomInt(0, 1),
-                        Device_Upgrade_Inquiry: seededRandom() < 0.3,
-                        Last_Survey_Score: randomInt(4, 5),
-                        Churn_Flag: false
-                    };
-                } else {
-                    // ARCHETYPE 6: Loyal Long-Term Customers - 25%
-                    customer = {
-                        Customer_ID: customerId,
-                        Contract_Type: '2-Year',
-                        Monthly_Charge: randomFloat(40, 80),
-                        LTV: randomInt(8000, 18000),
-                        Has_Early_Termination_Fee: 1,
-                        Total_Data_Usage: randomInt(30, 100),
-                        Days_Since_Last_Login: randomInt(1, 20),
-                        Support_Tickets_Last_90_Days: randomInt(0, 1),
-                        Call_Failure_Rate: randomFloat(0.00, 0.02),
-                        Recent_Pricing_Page_Views: 0,
-                        Device_Upgrade_Inquiry: false,
-                        Last_Survey_Score: 5,
-                        Churn_Flag: false
-                    };
-                }
-
-                customers.push(customer);
-            }
-
-            return customers;
-        }
-
-        // Generate 15 customers
-        const MOCK_CUSTOMERS = generateMockCustomers(15);
+        // Use the customerData for MOCK_CUSTOMERS to maintain compatibility
+        const MOCK_CUSTOMERS = customerData.map(customer => ({
+            Customer_ID: `C${customer.id}`,
+            Contract_Type: customer.riskScore >= 80 ? 'Month-to-Month' : customer.riskScore >= 60 ? '1-Year' : '2-Year',
+            Monthly_Charge: Math.round(customer.arr / 12),
+            LTV: customer.arr,
+            Has_Early_Termination_Fee: customer.riskScore < 60 ? 1 : 0,
+            Total_Data_Usage: Math.floor(Math.random() * 200) + 50,
+            Days_Since_Last_Login: customer.riskScore >= 80 ? Math.floor(Math.random() * 10) + 1 : Math.floor(Math.random() * 30) + 1,
+            Support_Tickets_Last_90_Days: customer.riskScore >= 80 ? Math.floor(Math.random() * 5) + 2 : Math.floor(Math.random() * 3),
+            Call_Failure_Rate: customer.riskScore >= 80 ? 0.08 : customer.riskScore >= 60 ? 0.04 : 0.02,
+            Recent_Pricing_Page_Views: customer.riskScore >= 80 ? Math.floor(Math.random() * 3) + 1 : Math.floor(Math.random() * 2),
+            Device_Upgrade_Inquiry: customer.riskScore >= 80 ? Math.random() < 0.6 : Math.random() < 0.3,
+            Last_Survey_Score: customer.riskScore >= 80 ? Math.floor(Math.random() * 2) + 1 : customer.riskScore >= 60 ? Math.floor(Math.random() * 2) + 2 : Math.floor(Math.random() * 2) + 3,
+            Churn_Flag: customer.riskScore >= 80,
+            // Add original fields for compatibility
+            name: customer.name,
+            arr: customer.arr,
+            riskScore: customer.riskScore,
+            topDrivers: customer.topDrivers,
+            notes: customer.notes
+        }));
         
         console.log(`Generated ${MOCK_CUSTOMERS.length} mock customer records`);
         console.log(`Churn Rate: ${(MOCK_CUSTOMERS.filter(c => c.Churn_Flag).length / MOCK_CUSTOMERS.length * 100).toFixed(1)}%`);
