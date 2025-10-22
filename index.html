@@ -954,8 +954,8 @@
             return customers;
         }
 
-        // Generate 800 customers
-        const MOCK_CUSTOMERS = generateMockCustomers(800);
+        // Generate 15 customers
+        const MOCK_CUSTOMERS = generateMockCustomers(15);
         
         console.log(`Generated ${MOCK_CUSTOMERS.length} mock customer records`);
         console.log(`Churn Rate: ${(MOCK_CUSTOMERS.filter(c => c.Churn_Flag).length / MOCK_CUSTOMERS.length * 100).toFixed(1)}%`);
