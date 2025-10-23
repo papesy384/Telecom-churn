@@ -627,7 +627,7 @@
                     Complete list of all customers flagged as high-risk by the AI model.
                 </p>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left" id="all-high-risk-table">
+                    <table class="w-full text-sm text-left" id="all-high-risk-table-customers">
                         <thead class="text-xs uppercase bg-dark-bg text-gray-400">
                             <tr>
                                 <th class="px-4 py-3">Customer ID</th>
@@ -641,7 +641,7 @@
                                 <th class="px-4 py-3">Survey Score</th>
                             </tr>
                         </thead>
-                        <tbody id="all-high-risk-tbody">
+                        <tbody id="all-high-risk-tbody-customers">
                             <!-- Table rows will be injected here -->
                         </tbody>
                     </table>
@@ -1368,6 +1368,7 @@
 
         function renderAllHighRiskTable() {
             const tbody = document.getElementById('all-high-risk-tbody');
+            const tbodyCustomers = document.getElementById('all-high-risk-tbody-customers');
             const allHighRisk = processedCustomers.filter(c => c.isHighRisk);
             
             // Update the section title with the count
@@ -1377,13 +1378,17 @@
             }
             
             if (allHighRisk.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="9" class="text-center py-10 text-gray-500">No high-risk customers detected.</td></tr>';
+                const emptyRow = '<tr><td colspan="9" class="text-center py-10 text-gray-500">No high-risk customers detected.</td></tr>';
+                if (tbody) tbody.innerHTML = emptyRow;
+                if (tbodyCustomers) tbodyCustomers.innerHTML = emptyRow;
                 return;
             }
 
             // Sort by risk score descending
             allHighRisk.sort((a, b) => b.riskScore - a.riskScore);
 
+            // Generate HTML for all rows
+            let allRowsHTML = '';
             allHighRisk.forEach(customer => {
                 const tagClass = getTagClass(customer.rootCauseTag);
                 const row = `
@@ -1399,8 +1404,12 @@
                         <td class="px-4 py-3 ${customer.Last_Survey_Score <= 2 ? 'text-red-400 font-semibold' : 'text-gray-400'}">${customer.Last_Survey_Score}/5</td>
                     </tr>
                 `;
-                tbody.insertAdjacentHTML('beforeend', row);
+                allRowsHTML += row;
             });
+
+            // Populate both tables
+            if (tbody) tbody.innerHTML = allRowsHTML;
+            if (tbodyCustomers) tbodyCustomers.innerHTML = allRowsHTML;
         }
 
         function renderActionList() {
