@@ -503,6 +503,10 @@
                         📈 ROI Summary
                     </h2>
                     <div class="space-y-4">
+                        <!-- Model Metrics will be injected here -->
+                        <div id="metrics-display">
+                            <p class="text-center text-gray-500">Calculating model accuracy...</p>
+                        </div>
                         <!-- ROI Metrics will be injected here -->
                         <div id="roi-metrics">
                             <p class="text-center text-gray-500">Calculating hypothetical savings...</p>
@@ -910,13 +914,13 @@
             Monthly_Charge: Math.round(customer.arr / 12),
             LTV: customer.arr,
             Has_Early_Termination_Fee: customer.riskScore < 60 ? 1 : 0,
-            Total_Data_Usage: Math.floor(Math.random() * 200) + 50,
-            Days_Since_Last_Login: customer.riskScore >= 80 ? Math.floor(Math.random() * 10) + 1 : Math.floor(Math.random() * 30) + 1,
-            Support_Tickets_Last_90_Days: customer.riskScore >= 80 ? Math.floor(Math.random() * 5) + 2 : Math.floor(Math.random() * 3),
+            Total_Data_Usage: 50 + (customer.id * 10), // Consistent data based on ID
+            Days_Since_Last_Login: customer.riskScore >= 80 ? (customer.id % 10) + 1 : (customer.id % 30) + 1,
+            Support_Tickets_Last_90_Days: customer.riskScore >= 80 ? (customer.id % 5) + 2 : customer.id % 3,
             Call_Failure_Rate: customer.riskScore >= 80 ? 0.08 : customer.riskScore >= 60 ? 0.04 : 0.02,
-            Recent_Pricing_Page_Views: customer.riskScore >= 80 ? Math.floor(Math.random() * 3) + 1 : Math.floor(Math.random() * 2),
-            Device_Upgrade_Inquiry: customer.riskScore >= 80 ? Math.random() < 0.6 : Math.random() < 0.3,
-            Last_Survey_Score: customer.riskScore >= 80 ? Math.floor(Math.random() * 2) + 1 : customer.riskScore >= 60 ? Math.floor(Math.random() * 2) + 2 : Math.floor(Math.random() * 2) + 3,
+            Recent_Pricing_Page_Views: customer.riskScore >= 80 ? (customer.id % 3) + 1 : customer.id % 2,
+            Device_Upgrade_Inquiry: customer.riskScore >= 80 ? (customer.id % 2 === 0) : (customer.id % 3 === 0),
+            Last_Survey_Score: customer.riskScore >= 80 ? ((customer.id % 2) + 1) : customer.riskScore >= 60 ? ((customer.id % 2) + 2) : ((customer.id % 2) + 3),
             Churn_Flag: customer.riskScore >= 80,
             // Add original fields for compatibility
             name: customer.name,
@@ -1075,13 +1079,13 @@
                 Monthly_Charge: Math.round(customer.arr / 12),
                 LTV: customer.arr,
                 Has_Early_Termination_Fee: customer.riskScore < 60 ? 1 : 0,
-                Total_Data_Usage: Math.floor(Math.random() * 200) + 50,
-                Days_Since_Last_Login: customer.riskScore >= 80 ? Math.floor(Math.random() * 10) + 1 : Math.floor(Math.random() * 30) + 1,
-                Support_Tickets_Last_90_Days: customer.riskScore >= 80 ? Math.floor(Math.random() * 5) + 2 : Math.floor(Math.random() * 3),
+                Total_Data_Usage: 50 + (customer.id * 10), // Consistent data based on ID
+                Days_Since_Last_Login: customer.riskScore >= 80 ? (customer.id % 10) + 1 : (customer.id % 30) + 1,
+                Support_Tickets_Last_90_Days: customer.riskScore >= 80 ? (customer.id % 5) + 2 : customer.id % 3,
                 Call_Failure_Rate: customer.riskScore >= 80 ? 0.08 : customer.riskScore >= 60 ? 0.04 : 0.02,
-                Recent_Pricing_Page_Views: customer.riskScore >= 80 ? Math.floor(Math.random() * 3) + 1 : Math.floor(Math.random() * 2),
-                Device_Upgrade_Inquiry: customer.riskScore >= 80 ? Math.random() < 0.6 : Math.random() < 0.3,
-                Last_Survey_Score: customer.riskScore >= 80 ? Math.floor(Math.random() * 2) + 1 : customer.riskScore >= 60 ? Math.floor(Math.random() * 2) + 2 : Math.floor(Math.random() * 2) + 3,
+                Recent_Pricing_Page_Views: customer.riskScore >= 80 ? (customer.id % 3) + 1 : customer.id % 2,
+                Device_Upgrade_Inquiry: customer.riskScore >= 80 ? (customer.id % 2 === 0) : (customer.id % 3 === 0),
+                Last_Survey_Score: customer.riskScore >= 80 ? ((customer.id % 2) + 1) : customer.riskScore >= 60 ? ((customer.id % 2) + 2) : ((customer.id % 2) + 3),
                 Churn_Flag: customer.riskScore >= 80,
                 // Keep original customerData fields
                 name: customer.name,
@@ -1495,6 +1499,11 @@
                 const computedDisplay = window.getComputedStyle(targetSection).display;
                 console.log(`   Display value: ${computedDisplay}`);
                 
+                // Initialize customer dashboard when it becomes active
+                if (sectionId === 'customer-dashboard') {
+                    updateCustomerList();
+                }
+                
                 // Scroll to top of page
                 window.scrollTo({ top: 0, behavior: 'instant' });
             } else {
@@ -1517,10 +1526,10 @@
         window.onload = () => {
             console.log("=== SPA DASHBOARD INITIALIZING ===");
             console.log("=== DASHBOARD STATISTICS ===");
-            console.log(`Total Customers Analyzed: ${processedCustomers.length}`);
-            console.log(`High-Risk Customers (≥80%): ${processedCustomers.filter(c => c.isHighRisk).length}`);
-            console.log(`High-Value At-Risk (≥$4K LTV): ${actionableTriageList.length}`);
-            console.log(`Actual Churners in Dataset: ${processedCustomers.filter(c => c.Churn_Flag).length}`);
+            console.log(`Total Customers Analyzed: ${customerData.length}`);
+            console.log(`High-Risk Customers (≥80%): ${customerData.filter(c => c.riskScore >= 80).length}`);
+            console.log(`High-Value At-Risk (≥$4K ARR): ${customerData.filter(c => c.arr >= 4000 && c.riskScore >= 80).length}`);
+            console.log(`Actual Churners in Dataset: ${customerData.filter(c => c.riskScore >= 80).length}`);
             
             // Set hero accuracy to marketing standard (92%)
             const heroAccuracy = document.getElementById('hero-accuracy');
@@ -1587,7 +1596,8 @@
             console.log("📌 Click navigation items to switch between sections");
             console.log("📊 Click 'Live Demo' to see customer data table");
             
-            // Initialize customer display
+            // Load saved data and initialize customer display
+            loadSavedData();
             renderCustomerList(customerData);
         };
 
@@ -1642,10 +1652,13 @@
             const modalContent = generateModalContent(customer);
             document.getElementById('modalContent').innerHTML = modalContent;
             
-            const actionLogInput = document.getElementById('actionLogInput');
-            if (actionLogInput) {
-                actionLogInput.value = customer.notes || '';
-            }
+            // Use setTimeout to ensure element is created before accessing it
+            setTimeout(() => {
+                const actionLogInput = document.getElementById('actionLogInput');
+                if (actionLogInput) {
+                    actionLogInput.value = customer.notes || '';
+                }
+            }, 0);
             
             window.currentCustomerId = customerId;
             
@@ -1724,12 +1737,44 @@
 
         function closeDetailModal() {
             const modal = document.getElementById('detailModal');
+            if (!modal) {
+                console.error('❌ detailModal element not found');
+                return;
+            }
+            
             modal.classList.add('hidden');
             modal.classList.remove('flex');
             document.body.style.overflow = 'auto';
         }
 
+        // --- DATA PERSISTENCE FUNCTIONS ---
+        
+        function loadSavedData() {
+            try {
+                const savedData = localStorage.getItem('churn-dashboard-customerData');
+                if (savedData) {
+                    const parsedData = JSON.parse(savedData);
+                    // Merge saved notes into customerData
+                    parsedData.forEach(savedCustomer => {
+                        const originalCustomer = customerData.find(c => c.id === savedCustomer.id);
+                        if (originalCustomer) {
+                            originalCustomer.notes = savedCustomer.notes || '';
+                        }
+                    });
+                    console.log('✅ Loaded saved customer notes from localStorage');
+                }
+            } catch (error) {
+                console.error('❌ Error loading saved data:', error);
+            }
+        }
+
         function saveNoteLocally(customerId) {
+            // Validate customerId parameter
+            if (!customerId || customerId < 1 || customerId > 15) {
+                console.error('❌ Invalid customerId:', customerId);
+                return;
+            }
+            
             const actionLogInput = document.getElementById('actionLogInput');
             if (!actionLogInput) return;
             
@@ -1738,27 +1783,47 @@
             
             if (customer) {
                 customer.notes = noteText;
-                localStorage.setItem('customerData', JSON.stringify(customerData));
-                
-                // Show confirmation
-                const confirmation = document.getElementById('saveConfirmation');
-                if (confirmation) {
-                    confirmation.textContent = 'Intervention Logged!';
-                    confirmation.classList.remove('hidden');
-                    setTimeout(() => {
-                        confirmation.classList.add('hidden');
-                    }, 3000);
+                try {
+                    localStorage.setItem('churn-dashboard-customerData', JSON.stringify(customerData));
+                    
+                    // Show confirmation
+                    const confirmation = document.getElementById('saveConfirmation');
+                    if (confirmation) {
+                        confirmation.textContent = 'Intervention Logged!';
+                        confirmation.classList.remove('hidden');
+                        setTimeout(() => {
+                            confirmation.classList.add('hidden');
+                        }, 3000);
+                    }
+                    console.log('✅ Saved customer notes to localStorage');
+                } catch (error) {
+                    console.error('❌ Error saving data:', error);
                 }
+            } else {
+                console.error('❌ Customer not found with ID:', customerId);
             }
         }
 
         // --- FILTER AND PRIORITIZATION FUNCTIONS ---
         
         function prioritizeCustomers() {
-            const threshold = parseInt(document.getElementById('valueThreshold').value) || 5000;
+            const thresholdElement = document.getElementById('valueThreshold');
+            if (!thresholdElement) {
+                console.error('❌ valueThreshold element not found');
+                return customerData.slice(0, 10); // Return default data
+            }
+            
+            const threshold = parseInt(thresholdElement.value) || 5000;
+            
+            // Validate input
+            if (isNaN(threshold) || threshold < 0) {
+                console.error('❌ Invalid threshold value:', thresholdElement.value);
+                return customerData.slice(0, 10); // Return default data
+            }
+            
             const filtered = customerData.filter(customer => customer.arr >= threshold);
             const sorted = filtered.sort((a, b) => b.riskScore - a.riskScore);
-            return sorted.slice(0, 10); // Top 10
+            return sorted; // Return all qualifying customers, not limited to 10
         }
 
         function updateCustomerList() {
@@ -1777,11 +1842,17 @@
         }
 
         function updateFilterStatus() {
-            const threshold = parseInt(document.getElementById('valueThreshold').value) || 5000;
-            const filtered = customerData.filter(customer => customer.arr >= threshold);
+            const thresholdElement = document.getElementById('valueThreshold');
+            if (!thresholdElement) {
+                console.error('❌ valueThreshold element not found');
+                return;
+            }
+            
+            const threshold = parseInt(thresholdElement.value) || 5000;
+            const prioritized = prioritizeCustomers(); // Use the actual displayed count
             const status = document.getElementById('filterStatus');
             if (status) {
-                status.textContent = `Showing ${filtered.length} customers with ARR ≥ $${threshold.toLocaleString()}, sorted by risk score (highest first)`;
+                status.textContent = `Showing ${prioritized.length} customers with ARR ≥ $${threshold.toLocaleString()}, sorted by risk score (highest first)`;
             }
         }
     </script>
