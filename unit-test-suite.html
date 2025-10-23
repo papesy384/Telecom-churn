@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Test Suite - Churn Prediction Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .test-section {
+            padding: 30px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .test-item {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ddd;
+            background: #f8f9fa;
+        }
+        
+        .test-pass {
+            background: #d4edda;
+            border-left-color: #28a745;
+            color: #155724;
+        }
+        
+        .test-fail {
+            background: #f8d7da;
+            border-left-color: #dc3545;
+            color: #721c24;
+        }
+        
+        .test-warning {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+            color: #856404;
+        }
+        
+        .summary {
+            background: #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        
+        .btn:hover {
+            background: #0056b3;
+        }
+        
+        .btn-success {
+            background: #28a745;
+        }
+        
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            transition: width 0.3s ease;
+        }
+        
+        .instructions {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .test-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧪 Unit Test Suite</h1>
+            <p>Comprehensive Testing of Individual Functions and Components</p>
+        </div>
+        
+        <div class="test-section">
+            <div class="instructions">
+                <h3>📋 Unit Testing Instructions</h3>
+                <p><strong>Step 1:</strong> Open the dashboard in a new tab: <a href="index.html" target="_blank">Open Dashboard</a></p>
+                <p><strong>Step 2:</strong> Copy the unit test script below</p>
+                <p><strong>Step 3:</strong> Open browser console (F12) in the dashboard tab</p>
+                <p><strong>Step 4:</strong> Paste the script and press Enter</p>
+                <p><strong>Step 5:</strong> View detailed test results in console</p>
+            </div>
+            
+            <div style="text-align: center; margin: 20px 0;">
+                <button class="btn" onclick="showUnitTestScript()">🧪 Show Unit Test Script</button>
+                <button class="btn btn-success" onclick="openDashboard()">🚀 Open Dashboard</button>
+                <button class="btn btn-warning" onclick="showTestCategories()">📊 Show Test Categories</button>
+                <button class="btn btn-danger" onclick="clearResults()">🗑️ Clear Results</button>
+            </div>
+            
+            <div id="test-results-container">
+                <div class="summary">
+                    <h3>Ready for Unit Testing</h3>
+                    <p>Click "Show Unit Test Script" to get the comprehensive unit test code</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const unitTestScript = `
+/**
+ * Comprehensive Unit Test Suite - Churn Prediction Dashboard
+ * Tests individual functions, components, and data integrity
+ * Copy and paste this entire script into the browser console of the dashboard
+ */
+
+(function() {
+    console.log('🧪 Starting Comprehensive Unit Testing...');
+    console.log('=' .repeat(60));
+    
+    const testResults = [];
+    let passedTests = 0;
+    let failedTests = 0;
+    let totalTests = 0;
+    
+    function addTestResult(testName, passed, details, category = 'General') {
+        totalTests++;
+        if (passed) passedTests++;
+        else failedTests++;
+        
+        testResults.push({
+            name: testName,
+            passed,
+            details,
+            category
+        });
+        
+        console.log(\`\${passed ? '✅' : '❌'} [\${category}] \${testName}: \${passed ? 'PASS' : 'FAIL'}\`);
+        if (details) console.log(\`   Details: \${details}\`);
+    }
+    
+    function testFunction(testName, testFunction, category = 'General') {
+        try {
+            const result = testFunction();
+            addTestResult(testName, result.passed, result.details, category);
+        } catch (error) {
+            addTestResult(testName, false, \`Error: \${error.message}\`, category);
+        }
+    }
+    
+    // DATA INTEGRITY TESTS
+    console.log('\\n📊 Data Integrity Unit Tests...');
+    
+    testFunction('Customer Data Structure', () => {
+        const hasCustomerData = customerData && Array.isArray(customerData);
+        const hasCorrectLength = hasCustomerData && customerData.length === 15;
+        const hasRequiredFields = hasCustomerData && customerData.every(c => 
+            c.id && c.name && typeof c.arr === 'number' && typeof c.riskScore === 'number' && 
+            Array.isArray(c.topDrivers) && typeof c.notes === 'string'
+        );
+        
+        return {
+            passed: hasCustomerData && hasCorrectLength && hasRequiredFields,
+            details: \`Customer data: \${hasCustomerData ? 'exists' : 'missing'}, Length: \${customerData?.length || 0}, Fields: \${hasRequiredFields ? 'valid' : 'invalid'}\`
+        };
+    }, 'Data Integrity');
+    
+    testFunction('Risk Score Validation', () => {
+        const validRiskScores = customerData.every(c => c.riskScore >= 50 && c.riskScore <= 100);
+        const hasHighRiskCustomers = customerData.some(c => c.riskScore >= 80);
+        
+        return {
+            passed: validRiskScores && hasHighRiskCustomers,
+            details: \`Risk scores: \${validRiskScores ? 'valid range' : 'invalid'}, High-risk: \${hasHighRiskCustomers ? 'present' : 'missing'}\`
+        };
+    }, 'Data Integrity');
+    
+    testFunction('ARR Value Validation', () => {
+        const validARR = customerData.every(c => c.arr >= 2000 && c.arr <= 25000);
+        const hasHighValueCustomers = customerData.some(c => c.arr >= 4000);
+        
+        return {
+            passed: validARR && hasHighValueCustomers,
+            details: \`ARR range: \${validARR ? 'valid' : 'invalid'}, High-value: \${hasHighValueCustomers ? 'present' : 'missing'}\`
+        };
+    }, 'Data Integrity');
+    
+    testFunction('Actionable Tags Validation', () => {
+        const hasActionableTags = customerData.some(c => c.topDrivers.some(driver => driver.includes('[Actionable]')));
+        const hasIgnoreTags = customerData.some(c => c.topDrivers.some(driver => driver.includes('[Ignore]')));
+        
+        return {
+            passed: hasActionableTags && hasIgnoreTags,
+            details: \`Actionable tags: \${hasActionableTags ? 'present' : 'missing'}, Ignore tags: \${hasIgnoreTags ? 'present' : 'missing'}\`
+        };
+    }, 'Data Integrity');
+    
+    // FUNCTION EXISTENCE TESTS
+    console.log('\\n🔧 Function Existence Unit Tests...');
+    
+    testFunction('Core Functions Existence', () => {
+        const coreFunctions = [
+            'prioritizeCustomers', 'updateCustomerList', 'renderCustomerList',
+            'showCustomerDetail', 'saveNoteLocally', 'loadSavedData',
+            'showSection', 'showDashboardTab'
+        ];
+        
+        const allFunctionsExist = coreFunctions.every(func => typeof window[func] === 'function');
+        
+        return {
+            passed: allFunctionsExist,
+            details: \`Core functions: \${coreFunctions.filter(f => typeof window[f] === 'function').length}/\${coreFunctions.length} exist\`
+        };
+    }, 'Function Existence');
+    
+    testFunction('Render Functions Existence', () => {
+        const renderFunctions = [
+            'renderAllHighRiskTable', 'renderModelMetrics', 'renderROISummary',
+            'renderRootCauseDistribution', 'renderActionList'
+        ];
+        
+        const allRenderFunctionsExist = renderFunctions.every(func => typeof window[func] === 'function');
+        
+        return {
+            passed: allRenderFunctionsExist,
+            details: \`Render functions: \${renderFunctions.filter(f => typeof window[f] === 'function').length}/\${renderFunctions.length} exist\`
+        };
+    }, 'Function Existence');
+    
+    testFunction('Filter Functions Existence', () => {
+        const filterFunctions = ['applyFilters', 'resetFilters', 'updateFilterStatus'];
+        
+        const allFilterFunctionsExist = filterFunctions.every(func => typeof window[func] === 'function');
+        
+        return {
+            passed: allFilterFunctionsExist,
+            details: \`Filter functions: \${filterFunctions.filter(f => typeof window[f] === 'function').length}/\${filterFunctions.length} exist\`
+        };
+    }, 'Function Existence');
+    
+    // ELEMENT EXISTENCE TESTS
+    console.log('\\n🎯 Element Existence Unit Tests...');
+    
+    testFunction('Core Elements Existence', () => {
+        const coreElements = [
+            'customerListContainer', 'valueThreshold', 'detailModal',
+            'modalContent', 'actionLogInput'
+        ];
+        
+        const allElementsExist = coreElements.every(id => document.getElementById(id) !== null);
+        
+        return {
+            passed: allElementsExist,
+            details: \`Core elements: \${coreElements.filter(id => document.getElementById(id) !== null).length}/\${coreElements.length} exist\`
+        };
+    }, 'Element Existence');
+    
+    testFunction('Dashboard Elements Existence', () => {
+        const dashboardElements = [
+            'dashboard-overview', 'dashboard-customers', 'dashboard-analytics', 'dashboard-playbook',
+            'all-high-risk-table', 'all-high-risk-tbody', 'metrics-display', 'roi-metrics'
+        ];
+        
+        const allElementsExist = dashboardElements.every(id => document.getElementById(id) !== null);
+        
+        return {
+            passed: allElementsExist,
+            details: \`Dashboard elements: \${dashboardElements.filter(id => document.getElementById(id) !== null).length}/\${dashboardElements.length} exist\`
+        };
+    }, 'Element Existence');
+    
+    testFunction('Navigation Elements Existence', () => {
+        const navElements = [
+            'hero-section', 'live-demo', 'customer-dashboard', 'how-it-works'
+        ];
+        
+        const allElementsExist = navElements.every(id => document.getElementById(id) !== null);
+        
+        return {
+            passed: allElementsExist,
+            details: \`Navigation elements: \${navElements.filter(id => document.getElementById(id) !== null).length}/\${navElements.length} exist\`
+        };
+    }, 'Element Existence');
+    
+    // FUNCTIONALITY TESTS
+    console.log('\\n⚙️ Functionality Unit Tests...');
+    
+    testFunction('Prioritize Customers Function', () => {
+        try {
+            const result = prioritizeCustomers();
+            const isValidArray = Array.isArray(result);
+            const hasCorrectLength = result.length <= 10;
+            const hasValidCustomers = result.every(c => c.id && c.name && c.riskScore);
+            
+            return {
+                passed: isValidArray && hasCorrectLength && hasValidCustomers,
+                details: \`Returns: \${isValidArray ? 'array' : 'not array'}, Length: \${result.length}, Valid: \${hasValidCustomers ? 'yes' : 'no'}\`
+            };
+        } catch (error) {
+            return { passed: false, details: \`Error: \${error.message}\` };
+        }
+    }, 'Functionality');
+    
+    testFunction('Customer Detail Modal Function', () => {
+        try {
+            const testCustomer = customerData[0];
+            showCustomerDetail(testCustomer.id);
+            
+            const modal = document.getElementById('detailModal');
+            const isVisible = modal && !modal.classList.contains('hidden');
+            const hasContent = document.getElementById('modalContent').innerHTML.length > 0;
+            
+            return {
+                passed: isVisible && hasContent,
+                details: \`Modal visible: \${isVisible ? 'yes' : 'no'}, Content: \${hasContent ? 'present' : 'missing'}\`
+            };
+        } catch (error) {
+            return { passed: false, details: \`Error: \${error.message}\` };
+        }
+    }, 'Functionality');
+    
+    testFunction('Local Storage Functionality', () => {
+        try {
+            const testKey = 'unit-test-key';
+            const testValue = 'unit-test-value';
+            
+            localStorage.setItem(testKey, testValue);
+            const retrieved = localStorage.getItem(testKey);
+            localStorage.removeItem(testKey);
+            
+            return {
+                passed: retrieved === testValue,
+                details: \`Storage: \${retrieved === testValue ? 'working' : 'broken'}\`
+            };
+        } catch (error) {
+            return { passed: false, details: \`Error: \${error.message}\` };
+        }
+    }, 'Functionality');
+    
+    testFunction('Filter Input Functionality', () => {
+        try {
+            const filterInput = document.getElementById('valueThreshold');
+            const originalValue = filterInput.value;
+            
+            filterInput.value = '10000';
+            const newValue = filterInput.value;
+            
+            filterInput.value = originalValue;
+            
+            return {
+                passed: newValue === '10000',
+                details: \`Filter input: \${newValue === '10000' ? 'working' : 'broken'}\`
+            };
+        } catch (error) {
+            return { passed: false, details: \`Error: \${error.message}\` };
+        }
+    }, 'Functionality');
+    
+    // DATA PROCESSING TESTS
+    console.log('\\n🔄 Data Processing Unit Tests...');
+    
+    testFunction('Processed Customers Generation', () => {
+        const hasProcessedCustomers = processedCustomers && Array.isArray(processedCustomers);
+        const hasCorrectLength = hasProcessedCustomers && processedCustomers.length === customerData.length;
+        const hasRequiredFields = hasProcessedCustomers && processedCustomers.every(c => 
+            c.Customer_ID && c.LTV && typeof c.isHighRisk === 'boolean' && typeof c.isHighValue === 'boolean'
+        );
+        
+        return {
+            passed: hasProcessedCustomers && hasCorrectLength && hasRequiredFields,
+            details: \`Processed: \${hasProcessedCustomers ? 'yes' : 'no'}, Length: \${processedCustomers?.length || 0}, Fields: \${hasRequiredFields ? 'valid' : 'invalid'}\`
+        };
+    }, 'Data Processing');
+    
+    testFunction('High-Risk Customer Filtering', () => {
+        const highRiskCustomers = processedCustomers.filter(c => c.isHighRisk);
+        const hasHighRiskCustomers = highRiskCustomers.length > 0;
+        const correctRiskThreshold = highRiskCustomers.every(c => c.riskScore >= 80);
+        
+        return {
+            passed: hasHighRiskCustomers && correctRiskThreshold,
+            details: \`High-risk count: \${highRiskCustomers.length}, Threshold: \${correctRiskThreshold ? 'correct' : 'incorrect'}\`
+        };
+    }, 'Data Processing');
+    
+    testFunction('High-Value Customer Filtering', () => {
+        const highValueCustomers = processedCustomers.filter(c => c.isHighValue);
+        const hasHighValueCustomers = highValueCustomers.length > 0;
+        const correctValueThreshold = highValueCustomers.every(c => c.arr >= 4000);
+        
+        return {
+            passed: hasHighValueCustomers && correctValueThreshold,
+            details: \`High-value count: \${highValueCustomers.length}, Threshold: \${correctValueThreshold ? 'correct' : 'incorrect'}\`
+        };
+    }, 'Data Processing');
+    
+    // UI COMPONENT TESTS
+    console.log('\\n🎨 UI Component Unit Tests...');
+    
+    testFunction('Modal Styling', () => {
+        const modal = document.getElementById('detailModal');
+        const hasCorrectClasses = modal && modal.classList.contains('fixed') && modal.classList.contains('inset-0');
+        
+        return {
+            passed: hasCorrectClasses,
+            details: \`Modal styling: \${hasCorrectClasses ? 'correct' : 'incorrect'}\`
+        };
+    }, 'UI Components');
+    
+    testFunction('Table Responsiveness', () => {
+        const table = document.getElementById('all-high-risk-table');
+        const hasResponsiveClass = table && table.closest('.overflow-x-auto') !== null;
+        
+        return {
+            passed: hasResponsiveClass,
+            details: \`Table responsiveness: \${hasResponsiveClass ? 'enabled' : 'disabled'}\`
+        };
+    }, 'UI Components');
+    
+    testFunction('Color Theme Consistency', () => {
+        const darkElements = document.querySelectorAll('.bg-dark-card');
+        const hasThemeElements = darkElements.length > 0;
+        
+        return {
+            passed: hasThemeElements,
+            details: \`Theme elements: \${darkElements.length} found\`
+        };
+    }, 'UI Components');
+    
+    // PERFORMANCE TESTS
+    console.log('\\n⚡ Performance Unit Tests...');
+    
+    testFunction('Function Execution Speed', () => {
+        const startTime = performance.now();
+        try {
+            prioritizeCustomers();
+            const endTime = performance.now();
+            const executionTime = endTime - startTime;
+            
+            return {
+                passed: executionTime < 100, // Less than 100ms
+                details: \`Execution time: \${executionTime.toFixed(2)}ms\`
+            };
+        } catch (error) {
+            return { passed: false, details: \`Error: \${error.message}\` };
+        }
+    }, 'Performance');
+    
+    testFunction('Memory Usage', () => {
+        const customerDataSize = JSON.stringify(customerData).length;
+        const processedDataSize = JSON.stringify(processedCustomers).length;
+        const totalSize = customerDataSize + processedDataSize;
+        
+        return {
+            passed: totalSize < 50000, // Less than 50KB
+            details: \`Memory usage: \${(totalSize / 1024).toFixed(2)}KB\`
+        };
+    }, 'Performance');
+    
+    // Generate Summary
+    console.log('\\n📊 UNIT TEST SUMMARY');
+    console.log('=' .repeat(60));
+    console.log(\`Total Tests: \${totalTests}\`);
+    console.log(\`Passed: \${passedTests} ✅\`);
+    console.log(\`Failed: \${failedTests} ❌\`);
+    console.log(\`Success Rate: \${((passedTests / totalTests) * 100).toFixed(1)}%\`);
+    
+    // Category breakdown
+    const categories = [...new Set(testResults.map(r => r.category))];
+    categories.forEach(category => {
+        const categoryTests = testResults.filter(r => r.category === category);
+        const categoryPassed = categoryTests.filter(r => r.passed).length;
+        console.log(\`\\n[\${category}] Tests: \${categoryPassed}/\${categoryTests.length} passed\`);
+    });
+    
+    if (failedTests === 0) {
+        console.log('\\n🎉 ALL UNIT TESTS PASSED! All functions and components are working correctly.');
+    } else {
+        console.log(\`\\n⚠️ \${failedTests} unit tests failed. Check the details above.\`);
+    }
+    
+    // Return results for further analysis
+    return {
+        total: totalTests,
+        passed: passedTests,
+        failed: failedTests,
+        successRate: (passedTests / totalTests) * 100,
+        results: testResults
+    };
+})();
+`;
+
+        function showUnitTestScript() {
+            const container = document.getElementById('test-results-container');
+            container.innerHTML = `
+                <div class="instructions">
+                    <h3>🧪 Comprehensive Unit Test Script</h3>
+                    <p>Copy the script below and paste it into the browser console of the dashboard:</p>
+                    <div class="code-block">${unitTestScript}</div>
+                    <p><strong>Test Categories Covered:</strong></p>
+                    <ul>
+                        <li>📊 Data Integrity Tests (4 tests)</li>
+                        <li>🔧 Function Existence Tests (3 tests)</li>
+                        <li>🎯 Element Existence Tests (3 tests)</li>
+                        <li>⚙️ Functionality Tests (4 tests)</li>
+                        <li>🔄 Data Processing Tests (3 tests)</li>
+                        <li>🎨 UI Component Tests (3 tests)</li>
+                        <li>⚡ Performance Tests (2 tests)</li>
+                    </ul>
+                    <p><strong>Total: 22 comprehensive unit tests</strong></p>
+                </div>
+            `;
+        }
+
+        function showTestCategories() {
+            const container = document.getElementById('test-results-container');
+            container.innerHTML = `
+                <div class="test-grid">
+                    <div class="test-card">
+                        <h4>📊 Data Integrity Tests</h4>
+                        <ul>
+                            <li>Customer Data Structure</li>
+                            <li>Risk Score Validation</li>
+                            <li>ARR Value Validation</li>
+                            <li>Actionable Tags Validation</li>
+                        </ul>
+                    </div>
+                    <div class="test-card">
+                        <h4>🔧 Function Existence Tests</h4>
+                        <ul>
+                            <li>Core Functions Existence</li>
+                            <li>Render Functions Existence</li>
+                            <li>Filter Functions Existence</li>
+                        </ul>
+                    </div>
+                    <div class="test-card">
+                        <h4>🎯 Element Existence Tests</h4>
+                        <ul>
+                            <li>Core Elements Existence</li>
+                            <li>Dashboard Elements Existence</li>
+                            <li>Navigation Elements Existence</li>
+                        </ul>
+                    </div>
+                    <div class="test-card">
+                        <h4>⚙️ Functionality Tests</h4>
+                        <ul>
+                            <li>Prioritize Customers Function</li>
+                            <li>Customer Detail Modal Function</li>
+                            <li>Local Storage Functionality</li>
+                            <li>Filter Input Functionality</li>
+                        </ul>
+                    </div>
+                    <div class="test-card">
+                        <h4>🔄 Data Processing Tests</h4>
+                        <ul>
+                            <li>Processed Customers Generation</li>
+                            <li>High-Risk Customer Filtering</li>
+                            <li>High-Value Customer Filtering</li>
+                        </ul>
+                    </div>
+                    <div class="test-card">
+                        <h4>🎨 UI Component Tests</h4>
+                        <ul>
+                            <li>Modal Styling</li>
+                            <li>Table Responsiveness</li>
+                            <li>Color Theme Consistency</li>
+                        </ul>
+                    </div>
+                    <div class="test-card">
+                        <h4>⚡ Performance Tests</h4>
+                        <ul>
+                            <li>Function Execution Speed</li>
+                            <li>Memory Usage</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+        }
+
+        function openDashboard() {
+            window.open('index.html', '_blank');
+        }
+
+        function clearResults() {
+            document.getElementById('test-results-container').innerHTML = `
+                <div class="summary">
+                    <h3>Ready for Unit Testing</h3>
+                    <p>Click "Show Unit Test Script" to get the comprehensive unit test code</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

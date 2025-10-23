@@ -1,0 +1,335 @@
+{
+  "timestamp": "2025-10-23T11:20:31.004Z",
+  "summary": {
+    "total": 22,
+    "passed": 20,
+    "failed": 2,
+    "successRate": 90.9090909090909
+  },
+  "categories": {
+    "Data Integrity": [
+      {
+        "name": "Customer Data Structure",
+        "passed": true,
+        "category": "Data Integrity",
+        "description": "Customer data structure validation",
+        "timestamp": "2025-10-23T11:20:30.986Z"
+      },
+      {
+        "name": "Risk Score Validation",
+        "passed": true,
+        "category": "Data Integrity",
+        "description": "Risk score range and high-risk customer validation",
+        "timestamp": "2025-10-23T11:20:30.999Z"
+      },
+      {
+        "name": "ARR Value Validation",
+        "passed": true,
+        "category": "Data Integrity",
+        "description": "ARR value range and high-value customer validation",
+        "timestamp": "2025-10-23T11:20:30.999Z"
+      },
+      {
+        "name": "Actionable Tags Validation",
+        "passed": true,
+        "category": "Data Integrity",
+        "description": "Actionable and ignore tags validation",
+        "timestamp": "2025-10-23T11:20:30.999Z"
+      }
+    ],
+    "Function Existence": [
+      {
+        "name": "Core Functions Existence",
+        "passed": true,
+        "category": "Function Existence",
+        "description": "Core functions availability",
+        "timestamp": "2025-10-23T11:20:31.000Z"
+      },
+      {
+        "name": "Render Functions Existence",
+        "passed": true,
+        "category": "Function Existence",
+        "description": "Render functions availability",
+        "timestamp": "2025-10-23T11:20:31.001Z"
+      },
+      {
+        "name": "Filter Functions Existence",
+        "passed": true,
+        "category": "Function Existence",
+        "description": "Filter functions availability",
+        "timestamp": "2025-10-23T11:20:31.001Z"
+      }
+    ],
+    "Element Existence": [
+      {
+        "name": "Core Elements Existence",
+        "passed": true,
+        "category": "Element Existence",
+        "description": "Core DOM elements availability",
+        "timestamp": "2025-10-23T11:20:31.001Z"
+      },
+      {
+        "name": "Dashboard Elements Existence",
+        "passed": true,
+        "category": "Element Existence",
+        "description": "Dashboard DOM elements availability",
+        "timestamp": "2025-10-23T11:20:31.001Z"
+      },
+      {
+        "name": "Navigation Elements Existence",
+        "passed": true,
+        "category": "Element Existence",
+        "description": "Navigation DOM elements availability",
+        "timestamp": "2025-10-23T11:20:31.001Z"
+      }
+    ],
+    "Functionality": [
+      {
+        "name": "Prioritize Customers Function",
+        "passed": true,
+        "category": "Functionality",
+        "description": "Prioritize customers function execution",
+        "timestamp": "2025-10-23T11:20:31.001Z"
+      },
+      {
+        "name": "Customer Detail Modal Function",
+        "passed": true,
+        "category": "Functionality",
+        "description": "Customer detail modal function execution",
+        "timestamp": "2025-10-23T11:20:31.002Z"
+      },
+      {
+        "name": "Local Storage Functionality",
+        "passed": false,
+        "category": "Functionality",
+        "description": "Local storage operations",
+        "timestamp": "2025-10-23T11:20:31.002Z"
+      },
+      {
+        "name": "Filter Input Functionality",
+        "passed": true,
+        "category": "Functionality",
+        "description": "Filter input manipulation",
+        "timestamp": "2025-10-23T11:20:31.002Z"
+      }
+    ],
+    "Data Processing": [
+      {
+        "name": "Processed Customers Generation",
+        "passed": true,
+        "category": "Data Processing",
+        "description": "Processed customers data structure",
+        "timestamp": "2025-10-23T11:20:31.002Z"
+      },
+      {
+        "name": "High-Risk Customer Filtering",
+        "passed": true,
+        "category": "Data Processing",
+        "description": "High-risk customer filtering logic",
+        "timestamp": "2025-10-23T11:20:31.002Z"
+      },
+      {
+        "name": "High-Value Customer Filtering",
+        "passed": true,
+        "category": "Data Processing",
+        "description": "High-value customer filtering logic",
+        "timestamp": "2025-10-23T11:20:31.002Z"
+      }
+    ],
+    "UI Components": [
+      {
+        "name": "Modal Styling",
+        "passed": false,
+        "category": "UI Components",
+        "description": "Modal styling classes",
+        "timestamp": "2025-10-23T11:20:31.002Z"
+      },
+      {
+        "name": "Table Responsiveness",
+        "passed": true,
+        "category": "UI Components",
+        "description": "Table responsive design",
+        "timestamp": "2025-10-23T11:20:31.002Z"
+      },
+      {
+        "name": "Color Theme Consistency",
+        "passed": true,
+        "category": "UI Components",
+        "description": "Color theme consistency",
+        "timestamp": "2025-10-23T11:20:31.002Z"
+      }
+    ],
+    "Performance": [
+      {
+        "name": "Function Execution Speed",
+        "passed": true,
+        "category": "Performance",
+        "description": "Function execution speed",
+        "timestamp": "2025-10-23T11:20:31.002Z"
+      },
+      {
+        "name": "Memory Usage",
+        "passed": true,
+        "category": "Performance",
+        "description": "Memory usage optimization",
+        "timestamp": "2025-10-23T11:20:31.003Z"
+      }
+    ]
+  },
+  "results": [
+    {
+      "name": "Customer Data Structure",
+      "passed": true,
+      "category": "Data Integrity",
+      "description": "Customer data structure validation",
+      "timestamp": "2025-10-23T11:20:30.986Z"
+    },
+    {
+      "name": "Risk Score Validation",
+      "passed": true,
+      "category": "Data Integrity",
+      "description": "Risk score range and high-risk customer validation",
+      "timestamp": "2025-10-23T11:20:30.999Z"
+    },
+    {
+      "name": "ARR Value Validation",
+      "passed": true,
+      "category": "Data Integrity",
+      "description": "ARR value range and high-value customer validation",
+      "timestamp": "2025-10-23T11:20:30.999Z"
+    },
+    {
+      "name": "Actionable Tags Validation",
+      "passed": true,
+      "category": "Data Integrity",
+      "description": "Actionable and ignore tags validation",
+      "timestamp": "2025-10-23T11:20:30.999Z"
+    },
+    {
+      "name": "Core Functions Existence",
+      "passed": true,
+      "category": "Function Existence",
+      "description": "Core functions availability",
+      "timestamp": "2025-10-23T11:20:31.000Z"
+    },
+    {
+      "name": "Render Functions Existence",
+      "passed": true,
+      "category": "Function Existence",
+      "description": "Render functions availability",
+      "timestamp": "2025-10-23T11:20:31.001Z"
+    },
+    {
+      "name": "Filter Functions Existence",
+      "passed": true,
+      "category": "Function Existence",
+      "description": "Filter functions availability",
+      "timestamp": "2025-10-23T11:20:31.001Z"
+    },
+    {
+      "name": "Core Elements Existence",
+      "passed": true,
+      "category": "Element Existence",
+      "description": "Core DOM elements availability",
+      "timestamp": "2025-10-23T11:20:31.001Z"
+    },
+    {
+      "name": "Dashboard Elements Existence",
+      "passed": true,
+      "category": "Element Existence",
+      "description": "Dashboard DOM elements availability",
+      "timestamp": "2025-10-23T11:20:31.001Z"
+    },
+    {
+      "name": "Navigation Elements Existence",
+      "passed": true,
+      "category": "Element Existence",
+      "description": "Navigation DOM elements availability",
+      "timestamp": "2025-10-23T11:20:31.001Z"
+    },
+    {
+      "name": "Prioritize Customers Function",
+      "passed": true,
+      "category": "Functionality",
+      "description": "Prioritize customers function execution",
+      "timestamp": "2025-10-23T11:20:31.001Z"
+    },
+    {
+      "name": "Customer Detail Modal Function",
+      "passed": true,
+      "category": "Functionality",
+      "description": "Customer detail modal function execution",
+      "timestamp": "2025-10-23T11:20:31.002Z"
+    },
+    {
+      "name": "Local Storage Functionality",
+      "passed": false,
+      "category": "Functionality",
+      "description": "Local storage operations",
+      "timestamp": "2025-10-23T11:20:31.002Z"
+    },
+    {
+      "name": "Filter Input Functionality",
+      "passed": true,
+      "category": "Functionality",
+      "description": "Filter input manipulation",
+      "timestamp": "2025-10-23T11:20:31.002Z"
+    },
+    {
+      "name": "Processed Customers Generation",
+      "passed": true,
+      "category": "Data Processing",
+      "description": "Processed customers data structure",
+      "timestamp": "2025-10-23T11:20:31.002Z"
+    },
+    {
+      "name": "High-Risk Customer Filtering",
+      "passed": true,
+      "category": "Data Processing",
+      "description": "High-risk customer filtering logic",
+      "timestamp": "2025-10-23T11:20:31.002Z"
+    },
+    {
+      "name": "High-Value Customer Filtering",
+      "passed": true,
+      "category": "Data Processing",
+      "description": "High-value customer filtering logic",
+      "timestamp": "2025-10-23T11:20:31.002Z"
+    },
+    {
+      "name": "Modal Styling",
+      "passed": false,
+      "category": "UI Components",
+      "description": "Modal styling classes",
+      "timestamp": "2025-10-23T11:20:31.002Z"
+    },
+    {
+      "name": "Table Responsiveness",
+      "passed": true,
+      "category": "UI Components",
+      "description": "Table responsive design",
+      "timestamp": "2025-10-23T11:20:31.002Z"
+    },
+    {
+      "name": "Color Theme Consistency",
+      "passed": true,
+      "category": "UI Components",
+      "description": "Color theme consistency",
+      "timestamp": "2025-10-23T11:20:31.002Z"
+    },
+    {
+      "name": "Function Execution Speed",
+      "passed": true,
+      "category": "Performance",
+      "description": "Function execution speed",
+      "timestamp": "2025-10-23T11:20:31.002Z"
+    },
+    {
+      "name": "Memory Usage",
+      "passed": true,
+      "category": "Performance",
+      "description": "Memory usage optimization",
+      "timestamp": "2025-10-23T11:20:31.003Z"
+    }
+  ]
+}
