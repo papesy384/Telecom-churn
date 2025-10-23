@@ -926,8 +926,8 @@
             notes: customer.notes
         }));
         
-        console.log(`Generated ${MOCK_CUSTOMERS.length} mock customer records`);
-        console.log(`Churn Rate: ${(MOCK_CUSTOMERS.filter(c => c.Churn_Flag).length / MOCK_CUSTOMERS.length * 100).toFixed(1)}%`);
+        console.log(`Generated ${customerData.length} customer records`);
+        console.log(`Churn Rate: ${(customerData.filter(c => c.riskScore >= 80).length / customerData.length * 100).toFixed(1)}%`);
 
         // --- 2. CONFIGURATION & SIMULATED ML LOGIC ---
         
@@ -938,7 +938,7 @@
             SIMULATED_SAVE_RATE: 0.40,  // Assumed success rate of root-cause driven intervention (40%)
             TARGET_PRECISION: 0.72,     // PoC Success Target
             TARGET_RECALL: 0.75,        // PoC Success Target
-            LTV_70TH_PERCENTILE: 4000,  // Threshold for High-Value Customer filter (adjusted for dataset)
+            LTV_70TH_PERCENTILE: 4000,  // Threshold for High-Value Customer filter (using ARR)
         };
 
         /**
@@ -1066,15 +1066,38 @@
 
         // --- 3. DATA PROCESSING & UTILITIES ---
 
-        // Apply ML simulation to all customers
-        const processedCustomers = MOCK_CUSTOMERS.map(customer => {
-            const mlResult = runSimulatedML(customer);
+        // Apply ML simulation to all customers (using customerData)
+        const processedCustomers = customerData.map(customer => {
+            // Convert customerData format to MOCK_CUSTOMERS format for ML processing
+            const mockCustomer = {
+                Customer_ID: `C${customer.id}`,
+                Contract_Type: customer.riskScore >= 80 ? 'Month-to-Month' : customer.riskScore >= 60 ? '1-Year' : '2-Year',
+                Monthly_Charge: Math.round(customer.arr / 12),
+                LTV: customer.arr,
+                Has_Early_Termination_Fee: customer.riskScore < 60 ? 1 : 0,
+                Total_Data_Usage: Math.floor(Math.random() * 200) + 50,
+                Days_Since_Last_Login: customer.riskScore >= 80 ? Math.floor(Math.random() * 10) + 1 : Math.floor(Math.random() * 30) + 1,
+                Support_Tickets_Last_90_Days: customer.riskScore >= 80 ? Math.floor(Math.random() * 5) + 2 : Math.floor(Math.random() * 3),
+                Call_Failure_Rate: customer.riskScore >= 80 ? 0.08 : customer.riskScore >= 60 ? 0.04 : 0.02,
+                Recent_Pricing_Page_Views: customer.riskScore >= 80 ? Math.floor(Math.random() * 3) + 1 : Math.floor(Math.random() * 2),
+                Device_Upgrade_Inquiry: customer.riskScore >= 80 ? Math.random() < 0.6 : Math.random() < 0.3,
+                Last_Survey_Score: customer.riskScore >= 80 ? Math.floor(Math.random() * 2) + 1 : customer.riskScore >= 60 ? Math.floor(Math.random() * 2) + 2 : Math.floor(Math.random() * 2) + 3,
+                Churn_Flag: customer.riskScore >= 80,
+                // Keep original customerData fields
+                name: customer.name,
+                arr: customer.arr,
+                riskScore: customer.riskScore,
+                topDrivers: customer.topDrivers,
+                notes: customer.notes
+            };
+            
+            const mlResult = runSimulatedML(mockCustomer);
             return {
-                ...customer,
+                ...mockCustomer,
                 ...mlResult,
-                isHighValue: customer.LTV >= ROI_CONFIG.LTV_70TH_PERCENTILE,
-                isHighRisk: mlResult.riskScore >= 80,
-                predictedChurn: mlResult.riskScore >= 62, // Optimized prediction threshold for exactly 92% accuracy
+                isHighValue: customer.arr >= ROI_CONFIG.LTV_70TH_PERCENTILE,
+                isHighRisk: customer.riskScore >= 80,
+                predictedChurn: customer.riskScore >= 62, // Use original riskScore for consistency
             };
         });
 
@@ -1594,7 +1617,7 @@
                         </div>
                         <div class="text-sm text-gray-600">
                             <p><span class="font-medium">ARR:</span> $${customer.arr.toLocaleString()}</p>
-                            <p><span class="font-medium">ID:</span> ${customer.id}</p>
+                            <p><span class="font-medium">ID:</span> C${customer.id}</p>
                         </div>
                         <div class="mt-2">
                             <div class="text-xs text-gray-500">
@@ -1668,7 +1691,7 @@
                             </div>
                             <div class="flex justify-between items-center">
                                 <span class="text-sm font-medium text-gray-500">Customer ID:</span>
-                                <span class="text-lg font-mono text-gray-900">${customer.id}</span>
+                                <span class="text-lg font-mono text-gray-900">C${customer.id}</span>
                             </div>
                         </div>
                     </div>
