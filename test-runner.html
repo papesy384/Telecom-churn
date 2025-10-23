@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regression Test Runner - Churn Prediction Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .test-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #56ab2f, #a8e6cf);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(86, 171, 47, 0.3);
+        }
+        
+        .btn-info {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+        }
+        
+        .btn-info:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3);
+        }
+        
+        .test-results {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            min-height: 400px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            overflow-y: auto;
+            max-height: 600px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .test-summary {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .summary-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .summary-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 2em;
+        }
+        
+        .summary-card p {
+            margin: 0;
+            opacity: 0.9;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .instructions h3 {
+            margin-top: 0;
+            color: #1976d2;
+        }
+        
+        .instructions ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧪 Regression Test Runner</h1>
+            <p>Churn Prediction Dashboard - Bug Fix Validation</p>
+        </div>
+        
+        <div class="content">
+            <div class="instructions">
+                <h3>📋 Test Instructions</h3>
+                <ol>
+                    <li><strong>Load Dashboard:</strong> Click "Load Dashboard" to open the main application</li>
+                    <li><strong>Run Tests:</strong> Click "Run All Tests" to execute the regression test suite</li>
+                    <li><strong>View Results:</strong> Check the test results and summary below</li>
+                    <li><strong>Export Report:</strong> Click "Export Report" to save detailed results</li>
+                </ol>
+            </div>
+            
+            <div class="test-controls">
+                <button class="btn btn-primary" onclick="loadDashboard()">📱 Load Dashboard</button>
+                <button class="btn btn-success" onclick="runTests()">🧪 Run All Tests</button>
+                <button class="btn btn-info" onclick="exportReport()">📊 Export Report</button>
+                <button class="btn btn-primary" onclick="clearResults()">🗑️ Clear Results</button>
+            </div>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Running regression tests...</p>
+            </div>
+            
+            <div class="test-summary" id="testSummary" style="display: none;">
+                <h3>📊 Test Summary</h3>
+                <div class="summary-grid" id="summaryGrid">
+                    <!-- Summary cards will be populated here -->
+                </div>
+            </div>
+            
+            <div class="test-results" id="testResults">
+                <h3>🔍 Test Results</h3>
+                <p>Click "Run All Tests" to start the regression testing process.</p>
+                <p>The test suite will validate all 19 bug fixes and ensure the application functions correctly.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let testSuite = null;
+        let testReport = null;
+
+        // Load the main dashboard
+        function loadDashboard() {
+            window.open('index.html', '_blank');
+        }
+
+        // Run all regression tests
+        async function runTests() {
+            const loading = document.getElementById('loading');
+            const testResults = document.getElementById('testResults');
+            const testSummary = document.getElementById('testSummary');
+            
+            loading.style.display = 'block';
+            testResults.innerHTML = '<h3>🔍 Test Results</h3>';
+            
+            try {
+                // Load the test suite
+                const script = document.createElement('script');
+                script.src = 'math-helper-test-suite.js';
+                script.onload = async () => {
+                    testSuite = new MathHelperTestSuite();
+                    await testSuite.runAllTests();
+                    
+                    // Display results
+                    displayResults();
+                    loading.style.display = 'none';
+                    testSummary.style.display = 'block';
+                };
+                script.onerror = () => {
+                    testResults.innerHTML = '<h3>❌ Error</h3><p>Could not load test suite. Make sure math-helper-test-suite.js is in the same directory.</p>';
+                    loading.style.display = 'none';
+                };
+                document.head.appendChild(script);
+                
+            } catch (error) {
+                testResults.innerHTML = `<h3>❌ Error</h3><p>Test execution failed: ${error.message}</p>`;
+                loading.style.display = 'none';
+            }
+        }
+
+        // Display test results
+        function displayResults() {
+            const testResults = document.getElementById('testResults');
+            const summaryGrid = document.getElementById('summaryGrid');
+            
+            if (!testSuite) return;
+            
+            // Display console output
+            testResults.innerHTML = '<h3>🔍 Test Results</h3>';
+            testResults.innerHTML += `<pre>${getConsoleOutput()}</pre>`;
+            
+            // Display summary
+            const passRate = ((testSuite.passedTests / testSuite.totalTests) * 100).toFixed(1);
+            const status = passRate >= 90 ? 'EXCELLENT' : 'NEEDS ATTENTION';
+            const statusColor = passRate >= 90 ? '#4CAF50' : '#FF9800';
+            
+            summaryGrid.innerHTML = `
+                <div class="summary-card">
+                    <h3>${testSuite.totalTests}</h3>
+                    <p>Total Tests</p>
+                </div>
+                <div class="summary-card">
+                    <h3>${testSuite.passedTests}</h3>
+                    <p>Passed</p>
+                </div>
+                <div class="summary-card">
+                    <h3>${testSuite.failedTests}</h3>
+                    <p>Failed</p>
+                </div>
+                <div class="summary-card">
+                    <h3>${passRate}%</h3>
+                    <p>Pass Rate</p>
+                </div>
+            `;
+            
+            // Store report
+            testReport = testSuite.saveDetailedReport();
+        }
+
+        // Get console output (simulated)
+        function getConsoleOutput() {
+            if (!testSuite) return 'No test results available';
+            
+            let output = '';
+            testSuite.testResults.forEach(test => {
+                const icon = test.passed ? '✅' : '❌';
+                output += `${icon} ${test.testName}: ${test.status}\n`;
+                if (!test.passed) {
+                    output += `   Details: ${test.details}\n`;
+                }
+            });
+            
+            output += `\n📊 SUMMARY:\n`;
+            output += `   Total Tests: ${testSuite.totalTests}\n`;
+            output += `   Passed: ${testSuite.passedTests}\n`;
+            output += `   Failed: ${testSuite.failedTests}\n`;
+            output += `   Pass Rate: ${((testSuite.passedTests / testSuite.totalTests) * 100).toFixed(1)}%\n`;
+            
+            return output;
+        }
+
+        // Export test report
+        function exportReport() {
+            if (!testReport) {
+                alert('No test report available. Please run tests first.');
+                return;
+            }
+            
+            const dataStr = JSON.stringify(testReport, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `regression-test-report-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+        }
+
+        // Clear results
+        function clearResults() {
+            document.getElementById('testResults').innerHTML = '<h3>🔍 Test Results</h3><p>Click "Run All Tests" to start the regression testing process.</p>';
+            document.getElementById('testSummary').style.display = 'none';
+            testSuite = null;
+            testReport = null;
+        }
+
+        // Initialize
+        console.log('🧪 Regression Test Runner loaded');
+        console.log('Click "Run All Tests" to validate all 19 bug fixes');
+    </script>
+</body>
+</html>
