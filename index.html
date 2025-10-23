@@ -1527,12 +1527,22 @@
                 'Other': '#A1A1AA' // Gray
             };
             
-            const totalPercentage = causeDistribution.reduce((sum, item) => sum + item.percentage, 0);
+            // Recalculate cause distribution to ensure fresh data
+            const currentCauseDistribution = calculateRootCauseDistribution(processedCustomers);
+            console.log('Root Cause Distribution:', currentCauseDistribution);
+            
+            // Fallback if no data
+            if (!currentCauseDistribution || currentCauseDistribution.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-500">No root cause data available</p>';
+                return;
+            }
+            
+            const totalPercentage = currentCauseDistribution.reduce((sum, item) => sum + item.percentage, 0);
 
             let chartSegments = '';
             let currentOffset = 0;
 
-            causeDistribution.forEach(item => {
+            currentCauseDistribution.forEach(item => {
                 const color = colorMap[item.cause] || colorMap['Other'];
                 const dashoffset = 100 - currentOffset;
                 const dasharray = item.percentage;
@@ -1564,7 +1574,7 @@
             let playbookHtml = '';
             
             // Top 2 causes for prescriptive map
-            const topCauses = causeDistribution.slice(0, 2);
+            const topCauses = currentCauseDistribution.slice(0, 2);
 
             topCauses.forEach(item => {
                 let action = '';
