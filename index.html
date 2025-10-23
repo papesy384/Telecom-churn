@@ -95,6 +95,24 @@
             background-clip: text;
         }
 
+        /* Professional enhancements */
+        .professional-shadow {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtle-glow {
+            box-shadow: 0 0 20px rgba(249, 115, 22, 0.15);
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
+        }
+
         /* Animated background for hero section */
         .hero-bg {
             background: linear-gradient(135deg, #171717 0%, #262626 50%, #171717 100%);
@@ -499,7 +517,7 @@
             
             <!-- SECTION 1: High-Risk Overview (Action Card Focus) -->
             <div class="lg:col-span-2">
-                <div id="high-risk-overview" class="p-4 rounded-xl shadow-xl bg-dark-card border border-primary-orange/50">
+                <div id="high-risk-overview" class="p-4 rounded-xl professional-shadow bg-dark-card border border-primary-orange/50 card-hover">
                     <h2 id="triage-list-title" class="text-xl font-bold mb-2 text-primary-orange">
                         🚨 Triage: Top High-Value Churn Risks
                     </h2>
@@ -516,7 +534,7 @@
 
             <!-- SECTION 3: Simulated ROI Summary (Focus on Business Value) -->
             <div class="lg:col-span-1">
-                <div id="roi-summary" class="h-full p-4 rounded-xl shadow-xl bg-dark-card border border-gray-700 flex flex-col justify-between">
+                <div id="roi-summary" class="h-full p-4 rounded-xl professional-shadow bg-dark-card border border-gray-700 flex flex-col justify-between card-hover">
                     <h2 class="text-xl font-bold mb-3 text-light-text">
                         📈 ROI Summary
                     </h2>
@@ -541,7 +559,7 @@
 
         <!-- SECTION 1.5: All High-Risk Customers Table -->
         <div class="mt-4">
-            <div class="p-4 rounded-xl shadow-xl bg-dark-card border border-gray-700">
+            <div class="p-4 rounded-xl professional-shadow bg-dark-card border border-gray-700 card-hover">
                 <h2 id="high-risk-table-title" class="text-xl font-bold mb-2 text-light-text">
                     📊 All High-Risk Customers (Risk Score ≥ 80%)
                 </h2>
@@ -601,7 +619,7 @@
 
         <!-- All Customers Panel -->
         <div id="dashboard-customers" class="dashboard-panel hidden">
-            <div class="p-4 rounded-xl shadow-xl bg-dark-card border border-gray-700">
+            <div class="p-4 rounded-xl professional-shadow bg-dark-card border border-gray-700 card-hover">
                 <h2 class="text-xl font-bold mb-4 text-light-text">
                     📊 All High-Risk Customers (Risk Score ≥ 80%)
                 </h2>
@@ -666,7 +684,7 @@
 
         <!-- Playbook Panel -->
         <div id="dashboard-playbook" class="dashboard-panel hidden">
-            <div class="p-4 rounded-xl shadow-xl bg-dark-card border border-gray-700">
+            <div class="p-4 rounded-xl professional-shadow bg-dark-card border border-gray-700 card-hover">
                 <h2 class="text-lg font-bold mb-2 text-light-text">
                     📚 Prescriptive Playbook
                 </h2>
@@ -699,12 +717,24 @@
                     </div>
                     <div class="flex-1 bg-gradient-to-br from-dark-bg to-dark-card p-4 rounded-xl border-2 border-primary-orange/30 hover:border-primary-orange shadow-lg backdrop-blur-sm">
                         <h3 class="text-xl font-bold text-light-text mb-2">AI Analyzes Customer Data</h3>
-                        <p class="body-text text-gray-300 mb-2">Analyzes behavior, usage, support tickets, network quality, and engagement signals.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-primary-orange/20 text-primary-orange rounded-lg text-sm font-semibold border border-primary-orange/30">Failures</span>
-                            <span class="px-3 py-1 bg-primary-orange/20 text-primary-orange rounded-lg text-sm font-semibold border border-primary-orange/30">Login</span>
-                            <span class="px-3 py-1 bg-primary-orange/20 text-primary-orange rounded-lg text-sm font-semibold border border-primary-orange/30">Tickets</span>
-                            <span class="px-3 py-1 bg-primary-orange/20 text-primary-orange rounded-lg text-sm font-semibold border border-primary-orange/30">Pricing</span>
+                        <p class="body-text text-gray-300 mb-3">Analyzes behavior, usage, support tickets, network quality, and engagement signals.</p>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="flex items-center space-x-2 text-sm text-gray-300">
+                                <div class="w-2 h-2 bg-primary-orange rounded-full"></div>
+                                <span>Call Failures & Network Quality</span>
+                        </div>
+                            <div class="flex items-center space-x-2 text-sm text-gray-300">
+                                <div class="w-2 h-2 bg-primary-orange rounded-full"></div>
+                                <span>Login Patterns & Usage Data</span>
+                            </div>
+                            <div class="flex items-center space-x-2 text-sm text-gray-300">
+                                <div class="w-2 h-2 bg-primary-orange rounded-full"></div>
+                                <span>Support Ticket Analysis</span>
+                            </div>
+                            <div class="flex items-center space-x-2 text-sm text-gray-300">
+                                <div class="w-2 h-2 bg-primary-orange rounded-full"></div>
+                                <span>Pricing Page Engagement</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -716,16 +746,19 @@
                     </div>
                     <div class="flex-1 bg-gradient-to-br from-dark-bg to-dark-card p-4 rounded-xl border-2 border-primary-orange/30 hover:border-primary-orange shadow-lg backdrop-blur-sm">
                         <h3 class="text-xl font-bold text-light-text mb-2">Predicts Churn with 92% Accuracy</h3>
-                        <p class="body-text text-gray-300 mb-2">Assigns precise <span class="text-primary-orange font-semibold">Risk Score</span> and <span class="text-primary-orange font-semibold">Root Cause</span>.</p>
-                        <div class="grid grid-cols-3 gap-2">
-                            <div class="p-2 bg-red-900/20 rounded-lg border border-red-400/30 text-center backdrop-blur-sm hover:bg-red-900/30 transition-all">
-                                <div class="text-red-400 font-bold text-sm">Service</div>
+                        <p class="body-text text-gray-300 mb-3">Assigns precise <span class="text-primary-orange font-semibold">Risk Score</span> and identifies <span class="text-primary-orange font-semibold">Root Cause</span>.</p>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="p-3 bg-red-900/20 rounded-lg border border-red-400/30 text-center">
+                                <div class="text-red-400 font-bold text-sm mb-1">Service Quality</div>
+                                <div class="text-xs text-gray-400">Network Issues</div>
                             </div>
-                            <div class="p-2 bg-primary-orange/20 rounded-lg border border-primary-orange/50 text-center backdrop-blur-sm hover:bg-primary-orange/30 transition-all">
-                                <div class="text-primary-orange font-bold text-sm">Cost</div>
+                            <div class="p-3 bg-primary-orange/20 rounded-lg border border-primary-orange/50 text-center">
+                                <div class="text-primary-orange font-bold text-sm mb-1">Cost Sensitivity</div>
+                                <div class="text-xs text-gray-400">Pricing Concerns</div>
                             </div>
-                            <div class="p-2 bg-blue-900/20 rounded-lg border border-blue-400/30 text-center backdrop-blur-sm hover:bg-blue-900/30 transition-all">
-                                <div class="text-blue-400 font-bold text-sm">Disengaged</div>
+                            <div class="p-3 bg-blue-900/20 rounded-lg border border-blue-400/30 text-center">
+                                <div class="text-blue-400 font-bold text-sm mb-1">Product Disengagement</div>
+                                <div class="text-xs text-gray-400">Low Usage</div>
                             </div>
                         </div>
                     </div>
