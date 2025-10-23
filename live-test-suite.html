@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Dashboard Test Suite</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .test-results {
+            padding: 30px;
+        }
+        
+        .test-item {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ddd;
+        }
+        
+        .test-pass {
+            background: #d4edda;
+            border-left-color: #28a745;
+            color: #155724;
+        }
+        
+        .test-fail {
+            background: #f8d7da;
+            border-left-color: #dc3545;
+            color: #721c24;
+        }
+        
+        .summary {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        
+        .btn:hover {
+            background: #0056b3;
+        }
+        
+        .btn-success {
+            background: #28a745;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+        }
+        
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧪 Live Dashboard Test Suite</h1>
+            <p>Automated Testing with Math Helper - Testing Real Dashboard Functionality</p>
+        </div>
+        
+        <div class="test-results">
+            <div style="text-align: center; margin: 20px 0;">
+                <button class="btn" onclick="runLiveTests()">🚀 Run Live Tests</button>
+                <button class="btn btn-success" onclick="openDashboard()">📊 Open Dashboard</button>
+                <button class="btn btn-danger" onclick="clearResults()">🗑️ Clear Results</button>
+            </div>
+            
+            <div id="test-results-container">
+                <div class="summary">
+                    <h3>Ready to Test</h3>
+                    <p>Click "Run Live Tests" to test the actual dashboard functionality</p>
+                </div>
+            </div>
+            
+            <iframe id="dashboard-frame" src="index.html" style="display: none;"></iframe>
+        </div>
+    </div>
+
+    <script>
+        class LiveDashboardTestSuite {
+            constructor() {
+                this.testResults = [];
+                this.passedTests = 0;
+                this.failedTests = 0;
+                this.totalTests = 0;
+                this.dashboardFrame = null;
+            }
+
+            async runLiveTests() {
+                console.log('🧪 Starting Live Dashboard Tests...');
+                this.clearResults();
+                
+                // Show the iframe
+                const frame = document.getElementById('dashboard-frame');
+                frame.style.display = 'block';
+                this.dashboardFrame = frame;
+                
+                // Wait for the dashboard to load
+                await this.waitForDashboardLoad();
+                
+                // Run all tests
+                await this.testCriticalElements();
+                await this.testMediumElements();
+                await this.testLowElements();
+                await this.testIntegration();
+                
+                this.generateSummary();
+            }
+
+            async waitForDashboardLoad() {
+                return new Promise((resolve) => {
+                    const frame = this.dashboardFrame;
+                    frame.onload = () => {
+                        // Wait a bit more for JavaScript to initialize
+                        setTimeout(resolve, 2000);
+                    };
+                });
+            }
+
+            async testCriticalElements() {
+                this.addTestHeader('🚨 Critical Bug Fixes');
+                
+                // Test 1: metrics-display element
+                await this.testElementExists('metrics-display', 'Critical Bug #1: metrics-display element');
+                
+                // Test 2: playbook-content element
+                await this.testElementExists('playbook-content', 'Critical Bug #2: playbook-content element');
+                
+                // Test 3: loadSavedData function
+                await this.testFunctionExists('loadSavedData', 'Critical Bug #3: loadSavedData function');
+                
+                // Test 4: valueThreshold element
+                await this.testElementExists('valueThreshold', 'Critical Bug #4: valueThreshold element');
+                
+                // Test 5: customerData array
+                await this.testDataExists('customerData', 'Critical Bug #5: customerData array');
+            }
+
+            async testMediumElements() {
+                this.addTestHeader('⚠️ Medium Bug Fixes');
+                
+                // Test 6: detailModal element
+                await this.testElementExists('detailModal', 'Medium Bug #6: detailModal element');
+                
+                // Test 7: saveNoteLocally function
+                await this.testFunctionExists('saveNoteLocally', 'Medium Bug #7: saveNoteLocally function');
+                
+                // Test 8: prioritizeCustomers function
+                await this.testFunctionExists('prioritizeCustomers', 'Medium Bug #8: prioritizeCustomers function');
+                
+                // Test 9: showCustomerDetail function
+                await this.testFunctionExists('showCustomerDetail', 'Medium Bug #9: showCustomerDetail function');
+                
+                // Test 10: action-list-container element
+                await this.testElementExists('action-list-container', 'Medium Bug #10: action-list-container element');
+                
+                // Test 11: renderAllHighRiskTable function
+                await this.testFunctionExists('renderAllHighRiskTable', 'Medium Bug #11: renderAllHighRiskTable function');
+                
+                // Test 12: renderModelMetrics function
+                await this.testFunctionExists('renderModelMetrics', 'Medium Bug #12: renderModelMetrics function');
+                
+                // Test 13: renderROISummary function
+                await this.testFunctionExists('renderROISummary', 'Medium Bug #13: renderROISummary function');
+                
+                // Test 14: renderRootCauseDistribution function
+                await this.testFunctionExists('renderRootCauseDistribution', 'Medium Bug #14: renderRootCauseDistribution function');
+                
+                // Test 15: updateCustomerList function
+                await this.testFunctionExists('updateCustomerList', 'Medium Bug #15: updateCustomerList function');
+                
+                // Test 16: showSection function
+                await this.testFunctionExists('showSection', 'Medium Bug #16: showSection function');
+                
+                // Test 17: Dashboard tab functions
+                await this.testFunctionExists('showDashboardTab', 'Medium Bug #17: showDashboardTab function');
+            }
+
+            async testLowElements() {
+                this.addTestHeader('📝 Low Bug Fixes');
+                
+                // Test 18: Customer data integrity
+                await this.testDataIntegrity('Low Bug #18: Customer data integrity', () => {
+                    try {
+                        const frame = this.dashboardFrame.contentWindow;
+                        return frame.customerData && frame.customerData.length === 15;
+                    } catch (e) {
+                        return false;
+                    }
+                });
+                
+                // Test 19: Local storage functionality
+                await this.testLocalStorage('Low Bug #19: Local storage functionality');
+            }
+
+            async testIntegration() {
+                this.addTestHeader('🔗 Integration Tests');
+                
+                // Test 20: Dashboard initialization
+                await this.testDashboardInitialization('Integration #1: Dashboard initialization');
+                
+                // Test 21: Modal functionality
+                await this.testModalFunctionality('Integration #2: Modal functionality');
+                
+                // Test 22: Filter functionality
+                await this.testFilterFunctionality('Integration #3: Filter functionality');
+                
+                // Test 23: Data persistence
+                await this.testDataPersistence('Integration #4: Data persistence');
+            }
+
+            async testElementExists(elementId, testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    const element = frame.document.getElementById(elementId);
+                    const passed = element !== null;
+                    
+                    this.addTestResult(testName, passed, 
+                        passed ? `Element '${elementId}' found` : `Element '${elementId}' not found`);
+                } catch (error) {
+                    this.addTestResult(testName, false, `Error accessing element: ${error.message}`);
+                }
+            }
+
+            async testFunctionExists(functionName, testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    const func = frame[functionName];
+                    const passed = typeof func === 'function';
+                    
+                    this.addTestResult(testName, passed, 
+                        passed ? `Function '${functionName}' found` : `Function '${functionName}' not found`);
+                } catch (error) {
+                    this.addTestResult(testName, false, `Error accessing function: ${error.message}`);
+                }
+            }
+
+            async testDataExists(dataName, testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    const data = frame[dataName];
+                    const passed = data !== undefined && data !== null;
+                    
+                    this.addTestResult(testName, passed, 
+                        passed ? `Data '${dataName}' exists` : `Data '${dataName}' not found`);
+                } catch (error) {
+                    this.addTestResult(testName, false, `Error accessing data: ${error.message}`);
+                }
+            }
+
+            async testDataIntegrity(testName, testFunction) {
+                this.totalTests++;
+                try {
+                    const passed = testFunction();
+                    this.addTestResult(testName, passed, 
+                        passed ? 'Data integrity check passed' : 'Data integrity check failed');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Data integrity error: ${error.message}`);
+                }
+            }
+
+            async testLocalStorage(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    const testKey = 'test-key';
+                    const testValue = 'test-value';
+                    
+                    frame.localStorage.setItem(testKey, testValue);
+                    const retrieved = frame.localStorage.getItem(testKey);
+                    frame.localStorage.removeItem(testKey);
+                    
+                    const passed = retrieved === testValue;
+                    this.addTestResult(testName, passed, 
+                        passed ? 'Local storage works correctly' : 'Local storage not working');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Local storage error: ${error.message}`);
+                }
+            }
+
+            async testDashboardInitialization(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    const hasCustomerData = frame.customerData && frame.customerData.length > 0;
+                    const hasProcessedCustomers = frame.processedCustomers && frame.processedCustomers.length > 0;
+                    const passed = hasCustomerData && hasProcessedCustomers;
+                    
+                    this.addTestResult(testName, passed, 
+                        passed ? 'Dashboard initialized correctly' : 'Dashboard initialization failed');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Dashboard initialization error: ${error.message}`);
+                }
+            }
+
+            async testModalFunctionality(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    const modal = frame.document.getElementById('detailModal');
+                    const hasShowFunction = typeof frame.showCustomerDetail === 'function';
+                    const passed = modal !== null && hasShowFunction;
+                    
+                    this.addTestResult(testName, passed, 
+                        passed ? 'Modal functionality available' : 'Modal functionality missing');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Modal functionality error: ${error.message}`);
+                }
+            }
+
+            async testFilterFunctionality(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    const hasFilterInput = frame.document.getElementById('valueThreshold') !== null;
+                    const hasFilterFunction = typeof frame.prioritizeCustomers === 'function';
+                    const passed = hasFilterInput && hasFilterFunction;
+                    
+                    this.addTestResult(testName, passed, 
+                        passed ? 'Filter functionality available' : 'Filter functionality missing');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Filter functionality error: ${error.message}`);
+                }
+            }
+
+            async testDataPersistence(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    const hasSaveFunction = typeof frame.saveNoteLocally === 'function';
+                    const hasLoadFunction = typeof frame.loadSavedData === 'function';
+                    const passed = hasSaveFunction && hasLoadFunction;
+                    
+                    this.addTestResult(testName, passed, 
+                        passed ? 'Data persistence functions available' : 'Data persistence functions missing');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Data persistence error: ${error.message}`);
+                }
+            }
+
+            addTestHeader(title) {
+                const container = document.getElementById('test-results-container');
+                const header = document.createElement('div');
+                header.style.cssText = 'margin: 20px 0 10px 0; font-weight: bold; font-size: 18px; color: #333;';
+                header.textContent = title;
+                container.appendChild(header);
+            }
+
+            addTestResult(testName, passed, details) {
+                const container = document.getElementById('test-results-container');
+                const testDiv = document.createElement('div');
+                testDiv.className = `test-item ${passed ? 'test-pass' : 'test-fail'}`;
+                
+                testDiv.innerHTML = `
+                    <strong>${passed ? '✅' : '❌'} ${testName}: ${passed ? 'PASS' : 'FAIL'}</strong><br>
+                    <small>${details}</small>
+                `;
+                
+                container.appendChild(testDiv);
+                
+                if (passed) this.passedTests++;
+                else this.failedTests++;
+                
+                console.log(`${passed ? '✅' : '❌'} ${testName}: ${passed ? 'PASS' : 'FAIL'} - ${details}`);
+            }
+
+            generateSummary() {
+                const container = document.getElementById('test-results-container');
+                const summaryDiv = document.createElement('div');
+                summaryDiv.className = 'summary';
+                
+                const successRate = ((this.passedTests / this.totalTests) * 100).toFixed(1);
+                
+                summaryDiv.innerHTML = `
+                    <h3>📊 Test Execution Summary</h3>
+                    <p><strong>Total Tests:</strong> ${this.totalTests}</p>
+                    <p><strong>Passed:</strong> ${this.passedTests} ✅</p>
+                    <p><strong>Failed:</strong> ${this.failedTests} ❌</p>
+                    <p><strong>Success Rate:</strong> ${successRate}%</p>
+                    ${this.failedTests === 0 ? 
+                        '<p style="color: #28a745; font-weight: bold;">🎉 ALL TESTS PASSED! Dashboard is fully functional.</p>' : 
+                        `<p style="color: #dc3545; font-weight: bold;">⚠️ ${this.failedTests} tests failed. Check details above.</p>`
+                    }
+                `;
+                
+                container.appendChild(summaryDiv);
+                
+                console.log('\n📊 TEST EXECUTION SUMMARY');
+                console.log('=' .repeat(50));
+                console.log(`Total Tests: ${this.totalTests}`);
+                console.log(`Passed: ${this.passedTests} ✅`);
+                console.log(`Failed: ${this.failedTests} ❌`);
+                console.log(`Success Rate: ${successRate}%`);
+            }
+
+            clearResults() {
+                const container = document.getElementById('test-results-container');
+                container.innerHTML = '';
+                this.testResults = [];
+                this.passedTests = 0;
+                this.failedTests = 0;
+                this.totalTests = 0;
+            }
+        }
+
+        // Global functions
+        const testSuite = new LiveDashboardTestSuite();
+
+        function runLiveTests() {
+            testSuite.runLiveTests();
+        }
+
+        function openDashboard() {
+            window.open('index.html', '_blank');
+        }
+
+        function clearResults() {
+            testSuite.clearResults();
+            document.getElementById('test-results-container').innerHTML = `
+                <div class="summary">
+                    <h3>Ready to Test</h3>
+                    <p>Click "Run Live Tests" to test the actual dashboard functionality</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

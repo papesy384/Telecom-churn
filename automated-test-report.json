@@ -1,0 +1,86 @@
+{
+  "timestamp": "2025-10-23T04:23:04.829Z",
+  "summary": {
+    "total": 15,
+    "passed": 15,
+    "failed": 0,
+    "successRate": 100
+  },
+  "results": [
+    {
+      "name": "Critical Bug #1: metrics-display element",
+      "passed": true,
+      "message": "Element 'metrics-display' exists"
+    },
+    {
+      "name": "Critical Bug #2: playbook-content element",
+      "passed": true,
+      "message": "Element 'playbook-content' exists"
+    },
+    {
+      "name": "Critical Bug #3: loadSavedData function",
+      "passed": true,
+      "message": "Function 'loadSavedData' exists"
+    },
+    {
+      "name": "Critical Bug #4: valueThreshold element",
+      "passed": true,
+      "message": "Element 'valueThreshold' exists"
+    },
+    {
+      "name": "Critical Bug #5: Data consistency",
+      "passed": true,
+      "message": "Data integrity check passed"
+    },
+    {
+      "name": "Medium Bug #6: detailModal element",
+      "passed": true,
+      "message": "Element 'detailModal' exists"
+    },
+    {
+      "name": "Medium Bug #7: saveNoteLocally function",
+      "passed": true,
+      "message": "Function 'saveNoteLocally' exists"
+    },
+    {
+      "name": "Medium Bug #8: prioritizeCustomers function",
+      "passed": true,
+      "message": "Function 'prioritizeCustomers' exists"
+    },
+    {
+      "name": "Medium Bug #9: Customer data loaded",
+      "passed": true,
+      "message": "Data integrity check passed"
+    },
+    {
+      "name": "Medium Bug #10: action-list-container element",
+      "passed": true,
+      "message": "Element 'action-list-container' exists"
+    },
+    {
+      "name": "Integration #1: Processed customers",
+      "passed": true,
+      "message": "Data integrity check passed"
+    },
+    {
+      "name": "Integration #2: Actionable triage list",
+      "passed": true,
+      "message": "Data integrity check passed"
+    },
+    {
+      "name": "Integration #3: Model metrics",
+      "passed": true,
+      "message": "Data integrity check passed"
+    },
+    {
+      "name": "Integration #4: Cause distribution",
+      "passed": true,
+      "message": "Data integrity check passed"
+    },
+    {
+      "name": "Integration #5: ROI config",
+      "passed": true,
+      "message": "Data integrity check passed"
+    }
+  ]
+}
