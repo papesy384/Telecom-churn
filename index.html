@@ -259,7 +259,6 @@
                     <a data-section="customer-dashboard" class="nav-link text-sm font-medium text-gray-300 pb-1">Customer Dashboard</a>
                     <a data-section="how-it-works" class="nav-link text-sm font-medium text-gray-300 pb-1">How It Works</a>
                     <a data-section="scaling" class="nav-link text-sm font-medium text-gray-300 pb-1">What's Next</a>
-                    <a data-section="live-demo" class="bg-primary-orange hover:bg-orange-600 text-dark-bg font-semibold px-6 py-2 rounded-lg transition duration-200">See Demo</a>
                 </div>
 
                 <!-- Mobile Menu Button -->
@@ -476,7 +475,26 @@
                 </p>
             </div>
 
+        <!-- Dashboard Tabs -->
+        <div class="mb-6">
+            <div class="flex flex-wrap justify-center gap-2">
+                <button onclick="showDashboardTab('overview')" id="tab-overview" class="dashboard-tab active px-6 py-3 bg-primary-orange text-dark-bg font-semibold rounded-lg transition duration-200">
+                    📊 Overview
+                </button>
+                <button onclick="showDashboardTab('customers')" id="tab-customers" class="dashboard-tab px-6 py-3 bg-dark-card text-gray-300 hover:bg-primary-orange hover:text-dark-bg font-semibold rounded-lg transition duration-200">
+                    👥 All Customers
+                </button>
+                <button onclick="showDashboardTab('analytics')" id="tab-analytics" class="dashboard-tab px-6 py-3 bg-dark-card text-gray-300 hover:bg-primary-orange hover:text-dark-bg font-semibold rounded-lg transition duration-200">
+                    📈 Analytics
+                </button>
+                <button onclick="showDashboardTab('playbook')" id="tab-playbook" class="dashboard-tab px-6 py-3 bg-dark-card text-gray-300 hover:bg-primary-orange hover:text-dark-bg font-semibold rounded-lg transition duration-200">
+                    📚 Playbook
+                </button>
+            </div>
+            </div>
+
         <!-- Main Grid Layout (Three-Panel View) -->
+        <div id="dashboard-overview" class="dashboard-panel">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
             
             <!-- SECTION 1: High-Risk Overview (Action Card Focus) -->
@@ -575,6 +593,87 @@
                     Targeted CSM actions based on root cause drivers.
                 </p>
                 <div class="space-y-3" id="playbook-content">
+                    <!-- Playbook content will be injected here -->
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- All Customers Panel -->
+        <div id="dashboard-customers" class="dashboard-panel hidden">
+            <div class="p-4 rounded-xl shadow-xl bg-dark-card border border-gray-700">
+                <h2 class="text-xl font-bold mb-4 text-light-text">
+                    📊 All High-Risk Customers (Risk Score ≥ 80%)
+                </h2>
+                <p class="text-sm text-gray-400 mb-4">
+                    Complete list of all customers flagged as high-risk by the AI model.
+                </p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left" id="all-high-risk-table">
+                        <thead class="text-xs uppercase bg-dark-bg text-gray-400">
+                            <tr>
+                                <th class="px-4 py-3">Customer ID</th>
+                                <th class="px-4 py-3">Risk Score</th>
+                                <th class="px-4 py-3">LTV</th>
+                                <th class="px-4 py-3">Contract</th>
+                                <th class="px-4 py-3">Root Cause</th>
+                                <th class="px-4 py-3">Call Failure</th>
+                                <th class="px-4 py-3">Price Views</th>
+                                <th class="px-4 py-3">Days Inactive</th>
+                                <th class="px-4 py-3">Survey Score</th>
+                            </tr>
+                        </thead>
+                        <tbody id="all-high-risk-tbody">
+                            <!-- Table rows will be injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Panel -->
+        <div id="dashboard-analytics" class="dashboard-panel hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div id="root-cause-distribution" class="p-4 rounded-xl shadow-xl bg-dark-card border border-gray-700">
+                    <h2 class="text-lg font-bold mb-2 text-light-text">
+                        💡 Root Cause Distribution
+                    </h2>
+                    <p class="text-sm text-gray-400 mb-2">
+                        Breakdown of Root Cause Tags for High-Risk customers.
+                    </p>
+                    <div id="cause-chart" class="h-48 flex items-center justify-center">
+                        <!-- Cause breakdown will be injected here -->
+                    </div>
+                </div>
+
+                <div id="roi-summary-analytics" class="p-4 rounded-xl shadow-xl bg-dark-card border border-gray-700">
+                    <h2 class="text-lg font-bold mb-3 text-light-text">
+                        📈 ROI Summary
+                    </h2>
+                    <div class="space-y-4">
+                        <!-- Model Metrics will be injected here -->
+                        <div id="metrics-display-analytics">
+                            <p class="text-center text-gray-500">Calculating model accuracy...</p>
+                        </div>
+                        <!-- ROI Metrics will be injected here -->
+                        <div id="roi-metrics-analytics">
+                            <p class="text-center text-gray-500">Calculating hypothetical savings...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Playbook Panel -->
+        <div id="dashboard-playbook" class="dashboard-panel hidden">
+            <div class="p-4 rounded-xl shadow-xl bg-dark-card border border-gray-700">
+                <h2 class="text-lg font-bold mb-2 text-light-text">
+                    📚 Prescriptive Playbook
+                </h2>
+                <p class="text-sm text-gray-400 mb-2">
+                    Targeted CSM actions based on root cause drivers.
+                </p>
+                <div class="space-y-3" id="playbook-content-tab">
                     <!-- Playbook content will be injected here -->
                 </div>
             </div>
@@ -1192,6 +1291,7 @@
 
         function renderModelMetrics() {
             const container = document.getElementById('metrics-display');
+            const containerAnalytics = document.getElementById('metrics-display-analytics');
             const html = `
                 <div class="text-center p-4 bg-dark-card rounded-xl">
                     <div class="text-4xl font-extrabold text-green-400 mb-2">${modelMetrics.accuracy}%</div>
@@ -1214,7 +1314,8 @@
                     <div class="text-xs text-gray-500 mt-1">Balanced metric</div>
                 </div>
             `;
-            container.innerHTML = html;
+            if (container) container.innerHTML = html;
+            if (containerAnalytics) containerAnalytics.innerHTML = html;
         }
 
         function getTagClass(tag) {
@@ -1316,6 +1417,7 @@
 
         function renderROISummary() {
             const container = document.getElementById('roi-metrics');
+            const containerAnalytics = document.getElementById('roi-metrics-analytics');
             
             // --- SIMULATED ROI CALCULATION ---
             // High-Value Customers (HVC) total
@@ -1361,7 +1463,8 @@
                     </div>
                 </div>
             `;
-            container.innerHTML = html;
+            if (container) container.innerHTML = html;
+            if (containerAnalytics) containerAnalytics.innerHTML = html;
         }
 
         function renderRootCauseDistribution() {
@@ -1406,6 +1509,7 @@
 
             // Render Legend and Playbook
             const playbookContainer = document.getElementById('playbook-content');
+            const playbookContainerTab = document.getElementById('playbook-content-tab');
             let playbookHtml = '';
             
             // Top 2 causes for prescriptive map
@@ -1440,7 +1544,8 @@
                 `;
             });
 
-            playbookContainer.innerHTML = playbookHtml;
+            if (playbookContainer) playbookContainer.innerHTML = playbookHtml;
+            if (playbookContainerTab) playbookContainerTab.innerHTML = playbookHtml;
         }
 
         // --- 5. MODAL LOGIC ---
@@ -1511,6 +1616,8 @@
                     renderModelMetrics();
                     renderROISummary();
                     renderRootCauseDistribution();
+                    // Initialize dashboard tabs
+                    showDashboardTab('overview');
                 }
                 
                 // Scroll to top of page
@@ -1528,6 +1635,48 @@
             });
             
             console.log(`✅ Section switch complete`);
+        }
+
+        // Dashboard Tab Switching
+        function showDashboardTab(tabId) {
+            console.log(`🔄 Switching to dashboard tab: ${tabId}`);
+            
+            // Hide all dashboard panels
+            const allPanels = document.querySelectorAll('.dashboard-panel');
+            allPanels.forEach(panel => {
+                panel.classList.add('hidden');
+            });
+            
+            // Remove active class from all tabs
+            const allTabs = document.querySelectorAll('.dashboard-tab');
+            allTabs.forEach(tab => {
+                tab.classList.remove('active', 'bg-primary-orange', 'text-dark-bg');
+                tab.classList.add('bg-dark-card', 'text-gray-300');
+            });
+            
+            // Show selected panel
+            const targetPanel = document.getElementById(`dashboard-${tabId}`);
+            if (targetPanel) {
+                targetPanel.classList.remove('hidden');
+            }
+            
+            // Activate selected tab
+            const targetTab = document.getElementById(`tab-${tabId}`);
+            if (targetTab) {
+                targetTab.classList.add('active', 'bg-primary-orange', 'text-dark-bg');
+                targetTab.classList.remove('bg-dark-card', 'text-gray-300');
+            }
+            
+            // Render content for specific tabs
+            if (tabId === 'analytics') {
+                renderModelMetrics();
+                renderROISummary();
+                renderRootCauseDistribution();
+            } else if (tabId === 'playbook') {
+                renderRootCauseDistribution();
+            }
+            
+            console.log(`✅ Dashboard tab switch complete`);
         }
 
         // --- 7. INITIALIZATION ---
