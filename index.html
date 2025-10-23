@@ -1843,6 +1843,33 @@
             document.body.style.overflow = 'hidden';
         }
 
+        function generateSingleActionRecommendation(customer) {
+            const actionableDrivers = customer.topDrivers.filter(driver => driver.includes('[Actionable]'));
+            
+            if (actionableDrivers.length === 0) {
+                return `Monitor ${customer.name} closely for any emerging risk signals. Current drivers suggest stable usage patterns.`;
+            }
+            
+            const primaryDriver = actionableDrivers[0];
+            
+            // Generate specific recommendations based on actionable drivers
+            if (primaryDriver.includes('Inactivity on Key Feature')) {
+                return `Schedule immediate feature walkthrough call with ${customer.name}'s primary contact. Demonstrate advanced features they haven't used and provide personalized training session. Follow up within 48 hours with usage metrics.`;
+            } else if (primaryDriver.includes('Low API Usage')) {
+                return `Reach out to ${customer.name}'s technical team to understand integration challenges. Offer API optimization consultation and provide developer resources. Consider offering integration support credits.`;
+            } else if (primaryDriver.includes('Billing issue')) {
+                return `Contact ${customer.name}'s finance team directly to resolve billing concerns. Offer flexible payment terms or billing adjustments if appropriate. Ensure billing contact has direct line to account manager.`;
+            } else if (primaryDriver.includes('Support ticket spike')) {
+                return `Escalate ${customer.name}'s support tickets to senior support engineer. Schedule proactive check-in call to address root cause of issues. Consider temporary dedicated support channel.`;
+            } else if (primaryDriver.includes('Contract renewal approaching')) {
+                return `Initiate renewal conversation 90 days early with ${customer.name}. Prepare value demonstration showing ROI and usage analytics. Offer early renewal incentives.`;
+            } else if (primaryDriver.includes('Feature adoption decline')) {
+                return `Send personalized feature adoption report to ${customer.name} with specific recommendations. Schedule product demo focusing on unused features that match their use case.`;
+            } else {
+                return `Schedule immediate executive check-in call with ${customer.name} to discuss current challenges and opportunities. Prepare customized success plan based on their specific needs.`;
+            }
+        }
+
         function generateModalContent(customer) {
             const driverElements = customer.topDrivers.map(driver => {
                 if (driver.includes('[Actionable]')) {
@@ -1882,6 +1909,22 @@
                                 <span class="text-sm font-medium text-gray-500">Customer ID:</span>
                                 <span class="text-lg font-mono text-gray-900">C${customer.id}</span>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Single-Action Recommendation -->
+                    <div class="bg-gradient-to-r from-orange-50 to-orange-100 rounded-lg p-4 border-l-4 border-orange-500">
+                        <h3 class="text-lg font-semibold text-orange-800 mb-3 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 mr-2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
+                            </svg>
+                            Single-Action Recommendation
+                        </h3>
+                        <div class="bg-white rounded-lg p-3 border border-orange-200">
+                            <p class="text-orange-800 font-medium mb-2">🎯 Priority Action:</p>
+                            <p class="text-gray-700 text-sm leading-relaxed">
+                                ${generateSingleActionRecommendation(customer)}
+                            </p>
                         </div>
                     </div>
 
