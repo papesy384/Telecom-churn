@@ -1504,6 +1504,15 @@
                     updateCustomerList();
                 }
                 
+                // Initialize live demo when it becomes active
+                if (sectionId === 'live-demo') {
+                    renderActionList();
+                    renderAllHighRiskTable();
+                    renderModelMetrics();
+                    renderROISummary();
+                    renderRootCauseDistribution();
+                }
+                
                 // Scroll to top of page
                 window.scrollTo({ top: 0, behavior: 'instant' });
             } else {
