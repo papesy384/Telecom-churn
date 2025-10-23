@@ -1095,6 +1095,7 @@
             return {
                 ...mockCustomer,
                 ...mlResult,
+                riskScore: customer.riskScore, // Use original riskScore from customerData
                 isHighValue: customer.arr >= ROI_CONFIG.LTV_70TH_PERCENTILE,
                 isHighRisk: customer.riskScore >= 80,
                 predictedChurn: customer.riskScore >= 62, // Use original riskScore for consistency
