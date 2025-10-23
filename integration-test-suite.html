@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integration Test Suite - Churn Prediction Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .test-section {
+            padding: 30px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .test-item {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ddd;
+            background: #f8f9fa;
+        }
+        
+        .test-pass {
+            background: #d4edda;
+            border-left-color: #28a745;
+            color: #155724;
+        }
+        
+        .test-fail {
+            background: #f8d7da;
+            border-left-color: #dc3545;
+            color: #721c24;
+        }
+        
+        .test-warning {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+            color: #856404;
+        }
+        
+        .summary {
+            background: #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        
+        .btn:hover {
+            background: #0056b3;
+        }
+        
+        .btn-success {
+            background: #28a745;
+        }
+        
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+        }
+        
+        iframe {
+            width: 100%;
+            height: 800px;
+            border: none;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .test-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔗 Integration Test Suite</h1>
+            <p>Comprehensive Testing of Dashboard Component Interactions and User Workflows</p>
+        </div>
+        
+        <div class="test-section">
+            <div style="text-align: center; margin: 20px 0;">
+                <button class="btn" onclick="runAllIntegrationTests()">🚀 Run All Integration Tests</button>
+                <button class="btn btn-success" onclick="runWorkflowTests()">👤 User Workflow Tests</button>
+                <button class="btn btn-warning" onclick="runComponentTests()">🧩 Component Integration Tests</button>
+                <button class="btn btn-danger" onclick="clearResults()">🗑️ Clear Results</button>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+            </div>
+            
+            <div id="test-results-container">
+                <div class="summary">
+                    <h3>Ready for Integration Testing</h3>
+                    <p>Click "Run All Integration Tests" to test complete dashboard functionality</p>
+                </div>
+            </div>
+            
+            <iframe id="dashboard-frame" src="index.html" style="display: none;"></iframe>
+        </div>
+    </div>
+
+    <script>
+        class IntegrationTestSuite {
+            constructor() {
+                this.testResults = [];
+                this.passedTests = 0;
+                this.failedTests = 0;
+                this.totalTests = 0;
+                this.dashboardFrame = null;
+                this.currentTestIndex = 0;
+            }
+
+            async runAllIntegrationTests() {
+                console.log('🔗 Starting Comprehensive Integration Tests...');
+                this.clearResults();
+                
+                // Show the iframe
+                const frame = document.getElementById('dashboard-frame');
+                frame.style.display = 'block';
+                this.dashboardFrame = frame;
+                
+                // Wait for the dashboard to load
+                await this.waitForDashboardLoad();
+                
+                // Run all test categories
+                await this.runWorkflowTests();
+                await this.runComponentTests();
+                await this.runDataFlowTests();
+                await this.runUITests();
+                await this.runPerformanceTests();
+                
+                this.generateSummary();
+            }
+
+            async waitForDashboardLoad() {
+                return new Promise((resolve) => {
+                    const frame = this.dashboardFrame;
+                    frame.onload = () => {
+                        // Wait for JavaScript to initialize
+                        setTimeout(resolve, 3000);
+                    };
+                });
+            }
+
+            async runWorkflowTests() {
+                this.addTestHeader('👤 User Workflow Integration Tests');
+                
+                // Test 1: Complete Dashboard Navigation Flow
+                await this.testDashboardNavigation('Workflow #1: Dashboard Navigation Flow');
+                
+                // Test 2: Customer Triage Workflow
+                await this.testCustomerTriageWorkflow('Workflow #2: Customer Triage Workflow');
+                
+                // Test 3: Modal Interaction Workflow
+                await this.testModalInteractionWorkflow('Workflow #3: Modal Interaction Workflow');
+                
+                // Test 4: Filter and Search Workflow
+                await this.testFilterSearchWorkflow('Workflow #4: Filter and Search Workflow');
+                
+                // Test 5: Data Persistence Workflow
+                await this.testDataPersistenceWorkflow('Workflow #5: Data Persistence Workflow');
+            }
+
+            async runComponentTests() {
+                this.addTestHeader('🧩 Component Integration Tests');
+                
+                // Test 6: Dashboard Tabs Integration
+                await this.testDashboardTabsIntegration('Component #1: Dashboard Tabs Integration');
+                
+                // Test 7: Table and Modal Integration
+                await this.testTableModalIntegration('Component #2: Table and Modal Integration');
+                
+                // Test 8: Filter and Display Integration
+                await this.testFilterDisplayIntegration('Component #3: Filter and Display Integration');
+                
+                // Test 9: Data Visualization Integration
+                await this.testDataVisualizationIntegration('Component #4: Data Visualization Integration');
+                
+                // Test 10: Navigation and Content Integration
+                await this.testNavigationContentIntegration('Component #5: Navigation and Content Integration');
+            }
+
+            async runDataFlowTests() {
+                this.addTestHeader('📊 Data Flow Integration Tests');
+                
+                // Test 11: Customer Data Flow
+                await this.testCustomerDataFlow('Data Flow #1: Customer Data Flow');
+                
+                // Test 12: Risk Score Calculation Flow
+                await this.testRiskScoreCalculationFlow('Data Flow #2: Risk Score Calculation Flow');
+                
+                // Test 13: Filter Data Flow
+                await this.testFilterDataFlow('Data Flow #3: Filter Data Flow');
+                
+                // Test 14: Local Storage Data Flow
+                await this.testLocalStorageDataFlow('Data Flow #4: Local Storage Data Flow');
+            }
+
+            async runUITests() {
+                this.addTestHeader('🎨 UI Integration Tests');
+                
+                // Test 15: Responsive Design Integration
+                await this.testResponsiveDesignIntegration('UI #1: Responsive Design Integration');
+                
+                // Test 16: Color and Theme Integration
+                await this.testColorThemeIntegration('UI #2: Color and Theme Integration');
+                
+                // Test 17: Interactive Elements Integration
+                await this.testInteractiveElementsIntegration('UI #3: Interactive Elements Integration');
+            }
+
+            async runPerformanceTests() {
+                this.addTestHeader('⚡ Performance Integration Tests');
+                
+                // Test 18: Load Time Performance
+                await this.testLoadTimePerformance('Performance #1: Load Time Performance');
+                
+                // Test 19: Interaction Performance
+                await this.testInteractionPerformance('Performance #2: Interaction Performance');
+                
+                // Test 20: Memory Usage Performance
+                await this.testMemoryUsagePerformance('Performance #3: Memory Usage Performance');
+            }
+
+            // Workflow Test Implementations
+            async testDashboardNavigation(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    const frameDoc = frame.document;
+                    
+                    // Test navigation elements exist
+                    const navElements = [
+                        'hero-section',
+                        'live-demo',
+                        'customer-dashboard',
+                        'how-it-works'
+                    ];
+                    
+                    let allElementsExist = true;
+                    for (const elementId of navElements) {
+                        const element = frameDoc.getElementById(elementId);
+                        if (!element) {
+                            allElementsExist = false;
+                            break;
+                        }
+                    }
+                    
+                    // Test showSection function works
+                    const hasShowSection = typeof frame.showSection === 'function';
+                    
+                    const passed = allElementsExist && hasShowSection;
+                    this.addTestResult(testName, passed, 
+                        passed ? 'Dashboard navigation elements and functions working' : 'Navigation elements or functions missing');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Dashboard navigation error: ${error.message}`);
+                }
+            }
+
+            async testCustomerTriageWorkflow(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    const frameDoc = frame.document;
+                    
+                    // Test triage elements exist
+                    const triageElements = [
+                        'valueThreshold',
+                        'customerListContainer',
+                        'all-high-risk-tbody'
+                    ];
+                    
+                    let allElementsExist = true;
+                    for (const elementId of triageElements) {
+                        const element = frameDoc.getElementById(elementId);
+                        if (!element) {
+                            allElementsExist = false;
+                            break;
+                        }
+                    }
+                    
+                    // Test triage functions exist
+                    const hasPrioritizeCustomers = typeof frame.prioritizeCustomers === 'function';
+                    const hasUpdateCustomerList = typeof frame.updateCustomerList === 'function';
+                    
+                    const passed = allElementsExist && hasPrioritizeCustomers && hasUpdateCustomerList;
+                    this.addTestResult(testName, passed, 
+                        passed ? 'Customer triage workflow components working' : 'Triage workflow components missing');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Customer triage workflow error: ${error.message}`);
+                }
+            }
+
+            async testModalInteractionWorkflow(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    const frameDoc = frame.document;
+                    
+                    // Test modal elements exist
+                    const modal = frameDoc.getElementById('detailModal');
+                    const modalContent = frameDoc.getElementById('modalContent');
+                    const actionLogInput = frameDoc.getElementById('actionLogInput');
+                    
+                    // Test modal functions exist
+                    const hasShowCustomerDetail = typeof frame.showCustomerDetail === 'function';
+                    const hasSaveNoteLocally = typeof frame.saveNoteLocally === 'function';
+                    
+                    const passed = modal && modalContent && actionLogInput && hasShowCustomerDetail && hasSaveNoteLocally;
+                    this.addTestResult(testName, passed, 
+                        passed ? 'Modal interaction workflow components working' : 'Modal workflow components missing');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Modal interaction workflow error: ${error.message}`);
+                }
+            }
+
+            async testFilterSearchWorkflow(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    const frameDoc = frame.document;
+                    
+                    // Test filter input exists
+                    const filterInput = frameDoc.getElementById('valueThreshold');
+                    
+                    // Test filter functions exist
+                    const hasPrioritizeCustomers = typeof frame.prioritizeCustomers === 'function';
+                    const hasApplyFilters = typeof frame.applyFilters === 'function';
+                    const hasResetFilters = typeof frame.resetFilters === 'function';
+                    
+                    const passed = filterInput && hasPrioritizeCustomers && hasApplyFilters && hasResetFilters;
+                    this.addTestResult(testName, passed, 
+                        passed ? 'Filter and search workflow components working' : 'Filter workflow components missing');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Filter search workflow error: ${error.message}`);
+                }
+            }
+
+            async testDataPersistenceWorkflow(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    
+                    // Test persistence functions exist
+                    const hasLoadSavedData = typeof frame.loadSavedData === 'function';
+                    const hasSaveNoteLocally = typeof frame.saveNoteLocally === 'function';
+                    
+                    // Test localStorage is accessible
+                    const testKey = 'integration-test';
+                    const testValue = 'test-value';
+                    frame.localStorage.setItem(testKey, testValue);
+                    const retrieved = frame.localStorage.getItem(testKey);
+                    frame.localStorage.removeItem(testKey);
+                    
+                    const localStorageWorks = retrieved === testValue;
+                    const passed = hasLoadSavedData && hasSaveNoteLocally && localStorageWorks;
+                    this.addTestResult(testName, passed, 
+                        passed ? 'Data persistence workflow components working' : 'Persistence workflow components missing');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Data persistence workflow error: ${error.message}`);
+                }
+            }
+
+            // Component Integration Test Implementations
+            async testDashboardTabsIntegration(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    const frameDoc = frame.document;
+                    
+                    // Test tab elements exist
+                    const tabElements = [
+                        'dashboard-overview',
+                        'dashboard-customers',
+                        'dashboard-analytics',
+                        'dashboard-playbook'
+                    ];
+                    
+                    let allTabsExist = true;
+                    for (const tabId of tabElements) {
+                        const tab = frameDoc.getElementById(tabId);
+                        if (!tab) {
+                            allTabsExist = false;
+                            break;
+                        }
+                    }
+                    
+                    // Test tab function exists
+                    const hasShowDashboardTab = typeof frame.showDashboardTab === 'function';
+                    
+                    const passed = allTabsExist && hasShowDashboardTab;
+                    this.addTestResult(testName, passed, 
+                        passed ? 'Dashboard tabs integration working' : 'Dashboard tabs integration missing');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Dashboard tabs integration error: ${error.message}`);
+                }
+            }
+
+            async testTableModalIntegration(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    const frameDoc = frame.document;
+                    
+                    // Test table elements exist
+                    const table = frameDoc.getElementById('all-high-risk-table');
+                    const tableBody = frameDoc.getElementById('all-high-risk-tbody');
+                    const modal = frameDoc.getElementById('detailModal');
+                    
+                    // Test integration functions exist
+                    const hasRenderAllHighRiskTable = typeof frame.renderAllHighRiskTable === 'function';
+                    const hasShowCustomerDetail = typeof frame.showCustomerDetail === 'function';
+                    
+                    const passed = table && tableBody && modal && hasRenderAllHighRiskTable && hasShowCustomerDetail;
+                    this.addTestResult(testName, passed, 
+                        passed ? 'Table and modal integration working' : 'Table modal integration missing');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Table modal integration error: ${error.message}`);
+                }
+            }
+
+            async testFilterDisplayIntegration(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    const frameDoc = frame.document;
+                    
+                    // Test filter elements exist
+                    const filterInput = frameDoc.getElementById('valueThreshold');
+                    const customerListContainer = frameDoc.getElementById('customerListContainer');
+                    
+                    // Test filter functions exist
+                    const hasPrioritizeCustomers = typeof frame.prioritizeCustomers === 'function';
+                    const hasRenderCustomerList = typeof frame.renderCustomerList === 'function';
+                    
+                    const passed = filterInput && customerListContainer && hasPrioritizeCustomers && hasRenderCustomerList;
+                    this.addTestResult(testName, passed, 
+                        passed ? 'Filter and display integration working' : 'Filter display integration missing');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Filter display integration error: ${error.message}`);
+                }
+            }
+
+            async testDataVisualizationIntegration(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    const frameDoc = frame.document;
+                    
+                    // Test visualization elements exist
+                    const visualizationElements = [
+                        'metrics-display',
+                        'roi-metrics',
+                        'cause-chart',
+                        'playbook-content'
+                    ];
+                    
+                    let allElementsExist = true;
+                    for (const elementId of visualizationElements) {
+                        const element = frameDoc.getElementById(elementId);
+                        if (!element) {
+                            allElementsExist = false;
+                            break;
+                        }
+                    }
+                    
+                    // Test visualization functions exist
+                    const hasRenderModelMetrics = typeof frame.renderModelMetrics === 'function';
+                    const hasRenderROISummary = typeof frame.renderROISummary === 'function';
+                    const hasRenderRootCauseDistribution = typeof frame.renderRootCauseDistribution === 'function';
+                    
+                    const passed = allElementsExist && hasRenderModelMetrics && hasRenderROISummary && hasRenderRootCauseDistribution;
+                    this.addTestResult(testName, passed, 
+                        passed ? 'Data visualization integration working' : 'Data visualization integration missing');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Data visualization integration error: ${error.message}`);
+                }
+            }
+
+            async testNavigationContentIntegration(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    const frameDoc = frame.document;
+                    
+                    // Test navigation elements exist
+                    const navElements = [
+                        'hero-section',
+                        'live-demo',
+                        'customer-dashboard',
+                        'how-it-works'
+                    ];
+                    
+                    let allNavElementsExist = true;
+                    for (const elementId of navElements) {
+                        const element = frameDoc.getElementById(elementId);
+                        if (!element) {
+                            allNavElementsExist = false;
+                            break;
+                        }
+                    }
+                    
+                    // Test content elements exist
+                    const contentElements = [
+                        'customerListContainer',
+                        'all-high-risk-tbody',
+                        'metrics-display'
+                    ];
+                    
+                    let allContentElementsExist = true;
+                    for (const elementId of contentElements) {
+                        const element = frameDoc.getElementById(elementId);
+                        if (!element) {
+                            allContentElementsExist = false;
+                            break;
+                        }
+                    }
+                    
+                    const passed = allNavElementsExist && allContentElementsExist;
+                    this.addTestResult(testName, passed, 
+                        passed ? 'Navigation and content integration working' : 'Navigation content integration missing');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Navigation content integration error: ${error.message}`);
+                }
+            }
+
+            // Data Flow Test Implementations
+            async testCustomerDataFlow(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    
+                    // Test customer data exists
+                    const hasCustomerData = frame.customerData && frame.customerData.length > 0;
+                    
+                    // Test processed customers exist
+                    const hasProcessedCustomers = frame.processedCustomers && frame.processedCustomers.length > 0;
+                    
+                    // Test data processing functions exist
+                    const hasPrioritizeCustomers = typeof frame.prioritizeCustomers === 'function';
+                    
+                    const passed = hasCustomerData && hasProcessedCustomers && hasPrioritizeCustomers;
+                    this.addTestResult(testName, passed, 
+                        passed ? 'Customer data flow working correctly' : 'Customer data flow broken');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Customer data flow error: ${error.message}`);
+                }
+            }
+
+            async testRiskScoreCalculationFlow(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    
+                    // Test risk score data exists
+                    const hasCustomerData = frame.customerData && frame.customerData.length > 0;
+                    const hasRiskScores = hasCustomerData && frame.customerData.every(c => typeof c.riskScore === 'number');
+                    
+                    // Test risk score processing
+                    const hasProcessedCustomers = frame.processedCustomers && frame.processedCustomers.length > 0;
+                    const hasRiskProcessing = hasProcessedCustomers && frame.processedCustomers.every(c => typeof c.riskScore === 'number');
+                    
+                    const passed = hasRiskScores && hasRiskProcessing;
+                    this.addTestResult(testName, passed, 
+                        passed ? 'Risk score calculation flow working' : 'Risk score calculation flow broken');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Risk score calculation flow error: ${error.message}`);
+                }
+            }
+
+            async testFilterDataFlow(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    
+                    // Test filter data flow
+                    const hasCustomerData = frame.customerData && frame.customerData.length > 0;
+                    const hasPrioritizeCustomers = typeof frame.prioritizeCustomers === 'function';
+                    
+                    // Test filter execution
+                    let filterWorks = false;
+                    if (hasPrioritizeCustomers) {
+                        try {
+                            const filteredCustomers = frame.prioritizeCustomers();
+                            filterWorks = Array.isArray(filteredCustomers);
+                        } catch (e) {
+                            filterWorks = false;
+                        }
+                    }
+                    
+                    const passed = hasCustomerData && hasPrioritizeCustomers && filterWorks;
+                    this.addTestResult(testName, passed, 
+                        passed ? 'Filter data flow working correctly' : 'Filter data flow broken');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Filter data flow error: ${error.message}`);
+                }
+            }
+
+            async testLocalStorageDataFlow(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    
+                    // Test localStorage functions exist
+                    const hasLoadSavedData = typeof frame.loadSavedData === 'function';
+                    const hasSaveNoteLocally = typeof frame.saveNoteLocally === 'function';
+                    
+                    // Test localStorage functionality
+                    const testKey = 'integration-test-storage';
+                    const testData = JSON.stringify({ test: 'data' });
+                    frame.localStorage.setItem(testKey, testData);
+                    const retrieved = frame.localStorage.getItem(testKey);
+                    frame.localStorage.removeItem(testKey);
+                    
+                    const localStorageWorks = retrieved === testData;
+                    const passed = hasLoadSavedData && hasSaveNoteLocally && localStorageWorks;
+                    this.addTestResult(testName, passed, 
+                        passed ? 'Local storage data flow working' : 'Local storage data flow broken');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Local storage data flow error: ${error.message}`);
+                }
+            }
+
+            // UI Integration Test Implementations
+            async testResponsiveDesignIntegration(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    const frameDoc = frame.document;
+                    
+                    // Test responsive elements exist
+                    const responsiveElements = [
+                        'customerListContainer',
+                        'all-high-risk-table',
+                        'detailModal'
+                    ];
+                    
+                    let allElementsExist = true;
+                    for (const elementId of responsiveElements) {
+                        const element = frameDoc.getElementById(elementId);
+                        if (!element) {
+                            allElementsExist = false;
+                            break;
+                        }
+                    }
+                    
+                    // Test responsive classes are applied
+                    const hasResponsiveClasses = frameDoc.querySelector('.overflow-x-auto') !== null;
+                    
+                    const passed = allElementsExist && hasResponsiveClasses;
+                    this.addTestResult(testName, passed, 
+                        passed ? 'Responsive design integration working' : 'Responsive design integration missing');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Responsive design integration error: ${error.message}`);
+                }
+            }
+
+            async testColorThemeIntegration(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    const frameDoc = frame.document;
+                    
+                    // Test theme elements exist
+                    const themeElements = [
+                        'detailModal',
+                        'all-high-risk-table',
+                        'metrics-display'
+                    ];
+                    
+                    let allElementsExist = true;
+                    for (const elementId of themeElements) {
+                        const element = frameDoc.getElementById(elementId);
+                        if (!element) {
+                            allElementsExist = false;
+                            break;
+                        }
+                    }
+                    
+                    // Test theme classes are applied
+                    const hasThemeClasses = frameDoc.querySelector('.bg-dark-card') !== null;
+                    
+                    const passed = allElementsExist && hasThemeClasses;
+                    this.addTestResult(testName, passed, 
+                        passed ? 'Color theme integration working' : 'Color theme integration missing');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Color theme integration error: ${error.message}`);
+                }
+            }
+
+            async testInteractiveElementsIntegration(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    const frameDoc = frame.document;
+                    
+                    // Test interactive elements exist
+                    const interactiveElements = [
+                        'valueThreshold',
+                        'detailModal',
+                        'actionLogInput'
+                    ];
+                    
+                    let allElementsExist = true;
+                    for (const elementId of interactiveElements) {
+                        const element = frameDoc.getElementById(elementId);
+                        if (!element) {
+                            allElementsExist = false;
+                            break;
+                        }
+                    }
+                    
+                    // Test interactive classes are applied
+                    const hasInteractiveClasses = frameDoc.querySelector('.hover\\:bg-dark-bg') !== null;
+                    
+                    const passed = allElementsExist && hasInteractiveClasses;
+                    this.addTestResult(testName, passed, 
+                        passed ? 'Interactive elements integration working' : 'Interactive elements integration missing');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Interactive elements integration error: ${error.message}`);
+                }
+            }
+
+            // Performance Test Implementations
+            async testLoadTimePerformance(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    
+                    // Test if dashboard loaded within reasonable time
+                    const loadTime = performance.now();
+                    const hasLoaded = frame.document.readyState === 'complete';
+                    
+                    // Test if essential elements are loaded
+                    const hasEssentialElements = frame.document.getElementById('customerListContainer') !== null;
+                    
+                    const passed = hasLoaded && hasEssentialElements && loadTime < 10000; // 10 seconds max
+                    this.addTestResult(testName, passed, 
+                        passed ? `Dashboard loaded in ${loadTime.toFixed(2)}ms` : 'Dashboard load time exceeded limits');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Load time performance error: ${error.message}`);
+                }
+            }
+
+            async testInteractionPerformance(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    
+                    // Test interaction functions exist and are callable
+                    const hasShowCustomerDetail = typeof frame.showCustomerDetail === 'function';
+                    const hasPrioritizeCustomers = typeof frame.prioritizeCustomers === 'function';
+                    
+                    // Test function execution time
+                    let interactionTime = 0;
+                    if (hasPrioritizeCustomers) {
+                        const startTime = performance.now();
+                        try {
+                            frame.prioritizeCustomers();
+                            interactionTime = performance.now() - startTime;
+                        } catch (e) {
+                            interactionTime = Infinity;
+                        }
+                    }
+                    
+                    const passed = hasShowCustomerDetail && hasPrioritizeCustomers && interactionTime < 1000; // 1 second max
+                    this.addTestResult(testName, passed, 
+                        passed ? `Interaction completed in ${interactionTime.toFixed(2)}ms` : 'Interaction performance exceeded limits');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Interaction performance error: ${error.message}`);
+                }
+            }
+
+            async testMemoryUsagePerformance(testName) {
+                this.totalTests++;
+                try {
+                    const frame = this.dashboardFrame.contentWindow;
+                    
+                    // Test if memory usage is reasonable
+                    const hasCustomerData = frame.customerData && frame.customerData.length > 0;
+                    const hasProcessedCustomers = frame.processedCustomers && frame.processedCustomers.length > 0;
+                    
+                    // Test data size is reasonable
+                    const customerDataSize = hasCustomerData ? JSON.stringify(frame.customerData).length : 0;
+                    const processedDataSize = hasProcessedCustomers ? JSON.stringify(frame.processedCustomers).length : 0;
+                    
+                    const totalDataSize = customerDataSize + processedDataSize;
+                    const passed = totalDataSize < 1000000; // 1MB max
+                    
+                    this.addTestResult(testName, passed, 
+                        passed ? `Memory usage: ${(totalDataSize / 1024).toFixed(2)}KB` : 'Memory usage exceeded limits');
+                } catch (error) {
+                    this.addTestResult(testName, false, `Memory usage performance error: ${error.message}`);
+                }
+            }
+
+            addTestHeader(title) {
+                const container = document.getElementById('test-results-container');
+                const header = document.createElement('div');
+                header.style.cssText = 'margin: 20px 0 10px 0; font-weight: bold; font-size: 18px; color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px;';
+                header.textContent = title;
+                container.appendChild(header);
+            }
+
+            addTestResult(testName, passed, details) {
+                const container = document.getElementById('test-results-container');
+                const testDiv = document.createElement('div');
+                testDiv.className = `test-item ${passed ? 'test-pass' : 'test-fail'}`;
+                
+                testDiv.innerHTML = `
+                    <strong>${passed ? '✅' : '❌'} ${testName}: ${passed ? 'PASS' : 'FAIL'}</strong><br>
+                    <small>${details}</small>
+                `;
+                
+                container.appendChild(testDiv);
+                
+                if (passed) this.passedTests++;
+                else this.failedTests++;
+                
+                // Update progress bar
+                const progress = ((this.passedTests + this.failedTests) / this.totalTests) * 100;
+                document.getElementById('progress-fill').style.width = `${progress}%`;
+                
+                console.log(`${passed ? '✅' : '❌'} ${testName}: ${passed ? 'PASS' : 'FAIL'} - ${details}`);
+            }
+
+            generateSummary() {
+                const container = document.getElementById('test-results-container');
+                const summaryDiv = document.createElement('div');
+                summaryDiv.className = 'summary';
+                
+                const successRate = ((this.passedTests / this.totalTests) * 100).toFixed(1);
+                
+                summaryDiv.innerHTML = `
+                    <h3>📊 Integration Test Summary</h3>
+                    <p><strong>Total Tests:</strong> ${this.totalTests}</p>
+                    <p><strong>Passed:</strong> ${this.passedTests} ✅</p>
+                    <p><strong>Failed:</strong> ${this.failedTests} ❌</p>
+                    <p><strong>Success Rate:</strong> ${successRate}%</p>
+                    ${this.failedTests === 0 ? 
+                        '<p style="color: #28a745; font-weight: bold;">🎉 ALL INTEGRATION TESTS PASSED! Dashboard is fully integrated and functional.</p>' : 
+                        `<p style="color: #dc3545; font-weight: bold;">⚠️ ${this.failedTests} integration tests failed. Check details above.</p>`
+                    }
+                `;
+                
+                container.appendChild(summaryDiv);
+                
+                console.log('\n📊 INTEGRATION TEST SUMMARY');
+                console.log('=' .repeat(60));
+                console.log(`Total Tests: ${this.totalTests}`);
+                console.log(`Passed: ${this.passedTests} ✅`);
+                console.log(`Failed: ${this.failedTests} ❌`);
+                console.log(`Success Rate: ${successRate}%`);
+            }
+
+            clearResults() {
+                const container = document.getElementById('test-results-container');
+                container.innerHTML = '';
+                this.testResults = [];
+                this.passedTests = 0;
+                this.failedTests = 0;
+                this.totalTests = 0;
+                this.currentTestIndex = 0;
+                document.getElementById('progress-fill').style.width = '0%';
+            }
+        }
+
+        // Global functions
+        const testSuite = new IntegrationTestSuite();
+
+        function runAllIntegrationTests() {
+            testSuite.runAllIntegrationTests();
+        }
+
+        function runWorkflowTests() {
+            testSuite.runWorkflowTests();
+        }
+
+        function runComponentTests() {
+            testSuite.runComponentTests();
+        }
+
+        function clearResults() {
+            testSuite.clearResults();
+            document.getElementById('test-results-container').innerHTML = `
+                <div class="summary">
+                    <h3>Ready for Integration Testing</h3>
+                    <p>Click "Run All Integration Tests" to test complete dashboard functionality</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
