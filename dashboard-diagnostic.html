@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Diagnostic - Run in Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .instructions {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .results {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .step {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Test Diagnostic Tool</h1>
+        
+        <div class="instructions">
+            <h3>📋 Instructions:</h3>
+            <div class="step">
+                <strong>Step 1:</strong> Open your main dashboard (<code>index.html</code>) in a new tab
+            </div>
+            <div class="step">
+                <strong>Step 2:</strong> Open browser Developer Tools (F12 or right-click → Inspect)
+            </div>
+            <div class="step">
+                <strong>Step 3:</strong> Go to the Console tab
+            </div>
+            <div class="step">
+                <strong>Step 4:</strong> Copy and paste the diagnostic code below into the console
+            </div>
+            <div class="step">
+                <strong>Step 5:</strong> Press Enter to run the diagnostic
+            </div>
+        </div>
+
+        <h3>🔧 Diagnostic Code to Copy:</h3>
+        <textarea id="diagnosticCode" readonly style="width: 100%; height: 200px; font-family: monospace; font-size: 12px; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">// Copy this entire code block and paste it into the browser console on your dashboard page
+
+function runDashboardDiagnostic() {
+    console.log('🔍 Running Dashboard Diagnostic...');
+    console.log('=' .repeat(50));
+    
+    const results = {
+        elements: {},
+        functions: {},
+        data: {},
+        errors: [],
+        summary: {}
+    };
+    
+    // Check critical elements
+    const criticalElements = ['metrics-display', 'playbook-content', 'valueThreshold', 'detailModal'];
+    console.log('📋 Checking Critical Elements:');
+    criticalElements.forEach(id => {
+        const element = document.getElementById(id);
+        results.elements[id] = {
+            exists: element !== null,
+            element: element
+        };
+        const status = element ? '✅ EXISTS' : '❌ MISSING';
+        console.log(`${status} Element '${id}'`);
+    });
+    
+    // Check critical functions
+    const criticalFunctions = ['loadSavedData', 'saveNoteLocally', 'prioritizeCustomers', 'showCustomerDetail', 'closeDetailModal'];
+    console.log('\n🔧 Checking Critical Functions:');
+    criticalFunctions.forEach(funcName => {
+        const func = window[funcName];
+        results.functions[funcName] = {
+            exists: typeof func === 'function',
+            function: func
+        };
+        const status = typeof func === 'function' ? '✅ EXISTS' : '❌ MISSING';
+        console.log(`${status} Function '${funcName}'`);
+    });
+    
+    // Check data
+    console.log('\n📊 Checking Data:');
+    if (typeof customerData !== 'undefined') {
+        console.log(`✅ customerData EXISTS (${customerData.length} items)`);
+        results.data.customerData = {
+            exists: true,
+            isArray: Array.isArray(customerData),
+            length: customerData.length
+        };
+    } else {
+        console.log('❌ customerData MISSING');
+        results.data.customerData = { exists: false };
+    }
+    
+    // Check localStorage
+    try {
+        const testKey = 'test-diagnostic';
+        localStorage.setItem(testKey, 'test');
+        const retrieved = localStorage.getItem(testKey);
+        localStorage.removeItem(testKey);
+        const status = retrieved === 'test' ? '✅ WORKS' : '❌ BROKEN';
+        console.log(`${status} localStorage`);
+        results.data.localStorage = { works: retrieved === 'test' };
+    } catch (error) {
+        console.log(`❌ localStorage ERROR - ${error.message}`);
+        results.data.localStorage = { works: false, error: error.message };
+    }
+    
+    // Test specific bug fixes
+    console.log('\n🧪 Testing Specific Bug Fixes:');
+    
+    // Bug #3: localStorage load function
+    if (typeof loadSavedData === 'function') {
+        try {
+            loadSavedData();
+            console.log('✅ Bug #3: loadSavedData function works');
+        } catch (error) {
+            console.log(`❌ Bug #3: loadSavedData error - ${error.message}`);
+            results.errors.push(`Bug #3: ${error.message}`);
+        }
+    } else {
+        console.log('❌ Bug #3: loadSavedData function missing');
+        results.errors.push('Bug #3: loadSavedData function missing');
+    }
+    
+    // Bug #4: Error handling for valueThreshold
+    if (typeof prioritizeCustomers === 'function') {
+        try {
+            const result = prioritizeCustomers();
+            const status = Array.isArray(result) ? `✅ WORKS (returned ${result.length} items)` : '❌ BROKEN (non-array result)';
+            console.log(`${status} Bug #4: prioritizeCustomers`);
+        } catch (error) {
+            console.log(`❌ Bug #4: prioritizeCustomers error - ${error.message}`);
+            results.errors.push(`Bug #4: ${error.message}`);
+        }
+    } else {
+        console.log('❌ Bug #4: prioritizeCustomers function missing');
+        results.errors.push('Bug #4: prioritizeCustomers function missing');
+    }
+    
+    // Bug #6: Modal functions
+    if (typeof showCustomerDetail === 'function' && typeof closeDetailModal === 'function') {
+        console.log('✅ Bug #6: Modal functions exist');
+    } else {
+        console.log('❌ Bug #6: Modal functions missing');
+        results.errors.push('Bug #6: Modal functions missing');
+    }
+    
+    // Bug #7: Data validation
+    if (typeof saveNoteLocally === 'function') {
+        const code = saveNoteLocally.toString();
+        const hasValidation = code.includes('customerId < 1') || code.includes('customerId > 15');
+        const status = hasValidation ? '✅ PRESENT' : '❌ MISSING';
+        console.log(`${status} Bug #7: Data validation`);
+        if (!hasValidation) {
+            results.errors.push('Bug #7: Data validation missing');
+        }
+    } else {
+        console.log('❌ Bug #7: saveNoteLocally function missing');
+        results.errors.push('Bug #7: saveNoteLocally function missing');
+    }
+    
+    // Summary
+    console.log('\n📊 Diagnostic Summary:');
+    const elementIssues = Object.values(results.elements).filter(e => !e.exists).length;
+    const functionIssues = Object.values(results.functions).filter(f => !f.exists).length;
+    const dataIssues = !results.data.customerData.exists || !results.data.localStorage.works;
+    
+    results.summary = {
+        elementIssues,
+        functionIssues,
+        dataIssues,
+        errorCount: results.errors.length
+    };
+    
+    console.log(`Elements missing: ${elementIssues}`);
+    console.log(`Functions missing: ${functionIssues}`);
+    console.log(`Data issues: ${dataIssues ? 'YES' : 'NO'}`);
+    console.log(`Errors found: ${results.errors.length}`);
+    
+    if (results.errors.length > 0) {
+        console.log('\n❌ Errors found:');
+        results.errors.forEach(error => console.log(`   - ${error}`));
+    }
+    
+    if (elementIssues === 0 && functionIssues === 0 && !dataIssues && results.errors.length === 0) {
+        console.log('\n🎉 All checks passed! Tests should work correctly.');
+        console.log('If tests are still failing, the issue might be in the test suite itself.');
+    } else {
+        console.log('\n⚠️ Issues found that could cause test failures.');
+        console.log('Fix these issues and run tests again.');
+    }
+    
+    return results;
+}
+
+// Auto-run the diagnostic
+runDashboardDiagnostic();</textarea>
+
+        <button class="btn" onclick="copyCode()">📋 Copy Code</button>
+        <button class="btn" onclick="openDashboard()">🚀 Open Dashboard</button>
+        
+        <div id="results" class="results" style="display: none;">
+            Results will appear here after running the diagnostic...
+        </div>
+    </div>
+
+    <script>
+        function copyCode() {
+            const textarea = document.getElementById('diagnosticCode');
+            textarea.select();
+            document.execCommand('copy');
+            alert('Code copied! Now paste it into the browser console on your dashboard page.');
+        }
+
+        function openDashboard() {
+            window.open('index.html', '_blank');
+        }
+    </script>
+</body>
+</html>
