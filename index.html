@@ -591,7 +591,7 @@
 
         <!-- SECTION 2: Root Cause Distribution & Playbook -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            <div id="root-cause-distribution" class="p-4 rounded-xl shadow-xl bg-dark-card border border-gray-700">
+            <div id="root-cause-distribution" class="p-4 rounded-xl professional-shadow bg-dark-card border border-gray-700 card-hover">
                 <h2 class="text-lg font-bold mb-2 text-light-text">
                     💡 Root Cause Distribution
                 </h2>
@@ -603,7 +603,7 @@
                 </div>
             </div>
 
-            <div id="prescriptive-playbook" class="p-4 rounded-xl shadow-xl bg-dark-card border border-gray-700">
+            <div id="prescriptive-playbook" class="p-4 rounded-xl professional-shadow bg-dark-card border border-gray-700 card-hover">
                 <h2 class="text-lg font-bold mb-2 text-light-text">
                     📚 Prescriptive Playbook
                 </h2>
@@ -1325,6 +1325,11 @@
         function renderModelMetrics() {
             const container = document.getElementById('metrics-display');
             const containerAnalytics = document.getElementById('metrics-display-analytics');
+            
+            // Clear any placeholder text
+            if (container) container.innerHTML = '';
+            if (containerAnalytics) containerAnalytics.innerHTML = '';
+            
             const html = `
                 <div class="text-center p-4 bg-dark-card rounded-xl">
                     <div class="text-4xl font-extrabold text-green-400 mb-2">${modelMetrics.accuracy}%</div>
@@ -1451,6 +1456,10 @@
         function renderROISummary() {
             const container = document.getElementById('roi-metrics');
             const containerAnalytics = document.getElementById('roi-metrics-analytics');
+            
+            // Clear any placeholder text
+            if (container) container.innerHTML = '';
+            if (containerAnalytics) containerAnalytics.innerHTML = '';
             
             // --- SIMULATED ROI CALCULATION ---
             // High-Value Customers (HVC) total
