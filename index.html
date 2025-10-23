@@ -652,7 +652,7 @@
         <!-- Analytics Panel -->
         <div id="dashboard-analytics" class="dashboard-panel hidden">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div id="root-cause-distribution" class="p-4 rounded-xl shadow-xl bg-dark-card border border-gray-700">
+                <div id="root-cause-distribution" class="p-4 rounded-xl professional-shadow bg-dark-card border border-gray-700 card-hover">
                     <h2 class="text-lg font-bold mb-2 text-light-text">
                         💡 Root Cause Distribution
                     </h2>
@@ -664,7 +664,7 @@
                     </div>
                 </div>
 
-                <div id="roi-summary-analytics" class="p-4 rounded-xl shadow-xl bg-dark-card border border-gray-700">
+                <div id="roi-summary-analytics" class="p-4 rounded-xl professional-shadow bg-dark-card border border-gray-700 card-hover">
                     <h2 class="text-lg font-bold mb-3 text-light-text">
                         📈 ROI Summary
                     </h2>
@@ -966,12 +966,6 @@
                         oninput="updateCustomerList()"
                     >
                     <button 
-                        onclick="applyFilters()" 
-                        class="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors"
-                    >
-                        Apply Filter
-                    </button>
-                    <button 
                         onclick="resetFilters()" 
                         class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors"
                     >
@@ -1062,8 +1056,6 @@
             notes: customer.notes
         }));
         
-        console.log(`Generated ${customerData.length} customer records`);
-        console.log(`Churn Rate: ${(customerData.filter(c => c.riskScore >= 80).length / customerData.length * 100).toFixed(1)}%`);
 
         // --- 2. CONFIGURATION & SIMULATED ML LOGIC ---
         
@@ -1278,16 +1270,6 @@
         }
 
         const modelMetrics = calculateModelAccuracy();
-        console.log('=== MODEL PERFORMANCE METRICS ===');
-        console.log(`Total Customers: ${modelMetrics.totalCustomers}`);
-        console.log(`Accuracy: ${modelMetrics.accuracy}%`);
-        console.log(`Precision: ${modelMetrics.precision}%`);
-        console.log(`Recall: ${modelMetrics.recall}%`);
-        console.log(`F1 Score: ${modelMetrics.f1Score}`);
-        console.log(`True Positives: ${modelMetrics.truePositives}`);
-        console.log(`True Negatives: ${modelMetrics.trueNegatives}`);
-        console.log(`False Positives: ${modelMetrics.falsePositives}`);
-        console.log(`False Negatives: ${modelMetrics.falseNegatives}`);
 
         // Filter for the Actionable Triage List
         const actionableTriageList = processedCustomers
@@ -1529,7 +1511,6 @@
             
             // Recalculate cause distribution to ensure fresh data
             const currentCauseDistribution = calculateRootCauseDistribution(processedCustomers);
-            console.log('Root Cause Distribution:', currentCauseDistribution);
             
             // Fallback if no data
             if (!currentCauseDistribution || currentCauseDistribution.length === 0) {
@@ -1643,27 +1624,18 @@
 
         // SPA Section Switching
         function showSection(sectionId) {
-            console.log(`🔄 Switching to section: ${sectionId}`);
-            
-            // Get all sections
             const allSections = document.querySelectorAll('.spa-section');
-            console.log(`   Found ${allSections.length} total sections`);
             
-            // Hide all sections
             allSections.forEach(section => {
                 section.classList.remove('active');
-                console.log(`   ✗ Hiding section: ${section.id}`);
             });
             
-            // Show the selected section
             const targetSection = document.getElementById(sectionId);
             if (targetSection) {
                 targetSection.classList.add('active');
-                console.log(`   ✓ Showing section: ${sectionId}`);
                 
                 // Verify the section is actually displayed
                 const computedDisplay = window.getComputedStyle(targetSection).display;
-                console.log(`   Display value: ${computedDisplay}`);
                 
                 // Initialize customer dashboard when it becomes active
                 if (sectionId === 'customer-dashboard') {
@@ -1700,8 +1672,6 @@
 
         // Dashboard Tab Switching
         function showDashboardTab(tabId) {
-            console.log(`🔄 Switching to dashboard tab: ${tabId}`);
-            
             // Hide all dashboard panels
             const allPanels = document.querySelectorAll('.dashboard-panel');
             allPanels.forEach(panel => {
@@ -1743,13 +1713,6 @@
         // --- 7. INITIALIZATION ---
 
         window.onload = () => {
-            console.log("=== SPA DASHBOARD INITIALIZING ===");
-            console.log("=== DASHBOARD STATISTICS ===");
-            console.log(`Total Customers Analyzed: ${customerData.length}`);
-            console.log(`High-Risk Customers (≥80%): ${customerData.filter(c => c.riskScore >= 80).length}`);
-            console.log(`High-Value At-Risk (≥$4K ARR): ${customerData.filter(c => c.arr >= 4000 && c.riskScore >= 80).length}`);
-            console.log(`Actual Churners in Dataset: ${customerData.filter(c => c.riskScore >= 80).length}`);
-            
             // Set hero accuracy to marketing standard (92%)
             const heroAccuracy = document.getElementById('hero-accuracy');
             if (heroAccuracy) {
@@ -1763,17 +1726,13 @@
             renderRootCauseDistribution();
             
             // === SETUP SPA NAVIGATION EVENT LISTENERS ===
-            console.log("Setting up SPA navigation...");
-            
             // Navigation Click Handlers - attach to ALL elements with data-section
             const navElements = document.querySelectorAll('[data-section]');
-            console.log(`Found ${navElements.length} navigation elements`);
             
             navElements.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     const sectionId = this.getAttribute('data-section');
-                    console.log(`Navigation clicked: ${sectionId}`);
                     if (sectionId) {
                         showSection(sectionId);
                         // Close mobile menu if open
@@ -1811,13 +1770,10 @@
             // Show home section by default
             showSection('home');
             
-            console.log("✅ SPA Dashboard Ready!");
-            console.log("📌 Click navigation items to switch between sections");
-            console.log("📊 Click 'Live Demo' to see customer data table");
             
             // Load saved data and initialize customer display
             loadSavedData();
-            renderCustomerList(customerData);
+            updateCustomerList();
         };
 
         // --- CUSTOMER DISPLAY FUNCTIONS (as originally requested) ---
@@ -2051,9 +2007,6 @@
             updateFilterStatus();
         }
 
-        function applyFilters() {
-            updateCustomerList();
-        }
 
         function resetFilters() {
             document.getElementById('valueThreshold').value = 5000;
