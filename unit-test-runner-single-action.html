@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single-Action Recommendation Unit Tests</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .test-pass { background-color: #dcfce7; border-color: #16a34a; }
+        .test-fail { background-color: #fef2f2; border-color: #dc2626; }
+        .test-summary { background-color: #f0f9ff; border-color: #0ea5e9; }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="max-w-6xl mx-auto p-6">
+        <h1 class="text-3xl font-bold text-gray-900 mb-6">
+            🧪 Single-Action Recommendation Unit Tests
+        </h1>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Test Controls</h2>
+            <div class="flex gap-4">
+                <button onclick="runAllTests()" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                    🚀 Run All Tests
+                </button>
+                <button onclick="runSpecificTestSuite()" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                    🎯 Run Specific Tests
+                </button>
+                <button onclick="clearResults()" class="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+                    🗑️ Clear Results
+                </button>
+            </div>
+        </div>
+
+        <div id="test-results" class="space-y-4">
+            <!-- Test results will be displayed here -->
+        </div>
+
+        <div id="test-summary" class="mt-8">
+            <!-- Test summary will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        // Include the test suite
+        // This would normally be loaded from the external file
+        // For demo purposes, we'll include a simplified version
+        
+        function generateSingleActionRecommendation(customer) {
+            if (!customer || typeof customer !== 'object') {
+                throw new TypeError('Customer must be a valid object');
+            }
+            
+            if (!customer.name || typeof customer.name !== 'string') {
+                throw new TypeError('Customer name is required and must be a string');
+            }
+            
+            if (!customer.topDrivers || !Array.isArray(customer.topDrivers)) {
+                throw new TypeError('Customer topDrivers must be an array');
+            }
+            
+            const actionableDrivers = customer.topDrivers.filter(driver => 
+                driver && typeof driver === 'string' && driver.includes('[Actionable]')
+            );
+            
+            if (actionableDrivers.length === 0) {
+                return `Monitor ${customer.name} closely for any emerging risk signals. Current drivers suggest stable usage patterns.`;
+            }
+            
+            const primaryDriver = actionableDrivers[0];
+            
+            if (primaryDriver.includes('Inactivity on Key Feature')) {
+                return `Schedule immediate feature walkthrough call with ${customer.name}'s primary contact. Demonstrate advanced features they haven't used and provide personalized training session. Follow up within 48 hours with usage metrics.`;
+            } else if (primaryDriver.includes('Low API Usage')) {
+                return `Reach out to ${customer.name}'s technical team to understand integration challenges. Offer API optimization consultation and provide developer resources. Consider offering integration support credits.`;
+            } else if (primaryDriver.includes('Billing issue')) {
+                return `Contact ${customer.name}'s finance team directly to resolve billing concerns. Offer flexible payment terms or billing adjustments if appropriate. Ensure billing contact has direct line to account manager.`;
+            } else if (primaryDriver.includes('Support ticket spike')) {
+                return `Escalate ${customer.name}'s support tickets to senior support engineer. Schedule proactive check-in call to address root cause of issues. Consider temporary dedicated support channel.`;
+            } else if (primaryDriver.includes('Contract renewal approaching')) {
+                return `Initiate renewal conversation 90 days early with ${customer.name}. Prepare value demonstration showing ROI and usage analytics. Offer early renewal incentives.`;
+            } else if (primaryDriver.includes('Feature adoption decline')) {
+                return `Send personalized feature adoption report to ${customer.name} with specific recommendations. Schedule product demo focusing on unused features that match their use case.`;
+            } else {
+                return `Schedule immediate executive check-in call with ${customer.name} to discuss current challenges and opportunities. Prepare customized success plan based on their specific needs.`;
+            }
+        }
+
+        class TestRunner {
+            constructor() {
+                this.tests = [];
+                this.results = [];
+                this.passed = 0;
+                this.failed = 0;
+            }
+
+            assert(condition, testName, expected, actual) {
+                if (condition) {
+                    this.passed++;
+                    this.results.push({ 
+                        status: 'PASS', 
+                        test: testName, 
+                        expected, 
+                        actual,
+                        category: this.getCategory(testName)
+                    });
+                } else {
+                    this.failed++;
+                    this.results.push({ 
+                        status: 'FAIL', 
+                        test: testName, 
+                        expected, 
+                        actual,
+                        category: this.getCategory(testName)
+                    });
+                }
+            }
+
+            assertThrows(fn, testName, expectedError) {
+                try {
+                    fn();
+                    this.failed++;
+                    this.results.push({ 
+                        status: 'FAIL', 
+                        test: testName, 
+                        expected: `Should throw ${expectedError}`, 
+                        actual: 'No error thrown',
+                        category: this.getCategory(testName)
+                    });
+                } catch (error) {
+                    this.passed++;
+                    this.results.push({ 
+                        status: 'PASS', 
+                        test: testName, 
+                        expected: expectedError, 
+                        actual: error.message,
+                        category: this.getCategory(testName)
+                    });
+                }
+            }
+
+            assertContains(text, substring, testName) {
+                const condition = text.includes(substring);
+                this.assert(condition, testName, `Should contain "${substring}"`, text);
+            }
+
+            getCategory(testName) {
+                if (testName.includes('Null') || testName.includes('Undefined')) return 'Null/Undefined';
+                if (testName.includes('Invalid Type') || testName.includes('String input') || testName.includes('Number input')) return 'Invalid Types';
+                if (testName.includes('Empty') || testName.includes('Missing')) return 'Edge Cases';
+                if (testName.includes('Special') || testName.includes('Long')) return 'Special Cases';
+                if (testName.includes('recommendation') || testName.includes('Customer')) return 'Valid Scenarios';
+                return 'Other';
+            }
+
+            runAllTests() {
+                this.passed = 0;
+                this.failed = 0;
+                this.results = [];
+
+                console.log('🧪 Starting Comprehensive Unit Tests for generateSingleActionRecommendation\n');
+                
+                this.testNullInput();
+                this.testUndefinedInput();
+                this.testInvalidTypes();
+                this.testEmptyObject();
+                this.testMissingProperties();
+                this.testValidCustomerScenarios();
+                this.testEdgeCases();
+                this.testSpecialCharacters();
+                this.testLongStrings();
+                this.testArrayEdgeCases();
+                
+                this.displayResults();
+                return this.getResults();
+            }
+
+            testNullInput() {
+                this.assertThrows(
+                    () => generateSingleActionRecommendation(null),
+                    'Null input should throw error',
+                    'TypeError'
+                );
+            }
+
+            testUndefinedInput() {
+                this.assertThrows(
+                    () => generateSingleActionRecommendation(undefined),
+                    'Undefined input should throw error',
+                    'TypeError'
+                );
+                
+                this.assertThrows(
+                    () => generateSingleActionRecommendation(),
+                    'No parameters should throw error',
+                    'TypeError'
+                );
+            }
+
+            testInvalidTypes() {
+                this.assertThrows(
+                    () => generateSingleActionRecommendation('invalid string'),
+                    'String input should throw error',
+                    'TypeError'
+                );
+                
+                this.assertThrows(
+                    () => generateSingleActionRecommendation(123),
+                    'Number input should throw error',
+                    'TypeError'
+                );
+                
+                this.assertThrows(
+                    () => generateSingleActionRecommendation(true),
+                    'Boolean input should throw error',
+                    'TypeError'
+                );
+                
+                this.assertThrows(
+                    () => generateSingleActionRecommendation([1, 2, 3]),
+                    'Array input should throw error',
+                    'TypeError'
+                );
+            }
+
+            testEmptyObject() {
+                this.assertThrows(
+                    () => generateSingleActionRecommendation({}),
+                    'Empty object should throw error',
+                    'TypeError'
+                );
+            }
+
+            testMissingProperties() {
+                this.assertThrows(
+                    () => generateSingleActionRecommendation({ topDrivers: [] }),
+                    'Missing name property should throw error',
+                    'TypeError'
+                );
+                
+                this.assertThrows(
+                    () => generateSingleActionRecommendation({ name: 'Test Customer' }),
+                    'Missing topDrivers property should throw error',
+                    'TypeError'
+                );
+            }
+
+            testValidCustomerScenarios() {
+                // Customer with Inactivity on Key Feature
+                const customer1 = {
+                    name: 'Acme Corp',
+                    topDrivers: ['Inactivity on Key Feature [Actionable]', 'Low usage']
+                };
+                const result1 = generateSingleActionRecommendation(customer1);
+                this.assertContains(result1, 'feature walkthrough call', 'Inactivity recommendation');
+                this.assertContains(result1, 'Acme Corp', 'Customer name in recommendation');
+                
+                // Customer with Low API Usage
+                const customer2 = {
+                    name: 'TechStart Inc',
+                    topDrivers: ['Low API Usage [Actionable]', 'Integration issues']
+                };
+                const result2 = generateSingleActionRecommendation(customer2);
+                this.assertContains(result2, 'technical team', 'API usage recommendation');
+                
+                // Customer with no actionable drivers
+                const customer3 = {
+                    name: 'Stable Customer',
+                    topDrivers: ['Regular usage', 'No issues', 'Happy customer']
+                };
+                const result3 = generateSingleActionRecommendation(customer3);
+                this.assertContains(result3, 'Monitor', 'Monitoring recommendation');
+            }
+
+            testEdgeCases() {
+                // Customer with empty topDrivers array
+                const customer1 = {
+                    name: 'Empty Drivers Customer',
+                    topDrivers: []
+                };
+                const result1 = generateSingleActionRecommendation(customer1);
+                this.assertContains(result1, 'Monitor', 'Empty drivers should trigger monitoring');
+                
+                // Customer with only ignore drivers
+                const customer2 = {
+                    name: 'Ignore Only Customer',
+                    topDrivers: ['Billing issue [Ignore]', 'Low priority [Ignore]']
+                };
+                const result2 = generateSingleActionRecommendation(customer2);
+                this.assertContains(result2, 'Monitor', 'Only ignore drivers should trigger monitoring');
+            }
+
+            testSpecialCharacters() {
+                // Customer name with special characters
+                const customer1 = {
+                    name: 'Customer & Co. (Ltd.)',
+                    topDrivers: ['Inactivity on Key Feature [Actionable]']
+                };
+                const result1 = generateSingleActionRecommendation(customer1);
+                this.assertContains(result1, 'Customer & Co. (Ltd.)', 'Special characters in name');
+            }
+
+            testLongStrings() {
+                // Very long customer name
+                const longName = 'A'.repeat(1000);
+                const customer1 = {
+                    name: longName,
+                    topDrivers: ['Inactivity on Key Feature [Actionable]']
+                };
+                const result1 = generateSingleActionRecommendation(customer1);
+                this.assertContains(result1, longName, 'Very long customer name');
+            }
+
+            testArrayEdgeCases() {
+                // topDrivers with null elements
+                const customer1 = {
+                    name: 'Null Elements Customer',
+                    topDrivers: [null, 'Inactivity on Key Feature [Actionable]', undefined]
+                };
+                const result1 = generateSingleActionRecommendation(customer1);
+                this.assertContains(result1, 'feature walkthrough', 'Should handle null/undefined in array');
+            }
+
+            displayResults() {
+                const resultsContainer = document.getElementById('test-results');
+                const summaryContainer = document.getElementById('test-summary');
+                
+                resultsContainer.innerHTML = '';
+                summaryContainer.innerHTML = '';
+
+                // Group results by category
+                const categories = {};
+                this.results.forEach(result => {
+                    if (!categories[result.category]) {
+                        categories[result.category] = [];
+                    }
+                    categories[result.category].push(result);
+                });
+
+                // Display results by category
+                Object.keys(categories).forEach(category => {
+                    const categoryDiv = document.createElement('div');
+                    categoryDiv.className = 'bg-white rounded-lg shadow-lg p-6 mb-4';
+                    
+                    const categoryResults = categories[category];
+                    const passed = categoryResults.filter(r => r.status === 'PASS').length;
+                    const failed = categoryResults.filter(r => r.status === 'FAIL').length;
+                    
+                    categoryDiv.innerHTML = `
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">
+                            ${category} (${passed} ✅ ${failed} ❌)
+                        </h3>
+                        <div class="space-y-2">
+                            ${categoryResults.map(result => `
+                                <div class="p-3 rounded-lg border ${result.status === 'PASS' ? 'test-pass' : 'test-fail'}">
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-medium">${result.test}</span>
+                                        <span class="text-sm ${result.status === 'PASS' ? 'text-green-700' : 'text-red-700'}">
+                                            ${result.status}
+                                        </span>
+                                    </div>
+                                    ${result.status === 'FAIL' ? `
+                                        <div class="mt-2 text-sm text-gray-600">
+                                            <div><strong>Expected:</strong> ${result.expected}</div>
+                                            <div><strong>Actual:</strong> ${result.actual}</div>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                    
+                    resultsContainer.appendChild(categoryDiv);
+                });
+
+                // Display summary
+                const successRate = ((this.passed / (this.passed + this.failed)) * 100).toFixed(1);
+                summaryContainer.innerHTML = `
+                    <div class="test-summary bg-white rounded-lg shadow-lg p-6 border-2">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-4">📊 Test Summary</h2>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-green-600">${this.passed}</div>
+                                <div class="text-sm text-gray-600">Passed</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-red-600">${this.failed}</div>
+                                <div class="text-sm text-gray-600">Failed</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-blue-600">${this.passed + this.failed}</div>
+                                <div class="text-sm text-gray-600">Total</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold ${successRate >= 90 ? 'text-green-600' : successRate >= 70 ? 'text-yellow-600' : 'text-red-600'}">${successRate}%</div>
+                                <div class="text-sm text-gray-600">Success Rate</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            getResults() {
+                return {
+                    total: this.passed + this.failed,
+                    passed: this.passed,
+                    failed: this.failed,
+                    successRate: (this.passed / (this.passed + this.failed)) * 100,
+                    results: this.results
+                };
+            }
+        }
+
+        // Global functions for buttons
+        function runAllTests() {
+            const runner = new TestRunner();
+            runner.runAllTests();
+        }
+
+        function runSpecificTestSuite() {
+            alert('Specific test suite functionality would be implemented here');
+        }
+
+        function clearResults() {
+            document.getElementById('test-results').innerHTML = '';
+            document.getElementById('test-summary').innerHTML = '';
+        }
+
+        // Auto-run tests on page load
+        window.onload = function() {
+            runAllTests();
+        };
+    </script>
+</body>
+</html>
