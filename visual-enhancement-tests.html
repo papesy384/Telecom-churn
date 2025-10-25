@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Enhancement Tests - User Interaction Scenarios</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .test-pass { background-color: #dcfce7; border-color: #16a34a; }
+        .test-fail { background-color: #fef2f2; border-color: #dc2626; }
+        .test-warning { background-color: #fef3c7; border-color: #d97706; }
+        .test-info { background-color: #dbeafe; border-color: #2563eb; }
+        
+        .interaction-test {
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background: white;
+        }
+        
+        .test-scenario {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .visual-check {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+        }
+        
+        .check-pass { background-color: #dcfce7; color: #166534; }
+        .check-fail { background-color: #fef2f2; color: #dc2626; }
+        .check-warning { background-color: #fef3c7; color: #92400e; }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="max-w-7xl mx-auto p-6">
+        <h1 class="text-4xl font-bold text-gray-900 mb-6">
+            🧪 Visual Enhancement Tests - User Interaction Scenarios
+        </h1>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Test Controls</h2>
+            <div class="flex flex-wrap gap-4">
+                <button onclick="runAllTests()" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+                    🚀 Run All Tests
+                </button>
+                <button onclick="runARRInputTests()" class="bg-orange-600 text-white px-6 py-3 rounded-lg hover:bg-orange-700 transition-colors font-semibold">
+                    💰 ARR Input Tests
+                </button>
+                <button onclick="runCustomerCardTests()" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors font-semibold">
+                    🎴 Customer Card Tests
+                </button>
+                <button onclick="runConfirmationTests()" class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors font-semibold">
+                    ✅ Confirmation Tests
+                </button>
+                <button onclick="runResponsiveTests()" class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors font-semibold">
+                    📱 Responsive Tests
+                </button>
+                <button onclick="clearResults()" class="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors font-semibold">
+                    🗑️ Clear Results
+                </button>
+            </div>
+        </div>
+
+        <div id="test-results" class="space-y-6">
+            <!-- Test results will be displayed here -->
+        </div>
+
+        <div id="test-summary" class="mt-8">
+            <!-- Test summary will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        class VisualEnhancementTestSuite {
+            constructor() {
+                this.tests = [];
+                this.results = [];
+                this.passed = 0;
+                this.failed = 0;
+                this.warnings = 0;
+                this.startTime = Date.now();
+            }
+
+            // Test assertion methods
+            assert(condition, testName, expected, actual, category = 'General') {
+                const result = {
+                    test: testName,
+                    status: condition ? 'PASS' : 'FAIL',
+                    expected,
+                    actual,
+                    category,
+                    timestamp: new Date().toISOString()
+                };
+                
+                this.results.push(result);
+                
+                if (condition) {
+                    this.passed++;
+                } else {
+                    this.failed++;
+                }
+            }
+
+            assertWarning(condition, testName, message, category = 'General') {
+                const result = {
+                    test: testName,
+                    status: condition ? 'WARNING' : 'PASS',
+                    expected: message,
+                    actual: condition ? 'Warning condition met' : 'No warning',
+                    category,
+                    timestamp: new Date().toISOString()
+                };
+                
+                this.results.push(result);
+                
+                if (condition) {
+                    this.warnings++;
+                } else {
+                    this.passed++;
+                }
+            }
+
+            assertVisual(element, property, expectedValue, testName, category = 'Visual') {
+                if (!element) {
+                    this.assert(false, testName, `Element should exist`, 'Element not found', category);
+                    return;
+                }
+
+                const computedStyle = window.getComputedStyle(element);
+                const actualValue = computedStyle[property];
+                
+                this.assert(
+                    actualValue === expectedValue || actualValue.includes(expectedValue),
+                    testName,
+                    expectedValue,
+                    actualValue,
+                    category
+                );
+            }
+
+            assertElementExists(selector, testName, category = 'DOM') {
+                const element = document.querySelector(selector);
+                this.assert(!!element, testName, `Element with selector "${selector}" should exist`, element ? 'Found' : 'Not found', category);
+                return element;
+            }
+
+            assertElementVisible(element, testName, category = 'Visual') {
+                if (!element) {
+                    this.assert(false, testName, 'Element should exist', 'Element not found', category);
+                    return false;
+                }
+
+                const computedStyle = window.getComputedStyle(element);
+                const isVisible = computedStyle.display !== 'none' && 
+                                computedStyle.visibility !== 'hidden' && 
+                                computedStyle.opacity !== '0';
+                
+                this.assert(isVisible, testName, 'Element should be visible', isVisible ? 'Visible' : 'Hidden', category);
+                return isVisible;
+            }
+
+            // Test scenarios
+            runAllTests() {
+                console.log('🧪 Starting Visual Enhancement Tests\n');
+                
+                this.testARRInputEnhancements();
+                this.testCustomerCardEnhancements();
+                this.testConfirmationMessageEnhancements();
+                this.testFilterStatusEnhancements();
+                this.testResponsiveDesign();
+                this.testUserInteractionFlows();
+                this.testVisualHierarchy();
+                this.testAccessibility();
+                
+                this.displayResults();
+                this.generateSummary();
+                
+                return this.getResults();
+            }
+
+            testARRInputEnhancements() {
+                console.log('\n💰 Testing ARR Input Field Enhancements...');
+                
+                // Test ARR input field exists and has enhanced styling
+                const arrInput = this.assertElementExists('#valueThreshold', 'ARR input field should exist', 'ARR Input');
+                if (arrInput) {
+                    this.assertVisual(arrInput, 'height', '48px', 'ARR input should be larger (h-12)', 'ARR Input');
+                    this.assertVisual(arrInput, 'paddingLeft', '32px', 'ARR input should have dollar sign padding', 'ARR Input');
+                    this.assertVisual(arrInput, 'fontSize', '18px', 'ARR input should have larger font', 'ARR Input');
+                    this.assertVisual(arrInput, 'fontWeight', '700', 'ARR input should be bold', 'ARR Input');
+                }
+
+                // Test ARR input container has gradient background
+                const arrContainer = document.querySelector('#valueThreshold')?.closest('.bg-gradient-to-r');
+                this.assert(!!arrContainer, 'ARR input should be in gradient container', 'Gradient container exists', arrContainer ? 'Found' : 'Not found', 'ARR Input');
+
+                // Test ARR input label enhancement
+                const arrLabel = document.querySelector('label[for="valueThreshold"]');
+                if (arrLabel) {
+                    this.assertVisual(arrLabel, 'fontSize', '18px', 'ARR label should be larger', 'ARR Input');
+                    this.assertVisual(arrLabel, 'fontWeight', '600', 'ARR label should be semibold', 'ARR Input');
+                }
+
+                // Test Reset button enhancement
+                const resetButton = document.querySelector('button[onclick="resetFilters()"]');
+                if (resetButton) {
+                    this.assertVisual(resetButton, 'padding', '24px', 'Reset button should have larger padding', 'ARR Input');
+                    this.assertVisual(resetButton, 'fontWeight', '600', 'Reset button should be semibold', 'ARR Input');
+                }
+
+                // Test filter status enhancement
+                const filterStatus = this.assertElementExists('#filterStatus', 'Filter status should exist', 'ARR Input');
+                if (filterStatus) {
+                    const statusDiv = filterStatus.querySelector('.bg-orange-200');
+                    this.assert(!!statusDiv, 'Filter status should have orange background', 'Orange background exists', statusDiv ? 'Found' : 'Not found', 'ARR Input');
+                }
+            }
+
+            testCustomerCardEnhancements() {
+                console.log('\n🎴 Testing Customer Card Enhancements...');
+                
+                // Test customer list container has enhanced grid
+                const container = this.assertElementExists('#customerListContainer', 'Customer list container should exist', 'Customer Cards');
+                if (container) {
+                    this.assertVisual(container, 'display', 'grid', 'Container should use CSS Grid', 'Customer Cards');
+                    this.assertVisual(container, 'gap', '24px', 'Container should have larger gap (gap-6)', 'Customer Cards');
+                }
+
+                // Test customer cards have enhanced styling
+                const customerCards = document.querySelectorAll('.customer-card');
+                this.assert(customerCards.length > 0, 'Customer cards should exist', 'At least one customer card', `${customerCards.length} cards found`, 'Customer Cards');
+
+                if (customerCards.length > 0) {
+                    const firstCard = customerCards[0];
+                    
+                    // Test card padding enhancement
+                    this.assertVisual(firstCard, 'padding', '24px', 'Customer card should have larger padding (p-6)', 'Customer Cards');
+                    
+                    // Test card border enhancement
+                    this.assertVisual(firstCard, 'borderWidth', '2px', 'Customer card should have thicker border', 'Customer Cards');
+                    
+                    // Test card border radius enhancement
+                    this.assertVisual(firstCard, 'borderRadius', '12px', 'Customer card should have rounded-xl corners', 'Customer Cards');
+                    
+                    // Test gradient background
+                    const hasGradient = firstCard.classList.contains('bg-gradient-to-br');
+                    this.assert(hasGradient, 'Customer card should have gradient background', 'Gradient background', hasGradient ? 'Present' : 'Missing', 'Customer Cards');
+                }
+
+                // Test customer name enhancement
+                const customerNames = document.querySelectorAll('.customer-card h3');
+                if (customerNames.length > 0) {
+                    this.assertVisual(customerNames[0], 'fontSize', '20px', 'Customer name should be larger (text-xl)', 'Customer Cards');
+                    this.assertVisual(customerNames[0], 'fontWeight', '700', 'Customer name should be bold', 'Customer Cards');
+                }
+
+                // Test ARR display enhancement
+                const arrDisplays = document.querySelectorAll('.customer-card .text-2xl');
+                if (arrDisplays.length > 0) {
+                    this.assertVisual(arrDisplays[0], 'fontSize', '24px', 'ARR display should be larger (text-2xl)', 'Customer Cards');
+                    this.assertVisual(arrDisplays[0], 'fontWeight', '700', 'ARR display should be bold', 'Customer Cards');
+                }
+
+                // Test risk score enhancement
+                const riskScores = document.querySelectorAll('.customer-card .text-lg');
+                if (riskScores.length > 0) {
+                    this.assertVisual(riskScores[0], 'fontSize', '18px', 'Risk score should be larger (text-lg)', 'Customer Cards');
+                    this.assertVisual(riskScores[0], 'fontWeight', '700', 'Risk score should be bold', 'Customer Cards');
+                }
+
+                // Test actionable badges
+                const actionableBadges = document.querySelectorAll('.customer-card .bg-green-100');
+                this.assert(actionableBadges.length > 0, 'Actionable badges should exist', 'At least one actionable badge', `${actionableBadges.length} badges found`, 'Customer Cards');
+            }
+
+            testConfirmationMessageEnhancements() {
+                console.log('\n✅ Testing Confirmation Message Enhancements...');
+                
+                // Test confirmation element exists
+                const confirmation = this.assertElementExists('#saveConfirmation', 'Confirmation element should exist', 'Confirmation');
+                
+                if (confirmation) {
+                    // Test confirmation has enhanced styling
+                    const confirmationDiv = confirmation.querySelector('.bg-green-50');
+                    this.assert(!!confirmationDiv, 'Confirmation should have green background', 'Green background exists', confirmationDiv ? 'Found' : 'Not found', 'Confirmation');
+                    
+                    // Test confirmation has border
+                    if (confirmationDiv) {
+                        this.assertVisual(confirmationDiv, 'borderWidth', '2px', 'Confirmation should have thick border', 'Confirmation');
+                    }
+                    
+                    // Test confirmation has icon
+                    const icon = confirmation.querySelector('svg');
+                    this.assert(!!icon, 'Confirmation should have checkmark icon', 'Icon exists', icon ? 'Found' : 'Not found', 'Confirmation');
+                    
+                    // Test confirmation has two-line message
+                    const title = confirmation.querySelector('.text-lg');
+                    const subtitle = confirmation.querySelector('.text-sm');
+                    this.assert(!!title, 'Confirmation should have title', 'Title exists', title ? 'Found' : 'Not found', 'Confirmation');
+                    this.assert(!!subtitle, 'Confirmation should have subtitle', 'Subtitle exists', subtitle ? 'Found' : 'Not found', 'Confirmation');
+                }
+
+                // Test Save button enhancement
+                const saveButton = document.querySelector('button[onclick*="saveNoteLocally"]');
+                if (saveButton) {
+                    this.assertVisual(saveButton, 'padding', '24px', 'Save button should have larger padding', 'Confirmation');
+                    this.assertVisual(saveButton, 'fontWeight', '600', 'Save button should be semibold', 'Confirmation');
+                    
+                    // Test gradient background
+                    const hasGradient = saveButton.classList.contains('bg-gradient-to-r');
+                    this.assert(hasGradient, 'Save button should have gradient background', 'Gradient background', hasGradient ? 'Present' : 'Missing', 'Confirmation');
+                }
+            }
+
+            testFilterStatusEnhancements() {
+                console.log('\n📊 Testing Filter Status Enhancements...');
+                
+                const filterStatus = this.assertElementExists('#filterStatus', 'Filter status should exist', 'Filter Status');
+                
+                if (filterStatus) {
+                    // Test filter status has enhanced styling
+                    const statusDiv = filterStatus.querySelector('.bg-orange-200');
+                    this.assert(!!statusDiv, 'Filter status should have orange background', 'Orange background exists', statusDiv ? 'Found' : 'Not found', 'Filter Status');
+                    
+                    // Test filter status has icon
+                    const icon = filterStatus.querySelector('svg');
+                    this.assert(!!icon, 'Filter status should have checkmark icon', 'Icon exists', icon ? 'Found' : 'Not found', 'Filter Status');
+                    
+                    // Test filter status has enhanced text
+                    if (statusDiv) {
+                        this.assertVisual(statusDiv, 'fontWeight', '500', 'Filter status should be medium weight', 'Filter Status');
+                    }
+                }
+            }
+
+            testResponsiveDesign() {
+                console.log('\n📱 Testing Responsive Design...');
+                
+                // Test grid responsiveness
+                const container = document.querySelector('#customerListContainer');
+                if (container) {
+                    // Test mobile (default)
+                    this.assertVisual(container, 'gridTemplateColumns', 'repeat(1, minmax(0, 1fr))', 'Should be single column on mobile', 'Responsive');
+                    
+                    // Test large screens
+                    const mediaQuery = window.matchMedia('(min-width: 1024px)');
+                    if (mediaQuery.matches) {
+                        // This would need to be tested with actual responsive behavior
+                        this.assertWarning(true, 'Large screen responsive test', 'Manual testing required for lg:grid-cols-2', 'Responsive');
+                    }
+                }
+
+                // Test ARR input responsiveness
+                const arrContainer = document.querySelector('#valueThreshold')?.closest('.flex');
+                if (arrContainer) {
+                    const hasResponsiveClasses = arrContainer.classList.contains('flex-col') && arrContainer.classList.contains('sm:flex-row');
+                    this.assert(hasResponsiveClasses, 'ARR input should have responsive flex classes', 'Responsive classes', hasResponsiveClasses ? 'Present' : 'Missing', 'Responsive');
+                }
+            }
+
+            testUserInteractionFlows() {
+                console.log('\n🔄 Testing User Interaction Flows...');
+                
+                // Test ARR input interaction
+                const arrInput = document.querySelector('#valueThreshold');
+                if (arrInput) {
+                    // Test focus states
+                    arrInput.focus();
+                    setTimeout(() => {
+                        const hasFocusRing = window.getComputedStyle(arrInput).outline !== 'none';
+                        this.assert(hasFocusRing, 'ARR input should have focus ring', 'Focus ring exists', hasFocusRing ? 'Present' : 'Missing', 'User Interaction');
+                    }, 100);
+                }
+
+                // Test customer card hover states
+                const customerCards = document.querySelectorAll('.customer-card');
+                if (customerCards.length > 0) {
+                    const firstCard = customerCards[0];
+                    const hasHoverClasses = firstCard.classList.contains('hover:scale-105') && 
+                                          firstCard.classList.contains('hover:shadow-2xl');
+                    this.assert(hasHoverClasses, 'Customer cards should have hover effects', 'Hover classes', hasHoverClasses ? 'Present' : 'Missing', 'User Interaction');
+                }
+
+                // Test button hover states
+                const buttons = document.querySelectorAll('button');
+                buttons.forEach((button, index) => {
+                    const hasHoverClasses = button.classList.toString().includes('hover:');
+                    this.assertWarning(hasHoverClasses, `Button ${index + 1} hover states`, 'Some buttons may lack hover effects', 'User Interaction');
+                });
+            }
+
+            testVisualHierarchy() {
+                console.log('\n🎨 Testing Visual Hierarchy...');
+                
+                // Test ARR input prominence
+                const arrContainer = document.querySelector('#valueThreshold')?.closest('.bg-gradient-to-r');
+                if (arrContainer) {
+                    const hasOrangeTheme = arrContainer.classList.contains('from-orange-50') && 
+                                         arrContainer.classList.contains('to-orange-100');
+                    this.assert(hasOrangeTheme, 'ARR input should have orange theme for prominence', 'Orange theme', hasOrangeTheme ? 'Present' : 'Missing', 'Visual Hierarchy');
+                }
+
+                // Test customer card priority indicators
+                const priorityIndicators = document.querySelectorAll('.customer-card .w-3.h-3');
+                this.assert(priorityIndicators.length > 0, 'Customer cards should have priority indicators', 'Priority indicators exist', `${priorityIndicators.length} indicators found`, 'Visual Hierarchy');
+
+                // Test risk score color coding
+                const riskScores = document.querySelectorAll('.customer-card [class*="bg-red-100"], .customer-card [class*="bg-orange-100"], .customer-card [class*="bg-green-100"]');
+                this.assert(riskScores.length > 0, 'Risk scores should have color coding', 'Color coded risk scores', `${riskScores.length} color coded scores found`, 'Visual Hierarchy');
+            }
+
+            testAccessibility() {
+                console.log('\n♿ Testing Accessibility...');
+                
+                // Test ARR input accessibility
+                const arrInput = document.querySelector('#valueThreshold');
+                if (arrInput) {
+                    const hasLabel = document.querySelector('label[for="valueThreshold"]');
+                    this.assert(!!hasLabel, 'ARR input should have associated label', 'Label exists', hasLabel ? 'Found' : 'Not found', 'Accessibility');
+                    
+                    const hasMin = arrInput.hasAttribute('min');
+                    this.assert(hasMin, 'ARR input should have min attribute', 'Min attribute', hasMin ? 'Present' : 'Missing', 'Accessibility');
+                    
+                    const hasStep = arrInput.hasAttribute('step');
+                    this.assert(hasStep, 'ARR input should have step attribute', 'Step attribute', hasStep ? 'Present' : 'Missing', 'Accessibility');
+                }
+
+                // Test customer card accessibility
+                const customerCards = document.querySelectorAll('.customer-card');
+                if (customerCards.length > 0) {
+                    const firstCard = customerCards[0];
+                    const hasOnClick = firstCard.hasAttribute('onclick');
+                    this.assert(hasOnClick, 'Customer cards should be clickable', 'Click handler', hasOnClick ? 'Present' : 'Missing', 'Accessibility');
+                    
+                    const hasCursorPointer = firstCard.classList.contains('cursor-pointer');
+                    this.assert(hasCursorPointer, 'Customer cards should have pointer cursor', 'Pointer cursor', hasCursorPointer ? 'Present' : 'Missing', 'Accessibility');
+                }
+
+                // Test button accessibility
+                const buttons = document.querySelectorAll('button');
+                buttons.forEach((button, index) => {
+                    const hasText = button.textContent.trim().length > 0;
+                    this.assert(hasText, `Button ${index + 1} should have text content`, 'Text content', hasText ? 'Present' : 'Missing', 'Accessibility');
+                });
+            }
+
+            displayResults() {
+                const resultsContainer = document.getElementById('test-results');
+                const summaryContainer = document.getElementById('test-summary');
+                
+                resultsContainer.innerHTML = '';
+                summaryContainer.innerHTML = '';
+
+                // Group results by category
+                const categories = {};
+                this.results.forEach(result => {
+                    if (!categories[result.category]) {
+                        categories[result.category] = [];
+                    }
+                    categories[result.category].push(result);
+                });
+
+                // Display results by category
+                Object.keys(categories).forEach(category => {
+                    const categoryDiv = document.createElement('div');
+                    categoryDiv.className = 'test-scenario';
+                    
+                    const categoryResults = categories[category];
+                    const passed = categoryResults.filter(r => r.status === 'PASS').length;
+                    const failed = categoryResults.filter(r => r.status === 'FAIL').length;
+                    const warnings = categoryResults.filter(r => r.status === 'WARNING').length;
+                    
+                    categoryDiv.innerHTML = `
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">
+                            ${category} (${passed} ✅ ${failed} ❌ ${warnings} ⚠️)
+                        </h3>
+                        <div class="space-y-2">
+                            ${categoryResults.map(result => `
+                                <div class="interaction-test ${result.status === 'PASS' ? 'test-pass' : result.status === 'FAIL' ? 'test-fail' : 'test-warning'}">
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-medium">${result.test}</span>
+                                        <span class="visual-check ${result.status === 'PASS' ? 'check-pass' : result.status === 'FAIL' ? 'check-fail' : 'check-warning'}">
+                                            ${result.status === 'PASS' ? '✅' : result.status === 'FAIL' ? '❌' : '⚠️'} ${result.status}
+                                        </span>
+                                    </div>
+                                    ${result.status === 'FAIL' || result.status === 'WARNING' ? `
+                                        <div class="mt-2 text-sm text-gray-600">
+                                            <div><strong>Expected:</strong> ${result.expected}</div>
+                                            <div><strong>Actual:</strong> ${result.actual}</div>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                    
+                    resultsContainer.appendChild(categoryDiv);
+                });
+
+                // Display summary
+                const successRate = ((this.passed / (this.passed + this.failed)) * 100).toFixed(1);
+                summaryContainer.innerHTML = `
+                    <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-blue-200">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-4">📊 Test Summary</h2>
+                        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                            <div class="metric-card">
+                                <div class="text-3xl font-bold text-green-600">${this.passed}</div>
+                                <div class="text-sm text-gray-600">Passed</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="text-3xl font-bold text-red-600">${this.failed}</div>
+                                <div class="text-sm text-gray-600">Failed</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="text-3xl font-bold text-yellow-600">${this.warnings}</div>
+                                <div class="text-sm text-gray-600">Warnings</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="text-3xl font-bold text-blue-600">${this.passed + this.failed + this.warnings}</div>
+                                <div class="text-sm text-gray-600">Total</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="text-3xl font-bold ${successRate >= 90 ? 'text-green-600' : successRate >= 70 ? 'text-yellow-600' : 'text-red-600'}">${successRate}%</div>
+                                <div class="text-sm text-gray-600">Success Rate</div>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-sm text-gray-600">
+                            <strong>Execution Time:</strong> ${Date.now() - this.startTime}ms
+                        </div>
+                    </div>
+                `;
+            }
+
+            generateSummary() {
+                console.log('\n📊 Visual Enhancement Test Summary:');
+                console.log(`✅ Passed: ${this.passed}`);
+                console.log(`❌ Failed: ${this.failed}`);
+                console.log(`⚠️ Warnings: ${this.warnings}`);
+                console.log(`📈 Total: ${this.passed + this.failed + this.warnings}`);
+                console.log(`🎯 Success Rate: ${((this.passed / (this.passed + this.failed)) * 100).toFixed(1)}%`);
+                console.log(`⏱️ Execution Time: ${Date.now() - this.startTime}ms`);
+            }
+
+            getResults() {
+                return {
+                    total: this.passed + this.failed + this.warnings,
+                    passed: this.passed,
+                    failed: this.failed,
+                    warnings: this.warnings,
+                    successRate: (this.passed / (this.passed + this.failed)) * 100,
+                    results: this.results
+                };
+            }
+        }
+
+        // Global functions for buttons
+        function runAllTests() {
+            const testSuite = new VisualEnhancementTestSuite();
+            testSuite.runAllTests();
+        }
+
+        function runARRInputTests() {
+            const testSuite = new VisualEnhancementTestSuite();
+            testSuite.testARRInputEnhancements();
+            testSuite.displayResults();
+        }
+
+        function runCustomerCardTests() {
+            const testSuite = new VisualEnhancementTestSuite();
+            testSuite.testCustomerCardEnhancements();
+            testSuite.displayResults();
+        }
+
+        function runConfirmationTests() {
+            const testSuite = new VisualEnhancementTestSuite();
+            testSuite.testConfirmationMessageEnhancements();
+            testSuite.displayResults();
+        }
+
+        function runResponsiveTests() {
+            const testSuite = new VisualEnhancementTestSuite();
+            testSuite.testResponsiveDesign();
+            testSuite.displayResults();
+        }
+
+        function clearResults() {
+            document.getElementById('test-results').innerHTML = '';
+            document.getElementById('test-summary').innerHTML = '';
+        }
+
+        // Auto-run tests on page load
+        window.onload = function() {
+            // Load the actual dashboard in an iframe for testing
+            const iframe = document.createElement('iframe');
+            iframe.src = 'index.html';
+            iframe.style.display = 'none';
+            iframe.onload = function() {
+                setTimeout(() => {
+                    runAllTests();
+                }, 1000);
+            };
+            document.body.appendChild(iframe);
+        };
+    </script>
+</body>
+</html>
