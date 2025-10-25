@@ -364,6 +364,231 @@
   text-decoration: none;
 }
 
+/* Layout Components */
+.antd-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.antd-layout-header {
+  background-color: var(--antd-bg-container);
+  border-bottom: 1px solid var(--antd-border-color);
+  padding: var(--antd-padding-md) var(--antd-padding-lg);
+  color: var(--antd-text-primary);
+}
+
+.antd-layout-content {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+.antd-layout-sider {
+  background-color: var(--antd-bg-container);
+  border-right: 1px solid var(--antd-border-color);
+  padding: var(--antd-padding-md);
+  min-width: 200px;
+  max-width: 300px;
+}
+
+.antd-layout-sider-expanded {
+  width: 250px;
+}
+
+.antd-layout-content > .antd-layout-content {
+  flex: 1;
+  padding: var(--antd-padding-lg);
+  background-color: var(--antd-bg-layout);
+}
+
+.antd-layout-footer {
+  background-color: var(--antd-bg-container);
+  border-top: 1px solid var(--antd-border-color);
+  padding: var(--antd-padding-md) var(--antd-padding-lg);
+  color: var(--antd-text-secondary);
+  text-align: center;
+}
+
+/* Divider */
+.antd-divider {
+  margin: var(--antd-padding-md) 0;
+  border: none;
+  border-top: 1px solid var(--antd-border-color);
+  position: relative;
+}
+
+.antd-divider-horizontal {
+  width: 100%;
+  height: 1px;
+}
+
+.antd-divider-vertical {
+  height: 100%;
+  width: 1px;
+  border-top: none;
+  border-left: 1px solid var(--antd-border-color);
+  margin: 0 var(--antd-padding-md);
+}
+
+.antd-divider-dashed {
+  border-style: dashed;
+}
+
+.antd-divider-with-text {
+  border-top: none;
+  text-align: center;
+  color: var(--antd-text-secondary);
+  font-size: 0.875rem;
+}
+
+.antd-divider-with-text::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: var(--antd-border-color);
+  z-index: 1;
+}
+
+.antd-divider-text {
+  background-color: var(--antd-bg-layout);
+  padding: 0 var(--antd-padding-md);
+  position: relative;
+  z-index: 2;
+}
+
+.antd-divider-with-text-left .antd-divider-text {
+  padding-left: 0;
+}
+
+.antd-divider-with-text-right .antd-divider-text {
+  padding-right: 0;
+}
+
+/* Text Line */
+.antd-text-line {
+  display: inline-block;
+  border-bottom: 1px solid var(--antd-border-color);
+  padding-bottom: 2px;
+  color: var(--antd-text-primary);
+}
+
+.antd-text-line-solid {
+  border-bottom-style: solid;
+}
+
+.antd-text-line-dashed {
+  border-bottom-style: dashed;
+}
+
+.antd-text-line-dotted {
+  border-bottom-style: dotted;
+}
+
+/* Space */
+.antd-space {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--antd-padding-sm);
+}
+
+.antd-space-vertical {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.antd-space-align-start {
+  align-items: flex-start;
+}
+
+.antd-space-align-center {
+  align-items: center;
+}
+
+.antd-space-align-end {
+  align-items: flex-end;
+}
+
+.antd-space-align-baseline {
+  align-items: baseline;
+}
+
+.antd-space-item {
+  display: inline-block;
+}
+
+/* Slot */
+.antd-slot {
+  display: block;
+}
+
+.antd-slot-inline {
+  display: inline-block;
+}
+
+.antd-slot-flex {
+  display: flex;
+}
+
+.antd-slot-flex-row {
+  flex-direction: row;
+}
+
+.antd-slot-flex-column {
+  flex-direction: column;
+}
+
+.antd-slot-justify-start {
+  justify-content: flex-start;
+}
+
+.antd-slot-justify-center {
+  justify-content: center;
+}
+
+.antd-slot-justify-end {
+  justify-content: flex-end;
+}
+
+.antd-slot-justify-between {
+  justify-content: space-between;
+}
+
+.antd-slot-justify-around {
+  justify-content: space-around;
+}
+
+.antd-slot-align-start {
+  align-items: flex-start;
+}
+
+.antd-slot-align-center {
+  align-items: center;
+}
+
+.antd-slot-align-end {
+  align-items: flex-end;
+}
+
+.antd-slot-align-stretch {
+  align-items: stretch;
+}
+
+.antd-slot-align-baseline {
+  align-items: baseline;
+}
+
+.antd-slot-flex-wrap {
+  flex-wrap: wrap;
+}
+
+.antd-slot-flex-nowrap {
+  flex-wrap: nowrap;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .antd-btn-large {
@@ -400,6 +625,23 @@
   
   .antd-typography-h3 {
     font-size: 1.5rem;
+  }
+  
+  .antd-layout-sider {
+    min-width: 150px;
+    max-width: 200px;
+  }
+  
+  .antd-layout-sider-expanded {
+    width: 180px;
+  }
+  
+  .antd-space {
+    gap: var(--antd-padding-xs);
+  }
+  
+  .antd-divider {
+    margin: var(--antd-padding-sm) 0;
   }
 }
 
