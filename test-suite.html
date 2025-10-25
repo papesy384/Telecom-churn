@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated Testing Suite - Telecom Churn Prediction Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .test-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .test-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .test-button:active {
+            transform: translateY(0);
+        }
+        
+        .test-button.success {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+        
+        .test-button.error {
+            background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+        
+        .test-results {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            min-height: 200px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-y: auto;
+            max-height: 500px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .test-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        
+        .test-status.running {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+        
+        .test-status.success {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+        
+        .test-status.error {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #F97316, #EA580C);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        .log-entry.info {
+            background: #E0F2FE;
+            color: #0C4A6E;
+        }
+        
+        .log-entry.success {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+        
+        .log-entry.error {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+        
+        .log-entry.warning {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧪 Automated Testing Suite</h1>
+            <p>Comprehensive testing for Telecom Churn Prediction Dashboard</p>
+        </div>
+        
+        <div class="content">
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalTests">0</div>
+                    <div class="stat-label">Total Tests</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="passedTests">0</div>
+                    <div class="stat-label">Passed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="failedTests">0</div>
+                    <div class="stat-label">Failed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="successRate">0%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+            
+            <div class="test-controls">
+                <button class="test-button" onclick="runAllTests()">
+                    🚀 Run All Tests
+                </button>
+                <button class="test-button" onclick="runUnitTests()">
+                    🔬 Unit Tests
+                </button>
+                <button class="test-button" onclick="runIntegrationTests()">
+                    🔗 Integration Tests
+                </button>
+                <button class="test-button" onclick="runE2ETests()">
+                    🌐 End-to-End Tests
+                </button>
+                <button class="test-button" onclick="runPerformanceTests()">
+                    ⚡ Performance Tests
+                </button>
+                <button class="test-button" onclick="runCIMode()">
+                    🏗️ CI/CD Mode
+                </button>
+            </div>
+            
+            <div class="test-status" id="testStatus" style="display: none;">
+                <span id="statusIcon">⏳</span>
+                <span id="statusText">Ready to run tests</span>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            
+            <div class="test-results" id="testResults">
+                <div class="log-entry info">
+                    🧪 Test Framework loaded successfully!<br>
+                    Ready to run comprehensive automated tests for the Telecom Churn Prediction Dashboard.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load the main dashboard first -->
+    <script src="index.html"></script>
+    
+    <!-- Load test framework and tests -->
+    <script src="test-framework.js"></script>
+    <script src="test-runner.js"></script>
+    <script src="unit-tests.js"></script>
+    <script src="integration-tests.js"></script>
+    <script src="e2e-tests.js"></script>
+
+    <script>
+        // Test execution functions
+        async function runAllTests() {
+            updateTestStatus('running', '⏳', 'Running all tests...');
+            clearResults();
+            
+            try {
+                const results = await testRunner.runAllTests();
+                displayResults(results);
+                updateStats(results);
+            } catch (error) {
+                updateTestStatus('error', '❌', 'Test execution failed');
+                addLogEntry('error', `Test execution failed: ${error.message}`);
+            }
+        }
+
+        async function runUnitTests() {
+            updateTestStatus('running', '⏳', 'Running unit tests...');
+            clearResults();
+            
+            try {
+                const results = await testRunner.runTestSuite('unit');
+                displayResults(results);
+                updateStats(results);
+            } catch (error) {
+                updateTestStatus('error', '❌', 'Unit tests failed');
+                addLogEntry('error', `Unit tests failed: ${error.message}`);
+            }
+        }
+
+        async function runIntegrationTests() {
+            updateTestStatus('running', '⏳', 'Running integration tests...');
+            clearResults();
+            
+            try {
+                const results = await testRunner.runTestSuite('integration');
+                displayResults(results);
+                updateStats(results);
+            } catch (error) {
+                updateTestStatus('error', '❌', 'Integration tests failed');
+                addLogEntry('error', `Integration tests failed: ${error.message}`);
+            }
+        }
+
+        async function runE2ETests() {
+            updateTestStatus('running', '⏳', 'Running end-to-end tests...');
+            clearResults();
+            
+            try {
+                const results = await testRunner.runTestSuite('e2e');
+                displayResults(results);
+                updateStats(results);
+            } catch (error) {
+                updateTestStatus('error', '❌', 'E2E tests failed');
+                addLogEntry('error', `E2E tests failed: ${error.message}`);
+            }
+        }
+
+        async function runPerformanceTests() {
+            updateTestStatus('running', '⏳', 'Running performance tests...');
+            clearResults();
+            
+            try {
+                const results = await testRunner.runPerformanceTests();
+                displayPerformanceResults(results);
+            } catch (error) {
+                updateTestStatus('error', '❌', 'Performance tests failed');
+                addLogEntry('error', `Performance tests failed: ${error.message}`);
+            }
+        }
+
+        async function runCIMode() {
+            updateTestStatus('running', '⏳', 'Running in CI/CD mode...');
+            clearResults();
+            
+            try {
+                const results = await testRunner.runCIMode();
+                displayResults(results);
+                updateStats(results);
+            } catch (error) {
+                updateTestStatus('error', '❌', 'CI/CD mode failed');
+                addLogEntry('error', `CI/CD mode failed: ${error.message}`);
+            }
+        }
+
+        // UI update functions
+        function updateTestStatus(type, icon, text) {
+            const status = document.getElementById('testStatus');
+            const statusIcon = document.getElementById('statusIcon');
+            const statusText = document.getElementById('statusText');
+            
+            status.className = `test-status ${type}`;
+            status.style.display = 'flex';
+            statusIcon.textContent = icon;
+            statusText.textContent = text;
+        }
+
+        function updateStats(results) {
+            document.getElementById('totalTests').textContent = results.totalTests || 0;
+            document.getElementById('passedTests').textContent = results.passed || 0;
+            document.getElementById('failedTests').textContent = results.failed || 0;
+            document.getElementById('successRate').textContent = 
+                results.successRate ? `${results.successRate.toFixed(1)}%` : '0%';
+        }
+
+        function displayResults(results) {
+            if (results.success) {
+                updateTestStatus('success', '✅', 'All tests passed!');
+                addLogEntry('success', `✅ All ${results.totalTests} tests passed in ${results.duration}ms`);
+            } else {
+                updateTestStatus('error', '❌', `${results.failed} tests failed`);
+                addLogEntry('error', `❌ ${results.failed} out of ${results.totalTests} tests failed`);
+            }
+        }
+
+        function displayPerformanceResults(results) {
+            updateTestStatus('success', '⚡', 'Performance tests completed');
+            
+            results.forEach(result => {
+                if (result.passed) {
+                    addLogEntry('success', `✅ ${result.name}: ${result.duration.toFixed(2)}ms (threshold: ${result.threshold}ms)`);
+                } else if (result.error) {
+                    addLogEntry('error', `💥 ${result.name}: ${result.error}`);
+                } else {
+                    addLogEntry('error', `❌ ${result.name}: ${result.duration.toFixed(2)}ms (threshold: ${result.threshold}ms)`);
+                }
+            });
+        }
+
+        function addLogEntry(type, message) {
+            const results = document.getElementById('testResults');
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.innerHTML = `${new Date().toLocaleTimeString()}: ${message}`;
+            results.appendChild(entry);
+            results.scrollTop = results.scrollHeight;
+        }
+
+        function clearResults() {
+            document.getElementById('testResults').innerHTML = '';
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            addLogEntry('info', '🚀 Automated Testing Suite initialized');
+            addLogEntry('info', 'Click any button above to start testing');
+        });
+    </script>
+</body>
+</html>

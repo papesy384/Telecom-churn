@@ -1,0 +1,35 @@
+{
+  "name": "telecom-churn-prediction-tests",
+  "version": "1.0.0",
+  "description": "Automated testing suite for Telecom Churn Prediction Dashboard",
+  "main": "test-runner-node.js",
+  "scripts": {
+    "test": "node test-runner-node.js",
+    "test:verbose": "node test-runner-node.js --verbose",
+    "test:ci": "node test-runner-node.js --output ci-test-results.json",
+    "test:browser": "open test-suite.html",
+    "test:all": "npm run test && npm run test:browser"
+  },
+  "keywords": [
+    "testing",
+    "automation",
+    "telecom",
+    "churn",
+    "prediction",
+    "dashboard"
+  ],
+  "author": "AI Prediction Engine",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/papesy384/Telecom-churn.git"
+  },
+  "bugs": {
+    "url": "https://github.com/papesy384/Telecom-churn/issues"
+  },
+  "homepage": "https://github.com/papesy384/Telecom-churn#readme"
+}
