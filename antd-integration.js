@@ -235,6 +235,185 @@ class AntDComponentFactory {
         return table;
     }
 
+    // Create Ant Design Layout
+    createLayout(options = {}) {
+        const {
+            header = null,
+            content = '',
+            footer = null,
+            sider = null,
+            className = ''
+        } = options;
+
+        const layout = document.createElement('div');
+        layout.className = `antd-layout ${className}`;
+
+        // Layout header
+        if (header) {
+            const headerElement = document.createElement('div');
+            headerElement.className = 'antd-layout-header';
+            if (typeof header === 'string') {
+                headerElement.textContent = header;
+            } else if (header instanceof HTMLElement) {
+                headerElement.appendChild(header);
+            }
+            layout.appendChild(headerElement);
+        }
+
+        // Layout content container
+        const contentContainer = document.createElement('div');
+        contentContainer.className = 'antd-layout-content';
+        
+        // Layout sider
+        if (sider) {
+            const siderElement = document.createElement('div');
+            siderElement.className = 'antd-layout-sider antd-layout-sider-expanded';
+            if (typeof sider === 'string') {
+                siderElement.innerHTML = sider;
+            } else if (sider instanceof HTMLElement) {
+                siderElement.appendChild(sider);
+            }
+            contentContainer.appendChild(siderElement);
+        }
+
+        // Main content
+        const mainContent = document.createElement('div');
+        mainContent.className = 'antd-layout-content';
+        if (typeof content === 'string') {
+            mainContent.innerHTML = content;
+        } else if (content instanceof HTMLElement) {
+            mainContent.appendChild(content);
+        }
+        contentContainer.appendChild(mainContent);
+
+        layout.appendChild(contentContainer);
+
+        // Layout footer
+        if (footer) {
+            const footerElement = document.createElement('div');
+            footerElement.className = 'antd-layout-footer';
+            if (typeof footer === 'string') {
+                footerElement.textContent = footer;
+            } else if (footer instanceof HTMLElement) {
+                footerElement.appendChild(footer);
+            }
+            layout.appendChild(footerElement);
+        }
+
+        return layout;
+    }
+
+    // Create Ant Design Divider
+    createDivider(options = {}) {
+        const {
+            type = 'horizontal', // horizontal, vertical
+            text = '',
+            orientation = 'center', // left, center, right
+            dashed = false,
+            className = ''
+        } = options;
+
+        const divider = document.createElement('div');
+        divider.className = `antd-divider antd-divider-${type} ${dashed ? 'antd-divider-dashed' : ''} ${className}`;
+
+        if (text) {
+            divider.classList.add('antd-divider-with-text');
+            if (orientation === 'left') {
+                divider.classList.add('antd-divider-with-text-left');
+            } else if (orientation === 'right') {
+                divider.classList.add('antd-divider-with-text-right');
+            }
+
+            const textElement = document.createElement('span');
+            textElement.className = 'antd-divider-text';
+            textElement.textContent = text;
+            divider.appendChild(textElement);
+        }
+
+        return divider;
+    }
+
+    // Create Ant Design Space
+    createSpace(options = {}) {
+        const {
+            direction = 'horizontal', // horizontal, vertical
+            align = 'center', // start, center, end, baseline
+            size = 'middle', // small, middle, large
+            wrap = false,
+            children = [],
+            className = ''
+        } = options;
+
+        const space = document.createElement('div');
+        space.className = `antd-space ${direction === 'vertical' ? 'antd-space-vertical' : ''} antd-space-align-${align} ${className}`;
+
+        children.forEach((child, index) => {
+            const spaceItem = document.createElement('div');
+            spaceItem.className = 'antd-space-item';
+            
+            if (typeof child === 'string') {
+                spaceItem.textContent = child;
+            } else if (child instanceof HTMLElement) {
+                spaceItem.appendChild(child);
+            }
+            
+            space.appendChild(spaceItem);
+        });
+
+        return space;
+    }
+
+    // Create Ant Design Slot
+    createSlot(options = {}) {
+        const {
+            display = 'block', // block, inline, flex
+            direction = 'row', // row, column
+            justify = 'start', // start, center, end, between, around
+            align = 'start', // start, center, end, stretch, baseline
+            wrap = false,
+            content = '',
+            className = ''
+        } = options;
+
+        const slot = document.createElement('div');
+        slot.className = `antd-slot antd-slot-${display} ${className}`;
+
+        if (display === 'flex') {
+            slot.classList.add(`antd-slot-flex-${direction}`);
+            slot.classList.add(`antd-slot-justify-${justify}`);
+            slot.classList.add(`antd-slot-align-${align}`);
+            
+            if (wrap) {
+                slot.classList.add('antd-slot-flex-wrap');
+            } else {
+                slot.classList.add('antd-slot-flex-nowrap');
+            }
+        }
+
+        if (typeof content === 'string') {
+            slot.innerHTML = content;
+        } else if (content instanceof HTMLElement) {
+            slot.appendChild(content);
+        }
+
+        return slot;
+    }
+
+    // Create Ant Design Text Line
+    createTextLine(options = {}) {
+        const {
+            text = '',
+            type = 'solid', // solid, dashed, dotted
+            className = ''
+        } = options;
+
+        const textLine = document.createElement('span');
+        textLine.className = `antd-text-line antd-text-line-${type} ${className}`;
+        textLine.textContent = text;
+
+        return textLine;
+    }
+
     // Create Ant Design Modal
     createModal(options = {}) {
         const {
@@ -326,6 +505,15 @@ function integrateAntDComponents() {
     
     // Add Ant Design typography
     applyTypography();
+    
+    // Add layout components
+    addLayoutComponents();
+    
+    // Add dividers for better section separation
+    addDividers();
+    
+    // Add spacing components
+    addSpacingComponents();
     
     // Add float button for quick actions
     addFloatButton();
@@ -576,10 +764,151 @@ function createAntDCustomerModal(customer) {
     return modal;
 }
 
+// Additional Layout Integration Functions
+function addLayoutComponents() {
+    console.log('🏗️ Adding layout components...');
+    
+    // Add layout structure to main sections
+    const mainSections = document.querySelectorAll('.spa-section');
+    mainSections.forEach(section => {
+        if (!section.querySelector('.antd-layout')) {
+            const layout = antdFactory.createLayout({
+                content: section.innerHTML,
+                className: 'min-h-screen'
+            });
+            section.innerHTML = '';
+            section.appendChild(layout);
+        }
+    });
+}
+
+function addDividers() {
+    console.log('📏 Adding dividers for better section separation...');
+    
+    // Add dividers between major sections
+    const sections = document.querySelectorAll('section');
+    sections.forEach((section, index) => {
+        if (index > 0) {
+            const divider = antdFactory.createDivider({
+                type: 'horizontal',
+                className: 'my-8'
+            });
+            section.parentNode.insertBefore(divider, section);
+        }
+    });
+    
+    // Add dividers within cards
+    const cards = document.querySelectorAll('.antd-card-body');
+    cards.forEach(card => {
+        const children = Array.from(card.children);
+        if (children.length > 1) {
+            children.forEach((child, index) => {
+                if (index > 0 && index < children.length - 1) {
+                    const divider = antdFactory.createDivider({
+                        type: 'horizontal',
+                        className: 'my-4'
+                    });
+                    child.parentNode.insertBefore(divider, child);
+                }
+            });
+        }
+    });
+}
+
+function addSpacingComponents() {
+    console.log('📐 Adding spacing components...');
+    
+    // Add space components to button groups
+    const buttonGroups = document.querySelectorAll('.flex.gap-4, .flex.gap-3, .flex.gap-2');
+    buttonGroups.forEach(group => {
+        const buttons = Array.from(group.children);
+        if (buttons.length > 1) {
+            const space = antdFactory.createSpace({
+                direction: 'horizontal',
+                align: 'center',
+                children: buttons
+            });
+            group.innerHTML = '';
+            group.appendChild(space);
+        }
+    });
+    
+    // Add space components to form elements
+    const forms = document.querySelectorAll('form, .space-y-4, .space-y-2');
+    forms.forEach(form => {
+        const children = Array.from(form.children);
+        if (children.length > 1) {
+            const space = antdFactory.createSpace({
+                direction: 'vertical',
+                align: 'start',
+                children: children
+            });
+            form.innerHTML = '';
+            form.appendChild(space);
+        }
+    });
+}
+
+function addSlotComponents() {
+    console.log('🎯 Adding slot components for flexible layouts...');
+    
+    // Add slot components to dashboard widgets
+    const dashboardWidgets = document.querySelectorAll('.p-4.rounded-xl');
+    dashboardWidgets.forEach(widget => {
+        if (!widget.classList.contains('antd-slot')) {
+            widget.classList.add('antd-slot', 'antd-slot-flex', 'antd-slot-flex-column');
+        }
+    });
+    
+    // Add slot components to customer cards
+    const customerCards = document.querySelectorAll('.customer-card');
+    customerCards.forEach(card => {
+        if (!card.classList.contains('antd-slot')) {
+            card.classList.add('antd-slot', 'antd-slot-flex', 'antd-slot-flex-column');
+        }
+    });
+}
+
+function addTextLines() {
+    console.log('📝 Adding text line components...');
+    
+    // Add text lines to section titles
+    const sectionTitles = document.querySelectorAll('h2, h3');
+    sectionTitles.forEach(title => {
+        if (!title.querySelector('.antd-text-line')) {
+            const textLine = antdFactory.createTextLine({
+                text: title.textContent,
+                type: 'solid'
+            });
+            title.innerHTML = '';
+            title.appendChild(textLine);
+        }
+    });
+}
+
+// Enhanced integration function
+function integrateAllAntDComponents() {
+    console.log('🚀 Integrating ALL Ant Design components...');
+    
+    // Basic components
+    integrateAntDComponents();
+    
+    // Layout components
+    addLayoutComponents();
+    addDividers();
+    addSpacingComponents();
+    addSlotComponents();
+    addTextLines();
+    
+    console.log('✅ ALL Ant Design components integrated successfully!');
+}
+
 // Export for use
 window.antdFactory = antdFactory;
 window.integrateAntDComponents = integrateAntDComponents;
+window.integrateAllAntDComponents = integrateAllAntDComponents;
 window.createAntDCustomerModal = createAntDCustomerModal;
 
 console.log('🎨 Ant Design integration script loaded');
-console.log('Run: integrateAntDComponents() to apply Ant Design styling');
+console.log('Run: integrateAntDComponents() to apply basic Ant Design styling');
+console.log('Run: integrateAllAntDComponents() to apply ALL Ant Design components');

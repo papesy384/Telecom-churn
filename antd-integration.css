@@ -504,6 +504,325 @@
   }
 }
 
+/* Ant Design Layout Components */
+.antd-layout {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--antd-bg-container);
+}
+
+.antd-layout-header {
+  position: relative;
+  padding: 0 50px;
+  color: var(--antd-text-primary);
+  line-height: 64px;
+  background: var(--antd-bg-container);
+  border-bottom: 1px solid var(--antd-border-color-split);
+}
+
+.antd-layout-content {
+  flex: auto;
+  min-height: 0;
+  padding: 24px;
+}
+
+.antd-layout-footer {
+  padding: 24px 50px;
+  color: var(--antd-text-secondary);
+  font-size: 14px;
+  background: var(--antd-bg-container);
+  border-top: 1px solid var(--antd-border-color-split);
+}
+
+.antd-layout-sider {
+  position: relative;
+  min-width: 0;
+  background: var(--antd-bg-container);
+  transition: all 0.2s;
+  border-right: 1px solid var(--antd-border-color-split);
+}
+
+.antd-layout-sider-collapsed {
+  flex: 0 0 80px;
+  max-width: 80px;
+  min-width: 80px;
+  width: 80px;
+}
+
+.antd-layout-sider-expanded {
+  flex: 0 0 200px;
+  max-width: 200px;
+  min-width: 200px;
+  width: 200px;
+}
+
+/* Ant Design Divider */
+.antd-divider {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--antd-text-primary);
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5714285714285714;
+  list-style: none;
+  font-feature-settings: 'tnum';
+  border-top: 1px solid var(--antd-border-color-split);
+}
+
+.antd-divider-horizontal {
+  display: flex;
+  clear: both;
+  width: 100%;
+  min-width: 100%;
+  margin: 24px 0;
+}
+
+.antd-divider-vertical {
+  position: relative;
+  top: -0.06em;
+  display: inline-block;
+  height: 0.9em;
+  margin: 0 8px;
+  vertical-align: middle;
+  border-top: 0;
+  border-left: 1px solid var(--antd-border-color-split);
+}
+
+.antd-divider-with-text {
+  display: flex;
+  align-items: center;
+  margin: 16px 0;
+  color: var(--antd-text-primary);
+  font-weight: 500;
+  font-size: 16px;
+  white-space: nowrap;
+  text-align: center;
+  border-top: 0;
+}
+
+.antd-divider-with-text::before,
+.antd-divider-with-text::after {
+  position: relative;
+  top: 50%;
+  width: 50%;
+  border-top: 1px solid transparent;
+  border-top-color: var(--antd-border-color-split);
+  border-bottom: 0;
+  transform: translateY(50%);
+  content: '';
+}
+
+.antd-divider-with-text-left::before {
+  top: 50%;
+  width: 5%;
+}
+
+.antd-divider-with-text-left::after {
+  top: 50%;
+  width: 95%;
+}
+
+.antd-divider-with-text-right::before {
+  top: 50%;
+  width: 95%;
+}
+
+.antd-divider-with-text-right::after {
+  top: 50%;
+  width: 5%;
+}
+
+.antd-divider-text {
+  display: inline-block;
+  padding: 0 1em;
+}
+
+.antd-divider-dashed {
+  border-top: 1px dashed var(--antd-border-color-split);
+}
+
+.antd-divider-dashed.antd-divider-vertical {
+  border-left: 1px dashed var(--antd-border-color-split);
+}
+
+/* Ant Design Space */
+.antd-space {
+  display: inline-flex;
+  align-items: center;
+}
+
+.antd-space-vertical {
+  flex-direction: column;
+}
+
+.antd-space-align-center {
+  align-items: center;
+}
+
+.antd-space-align-start {
+  align-items: flex-start;
+}
+
+.antd-space-align-end {
+  align-items: flex-end;
+}
+
+.antd-space-align-baseline {
+  align-items: baseline;
+}
+
+.antd-space-item:not(:last-child) {
+  margin-right: 8px;
+}
+
+.antd-space-vertical .antd-space-item:not(:last-child) {
+  margin-right: 0;
+  margin-bottom: 8px;
+}
+
+.antd-space-compact {
+  display: inline-flex;
+}
+
+.antd-space-compact .antd-space-item:not(:last-child) {
+  margin-right: -1px;
+  border-right-width: 0;
+}
+
+.antd-space-compact .antd-space-item:not(:last-child):hover,
+.antd-space-compact .antd-space-item:not(:last-child):focus,
+.antd-space-compact .antd-space-item:not(:last-child):active {
+  z-index: 2;
+}
+
+.antd-space-compact .antd-space-item:not(:first-child):hover,
+.antd-space-compact .antd-space-item:not(:first-child):focus,
+.antd-space-compact .antd-space-item:not(:first-child):active {
+  z-index: 2;
+}
+
+.antd-space-compact .antd-space-item:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.antd-space-compact .antd-space-item:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* Ant Design Slot Component */
+.antd-slot {
+  display: block;
+  position: relative;
+}
+
+.antd-slot-inline {
+  display: inline-block;
+}
+
+.antd-slot-flex {
+  display: flex;
+}
+
+.antd-slot-flex-column {
+  flex-direction: column;
+}
+
+.antd-slot-flex-row {
+  flex-direction: row;
+}
+
+.antd-slot-flex-wrap {
+  flex-wrap: wrap;
+}
+
+.antd-slot-flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+.antd-slot-justify-start {
+  justify-content: flex-start;
+}
+
+.antd-slot-justify-center {
+  justify-content: center;
+}
+
+.antd-slot-justify-end {
+  justify-content: flex-end;
+}
+
+.antd-slot-justify-between {
+  justify-content: space-between;
+}
+
+.antd-slot-justify-around {
+  justify-content: space-around;
+}
+
+.antd-slot-align-start {
+  align-items: flex-start;
+}
+
+.antd-slot-align-center {
+  align-items: center;
+}
+
+.antd-slot-align-end {
+  align-items: flex-end;
+}
+
+.antd-slot-align-stretch {
+  align-items: stretch;
+}
+
+.antd-slot-align-baseline {
+  align-items: baseline;
+}
+
+/* Text Line Component */
+.antd-text-line {
+  position: relative;
+  display: inline-block;
+  color: var(--antd-text-primary);
+  font-size: 14px;
+  line-height: 1.5714285714285714;
+}
+
+.antd-text-line::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--antd-border-color-split);
+}
+
+.antd-text-line-dashed::after {
+  background: repeating-linear-gradient(
+    to right,
+    var(--antd-border-color-split) 0,
+    var(--antd-border-color-split) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+}
+
+.antd-text-line-dotted::after {
+  background: repeating-linear-gradient(
+    to right,
+    var(--antd-border-color-split) 0,
+    var(--antd-border-color-split) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+}
+
 /* Integration with existing dashboard */
 .dashboard-antd-integration {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
