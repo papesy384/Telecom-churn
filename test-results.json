@@ -1,0 +1,208 @@
+{
+  "success": false,
+  "totalTests": 28,
+  "passed": 19,
+  "failed": 9,
+  "duration": 8,
+  "successRate": 67.85714285714286,
+  "timestamp": "2025-10-25T18:39:22.025Z",
+  "environment": "Node.js",
+  "results": [
+    {
+      "name": "should have valid customer data structure",
+      "suite": "Default",
+      "passed": true,
+      "message": "✅ Customer data structure is valid",
+      "timestamp": "2025-10-25T18:39:22.016Z"
+    },
+    {
+      "name": "should have required fields for each customer",
+      "suite": "Default",
+      "passed": true,
+      "message": "✅ All customers have required fields",
+      "timestamp": "2025-10-25T18:39:22.022Z"
+    },
+    {
+      "name": "should have valid risk scores",
+      "suite": "Default",
+      "passed": true,
+      "message": "✅ All risk scores are valid",
+      "timestamp": "2025-10-25T18:39:22.022Z"
+    },
+    {
+      "name": "should have valid LTV values",
+      "suite": "Default",
+      "passed": true,
+      "message": "✅ All LTV values are valid",
+      "timestamp": "2025-10-25T18:39:22.022Z"
+    },
+    {
+      "name": "should have unique customer IDs",
+      "suite": "Default",
+      "passed": true,
+      "message": "All customer IDs should be unique",
+      "timestamp": "2025-10-25T18:39:22.022Z"
+    },
+    {
+      "name": "should create MOCK_CUSTOMERS from customerData",
+      "suite": "Default",
+      "passed": true,
+      "message": "MOCK_CUSTOMERS should have same length as customerData",
+      "timestamp": "2025-10-25T18:39:22.022Z"
+    },
+    {
+      "name": "should have correct field mappings",
+      "suite": "Default",
+      "passed": true,
+      "message": "✅ All field mappings are correct",
+      "timestamp": "2025-10-25T18:39:22.022Z"
+    },
+    {
+      "name": "should filter customers by LTV threshold",
+      "suite": "Default",
+      "passed": false,
+      "message": "Customer LTV 8500 should be >= 10000",
+      "timestamp": "2025-10-25T18:39:22.022Z"
+    },
+    {
+      "name": "should sort customers by risk score descending",
+      "suite": "Default",
+      "passed": true,
+      "message": "✅ Customers sorted by risk score",
+      "timestamp": "2025-10-25T18:39:22.022Z"
+    },
+    {
+      "name": "should handle invalid threshold values",
+      "suite": "Default",
+      "passed": true,
+      "message": "Should return default data for invalid threshold",
+      "timestamp": "2025-10-25T18:39:22.022Z"
+    },
+    {
+      "name": "should generate recommendation for actionable drivers",
+      "suite": "Default",
+      "passed": true,
+      "message": "Recommendation should not be empty",
+      "timestamp": "2025-10-25T18:39:22.022Z"
+    },
+    {
+      "name": "should generate recommendation for non-actionable drivers",
+      "suite": "Default",
+      "passed": true,
+      "message": "Recommendation should not be empty",
+      "timestamp": "2025-10-25T18:39:22.022Z"
+    },
+    {
+      "name": "should include customer name in recommendation",
+      "suite": "Default",
+      "passed": true,
+      "message": "Recommendation should include customer name",
+      "timestamp": "2025-10-25T18:39:22.022Z"
+    },
+    {
+      "name": "should handle null customer gracefully",
+      "suite": "Default",
+      "passed": false,
+      "message": "Should throw error for null customer",
+      "timestamp": "2025-10-25T18:39:22.023Z"
+    },
+    {
+      "name": "should generate modal content for valid customer",
+      "suite": "Default",
+      "passed": true,
+      "message": "Content should include risk score",
+      "timestamp": "2025-10-25T18:39:22.023Z"
+    },
+    {
+      "name": "should highlight actionable drivers",
+      "suite": "Default",
+      "passed": false,
+      "message": "Should highlight actionable drivers with green background",
+      "timestamp": "2025-10-25T18:39:22.023Z"
+    },
+    {
+      "name": "should include single action recommendation",
+      "suite": "Default",
+      "passed": false,
+      "message": "Should include single action recommendation section",
+      "timestamp": "2025-10-25T18:39:22.023Z"
+    },
+    {
+      "name": "should update filter status correctly",
+      "suite": "Default",
+      "passed": false,
+      "message": "Filter status should have content",
+      "timestamp": "2025-10-25T18:39:22.023Z"
+    },
+    {
+      "name": "should calculate correct percentages",
+      "suite": "Default",
+      "passed": true,
+      "message": "Percentage should be between 0-100",
+      "timestamp": "2025-10-25T18:39:22.023Z"
+    },
+    {
+      "name": "should save customer notes to localStorage",
+      "suite": "Default",
+      "passed": false,
+      "message": "Error: Cannot set properties of undefined (setting 'churn-dashboard-customerData')",
+      "timestamp": "2025-10-25T18:39:22.024Z"
+    },
+    {
+      "name": "should load saved data correctly",
+      "suite": "Default",
+      "passed": true,
+      "message": "Should load saved data without errors",
+      "timestamp": "2025-10-25T18:39:22.024Z"
+    },
+    {
+      "name": "should render customer list correctly",
+      "suite": "Default",
+      "passed": false,
+      "message": "Container should have customer cards",
+      "timestamp": "2025-10-25T18:39:22.024Z"
+    },
+    {
+      "name": "should show customer detail modal",
+      "suite": "Default",
+      "passed": false,
+      "message": "Error: Cannot set properties of undefined (setting 'overflow')",
+      "timestamp": "2025-10-25T18:39:22.024Z"
+    },
+    {
+      "name": "should hide customer detail modal",
+      "suite": "Default",
+      "passed": false,
+      "message": "Modal should be hidden",
+      "timestamp": "2025-10-25T18:39:22.024Z"
+    },
+    {
+      "name": "should validate customer ID format",
+      "suite": "Default",
+      "passed": true,
+      "message": "✅ All customer IDs have correct format",
+      "timestamp": "2025-10-25T18:39:22.024Z"
+    },
+    {
+      "name": "should validate topDrivers array",
+      "suite": "Default",
+      "passed": true,
+      "message": "✅ All topDrivers arrays are valid",
+      "timestamp": "2025-10-25T18:39:22.024Z"
+    },
+    {
+      "name": "should validate contract types",
+      "suite": "Default",
+      "passed": true,
+      "message": "✅ All contract types are valid",
+      "timestamp": "2025-10-25T18:39:22.024Z"
+    },
+    {
+      "name": "should validate root cause values",
+      "suite": "Default",
+      "passed": true,
+      "message": "✅ All root cause values are valid",
+      "timestamp": "2025-10-25T18:39:22.024Z"
+    }
+  ]
+}
