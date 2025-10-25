@@ -541,11 +541,26 @@
   text-decoration: none;
 }
 
-/* Layout Components */
+/* Enhanced Layout Components */
 .antd-layout {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  transition: all 0.3s ease;
+}
+
+.antd-layout-light {
+  background-color: var(--antd-bg-layout);
+  color: var(--antd-text-primary);
+}
+
+.antd-layout-dark {
+  background-color: #141414;
+  color: #ffffff;
+}
+
+.antd-layout-has-sider {
+  flex-direction: row;
 }
 
 .antd-layout-header {
@@ -585,6 +600,88 @@
   padding: var(--antd-padding-md) var(--antd-padding-lg);
   color: var(--antd-text-secondary);
   text-align: center;
+}
+
+/* Enhanced Layout Header */
+.antd-layout-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.antd-layout-header-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--antd-primary);
+}
+
+.antd-layout-header-nav {
+  display: flex;
+  gap: var(--antd-padding-lg);
+}
+
+.antd-layout-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--antd-padding-md);
+}
+
+/* Enhanced Layout Sider */
+.antd-layout-sider-collapsible {
+  position: relative;
+}
+
+.antd-layout-sider-trigger {
+  position: absolute;
+  bottom: var(--antd-padding-md);
+  right: var(--antd-padding-md);
+  width: 32px;
+  height: 32px;
+  background: var(--antd-primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+
+.antd-layout-sider-trigger:hover {
+  background: var(--antd-primary-hover);
+}
+
+.antd-layout-sider-content {
+  padding: var(--antd-padding-md);
+  height: calc(100% - 60px);
+  overflow-y: auto;
+}
+
+.antd-layout-sider-collapsed .antd-layout-sider-content {
+  padding: var(--antd-padding-sm);
+}
+
+/* Enhanced Layout Footer */
+.antd-layout-footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.antd-layout-footer-links {
+  display: flex;
+  gap: var(--antd-padding-lg);
+}
+
+.antd-layout-footer-copyright {
+  color: var(--antd-text-tertiary);
+  font-size: 0.875rem;
 }
 
 /* Divider */
@@ -645,6 +742,41 @@
   padding-right: 0;
 }
 
+/* Enhanced Divider Styles */
+.antd-divider-small {
+  margin: var(--antd-padding-sm) 0;
+}
+
+.antd-divider-large {
+  margin: var(--antd-padding-lg) 0;
+}
+
+.antd-divider-dotted {
+  border-style: dotted;
+}
+
+.antd-divider-inner-text {
+  background-color: var(--antd-bg-layout);
+  padding: 0 var(--antd-padding-md);
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.antd-divider-icon {
+  font-size: 1.2em;
+}
+
+.antd-divider-icon-only {
+  padding: 0 var(--antd-padding-sm);
+}
+
+.antd-divider-with-text-center {
+  text-align: center;
+}
+
 /* Text Line */
 .antd-text-line {
   display: inline-block;
@@ -663,6 +795,26 @@
 
 .antd-text-line-dotted {
   border-bottom-style: dotted;
+}
+
+/* Enhanced Text Line Styles */
+.antd-text-line-top {
+  border-bottom: none;
+  border-top: 1px solid var(--antd-border-color);
+}
+
+.antd-text-line-through {
+  border-bottom: none;
+  text-decoration: underline;
+}
+
+.antd-text-line-animated {
+  position: relative;
+}
+
+@keyframes antd-text-line-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
 /* Space */
@@ -695,6 +847,34 @@
 
 .antd-space-item {
   display: inline-block;
+}
+
+/* Enhanced Space Styles */
+.antd-space-horizontal {
+  flex-direction: row;
+}
+
+.antd-space-wrap {
+  flex-wrap: wrap;
+}
+
+.antd-space-block {
+  width: 100%;
+  display: flex;
+}
+
+.antd-space-small {
+  gap: var(--antd-padding-xs);
+}
+
+.antd-space-large {
+  gap: var(--antd-padding-lg);
+}
+
+.antd-space-split {
+  display: flex;
+  align-items: center;
+  color: var(--antd-text-tertiary);
 }
 
 /* Slot */
@@ -764,6 +944,38 @@
 
 .antd-slot-flex-nowrap {
   flex-wrap: nowrap;
+}
+
+/* Enhanced Slot Styles */
+.antd-slot-grid {
+  display: grid;
+}
+
+.antd-slot-shadow {
+  box-shadow: var(--antd-shadow-md);
+}
+
+.antd-slot-flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
+.antd-slot-flex-column-reverse {
+  flex-direction: column-reverse;
+}
+
+.antd-slot-justify-evenly {
+  justify-content: space-evenly;
+}
+
+/* Responsive Slot Styles */
+@media (max-width: 768px) {
+  .antd-slot-flex-row {
+    flex-direction: column;
+  }
+  
+  .antd-slot-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Responsive Design */
