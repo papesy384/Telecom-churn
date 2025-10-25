@@ -9,6 +9,9 @@
     <title>AI Prediction Engine [v7.2 - Compact Demo]</title>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Load Ant Design Integration -->
+    <link rel="stylesheet" href="antd-integration.css">
     <script>
         tailwind.config = {
             theme: {
@@ -1049,6 +1052,9 @@
         </div>
     </div>
 
+    <!-- Load Ant Design Integration Script -->
+    <script src="antd-integration.js"></script>
+    
     <script>
         // --- 1. MOCK CUSTOMER DATA (15 customers as requested) ---
         const customerData = [
@@ -1810,6 +1816,14 @@
             // Load saved data and initialize customer display
             loadSavedData();
             updateCustomerList();
+            
+            // Initialize Ant Design components
+            setTimeout(() => {
+                if (typeof integrateAntDComponents === 'function') {
+                    integrateAntDComponents();
+                    console.log('🎨 Ant Design components integrated successfully!');
+                }
+            }, 1000);
         };
 
         // --- CUSTOMER DISPLAY FUNCTIONS (as originally requested) ---
