@@ -89,8 +89,6 @@ class NodeTestRunner {
         };
 
         global.document = global.window.document;
-        global.navigator = global.window.navigator;
-        global.performance = global.window.performance;
         global.localStorage = global.window.localStorage;
     }
 
@@ -99,6 +97,10 @@ class NodeTestRunner {
         try {
             const frameworkCode = fs.readFileSync(path.join(__dirname, 'test-framework.js'), 'utf8');
             eval(frameworkCode);
+            
+            // Make testFramework available globally
+            global.testFramework = global.window.testFramework;
+            
             return true;
         } catch (error) {
             console.error('❌ Failed to load test framework:', error.message);
