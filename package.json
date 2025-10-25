@@ -8,7 +8,10 @@
     "test:verbose": "node test-runner-node.js --verbose",
     "test:ci": "node test-runner-node.js --output ci-test-results.json",
     "test:browser": "open test-suite.html",
-    "test:all": "npm run test && npm run test:browser"
+    "test:all": "npm run test && npm run test:browser",
+    "commit": "./auto-commit.sh",
+    "commit:smart": "./smart-commit.sh",
+    "auto": "./smart-commit.sh"
   },
   "keywords": [
     "testing",
