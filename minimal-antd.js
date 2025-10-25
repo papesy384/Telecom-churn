@@ -446,14 +446,55 @@ class MinimalAntDComponents {
         });
 
         // Replace filter buttons
-        const filterButtons = document.querySelectorAll('#arrFilterContainer button');
+        const filterButtons = document.querySelectorAll('#arrFilterContainer button, button[onclick*="resetFilters"]');
         filterButtons.forEach(button => {
             const newButton = this.createButton({
                 text: button.textContent.trim(),
-                type: 'secondary',
+                type: 'default',
+                icon: '🔄',
                 onClick: () => {
                     if (typeof resetFilters === 'function') {
                         resetFilters();
+                    }
+                }
+            });
+            button.parentNode.replaceChild(newButton, button);
+        });
+
+        // Replace test buttons in modal
+        const testButtons = document.querySelectorAll('button[onclick*="Test"]');
+        testButtons.forEach(button => {
+            let buttonConfig = {
+                text: button.textContent.trim(),
+                size: 'small',
+                onClick: button.onclick
+            };
+            
+            if (button.textContent.includes('Visual')) {
+                buttonConfig.type = 'primary';
+                buttonConfig.icon = '🧪';
+            } else if (button.textContent.includes('Performance')) {
+                buttonConfig.type = 'success';
+                buttonConfig.icon = '⚡';
+            }
+            
+            const newButton = this.createButton(buttonConfig);
+            button.parentNode.replaceChild(newButton, button);
+        });
+
+        // Replace navigation buttons
+        const navButtons = document.querySelectorAll('a[data-section]:not(.antd-btn)');
+        navButtons.forEach(button => {
+            const isPrimary = button.classList.contains('btn-primary') || button.dataset.section === 'live-demo';
+            const newButton = this.createButton({
+                text: button.textContent.trim(),
+                type: isPrimary ? 'primary' : 'ghost',
+                size: 'large',
+                href: button.href || '#',
+                onClick: () => {
+                    const section = button.getAttribute('data-section');
+                    if (typeof showSection === 'function') {
+                        showSection(section);
                     }
                 }
             });
@@ -476,21 +517,124 @@ class MinimalAntDComponents {
                 p.classList.add('antd-typography', 'antd-typography-p');
             }
         });
+        
+        // Apply to labels
+        this.applyLabels();
+        
+        // Apply to links
+        this.applyLinks();
+    }
+    
+    applyLabels() {
+        // Apply to form labels
+        document.querySelectorAll('label:not(.antd-label)').forEach(label => {
+            label.classList.add('antd-label');
+            
+            // Check if it's a required field
+            const input = document.querySelector(`#${label.htmlFor}`);
+            if (input && input.hasAttribute('required')) {
+                label.classList.add('antd-label-required');
+            }
+        });
+        
+        // Apply to span elements that act as labels
+        document.querySelectorAll('span.text-sm.font-medium.text-gray-500').forEach(span => {
+            if (!span.classList.contains('antd-label')) {
+                span.classList.add('antd-label');
+            }
+        });
+    }
+    
+    applyLinks() {
+        // Apply to navigation links
+        document.querySelectorAll('a:not(.antd-btn):not(.antd-link)').forEach(link => {
+            link.classList.add('antd-link');
+            
+            // Add hover effects for external links
+            if (link.href && (link.href.startsWith('http') || link.href.startsWith('mailto'))) {
+                link.classList.add('antd-link-external');
+            }
+        });
     }
 
     addFloatButton() {
-        // Add float button for quick actions
+        // Add enhanced float button group for quick actions
         const existingFloatButton = document.querySelector('.antd-float-btn');
         if (!existingFloatButton) {
-            const floatButton = this.createFloatButton({
-                icon: '💬',
+            // Create main float button
+            const mainFloatButton = this.createFloatButton({
+                icon: '🚀',
                 type: 'primary',
                 position: 'bottom-right',
                 onClick: () => {
-                    alert('Quick Action: Contact Support');
+                    this.toggleFloatButtonGroup();
                 }
             });
-        document.body.appendChild(floatButton);
+            
+            // Create float button group (initially hidden)
+            const floatButtonGroup = document.createElement('div');
+            floatButtonGroup.className = 'antd-float-btn-group antd-float-btn-bottom-right';
+            floatButtonGroup.style.bottom = '90px';
+            floatButtonGroup.style.right = '24px';
+            floatButtonGroup.style.display = 'none';
+            floatButtonGroup.id = 'antd-float-btn-group';
+            
+            // Add action buttons to group
+            const actionButtons = [
+                {
+                    icon: '💬',
+                    type: 'default',
+                    onClick: () => alert('Contact Support - Feature coming soon!')
+                },
+                {
+                    icon: '📊',
+                    type: 'default',
+                    onClick: () => {
+                        const section = document.getElementById('live-demo');
+                        if (section) {
+                            section.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
+                },
+                {
+                    icon: '🧪',
+                    type: 'default',
+                    onClick: () => {
+                        if (typeof runVisualEnhancementTests === 'function') {
+                            runVisualEnhancementTests();
+                        }
+                    }
+                }
+            ];
+            
+            actionButtons.forEach(config => {
+                const actionButton = this.createFloatButton(config);
+                floatButtonGroup.appendChild(actionButton);
+            });
+            
+            document.body.appendChild(mainFloatButton);
+            document.body.appendChild(floatButtonGroup);
+        }
+    }
+    
+    toggleFloatButtonGroup() {
+        const group = document.getElementById('antd-float-btn-group');
+        if (group) {
+            const isVisible = group.style.display !== 'none';
+            group.style.display = isVisible ? 'none' : 'flex';
+            
+            // Animate the buttons
+            if (!isVisible) {
+                const buttons = group.querySelectorAll('.antd-float-btn');
+                buttons.forEach((button, index) => {
+                    button.style.transform = 'scale(0)';
+                    setTimeout(() => {
+                        button.style.transform = 'scale(1)';
+                        button.style.transition = 'transform 0.2s ease';
+                    }, index * 50);
+                });
+            }
+        }
     }
 
     applyLayoutComponents() {

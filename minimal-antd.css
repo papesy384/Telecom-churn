@@ -91,6 +91,128 @@
   cursor: not-allowed;
 }
 
+/* Enhanced Button Content Structure */
+.antd-btn-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.antd-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.antd-btn-text {
+  display: inline-block;
+}
+
+.antd-btn-loading-icon {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 4px;
+}
+
+.antd-spin {
+  animation: antd-spin 1s infinite linear;
+  fill: currentColor;
+}
+
+@keyframes antd-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Button Shapes */
+.antd-btn-round {
+  border-radius: 32px;
+}
+
+.antd-btn-circle {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  min-width: 32px;
+}
+
+.antd-btn-circle.antd-btn-large {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+}
+
+.antd-btn-circle.antd-btn-small {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+}
+
+/* Block Button */
+.antd-btn-block {
+  width: 100%;
+  display: flex;
+}
+
+/* Button Variants */
+.antd-btn-ghost {
+  background: transparent;
+  border-color: var(--antd-primary);
+  color: var(--antd-primary);
+}
+
+.antd-btn-ghost:hover {
+  background: var(--antd-primary);
+  color: white;
+}
+
+.antd-btn-dashed {
+  border-style: dashed;
+  background: transparent;
+}
+
+.antd-btn-text {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.antd-btn-text:hover {
+  background: var(--antd-primary);
+  color: white;
+}
+
+.antd-btn-link {
+  background: transparent;
+  border-color: transparent;
+  color: var(--antd-primary);
+  box-shadow: none;
+  text-decoration: none;
+}
+
+.antd-btn-link:hover {
+  color: var(--antd-primary-hover);
+  text-decoration: underline;
+}
+
+/* Danger Button */
+.antd-btn-danger {
+  background: var(--antd-error);
+  border-color: var(--antd-error);
+  color: white;
+}
+
+.antd-btn-danger:hover {
+  background: var(--antd-error-hover);
+  border-color: var(--antd-error-hover);
+}
+
+/* Loading State */
+.antd-btn-loading {
+  pointer-events: none;
+  opacity: 0.65;
+}
+
 /* Button Sizes */
 .antd-btn-small {
   padding: var(--antd-padding-xs) var(--antd-padding-md);
@@ -230,6 +352,54 @@
   left: 24px;
 }
 
+/* Enhanced FloatButton Variants */
+.antd-float-btn-default {
+  background: var(--antd-bg-container);
+  color: var(--antd-text-primary);
+  border: 1px solid var(--antd-border-color);
+}
+
+.antd-float-btn-default:hover {
+  background: var(--antd-bg-container);
+  border-color: var(--antd-primary);
+  color: var(--antd-primary);
+  transform: scale(1.05);
+}
+
+.antd-float-btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+/* FloatButton Group */
+.antd-float-btn-group {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 1000;
+}
+
+.antd-float-btn-group .antd-float-btn {
+  position: relative;
+  margin: 0;
+}
+
+/* FloatButton Sizes */
+.antd-float-btn-small {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+}
+
+.antd-float-btn-large {
+  width: 72px;
+  height: 72px;
+  font-size: 24px;
+}
+
 /* Typography Styles */
 .antd-typography {
   color: var(--antd-text-primary);
@@ -344,6 +514,13 @@
 .antd-link:hover {
   color: var(--antd-primary-hover);
   text-decoration: underline;
+}
+
+.antd-link-external::after {
+  content: '↗';
+  margin-left: 4px;
+  font-size: 0.8em;
+  opacity: 0.7;
 }
 
 .antd-link:active {
