@@ -132,12 +132,12 @@
             margin: 0 auto 1rem auto;
         }
 
-        /* Live demo section - special layout */
+        /* Live demo section - optimized layout */
         .live-demo-container {
             height: 100vh;
             display: flex;
             flex-direction: column;
-            padding: 2rem 1rem;
+            padding: 1rem;
             box-sizing: border-box;
             overflow: hidden;
         }
@@ -147,16 +147,151 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
         }
 
         .live-demo-header {
             flex-shrink: 0;
             margin-bottom: 1rem;
+            text-align: center;
         }
 
         .live-demo-body {
             flex: 1;
             overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Dashboard tabs optimization */
+        .dashboard-tabs {
+            flex-shrink: 0;
+            margin-bottom: 1rem;
+        }
+
+        .dashboard-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.5rem;
+        }
+
+        /* Dashboard panels */
+        .dashboard-panel {
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        /* Compact dashboard cards */
+        .dashboard-card {
+            background: #262626;
+            border: 1px solid #404040;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dashboard-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #F97316;
+        }
+
+        .dashboard-card-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        /* Responsive dashboard grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1rem;
+            height: calc(100% - 2rem);
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+        }
+
+        /* Customer Dashboard Optimization */
+        .customer-dashboard-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .customer-dashboard-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .customer-dashboard-header {
+            flex-shrink: 0;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .customer-dashboard-body {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .customer-filter-section {
+            flex-shrink: 0;
+            margin-bottom: 1rem;
+        }
+
+        .customer-list-section {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .customer-list-container {
+            height: 100%;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .customer-card-compact {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .customer-card-compact:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .filter-input-enhanced {
+            background: linear-gradient(135deg, #fff5ec 0%, #fed7aa 100%);
+            border: 2px solid #fb923c;
+            border-radius: 1rem;
+            padding: 1rem;
+            box-shadow: 0 4px 12px rgba(251, 146, 60, 0.2);
         }
 
         @keyframes fadeIn {
@@ -696,81 +831,74 @@
 
     <!-- Live Demo Section -->
     <section id="live-demo" class="spa-section live-demo-container bg-dark-bg">
-        <div class="live-demo-content max-w-7xl mx-auto w-full">
-            <div class="live-demo-header text-center">
-                <h2 class="section-title font-extrabold text-light-text mb-2">
+        <div class="live-demo-content">
+            <div class="live-demo-header">
+                <h2 class="text-2xl font-bold text-light-text mb-2">
                     Live Application Demo
                 </h2>
-                <div class="w-20 h-0.5 bg-primary-orange mx-auto mb-2"></div>
-                <p class="body-text text-gray-300 max-w-2xl mx-auto">
-                    See how our AI delivers critical value and prescriptive actions for your CSM team.
+                <div class="w-16 h-0.5 bg-primary-orange mx-auto mb-2"></div>
+                <p class="text-sm text-gray-300">
+                    AI-powered churn prediction in action
                 </p>
             </div>
-            <div class="live-demo-body">
-
-        <!-- Dashboard Tabs -->
-        <div class="mb-6">
-            <div class="flex flex-wrap justify-center gap-2">
-                <button onclick="showDashboardTab('overview')" id="tab-overview" class="dashboard-tab active px-6 py-3 bg-primary-orange text-dark-bg font-semibold rounded-lg transition duration-200">
-                    📊 Overview
-                </button>
-                <button onclick="showDashboardTab('customers')" id="tab-customers" class="dashboard-tab px-6 py-3 bg-dark-card text-gray-300 hover:bg-primary-orange hover:text-dark-bg font-semibold rounded-lg transition duration-200">
-                    👥 All Customers
-                </button>
-                <button onclick="showDashboardTab('analytics')" id="tab-analytics" class="dashboard-tab px-6 py-3 bg-dark-card text-gray-300 hover:bg-primary-orange hover:text-dark-bg font-semibold rounded-lg transition duration-200">
-                    📈 Analytics
-                </button>
-                <button onclick="showDashboardTab('playbook')" id="tab-playbook" class="dashboard-tab px-6 py-3 bg-dark-card text-gray-300 hover:bg-primary-orange hover:text-dark-bg font-semibold rounded-lg transition duration-200">
-                    📚 Playbook
-                </button>
-            </div>
-            </div>
-
-        <!-- Main Grid Layout (Three-Panel View) -->
-        <div id="dashboard-overview" class="dashboard-panel">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
             
-            <!-- SECTION 1: High-Risk Overview (Action Card Focus) -->
-            <div class="lg:col-span-2">
-                <div id="high-risk-overview" class="p-4 rounded-xl professional-shadow bg-dark-card border border-primary-orange/50 card-hover">
-                    <h2 id="triage-list-title" class="text-xl font-bold mb-2 text-primary-orange">
-                        🚨 Triage: Top High-Value Churn Risks
-                    </h2>
-                    <p class="text-sm text-gray-400 mb-3">
-                        Customers with <strong>Risk Score ≥ 80%</strong> AND <strong>LTV ≥ $4,000</strong>.
-                    </p>
-
-                    <div id="action-list-container" class="scroll-container h-64 overflow-y-auto pr-2 space-y-2">
-                        <!-- High-Risk Customer Action Cards will be injected here -->
-                        <div id="loading-list"></div>
+            <div class="live-demo-body">
+                <!-- Dashboard Tabs -->
+                <div class="dashboard-tabs">
+                    <div class="flex flex-wrap justify-center gap-2">
+                        <button onclick="showDashboardTab('overview')" id="tab-overview" class="dashboard-tab active px-4 py-2 bg-primary-orange text-dark-bg font-semibold rounded-lg transition duration-200 text-sm">
+                            📊 Overview
+                        </button>
+                        <button onclick="showDashboardTab('customers')" id="tab-customers" class="dashboard-tab px-4 py-2 bg-dark-card text-gray-300 hover:bg-primary-orange hover:text-dark-bg font-semibold rounded-lg transition duration-200 text-sm">
+                            👥 Customers
+                        </button>
+                        <button onclick="showDashboardTab('analytics')" id="tab-analytics" class="dashboard-tab px-4 py-2 bg-dark-card text-gray-300 hover:bg-primary-orange hover:text-dark-bg font-semibold rounded-lg transition duration-200 text-sm">
+                            📈 Analytics
+                        </button>
+                        <button onclick="showDashboardTab('playbook')" id="tab-playbook" class="dashboard-tab px-4 py-2 bg-dark-card text-gray-300 hover:bg-primary-orange hover:text-dark-bg font-semibold rounded-lg transition duration-200 text-sm">
+                            📚 Playbook
+                        </button>
                     </div>
                 </div>
-            </div>
+                
+                <div class="dashboard-content">
 
-            <!-- SECTION 3: Simulated ROI Summary (Focus on Business Value) -->
-            <div class="lg:col-span-1">
-                <div id="roi-summary" class="h-full p-4 rounded-xl professional-shadow bg-dark-card border border-gray-700 flex flex-col justify-between card-hover">
-                    <h2 class="text-xl font-bold mb-3 text-light-text">
-                        📈 ROI Summary
-                    </h2>
-                    <div class="space-y-4">
-                        <!-- Model Metrics will be injected here -->
-                        <div id="metrics-display">
-                            <div id="model-metrics-container"></div>
-                        </div>
-                        <!-- ROI Metrics will be injected here -->
-                        <div id="roi-metrics">
-                            <div id="roi-summary-container"></div>
+                    <!-- Dashboard Overview -->
+                    <div id="dashboard-overview" class="dashboard-panel">
+                        <div class="dashboard-grid">
+                            <!-- Left Panel: High-Risk Customers -->
+                            <div class="dashboard-card">
+                                <h3>🚨 High-Value Churn Risks</h3>
+                                <div class="dashboard-card-content">
+                                    <p class="text-xs text-gray-400 mb-3">
+                                        Risk Score ≥ 80% AND LTV ≥ $4,000
+                                    </p>
+                                    <div id="action-list-container" class="space-y-2 h-full overflow-y-auto">
+                                        <!-- High-Risk Customer Action Cards will be injected here -->
+                                        <div id="loading-list"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Panel: ROI Summary -->
+                            <div class="dashboard-card">
+                                <h3>📈 ROI Summary</h3>
+                                <div class="dashboard-card-content">
+                                    <div class="space-y-3">
+                                        <!-- Model Metrics -->
+                                        <div id="model-metrics-container"></div>
+                                        <!-- ROI Metrics -->
+                                        <div id="roi-summary-container"></div>
+                                    </div>
+                                    <div class="mt-4 pt-3 border-t border-gray-600">
+                                        <p class="text-xs text-gray-400">
+                                            Based on 72% Precision & 75% Recall
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="mt-6 pt-4 border-t border-gray-700">
-                        <p class="text-sm text-gray-400">
-                            Based on **$72\%$ Precision** and **$75\%$ Recall** targets.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- SECTION 1.5: All High-Risk Customers Table -->
         <div class="mt-4">
@@ -1159,17 +1287,19 @@
     </div>
 
     <!-- Customer Dashboard Section -->
-    <section id="customer-dashboard" class="spa-section section-container bg-gray-50">
-        <div class="content-section">
+    <section id="customer-dashboard" class="spa-section customer-dashboard-container bg-gray-50">
+        <div class="customer-dashboard-content">
             <!-- Header -->
-            <div class="section-header">
-                <h2 class="text-3xl font-bold text-gray-900">Churn Intervention Dashboard</h2>
-                <div class="divider" style="background: #374151;"></div>
-                <p class="text-gray-600">Prioritize high-value customers at risk of churning</p>
+            <div class="customer-dashboard-header">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Churn Intervention Dashboard</h2>
+                <div class="w-16 h-0.5 bg-gray-600 mx-auto mb-2"></div>
+                <p class="text-sm text-gray-600">Prioritize high-value customers at risk</p>
             </div>
 
-            <!-- Enhanced ARR Threshold Input -->
-            <div class="bg-gradient-to-r from-orange-50 to-orange-100 rounded-xl p-6 border-2 border-orange-200 shadow-lg mb-6">
+            <div class="customer-dashboard-body">
+                <!-- Filter Section -->
+                <div class="customer-filter-section">
+                    <div class="filter-input-enhanced text-center">
                 <div class="text-center mb-4">
                     <h3 class="text-xl font-bold text-orange-800 mb-2 flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 mr-2">
@@ -1217,9 +1347,12 @@
                 </div>
             </div>
 
-            <!-- Enhanced Customer List Container -->
-            <div id="customerListContainer" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                <!-- Customer cards will be rendered here -->
+                <!-- Customer List Section -->
+                <div class="customer-list-section">
+                    <div class="customer-list-container" id="customerListContainer">
+                        <!-- Customer cards will be rendered here -->
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -2064,7 +2197,7 @@
             // Process all data before DOM manipulation
             data.forEach(customer => {
                 const cardElement = document.createElement('div');
-                cardElement.className = 'customer-card bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg p-6 border-2 border-gray-200 hover:shadow-2xl hover:border-orange-400 hover:scale-105 transition-all duration-300 cursor-pointer transform';
+                cardElement.className = 'customer-card-compact';
                 cardElement.onclick = () => showCustomerDetail(customer.Customer_ID);
                 
                 // Build card content efficiently
@@ -2079,44 +2212,37 @@
                     '<span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-bold rounded-full">Monitor</span>';
                 
                 cardElement.innerHTML = `
-                    <!-- Priority Badge -->
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="flex items-center space-x-2">
-                            <div class="w-3 h-3 rounded-full ${dotColor}"></div>
-                            <h3 class="text-xl font-bold text-gray-900">${customer.Customer_Name}</h3>
+                    <div class="flex justify-between items-start mb-3">
+                        <div class="flex items-center space-x-2 flex-1">
+                            <div class="w-2 h-2 rounded-full ${dotColor}"></div>
+                            <h3 class="text-lg font-bold text-gray-900">${customer.Customer_Name}</h3>
                         </div>
-                        <div class="text-right">
-                            <div class="px-4 py-2 rounded-lg text-lg font-bold ${riskBadgeColor}">
-                                ${customer.riskScore}% Risk
+                        <div class="text-right ml-2">
+                            <div class="text-lg font-bold text-${riskColor}-600">
+                                ${customer.riskScore}%
                             </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Key Metrics -->
-                    <div class="bg-gray-50 rounded-lg p-4 mb-4">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="text-center">
-                                <div class="text-2xl font-bold text-orange-600">$${customer.LTV.toLocaleString()}</div>
-                                <div class="text-sm text-gray-600 font-medium">Annual Revenue</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-xl font-bold text-gray-800">${customer.Customer_ID}</div>
-                                <div class="text-sm text-gray-600 font-medium">Customer ID</div>
-                            </div>
+                            <div class="text-xs text-${riskColor}-500 font-medium">RISK</div>
                         </div>
                     </div>
                     
-                    <!-- Action Indicators -->
+                    <div class="grid grid-cols-2 gap-2 mb-3">
+                        <div class="bg-gray-50 p-2 rounded text-center">
+                            <div class="text-sm font-bold text-orange-600">$${customer.LTV.toLocaleString()}</div>
+                            <div class="text-xs text-gray-600">LTV</div>
+                        </div>
+                        <div class="bg-gray-50 p-2 rounded text-center">
+                            <div class="text-sm font-bold text-gray-800">${customer.Customer_ID}</div>
+                            <div class="text-xs text-gray-600">ID</div>
+                        </div>
+                    </div>
+                    
                     <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 text-orange-600">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                            </svg>
-                            <span class="text-sm font-medium text-gray-700">View Details</span>
-                        </div>
-                        <div class="flex items-center space-x-1">
+                        <div class="flex items-center space-x-1 flex-1">
                             ${actionableBadge}
                         </div>
+                        <button class="px-3 py-1 bg-orange-600 hover:bg-orange-700 text-white text-xs font-semibold rounded transition-all duration-200">
+                            Details
+                        </button>
                     </div>
                 `;
                 
