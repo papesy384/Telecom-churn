@@ -1368,15 +1368,11 @@
             <!-- Enhanced Modal Footer -->
             <div class="flex justify-between items-center p-6 border-t border-gray-200">
                 <div id="saveConfirmation" class="hidden">
-                    <div class="flex items-center space-x-4 px-8 py-6 bg-gradient-to-r from-green-100 to-green-200 border-4 border-green-500 rounded-xl shadow-2xl transform scale-110">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-12 h-12 text-green-700 animate-bounce">
+                    <div class="flex items-center space-x-2 px-4 py-2 bg-green-100 border border-green-300 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 text-green-600">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
-                        <div>
-                            <div class="text-2xl font-black text-green-800 uppercase tracking-wider">Intervention Logged!</div>
-                            <div class="text-lg font-bold text-green-700 mt-1">Critical action data saved for audit trail</div>
-                            <div class="text-sm font-semibold text-green-600 mt-1">Data persistence guaranteed for future review</div>
-                        </div>
+                        <span class="text-sm font-medium text-green-700">Intervention saved</span>
                     </div>
                 </div>
                 <div class="flex gap-3">
@@ -2320,11 +2316,8 @@
         function generateModalContent(customer) {
             const driverElements = customer.topDrivers.map(driver => {
                 if (driver.includes('[Actionable]')) {
-                    return `<div class="inline-flex items-center px-4 py-3 rounded-lg bg-gradient-to-r from-green-100 to-green-200 border-2 border-green-400 mr-2 mb-2 shadow-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 text-green-700 mr-2 animate-pulse">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
-                        </svg>
-                        <span class="text-base font-black text-green-800 uppercase tracking-wide">${driver}</span>
+                    return `<div class="inline-flex items-center px-3 py-2 rounded-lg bg-green-100 border border-green-200 mr-2 mb-2">
+                        <span class="text-sm text-green-800">${driver}</span>
                     </div>`;
                 } else if (driver.includes('[Ignore]')) {
                     return `<div class="inline-flex items-center px-3 py-2 rounded-lg bg-gray-100 border border-gray-200 mr-2 mb-2">
@@ -2339,19 +2332,10 @@
 
             return `
                 <div class="space-y-6">
-                    <!-- Root Cause Alert - Prominently Displayed -->
-                    <div class="bg-gradient-to-r from-red-50 to-red-100 border-4 border-red-500 rounded-xl p-6 shadow-2xl">
-                        <div class="flex items-center mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8 text-red-600 mr-3 animate-pulse">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-                            </svg>
-                            <h2 class="text-2xl font-black text-red-800 uppercase tracking-wider">Root Cause Identified</h2>
-                        </div>
-                        <div class="bg-white rounded-lg p-4 border-2 border-red-300">
-                            <div class="text-center">
-                                <span class="text-3xl font-black text-red-600 uppercase tracking-widest">${customer.Root_Cause}</span>
-                            </div>
-                        </div>
+                    <!-- Root Cause -->
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3">Root Cause</h3>
+                        <div class="text-gray-700">${customer.Root_Cause}</div>
                     </div>
 
                     <!-- Customer Details -->
@@ -2399,15 +2383,9 @@
                         <div class="flex flex-wrap">
                             ${driverElements}
                         </div>
-                        <div class="mt-4 p-4 bg-gradient-to-r from-green-50 to-green-100 border-2 border-green-400 rounded-lg">
-                            <div class="flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 text-green-700 mr-2 animate-pulse">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
-                                </svg>
-                                <span class="text-lg font-black text-green-800 uppercase tracking-wide">Action Required!</span>
-                            </div>
-                            <p class="text-base font-bold text-green-700 mt-2">
-                                <span class="font-black text-green-800">BRIGHT GREEN BADGES</span> indicate actionable items that require immediate attention. No guessing needed!
+                        <div class="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                            <p class="text-sm text-blue-700">
+                                Green badges indicate actionable items that require attention.
                             </p>
                         </div>
                     </div>
@@ -2477,37 +2455,13 @@
                 try {
                     localStorage.setItem('churn-dashboard-customerData', JSON.stringify(customerData));
                     
-                    // Show enhanced confirmation with dramatic entrance
+                    // Show simple confirmation
                     const confirmation = document.getElementById('saveConfirmation');
                     if (confirmation) {
                         confirmation.classList.remove('hidden');
-                        
-                        // Dramatic entrance animation
-                        confirmation.style.transform = 'scale(0.5) rotate(-5deg)';
-                        confirmation.style.opacity = '0';
-                        confirmation.style.transition = 'all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
-                        
                         setTimeout(() => {
-                            confirmation.style.transform = 'scale(1.1) rotate(0deg)';
-                            confirmation.style.opacity = '1';
-                            
-                            // Slight settle animation
-                            setTimeout(() => {
-                                confirmation.style.transform = 'scale(1) rotate(0deg)';
-                            }, 200);
-                        }, 100);
-                        
-                        // Hide after 3.5 seconds for optimal trust building
-                        setTimeout(() => {
-                            confirmation.style.transform = 'scale(0.9) rotate(2deg)';
-                            confirmation.style.opacity = '0';
-                            setTimeout(() => {
-                                confirmation.classList.add('hidden');
-                                confirmation.style.transform = '';
-                                confirmation.style.opacity = '';
-                                confirmation.style.transition = '';
-                            }, 400);
-                        }, 3500); // 3.5 seconds for optimal user trust
+                            confirmation.classList.add('hidden');
+                        }, 1500); // Simple 1.5 second display
                     }
                     console.log('✅ Saved customer notes to localStorage');
                 } catch (error) {
