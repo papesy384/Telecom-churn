@@ -1,0 +1,1138 @@
+/**
+ * Data Display Components CSS
+ * Comprehensive styling for all data display components
+ */
+
+/* Base Data Display Component Styles */
+.data-display-component {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+/* Avatar Component */
+.dd-avatar {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    color: #fff;
+    white-space: nowrap;
+    text-align: center;
+    vertical-align: middle;
+    background: #ccc;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 500;
+    user-select: none;
+}
+
+.dd-avatar.large {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+}
+
+.dd-avatar.small {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    font-size: 12px;
+}
+
+.dd-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+}
+
+.dd-avatar-group {
+    display: inline-flex;
+    align-items: center;
+}
+
+.dd-avatar-group .dd-avatar {
+    margin-left: -8px;
+    border: 2px solid #fff;
+}
+
+.dd-avatar-group .dd-avatar:first-child {
+    margin-left: 0;
+}
+
+/* Badge Component */
+.dd-badge {
+    position: relative;
+    display: inline-block;
+    line-height: 1;
+}
+
+.dd-badge-count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+    background: #ff4d4f;
+    color: #fff;
+    border-radius: 10px;
+    min-width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    font-size: 12px;
+    padding: 0 6px;
+    box-shadow: 0 0 0 1px #fff;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.dd-badge-count.zero {
+    display: none;
+}
+
+.dd-badge-dot {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+    width: 6px;
+    height: 6px;
+    background: #ff4d4f;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px #fff;
+}
+
+.dd-badge.status .dd-badge-count {
+    background: #52c41a;
+}
+
+.dd-badge.status.error .dd-badge-count {
+    background: #ff4d4f;
+}
+
+.dd-badge.status.warning .dd-badge-count {
+    background: #faad14;
+}
+
+.dd-badge.status.processing .dd-badge-count {
+    background: #1890ff;
+}
+
+/* Calendar Component */
+.dd-calendar {
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    padding: 16px;
+    width: 300px;
+    font-size: 14px;
+}
+
+.dd-calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85);
+}
+
+.dd-calendar-nav {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background 0.3s;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.45);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dd-calendar-nav:hover {
+    background: #f5f5f5;
+    color: rgba(0, 0, 0, 0.85);
+}
+
+.dd-calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+.dd-calendar-cell {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.85);
+}
+
+.dd-calendar-cell:hover {
+    background: #f5f5f5;
+}
+
+.dd-calendar-cell.today {
+    background: #1890ff;
+    color: #fff;
+    font-weight: 500;
+}
+
+.dd-calendar-cell.selected {
+    background: #1890ff;
+    color: #fff;
+}
+
+.dd-calendar-cell.other-month {
+    color: rgba(0, 0, 0, 0.25);
+}
+
+.dd-calendar-cell.disabled {
+    color: rgba(0, 0, 0, 0.25);
+    cursor: not-allowed;
+}
+
+.dd-calendar-cell.disabled:hover {
+    background: transparent;
+}
+
+/* Card Component */
+.dd-card {
+    background: #fff;
+    border-radius: 6px;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    transition: box-shadow 0.3s;
+    overflow: hidden;
+}
+
+.dd-card.hoverable:hover {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 1px 6px rgba(0, 0, 0, 0.03), 0 2px 24px rgba(0, 0, 0, 0.03);
+}
+
+.dd-card-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fafafa;
+}
+
+.dd-card-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85);
+    line-height: 1.5;
+}
+
+.dd-card-extra {
+    color: #1890ff;
+    cursor: pointer;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.dd-card-extra:hover {
+    color: #40a9ff;
+}
+
+.dd-card-body {
+    padding: 24px;
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.dd-card.loading .dd-card-body {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* Carousel Component */
+.dd-carousel {
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+    background: #f5f5f5;
+}
+
+.dd-carousel-container {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.dd-carousel-slide {
+    flex: 0 0 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    background: #f5f5f5;
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 16px;
+}
+
+.dd-carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.45);
+    color: #fff;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.3s;
+    z-index: 2;
+}
+
+.dd-carousel-nav:hover {
+    background: rgba(0, 0, 0, 0.75);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.dd-carousel-prev {
+    left: 16px;
+}
+
+.dd-carousel-next {
+    right: 16px;
+}
+
+.dd-carousel-dots {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 2;
+}
+
+.dd-carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.dd-carousel-dot:hover {
+    background: rgba(255, 255, 255, 0.75);
+}
+
+.dd-carousel-dot.active {
+    background: #fff;
+    transform: scale(1.2);
+}
+
+/* Collapse Component */
+.dd-collapse {
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.dd-collapse-item {
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.dd-collapse-item:last-child {
+    border-bottom: none;
+}
+
+.dd-collapse-header {
+    padding: 12px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.3s;
+    background: #fafafa;
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 500;
+}
+
+.dd-collapse-header:hover {
+    background: #f0f0f0;
+}
+
+.dd-collapse-header.active {
+    background: #e6f7ff;
+    color: #1890ff;
+}
+
+.dd-collapse-arrow {
+    transition: transform 0.3s;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.45);
+}
+
+.dd-collapse-arrow.expanded {
+    transform: rotate(90deg);
+    color: #1890ff;
+}
+
+.dd-collapse-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.dd-collapse-content.expanded {
+    max-height: 1000px;
+}
+
+.dd-collapse-body {
+    padding: 16px;
+    color: rgba(0, 0, 0, 0.65);
+    line-height: 1.5715;
+    border-top: 1px solid #f0f0f0;
+}
+
+/* Table Component */
+.dd-table-container {
+    background: #fff;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid #f0f0f0;
+}
+
+.dd-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    font-size: 14px;
+}
+
+.dd-table th,
+.dd-table td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+    color: rgba(0, 0, 0, 0.85);
+}
+
+.dd-table th {
+    background: #fafafa;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85);
+    position: relative;
+}
+
+.dd-table tbody tr {
+    transition: background 0.3s;
+}
+
+.dd-table tbody tr:hover {
+    background: #f5f5f5;
+}
+
+.dd-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.dd-table-pagination {
+    padding: 16px;
+    border-top: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fafafa;
+}
+
+/* Tabs Component */
+.dd-tabs {
+    background: #fff;
+}
+
+.dd-tabs-nav {
+    display: flex;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.dd-tab {
+    padding: 12px 16px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s;
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 14px;
+    position: relative;
+    background: none;
+    border: none;
+    outline: none;
+}
+
+.dd-tab:hover {
+    color: #40a9ff;
+}
+
+.dd-tab.active {
+    color: #1890ff;
+    border-bottom-color: #1890ff;
+    font-weight: 500;
+}
+
+.dd-tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.dd-tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Timeline Component */
+.dd-timeline {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.dd-timeline-item {
+    position: relative;
+    padding-bottom: 20px;
+    padding-left: 24px;
+    font-size: 14px;
+}
+
+.dd-timeline-item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background: #f0f0f0;
+}
+
+.dd-timeline-dot {
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #1890ff;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px #d9d9d9;
+    z-index: 1;
+}
+
+.dd-timeline-dot.success {
+    background: #52c41a;
+}
+
+.dd-timeline-dot.error {
+    background: #ff4d4f;
+}
+
+.dd-timeline-dot.warning {
+    background: #faad14;
+}
+
+.dd-timeline-content {
+    margin-left: 8px;
+    position: relative;
+    top: -2px;
+}
+
+.dd-timeline-title {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.85);
+    line-height: 1.5715;
+}
+
+.dd-timeline-description {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.45);
+    line-height: 1.5715;
+}
+
+/* Tag Component */
+.dd-tag {
+    display: inline-block;
+    padding: 0 7px;
+    font-size: 12px;
+    line-height: 20px;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    background: #fafafa;
+    color: rgba(0, 0, 0, 0.65);
+    cursor: default;
+    transition: all 0.3s;
+    margin: 0 8px 8px 0;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.dd-tag:hover {
+    opacity: 0.85;
+}
+
+.dd-tag.success {
+    background: #f6ffed;
+    border-color: #b7eb8f;
+    color: #52c41a;
+}
+
+.dd-tag.error {
+    background: #fff2f0;
+    border-color: #ffccc7;
+    color: #ff4d4f;
+}
+
+.dd-tag.warning {
+    background: #fffbe6;
+    border-color: #ffe58f;
+    color: #faad14;
+}
+
+.dd-tag.processing {
+    background: #e6f7ff;
+    border-color: #91d5ff;
+    color: #1890ff;
+}
+
+.dd-tag.default {
+    background: #fafafa;
+    border-color: #d9d9d9;
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.dd-tag-close {
+    margin-left: 4px;
+    cursor: pointer;
+    font-size: 10px;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+    color: inherit;
+}
+
+.dd-tag-close:hover {
+    opacity: 1;
+}
+
+/* Tooltip Component */
+.dd-tooltip {
+    position: absolute;
+    z-index: 1060;
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    padding: 6px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    max-width: 250px;
+    word-wrap: break-word;
+    pointer-events: none;
+    line-height: 1.5;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.dd-tooltip-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 4px solid transparent;
+}
+
+.dd-tooltip.top .dd-tooltip-arrow {
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-top-color: rgba(0, 0, 0, 0.75);
+}
+
+.dd-tooltip.bottom .dd-tooltip-arrow {
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-bottom-color: rgba(0, 0, 0, 0.75);
+}
+
+.dd-tooltip.left .dd-tooltip-arrow {
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-left-color: rgba(0, 0, 0, 0.75);
+}
+
+.dd-tooltip.right .dd-tooltip-arrow {
+    left: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-right-color: rgba(0, 0, 0, 0.75);
+}
+
+/* Statistic Component */
+.dd-statistic {
+    text-align: left;
+}
+
+.dd-statistic.center {
+    text-align: center;
+}
+
+.dd-statistic-title {
+    margin-bottom: 4px;
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.dd-statistic-content {
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 24px;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.35;
+}
+
+.dd-statistic-content-value {
+    display: inline-block;
+    direction: ltr;
+}
+
+.dd-statistic-content-suffix,
+.dd-statistic-content-prefix {
+    font-size: 16px;
+    margin: 0 4px;
+}
+
+/* List Component */
+.dd-list {
+    background: #fff;
+    border-radius: 6px;
+    border: 1px solid #f0f0f0;
+    overflow: hidden;
+}
+
+.dd-list-header,
+.dd-list-footer {
+    padding: 12px 24px;
+    background: #fafafa;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85);
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.dd-list-footer {
+    border-bottom: none;
+    border-top: 1px solid #f0f0f0;
+}
+
+.dd-list-item {
+    padding: 12px 24px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: flex-start;
+    transition: background 0.3s;
+    position: relative;
+}
+
+.dd-list-item:hover {
+    background: #f5f5f5;
+}
+
+.dd-list-item:last-child {
+    border-bottom: none;
+}
+
+.dd-list-item-meta {
+    display: flex;
+    align-items: flex-start;
+    flex: 1;
+}
+
+.dd-list-item-meta-avatar {
+    margin-right: 16px;
+}
+
+.dd-list-item-meta-content {
+    flex: 1;
+}
+
+.dd-list-item-meta-title {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.85);
+    line-height: 1.5715;
+}
+
+.dd-list-item-meta-description {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.45);
+    line-height: 1.5715;
+}
+
+.dd-list-item-action {
+    margin-left: 16px;
+    display: flex;
+    gap: 8px;
+}
+
+/* Empty Component */
+.dd-empty {
+    text-align: center;
+    padding: 32px 16px;
+    color: rgba(0, 0, 0, 0.45);
+}
+
+.dd-empty-image {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 16px;
+    opacity: 0.5;
+    background: #f5f5f5;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.dd-empty-description {
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.45);
+}
+
+.dd-empty-footer {
+    margin-top: 16px;
+}
+
+/* Descriptions Component */
+.dd-descriptions {
+    background: #fff;
+}
+
+.dd-descriptions-title {
+    margin-bottom: 16px;
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85);
+    line-height: 1.5715;
+}
+
+.dd-descriptions-view {
+    border: 1px solid #f0f0f0;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.dd-descriptions-row {
+    display: flex;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.dd-descriptions-row:last-child {
+    border-bottom: none;
+}
+
+.dd-descriptions-item {
+    flex: 1;
+    display: flex;
+    padding: 16px;
+    border-right: 1px solid #f0f0f0;
+    min-height: 32px;
+}
+
+.dd-descriptions-item:last-child {
+    border-right: none;
+}
+
+.dd-descriptions-item-label {
+    width: 100px;
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 500;
+    margin-right: 16px;
+    flex-shrink: 0;
+    line-height: 1.5715;
+}
+
+.dd-descriptions-item-content {
+    flex: 1;
+    color: rgba(0, 0, 0, 0.65);
+    line-height: 1.5715;
+    word-break: break-word;
+}
+
+/* Segmented Component */
+.dd-segmented {
+    display: inline-flex;
+    background: #f5f5f5;
+    border-radius: 6px;
+    padding: 2px;
+    position: relative;
+}
+
+.dd-segmented-item {
+    padding: 4px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.65);
+    position: relative;
+    z-index: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+.dd-segmented-item:hover {
+    color: rgba(0, 0, 0, 0.85);
+}
+
+.dd-segmented-item.active {
+    background: #fff;
+    color: rgba(0, 0, 0, 0.85);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 1px 6px rgba(0, 0, 0, 0.03);
+    font-weight: 500;
+}
+
+/* Popover Component */
+.dd-popover {
+    position: absolute;
+    z-index: 1030;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    max-width: 276px;
+    min-width: 177px;
+}
+
+.dd-popover-title {
+    padding: 5px 16px 4px;
+    border-bottom: 1px solid #f0f0f0;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 14px;
+    line-height: 1.5715;
+}
+
+.dd-popover-content {
+    padding: 12px 16px;
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 14px;
+    line-height: 1.5715;
+}
+
+.dd-popover-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+}
+
+.dd-popover.top .dd-popover-arrow {
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-top-color: #fff;
+}
+
+.dd-popover.bottom .dd-popover-arrow {
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-bottom-color: #fff;
+}
+
+/* Tour Component */
+.dd-tour-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1040;
+    pointer-events: none;
+}
+
+.dd-tour-spotlight {
+    position: absolute;
+    border: 2px solid #1890ff;
+    border-radius: 6px;
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    transition: all 0.3s;
+}
+
+.dd-tour-popup {
+    position: absolute;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 16px;
+    max-width: 300px;
+    z-index: 1041;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.dd-tour-title {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85);
+    line-height: 1.5;
+}
+
+.dd-tour-description {
+    margin-bottom: 16px;
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 14px;
+    line-height: 1.5715;
+}
+
+.dd-tour-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.dd-tour-button {
+    padding: 4px 15px;
+    border-radius: 6px;
+    border: 1px solid #d9d9d9;
+    background: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s;
+    color: rgba(0, 0, 0, 0.85);
+}
+
+.dd-tour-button:hover {
+    color: #40a9ff;
+    border-color: #40a9ff;
+}
+
+.dd-tour-button.primary {
+    background: #1890ff;
+    border-color: #1890ff;
+    color: #fff;
+}
+
+.dd-tour-button.primary:hover {
+    background: #40a9ff;
+    border-color: #40a9ff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dd-calendar {
+        width: 100%;
+        padding: 12px;
+    }
+    
+    .dd-card-body {
+        padding: 16px;
+    }
+    
+    .dd-table th,
+    .dd-table td {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+    
+    .dd-tabs-nav {
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    
+    .dd-tabs-nav::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .dd-list-item {
+        padding: 12px 16px;
+    }
+    
+    .dd-descriptions-item {
+        padding: 12px;
+        flex-direction: column;
+    }
+    
+    .dd-descriptions-item-label {
+        width: auto;
+        margin-right: 0;
+        margin-bottom: 4px;
+    }
+    
+    .dd-tour-popup {
+        max-width: calc(100vw - 32px);
+        margin: 16px;
+    }
+}
+
+/* Dark Theme Support */
+@media (prefers-color-scheme: dark) {
+    .dd-card,
+    .dd-calendar,
+    .dd-collapse,
+    .dd-table,
+    .dd-tabs,
+    .dd-list,
+    .dd-descriptions {
+        background: #1f1f1f;
+        color: rgba(255, 255, 255, 0.85);
+        border-color: #434343;
+    }
+    
+    .dd-card-header,
+    .dd-table th,
+    .dd-list-header,
+    .dd-list-footer,
+    .dd-collapse-header {
+        background: #262626;
+        border-color: #434343;
+    }
+    
+    .dd-calendar-cell:hover,
+    .dd-table tbody tr:hover,
+    .dd-list-item:hover {
+        background: #262626;
+    }
+    
+    .dd-tooltip {
+        background: rgba(0, 0, 0, 0.85);
+    }
+    
+    .dd-popover,
+    .dd-tour-popup {
+        background: #1f1f1f;
+        border-color: #434343;
+    }
+}

@@ -12,6 +12,9 @@
     
     <!-- Load Feedback Components -->
     <link rel="stylesheet" href="feedback-components.css">
+    
+    <!-- Load Data Display Components -->
+    <link rel="stylesheet" href="data-display-components.css">
     <script>
         tailwind.config = {
             theme: {
@@ -1390,6 +1393,9 @@
                     <button onclick="showFeedbackDemo()" class="px-4 py-2 bg-purple-500 text-white text-sm font-semibold rounded-lg hover:bg-purple-600 transition-all duration-200">
                         🎨 Feedback Demo
                     </button>
+                    <button onclick="showDataDisplayDemo()" class="px-4 py-2 bg-green-500 text-white text-sm font-semibold rounded-lg hover:bg-green-600 transition-all duration-200">
+                        📊 Data Display Demo
+                    </button>
                     <button onclick="runPerformanceOptimizationTests()" class="px-4 py-2 bg-purple-500 text-white text-sm font-semibold rounded-lg hover:bg-purple-600 transition-all duration-200">
                         ⚡ Test Performance
                     </button>
@@ -1400,6 +1406,9 @@
 
         <!-- Load Feedback Components -->
         <script src="feedback-components.js"></script>
+        
+        <!-- Load Data Display Components -->
+        <script src="data-display-components.js"></script>
         
         <!-- Load Visual Enhancement Tests -->
         <script src="visual-enhancement-tests.js"></script>
@@ -2705,6 +2714,213 @@
             }, 5000);
             
             console.log('✅ Feedback Components Demo completed!');
+        }
+
+        // Data Display Components Demo Function
+        function showDataDisplayDemo() {
+            console.log('📊 Starting Data Display Components Demo...');
+            
+            // Create demo container
+            const demoContainer = document.createElement('div');
+            demoContainer.style.cssText = `
+                position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                background: white; padding: 24px; border-radius: 12px; 
+                box-shadow: 0 8px 32px rgba(0,0,0,0.15); z-index: 1050; 
+                width: 90vw; max-width: 800px; max-height: 90vh; overflow-y: auto;
+            `;
+            
+            demoContainer.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                    <h2 style="margin: 0; font-size: 20px; font-weight: 600;">📊 Data Display Components Demo</h2>
+                    <button onclick="this.closest('div').remove()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #999;">×</button>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+                    <!-- Avatar Demo -->
+                    <div>
+                        <h3 style="margin: 0 0 12px 0; font-size: 16px; font-weight: 500;">Avatar</h3>
+                        <div id="avatar-demo" style="display: flex; gap: 12px; align-items: center;"></div>
+                    </div>
+                    
+                    <!-- Badge Demo -->
+                    <div>
+                        <h3 style="margin: 0 0 12px 0; font-size: 16px; font-weight: 500;">Badge</h3>
+                        <div id="badge-demo" style="display: flex; gap: 16px; align-items: center;"></div>
+                    </div>
+                    
+                    <!-- Card Demo -->
+                    <div>
+                        <h3 style="margin: 0 0 12px 0; font-size: 16px; font-weight: 500;">Card</h3>
+                        <div id="card-demo"></div>
+                    </div>
+                    
+                    <!-- Tags Demo -->
+                    <div>
+                        <h3 style="margin: 0 0 12px 0; font-size: 16px; font-weight: 500;">Tags</h3>
+                        <div id="tags-demo"></div>
+                    </div>
+                    
+                    <!-- Timeline Demo -->
+                    <div>
+                        <h3 style="margin: 0 0 12px 0; font-size: 16px; font-weight: 500;">Timeline</h3>
+                        <div id="timeline-demo"></div>
+                    </div>
+                    
+                    <!-- Statistic Demo -->
+                    <div>
+                        <h3 style="margin: 0 0 12px 0; font-size: 16px; font-weight: 500;">Statistics</h3>
+                        <div id="statistic-demo" style="display: flex; gap: 24px;"></div>
+                    </div>
+                    
+                    <!-- Calendar Demo -->
+                    <div>
+                        <h3 style="margin: 0 0 12px 0; font-size: 16px; font-weight: 500;">Calendar</h3>
+                        <div id="calendar-demo"></div>
+                    </div>
+                    
+                    <!-- Tabs Demo -->
+                    <div>
+                        <h3 style="margin: 0 0 12px 0; font-size: 16px; font-weight: 500;">Tabs</h3>
+                        <div id="tabs-demo"></div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(demoContainer);
+            
+            // Demo Avatar
+            setTimeout(() => {
+                const avatarContainer = document.getElementById('avatar-demo');
+                if (avatarContainer) {
+                    const avatar1 = window.dataDisplayComponents.createAvatar({ text: 'TW', size: 'large' });
+                    const avatar2 = window.dataDisplayComponents.createAvatar({ text: 'JS', size: 'default' });
+                    const avatar3 = window.dataDisplayComponents.createAvatar({ text: 'AB', size: 'small' });
+                    
+                    avatarContainer.appendChild(avatar1);
+                    avatarContainer.appendChild(avatar2);
+                    avatarContainer.appendChild(avatar3);
+                }
+            }, 100);
+            
+            // Demo Badge
+            setTimeout(() => {
+                const badgeContainer = document.getElementById('badge-demo');
+                if (badgeContainer) {
+                    const button1 = document.createElement('button');
+                    button1.textContent = 'Messages';
+                    button1.style.cssText = 'padding: 8px 16px; border: 1px solid #d9d9d9; border-radius: 6px; background: white;';
+                    
+                    const badge1 = window.dataDisplayComponents.createBadge({ count: 9, children: button1 });
+                    
+                    const button2 = document.createElement('button');
+                    button2.textContent = 'Notifications';
+                    button2.style.cssText = 'padding: 8px 16px; border: 1px solid #d9d9d9; border-radius: 6px; background: white;';
+                    
+                    const badge2 = window.dataDisplayComponents.createBadge({ count: 99, children: button2 });
+                    
+                    badgeContainer.appendChild(badge1);
+                    badgeContainer.appendChild(badge2);
+                }
+            }, 200);
+            
+            // Demo Card
+            setTimeout(() => {
+                const cardContainer = document.getElementById('card-demo');
+                if (cardContainer) {
+                    const card = window.dataDisplayComponents.createCard({
+                        title: 'Card Title',
+                        extra: 'More',
+                        children: 'This is a sample card with some content to demonstrate the card component functionality.'
+                    });
+                    cardContainer.appendChild(card);
+                }
+            }, 300);
+            
+            // Demo Tags
+            setTimeout(() => {
+                const tagsContainer = document.getElementById('tags-demo');
+                if (tagsContainer) {
+                    const tag1 = window.dataDisplayComponents.createTag({ children: 'Success', color: 'success' });
+                    const tag2 = window.dataDisplayComponents.createTag({ children: 'Error', color: 'error' });
+                    const tag3 = window.dataDisplayComponents.createTag({ children: 'Warning', color: 'warning' });
+                    const tag4 = window.dataDisplayComponents.createTag({ children: 'Processing', color: 'processing' });
+                    
+                    tagsContainer.appendChild(tag1);
+                    tagsContainer.appendChild(tag2);
+                    tagsContainer.appendChild(tag3);
+                    tagsContainer.appendChild(tag4);
+                }
+            }, 400);
+            
+            // Demo Timeline
+            setTimeout(() => {
+                const timelineContainer = document.getElementById('timeline-demo');
+                if (timelineContainer) {
+                    const timeline = window.dataDisplayComponents.createTimeline({
+                        items: [
+                            { children: 'Create a services site', description: '2015-09-01' },
+                            { children: 'Solve initial network problems', description: '2015-09-01' },
+                            { children: 'Technical testing', description: '2015-09-01' },
+                            { children: 'Network problems being solved', description: '2015-09-01' }
+                        ]
+                    });
+                    timelineContainer.appendChild(timeline);
+                }
+            }, 500);
+            
+            // Demo Statistics
+            setTimeout(() => {
+                const statisticContainer = document.getElementById('statistic-demo');
+                if (statisticContainer) {
+                    const stat1 = document.createElement('div');
+                    stat1.className = 'dd-statistic';
+                    stat1.innerHTML = `
+                        <div class="dd-statistic-title">Active Users</div>
+                        <div class="dd-statistic-content">112,893</div>
+                    `;
+                    
+                    const stat2 = document.createElement('div');
+                    stat2.className = 'dd-statistic';
+                    stat2.innerHTML = `
+                        <div class="dd-statistic-title">Revenue</div>
+                        <div class="dd-statistic-content">$1,234,567</div>
+                    `;
+                    
+                    statisticContainer.appendChild(stat1);
+                    statisticContainer.appendChild(stat2);
+                }
+            }, 600);
+            
+            // Demo Calendar
+            setTimeout(() => {
+                const calendarContainer = document.getElementById('calendar-demo');
+                if (calendarContainer) {
+                    const calendar = window.dataDisplayComponents.createCalendar({
+                        value: new Date(),
+                        onChange: (date) => console.log('Selected date:', date)
+                    });
+                    calendarContainer.appendChild(calendar);
+                }
+            }, 700);
+            
+            // Demo Tabs
+            setTimeout(() => {
+                const tabsContainer = document.getElementById('tabs-demo');
+                if (tabsContainer) {
+                    const tabs = window.dataDisplayComponents.createTabs({
+                        items: [
+                            { key: 'tab1', label: 'Tab 1', children: 'Content of Tab Pane 1' },
+                            { key: 'tab2', label: 'Tab 2', children: 'Content of Tab Pane 2' },
+                            { key: 'tab3', label: 'Tab 3', children: 'Content of Tab Pane 3' }
+                        ],
+                        defaultActiveKey: 'tab1',
+                        onChange: (key) => console.log('Tab changed to:', key)
+                    });
+                    tabsContainer.appendChild(tabs);
+                }
+            }, 800);
+            
+            console.log('✅ Data Display Components Demo completed!');
         }
     </script>
 </body>
