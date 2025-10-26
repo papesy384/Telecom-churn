@@ -13,9 +13,6 @@
     <!-- Load Minimal Ant Design Integration -->
     <link rel="stylesheet" href="minimal-antd.css">
     
-    <!-- Load SAP Fiori Design System (initially disabled) -->
-    <link rel="stylesheet" href="sap-fiori.css" id="sap-fiori-css" disabled>
-    
     <script>
         tailwind.config = {
             theme: {
@@ -2330,82 +2327,6 @@
                 `;
             }
         }
-    </script>
-    
-    <!-- Load SAP Fiori Transformer -->
-    <script src="sap-transformer.js"></script>
-    
-    <!-- SAP Integration Controls -->
-    <script>
-        // Add SAP toggle functionality to existing UI
-        function addSAPControls() {
-            // Add SAP toggle button to the page header
-            const pageHeader = document.querySelector('.text-center.mb-12') || document.querySelector('h1').parentElement;
-            if (pageHeader && !document.getElementById('sap-toggle-controls')) {
-                const sapControls = document.createElement('div');
-                sapControls.id = 'sap-toggle-controls';
-                sapControls.className = 'mt-4 flex justify-center gap-4';
-                sapControls.innerHTML = `
-                    <button id="sap-toggle-btn" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-200 font-semibold shadow-lg">
-                        🔄 Switch to SAP Design
-                    </button>
-                    <button id="sap-auto-transform" class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-200 font-semibold shadow-lg">
-                        ⚡ Auto Transform
-                    </button>
-                `;
-                pageHeader.appendChild(sapControls);
-                
-                // Add event listeners
-                document.getElementById('sap-toggle-btn').addEventListener('click', function() {
-                    if (window.sapTransformer) {
-                        window.sapTransformer.toggle();
-                        this.textContent = window.sapTransformer.isTransformed ? 
-                            '🔄 Switch to Original Design' : '🔄 Switch to SAP Design';
-                    }
-                });
-                
-                document.getElementById('sap-auto-transform').addEventListener('click', function() {
-                    if (window.sapTransformer && !window.sapTransformer.isTransformed) {
-                        window.sapTransformer.transformToSAP();
-                        document.getElementById('sap-toggle-btn').textContent = '🔄 Switch to Original Design';
-                        this.textContent = '✅ SAP Applied';
-                        this.disabled = true;
-                        setTimeout(() => {
-                            this.textContent = '⚡ Auto Transform';
-                            this.disabled = false;
-                        }, 2000);
-                    }
-                });
-            }
-        }
-        
-        // Initialize SAP controls when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(addSAPControls, 1000);
-        });
-        
-        // Override customer card rendering for SAP compatibility
-        const originalRenderCustomerList = window.renderCustomerListOptimized;
-        window.renderCustomerListOptimized = function(data) {
-            if (window.sapTransformer && window.sapTransformer.isTransformed) {
-                // Use SAP-style rendering
-                const container = document.getElementById('customerListContainer');
-                if (!container) return;
-                
-                const fragment = document.createDocumentFragment();
-                
-                data.forEach(customer => {
-                    const sapCard = window.sapTransformer.createSAPCustomerCard(customer);
-                    fragment.appendChild(sapCard);
-                });
-                
-                container.innerHTML = '';
-                container.appendChild(fragment);
-            } else {
-                // Use original rendering
-                originalRenderCustomerList(data);
-            }
-        };
     </script>
 </body>
 </html>
