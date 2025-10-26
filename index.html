@@ -10,6 +10,8 @@
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- Load Feedback Components -->
+    <link rel="stylesheet" href="feedback-components.css">
     <script>
         tailwind.config = {
             theme: {
@@ -1385,6 +1387,9 @@
                     <button onclick="runVisualEnhancementTests()" class="px-4 py-2 bg-blue-500 text-white text-sm font-semibold rounded-lg hover:bg-blue-600 transition-all duration-200">
                         🧪 Test Visuals
                     </button>
+                    <button onclick="showFeedbackDemo()" class="px-4 py-2 bg-purple-500 text-white text-sm font-semibold rounded-lg hover:bg-purple-600 transition-all duration-200">
+                        🎨 Feedback Demo
+                    </button>
                     <button onclick="runPerformanceOptimizationTests()" class="px-4 py-2 bg-purple-500 text-white text-sm font-semibold rounded-lg hover:bg-purple-600 transition-all duration-200">
                         ⚡ Test Performance
                     </button>
@@ -1393,6 +1398,9 @@
         </div>
     </div>
 
+        <!-- Load Feedback Components -->
+        <script src="feedback-components.js"></script>
+        
         <!-- Load Visual Enhancement Tests -->
         <script src="visual-enhancement-tests.js"></script>
         
@@ -2580,6 +2588,123 @@
                     </div>
                 `;
             }
+        }
+
+        // Feedback Components Demo Function
+        function showFeedbackDemo() {
+            console.log('🎨 Starting Feedback Components Demo...');
+            
+            // Demo Alert
+            setTimeout(() => {
+                showAlert('This is an info alert message!', 'info');
+            }, 500);
+            
+            // Demo Message
+            setTimeout(() => {
+                showMessage('Success message displayed!', 'success');
+            }, 1000);
+            
+            // Demo Notification
+            setTimeout(() => {
+                showNotification(
+                    'Notification Title',
+                    'This is a notification with multiple lines of text to demonstrate the notification component functionality.',
+                    'info'
+                );
+            }, 1500);
+            
+            // Demo Progress
+            setTimeout(() => {
+                const progressContainer = document.createElement('div');
+                progressContainer.style.cssText = 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1020; width: 300px;';
+                progressContainer.innerHTML = '<h4 style="margin: 0 0 16px 0;">Progress Demo</h4>';
+                
+                const progress = FeedbackComponents.progress(10);
+                progressContainer.appendChild(progress);
+                
+                document.body.appendChild(progressContainer);
+                
+                // Animate progress
+                let percent = 10;
+                const interval = setInterval(() => {
+                    percent += 10;
+                    progress.updateProgress(percent);
+                    if (percent >= 100) {
+                        clearInterval(interval);
+                        setTimeout(() => progressContainer.remove(), 1000);
+                    }
+                }, 200);
+            }, 2000);
+            
+            // Demo Skeleton
+            setTimeout(() => {
+                const skeletonContainer = document.createElement('div');
+                skeletonContainer.style.cssText = 'position: fixed; top: 60%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1020; width: 300px;';
+                skeletonContainer.innerHTML = '<h4 style="margin: 0 0 16px 0;">Skeleton Demo</h4>';
+                
+                const skeleton = window.feedbackComponents.createSkeleton({
+                    active: true,
+                    avatar: true,
+                    paragraph: { rows: 3 }
+                });
+                skeletonContainer.appendChild(skeleton);
+                
+                document.body.appendChild(skeletonContainer);
+                setTimeout(() => skeletonContainer.remove(), 3000);
+            }, 3000);
+            
+            // Demo Spin
+            setTimeout(() => {
+                const spinContainer = document.createElement('div');
+                spinContainer.style.cssText = 'position: fixed; top: 70%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1020; width: 200px; text-align: center;';
+                
+                const spin = FeedbackComponents.spin('Loading...');
+                spinContainer.appendChild(spin);
+                
+                document.body.appendChild(spinContainer);
+                setTimeout(() => spinContainer.remove(), 2000);
+            }, 4000);
+            
+            // Demo Modal
+            setTimeout(() => {
+                showModal(
+                    'Modal Demo',
+                    `
+                    <div>
+                        <p>This is a modal demonstration with multiple components:</p>
+                        <br>
+                        <div id="modal-alert-demo"></div>
+                        <br>
+                        <div id="modal-progress-demo"></div>
+                    </div>
+                    `,
+                    {
+                        onOk: () => console.log('Modal OK clicked'),
+                        onCancel: () => console.log('Modal Cancel clicked')
+                    }
+                );
+                
+                // Add components inside modal
+                setTimeout(() => {
+                    const alertContainer = document.getElementById('modal-alert-demo');
+                    if (alertContainer) {
+                        const alert = window.feedbackComponents.createAlert({
+                            type: 'warning',
+                            message: 'Warning alert inside modal',
+                            closable: true
+                        });
+                        alertContainer.appendChild(alert);
+                    }
+                    
+                    const progressContainer = document.getElementById('modal-progress-demo');
+                    if (progressContainer) {
+                        const progress = window.feedbackComponents.createProgress({ percent: 40 });
+                        progressContainer.appendChild(progress);
+                    }
+                }, 100);
+            }, 5000);
+            
+            console.log('✅ Feedback Components Demo completed!');
         }
     </script>
 </body>
