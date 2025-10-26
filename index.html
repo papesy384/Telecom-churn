@@ -363,12 +363,7 @@
             margin-bottom: 1rem; /* Reduced for viewport fit */
         }
 
-        /* Customer List Container - Viewport Constrained */
-        #customerListContainer {
-            max-height: calc(100vh - 300px); /* Leave space for header and controls */
-            overflow-y: auto;
-            padding-right: 8px;
-        }
+        /* Remove conflicting styles - using .customer-list-container instead */
 
         /* Modal Viewport Constraints */
         .modal-content {
@@ -836,7 +831,7 @@
                 <h2 class="text-2xl font-bold text-light-text mb-2">
                     Live Application Demo
                 </h2>
-                <div class="w-16 h-0.5 bg-primary-orange mx-auto mb-2"></div>
+                <div class="w-16 h-0.5 bg-gray-600 mx-auto mb-2"></div>
                 <p class="text-sm text-gray-300">
                     AI-powered churn prediction in action
                 </p>
@@ -2191,11 +2186,23 @@
                 return;
             }
             
+            console.log('🔄 Rendering customer list with', data.length, 'customers');
+            
             // Create DocumentFragment for efficient DOM manipulation
             const fragment = document.createDocumentFragment();
             
-            // Process all data before DOM manipulation
-            data.forEach(customer => {
+            if (data.length === 0) {
+                const emptyDiv = document.createElement('div');
+                emptyDiv.className = 'text-center py-8 text-gray-500';
+                emptyDiv.innerHTML = `
+                    <div class="text-2xl mb-2">🔍</div>
+                    <p class="text-sm font-semibold">No customers match your criteria</p>
+                    <p class="text-xs">Try adjusting the ARR threshold</p>
+                `;
+                fragment.appendChild(emptyDiv);
+            } else {
+                // Process all data before DOM manipulation
+                data.forEach(customer => {
                 const cardElement = document.createElement('div');
                 cardElement.className = 'customer-card-compact';
                 cardElement.onclick = () => showCustomerDetail(customer.Customer_ID);
@@ -2246,12 +2253,15 @@
                     </div>
                 `;
                 
-                fragment.appendChild(cardElement);
-            });
+                    fragment.appendChild(cardElement);
+                });
+            }
             
             // Single DOM update - clear container and append all elements at once
             container.innerHTML = '';
             container.appendChild(fragment);
+            
+            console.log('✅ Customer list rendered successfully');
         }
 
         // Keep original function for backward compatibility
