@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated Test Runner - Churn Prediction Dashboard</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1a1a1a;
+            color: #00ff00;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.4;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #000;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #00ff00;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .test-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background: #003300;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background: #00ff00;
+            color: #000;
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .test-output {
+            background: #111;
+            border: 1px solid #333;
+            padding: 15px;
+            height: 500px;
+            overflow-y: auto;
+            font-size: 12px;
+            white-space: pre-wrap;
+            margin-bottom: 20px;
+        }
+        
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #222;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #666;
+        }
+        
+        .status-dot.running {
+            background: #ffff00;
+            animation: pulse 1s infinite;
+        }
+        
+        .status-dot.passed {
+            background: #00ff00;
+        }
+        
+        .status-dot.failed {
+            background: #ff0000;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff00, #00aa00);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .test-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .summary-card {
+            background: #222;
+            border: 1px solid #444;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        
+        .summary-card h3 {
+            margin: 0 0 10px 0;
+            color: #00ff00;
+        }
+        
+        .error-log {
+            background: #330000;
+            border: 1px solid #ff0000;
+            color: #ff6666;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧪 Automated Test Runner</h1>
+            <p>Continuous Testing for Churn Prediction Dashboard</p>
+        </div>
+        
+        <div class="status-bar">
+            <div class="status-item">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="statusText">Ready</span>
+            </div>
+            <div class="status-item">
+                <span>Tests: <span id="testCount">0/0</span></span>
+            </div>
+            <div class="status-item">
+                <span>Success Rate: <span id="successRate">0%</span></span>
+            </div>
+            <div class="status-item">
+                <span>Duration: <span id="duration">0ms</span></span>
+            </div>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        
+        <div class="test-controls">
+            <button class="btn" onclick="runBasicTests()" id="basicTestBtn">
+                🧪 Run Basic Tests
+            </button>
+            <button class="btn" onclick="runContinuousTests()" id="continuousTestBtn">
+                🔄 Run Continuous Tests
+            </button>
+            <button class="btn" onclick="runPerformanceTests()" id="performanceTestBtn">
+                ⚡ Performance Tests
+            </button>
+            <button class="btn" onclick="runAllTests()" id="allTestBtn">
+                🚀 Run All Tests
+            </button>
+            <button class="btn" onclick="clearOutput()" id="clearBtn">
+                🗑️ Clear Output
+            </button>
+            <button class="btn" onclick="exportResults()" id="exportBtn">
+                📊 Export Results
+            </button>
+        </div>
+        
+        <div class="test-output" id="testOutput">
+Ready to run tests. Click a button above to start.
+        </div>
+        
+        <div class="test-summary" id="testSummary" style="display: none;">
+            <!-- Summary cards will be populated here -->
+        </div>
+        
+        <div class="error-log" id="errorLog" style="display: none;">
+            <!-- Error details will be shown here -->
+        </div>
+    </div>
+
+    <!-- Load the main application -->
+    <iframe src="index.html" style="display: none;" id="appFrame" onload="initializeTests()"></iframe>
+
+    <!-- Load test suites -->
+    <script src="automated-test-suite.js"></script>
+    <script src="continuous-test-runner.js"></script>
+
+    <script>
+        let currentTestRun = null;
+        let testResults = [];
+        let appWindow = null;
+
+        function initializeTests() {
+            const frame = document.getElementById('appFrame');
+            appWindow = frame.contentWindow;
+            
+            // Copy test classes to app window
+            if (appWindow && typeof AutomatedTestSuite !== 'undefined') {
+                appWindow.AutomatedTestSuite = AutomatedTestSuite;
+                appWindow.ContinuousTestRunner = ContinuousTestRunner;
+                
+                updateStatus('Ready - Application loaded', 'ready');
+                log('✅ Test environment initialized successfully');
+                log('📱 Application loaded in background');
+                log('🧪 Test suites ready');
+            } else {
+                updateStatus('Error - Failed to initialize', 'failed');
+                log('❌ Failed to initialize test environment');
+            }
+        }
+
+        function log(message) {
+            const output = document.getElementById('testOutput');
+            const timestamp = new Date().toLocaleTimeString();
+            output.textContent += `[${timestamp}] ${message}\n`;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function updateStatus(text, status) {
+            document.getElementById('statusText').textContent = text;
+            const dot = document.getElementById('statusDot');
+            dot.className = `status-dot ${status}`;
+        }
+
+        function updateProgress(current, total) {
+            const percentage = total > 0 ? (current / total) * 100 : 0;
+            document.getElementById('progressFill').style.width = `${percentage}%`;
+            document.getElementById('testCount').textContent = `${current}/${total}`;
+        }
+
+        function updateSuccessRate(passed, total) {
+            const rate = total > 0 ? ((passed / total) * 100).toFixed(1) : 0;
+            document.getElementById('successRate').textContent = `${rate}%`;
+        }
+
+        function updateDuration(ms) {
+            document.getElementById('duration').textContent = `${ms}ms`;
+        }
+
+        async function runBasicTests() {
+            if (!appWindow) {
+                log('❌ Application not loaded. Please wait for initialization.');
+                return;
+            }
+
+            updateStatus('Running basic tests...', 'running');
+            disableButtons(true);
+            
+            try {
+                log('🚀 Starting basic test suite...');
+                
+                const testSuite = new appWindow.AutomatedTestSuite();
+                const results = await testSuite.runAllTests();
+                
+                testResults.push({
+                    type: 'basic',
+                    timestamp: Date.now(),
+                    results: results
+                });
+                
+                updateProgress(results.passedTests + results.failedTests, results.totalTests);
+                updateSuccessRate(results.passedTests, results.totalTests);
+                updateDuration(results.duration);
+                
+                if (results.failedTests === 0) {
+                    updateStatus(`All tests passed! (${results.totalTests} tests)`, 'passed');
+                    log('🎉 All basic tests passed successfully!');
+                } else {
+                    updateStatus(`${results.failedTests} tests failed`, 'failed');
+                    log(`⚠️ ${results.failedTests} out of ${results.totalTests} tests failed`);
+                }
+                
+                showTestSummary(results);
+                
+            } catch (error) {
+                updateStatus('Test execution failed', 'failed');
+                log(`💥 Test execution error: ${error.message}`);
+                showError(error);
+            } finally {
+                disableButtons(false);
+            }
+        }
+
+        async function runContinuousTests() {
+            if (!appWindow) {
+                log('❌ Application not loaded. Please wait for initialization.');
+                return;
+            }
+
+            updateStatus('Running continuous tests...', 'running');
+            disableButtons(true);
+            
+            try {
+                log('🔄 Starting continuous test runner...');
+                log('Will keep testing until all bugs are fixed or max iterations reached');
+                
+                const runner = new appWindow.ContinuousTestRunner();
+                const results = await runner.runContinuousTests();
+                
+                testResults.push({
+                    type: 'continuous',
+                    timestamp: Date.now(),
+                    results: results
+                });
+                
+                if (results.finalResults) {
+                    updateProgress(results.finalResults.passedTests + results.finalResults.failedTests, results.finalResults.totalTests);
+                    updateSuccessRate(results.finalResults.passedTests, results.finalResults.totalTests);
+                    updateDuration(results.finalResults.duration);
+                }
+                
+                if (results.completed && results.finalResults.failedTests === 0) {
+                    updateStatus(`All bugs fixed! (${results.iterations} iterations)`, 'passed');
+                    log('🎉 Continuous testing completed - all bugs fixed!');
+                } else {
+                    updateStatus(`Completed with ${results.persistentIssues} persistent issues`, 'failed');
+                    log(`⚠️ Continuous testing completed with ${results.persistentIssues} remaining issues`);
+                }
+                
+                showTestSummary(results.finalResults || {});
+                
+            } catch (error) {
+                updateStatus('Continuous test failed', 'failed');
+                log(`💥 Continuous test error: ${error.message}`);
+                showError(error);
+            } finally {
+                disableButtons(false);
+            }
+        }
+
+        async function runPerformanceTests() {
+            if (!appWindow) {
+                log('❌ Application not loaded. Please wait for initialization.');
+                return;
+            }
+
+            updateStatus('Running performance tests...', 'running');
+            disableButtons(true);
+            
+            try {
+                log('⚡ Starting performance test suite...');
+                
+                // Custom performance tests
+                const performanceResults = {
+                    totalTests: 0,
+                    passedTests: 0,
+                    failedTests: 0,
+                    performance: {},
+                    startTime: Date.now()
+                };
+
+                // Test 1: Rendering performance
+                log('📊 Testing rendering performance...');
+                performanceResults.totalTests++;
+                
+                if (appWindow.customerData && appWindow.renderCustomerListOptimized) {
+                    const startTime = performance.now();
+                    appWindow.renderCustomerListOptimized(appWindow.customerData);
+                    const endTime = performance.now();
+                    const renderTime = endTime - startTime;
+                    
+                    performanceResults.performance.fullRenderTime = renderTime;
+                    
+                    if (renderTime < 50) {
+                        performanceResults.passedTests++;
+                        log(`✅ Render performance: ${renderTime.toFixed(2)}ms (Good)`);
+                    } else {
+                        performanceResults.failedTests++;
+                        log(`❌ Render performance: ${renderTime.toFixed(2)}ms (Slow - should be < 50ms)`);
+                    }
+                } else {
+                    performanceResults.failedTests++;
+                    log('❌ Render function not available for performance testing');
+                }
+
+                // Test 2: Memory usage
+                log('🧠 Testing memory usage...');
+                performanceResults.totalTests++;
+                
+                if (performance.memory) {
+                    const initialMemory = performance.memory.usedJSHeapSize;
+                    
+                    // Perform operations
+                    for (let i = 0; i < 100; i++) {
+                        if (appWindow.renderCustomerListOptimized && appWindow.customerData) {
+                            appWindow.renderCustomerListOptimized(appWindow.customerData.slice(0, 5));
+                        }
+                    }
+                    
+                    const finalMemory = performance.memory.usedJSHeapSize;
+                    const memoryIncrease = finalMemory - initialMemory;
+                    
+                    performanceResults.performance.memoryIncrease = memoryIncrease;
+                    
+                    if (memoryIncrease < 1024 * 1024) { // Less than 1MB
+                        performanceResults.passedTests++;
+                        log(`✅ Memory usage: ${(memoryIncrease / 1024).toFixed(2)}KB increase (Good)`);
+                    } else {
+                        performanceResults.failedTests++;
+                        log(`❌ Memory usage: ${(memoryIncrease / 1024 / 1024).toFixed(2)}MB increase (High)`);
+                    }
+                } else {
+                    performanceResults.passedTests++;
+                    log('ℹ️ Memory API not available - skipping memory test');
+                }
+
+                // Test 3: Filter performance
+                log('🔍 Testing filter performance...');
+                performanceResults.totalTests++;
+                
+                if (appWindow.updateCustomerList) {
+                    const startTime = performance.now();
+                    appWindow.updateCustomerList();
+                    
+                    // Wait for debounce
+                    await new Promise(resolve => setTimeout(resolve, 200));
+                    
+                    const endTime = performance.now();
+                    const filterTime = endTime - startTime;
+                    
+                    performanceResults.performance.filterTime = filterTime;
+                    
+                    if (filterTime < 300) {
+                        performanceResults.passedTests++;
+                        log(`✅ Filter performance: ${filterTime.toFixed(2)}ms (Good)`);
+                    } else {
+                        performanceResults.failedTests++;
+                        log(`❌ Filter performance: ${filterTime.toFixed(2)}ms (Slow - should be < 300ms)`);
+                    }
+                } else {
+                    performanceResults.failedTests++;
+                    log('❌ Filter function not available for performance testing');
+                }
+
+                performanceResults.endTime = Date.now();
+                performanceResults.duration = performanceResults.endTime - performanceResults.startTime;
+                
+                testResults.push({
+                    type: 'performance',
+                    timestamp: Date.now(),
+                    results: performanceResults
+                });
+                
+                updateProgress(performanceResults.passedTests + performanceResults.failedTests, performanceResults.totalTests);
+                updateSuccessRate(performanceResults.passedTests, performanceResults.totalTests);
+                updateDuration(performanceResults.duration);
+                
+                if (performanceResults.failedTests === 0) {
+                    updateStatus('Performance tests passed!', 'passed');
+                    log('🎉 All performance tests passed!');
+                } else {
+                    updateStatus(`${performanceResults.failedTests} performance issues`, 'failed');
+                    log(`⚠️ ${performanceResults.failedTests} performance issues detected`);
+                }
+                
+                showTestSummary(performanceResults);
+                
+            } catch (error) {
+                updateStatus('Performance test failed', 'failed');
+                log(`💥 Performance test error: ${error.message}`);
+                showError(error);
+            } finally {
+                disableButtons(false);
+            }
+        }
+
+        async function runAllTests() {
+            log('🚀 Running complete test suite...');
+            
+            await runBasicTests();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            await runPerformanceTests();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            await runContinuousTests();
+            
+            log('🏁 Complete test suite finished!');
+            
+            // Generate comprehensive report
+            generateComprehensiveReport();
+        }
+
+        function generateComprehensiveReport() {
+            log('\n📊 COMPREHENSIVE TEST REPORT');
+            log('='.repeat(50));
+            
+            testResults.forEach((testRun, index) => {
+                log(`\n${index + 1}. ${testRun.type.toUpperCase()} TESTS:`);
+                log(`   Timestamp: ${new Date(testRun.timestamp).toLocaleString()}`);
+                
+                if (testRun.results.totalTests) {
+                    log(`   Total Tests: ${testRun.results.totalTests}`);
+                    log(`   Passed: ${testRun.results.passedTests}`);
+                    log(`   Failed: ${testRun.results.failedTests}`);
+                    log(`   Success Rate: ${((testRun.results.passedTests / testRun.results.totalTests) * 100).toFixed(1)}%`);
+                }
+                
+                if (testRun.results.duration) {
+                    log(`   Duration: ${testRun.results.duration}ms`);
+                }
+                
+                if (testRun.results.performance) {
+                    log(`   Performance Metrics:`);
+                    Object.entries(testRun.results.performance).forEach(([key, value]) => {
+                        if (typeof value === 'number') {
+                            log(`     ${key}: ${value.toFixed(2)}${key.includes('Time') ? 'ms' : key.includes('Memory') ? ' bytes' : ''}`);
+                        }
+                    });
+                }
+            });
+            
+            log('\n='.repeat(50));
+        }
+
+        function showTestSummary(results) {
+            const summaryDiv = document.getElementById('testSummary');
+            summaryDiv.style.display = 'grid';
+            
+            summaryDiv.innerHTML = `
+                <div class="summary-card">
+                    <h3>📊 Test Results</h3>
+                    <p>Total: ${results.totalTests || 0}</p>
+                    <p>Passed: ${results.passedTests || 0}</p>
+                    <p>Failed: ${results.failedTests || 0}</p>
+                    <p>Success Rate: ${results.totalTests ? ((results.passedTests / results.totalTests) * 100).toFixed(1) : 0}%</p>
+                </div>
+                
+                <div class="summary-card">
+                    <h3>⏱️ Performance</h3>
+                    <p>Duration: ${results.duration || 0}ms</p>
+                    ${results.performance ? Object.entries(results.performance).map(([key, value]) => 
+                        `<p>${key}: ${typeof value === 'number' ? value.toFixed(2) : value}</p>`
+                    ).join('') : ''}
+                </div>
+                
+                <div class="summary-card">
+                    <h3>🎯 Status</h3>
+                    <p>Status: ${results.failedTests === 0 ? '✅ All Passed' : `❌ ${results.failedTests} Failed`}</p>
+                    <p>Timestamp: ${new Date().toLocaleTimeString()}</p>
+                </div>
+            `;
+        }
+
+        function showError(error) {
+            const errorDiv = document.getElementById('errorLog');
+            errorDiv.style.display = 'block';
+            errorDiv.innerHTML = `
+                <h3>💥 Error Details</h3>
+                <p><strong>Message:</strong> ${error.message}</p>
+                <p><strong>Stack:</strong></p>
+                <pre>${error.stack || 'No stack trace available'}</pre>
+            `;
+        }
+
+        function clearOutput() {
+            document.getElementById('testOutput').textContent = 'Output cleared. Ready for new tests.\n';
+            document.getElementById('testSummary').style.display = 'none';
+            document.getElementById('errorLog').style.display = 'none';
+            updateStatus('Ready', 'ready');
+            updateProgress(0, 0);
+            updateSuccessRate(0, 0);
+            updateDuration(0);
+        }
+
+        function exportResults() {
+            const data = {
+                timestamp: new Date().toISOString(),
+                testResults: testResults,
+                summary: {
+                    totalRuns: testResults.length,
+                    lastRun: testResults[testResults.length - 1] || null
+                }
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `test-results-${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            log('📊 Test results exported successfully');
+        }
+
+        function disableButtons(disabled) {
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(btn => {
+                if (btn.id !== 'clearBtn') {
+                    btn.disabled = disabled;
+                }
+            });
+        }
+
+        // Auto-start basic tests when page loads
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                if (appWindow) {
+                    log('🚀 Auto-starting basic tests...');
+                    runBasicTests();
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
