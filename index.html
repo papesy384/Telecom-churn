@@ -38,8 +38,11 @@
             font-family: 'Inter', sans-serif;
             background-color: #171717;
             color: #f5f5f5;
-            min-height: 100vh;
+            height: 100vh;
+            overflow: hidden; /* Prevent body scrolling */
             font-size: 16px;  /* Web Standard Base Font Size */
+            margin: 0;
+            padding: 0;
         }
 
         /* Custom scrollbar for the high-risk list */
@@ -56,14 +59,40 @@
             background-color: #262626;
         }
 
-        /* SPA Section Management */
+        /* SPA Section Management - Viewport Constrained */
         .spa-section {
             display: none !important;
             animation: fadeIn 0.3s ease-in;
+            height: 100vh;
+            overflow-y: auto;
+            box-sizing: border-box;
         }
 
         .spa-section.active {
-            display: block !important;
+            display: flex !important;
+            flex-direction: column;
+        }
+
+        /* Ensure sections fit within viewport */
+        .section-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        /* Responsive content sizing */
+        .content-wrapper {
+            max-height: calc(100vh - 4rem);
+            overflow-y: auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         @keyframes fadeIn {
@@ -126,13 +155,88 @@
             transform: translateY(-1px);
         }
         
-        /* Improved Spacing */
+        /* Improved Spacing - Viewport Optimized */
         .section-spacing {
-            margin-bottom: 4rem;
+            margin-bottom: 2rem; /* Reduced for viewport fit */
         }
         
         .card-spacing {
-            margin-bottom: 2rem;
+            margin-bottom: 1rem; /* Reduced for viewport fit */
+        }
+
+        /* Customer List Container - Viewport Constrained */
+        #customerListContainer {
+            max-height: calc(100vh - 300px); /* Leave space for header and controls */
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        /* Modal Viewport Constraints */
+        .modal-content {
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        /* Live Demo Section Optimization */
+        #live-demo .max-w-7xl {
+            height: calc(100vh - 8rem);
+            display: flex;
+            flex-direction: column;
+        }
+
+        #live-demo .grid {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Dashboard Grid Optimization */
+        .dashboard-grid {
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+
+        /* Compact spacing for viewport fit */
+        .compact-spacing {
+            margin: 0.5rem 0;
+            padding: 0.75rem;
+        }
+
+        /* Responsive text sizing */
+        @media (max-height: 800px) {
+            .hero-title {
+                font-size: 2.5rem !important;
+            }
+            
+            .section-title {
+                font-size: 1.75rem !important;
+            }
+            
+            .section-spacing {
+                margin-bottom: 1rem;
+            }
+            
+            .card-spacing {
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        @media (max-height: 600px) {
+            .hero-title {
+                font-size: 2rem !important;
+            }
+            
+            .section-title {
+                font-size: 1.5rem !important;
+            }
+            
+            .section-spacing {
+                margin-bottom: 0.5rem;
+            }
+            
+            .compact-spacing {
+                margin: 0.25rem 0;
+                padding: 0.5rem;
+            }
         }
         
         /* Better Typography */
@@ -349,7 +453,7 @@
     </nav>
 
     <!-- Hero Section / Landing Page -->
-    <section id="home" class="spa-section active relative h-screen flex items-center justify-center overflow-hidden">
+    <section id="home" class="spa-section active relative section-container overflow-hidden">
         <!-- Animated Background -->
         <div class="absolute inset-0 bg-gradient-to-br from-dark-bg via-dark-card to-dark-bg">
             <div class="absolute inset-0 opacity-20">
@@ -393,7 +497,7 @@
     </section>
 
     <!-- Problem Section -->
-    <section id="problem" class="spa-section h-screen flex items-center px-4 md:px-8 bg-dark-bg overflow-hidden" style="padding-top: 5rem; padding-bottom: 2rem;">
+    <section id="problem" class="spa-section section-container bg-dark-bg">
         <div class="max-w-5xl mx-auto w-full">
             <div class="text-center" style="margin-bottom: 3vh;">
                 <h2 class="section-title font-extrabold text-light-text mb-2">The Problem</h2>
@@ -457,7 +561,7 @@
     </section>
 
     <!-- Solution Section -->
-    <section id="solution" class="spa-section h-screen flex items-center px-4 md:px-8 bg-dark-card overflow-hidden" style="padding-top: 5rem; padding-bottom: 2rem;">
+    <section id="solution" class="spa-section section-container bg-dark-card">
         <div class="max-w-5xl mx-auto w-full">
             <div class="text-center" style="margin-bottom: 3vh;">
                 <h2 class="section-title font-extrabold text-light-text mb-2">Our Solution</h2>
@@ -527,13 +631,13 @@
     </section>
 
     <!-- Live Demo Section -->
-    <section id="live-demo" class="spa-section h-screen flex items-center px-4 md:px-8 bg-dark-bg overflow-y-auto" style="padding-top: 6rem; padding-bottom: 2rem;">
-        <div class="max-w-7xl mx-auto w-full">
-            <div class="text-center mb-6">
-                <h2 class="section-title font-extrabold text-light-text mb-3">
+    <section id="live-demo" class="spa-section section-container bg-dark-bg">
+        <div class="content-wrapper max-w-7xl mx-auto">
+            <div class="text-center compact-spacing">
+                <h2 class="section-title font-extrabold text-light-text mb-2">
                     Live Application Demo
                 </h2>
-                <div class="w-20 h-0.5 bg-primary-orange mx-auto mb-3"></div>
+                <div class="w-20 h-0.5 bg-primary-orange mx-auto mb-2"></div>
                 <p class="body-text text-gray-300 max-w-2xl mx-auto">
                     See how our AI delivers critical value and prescriptive actions for your CSM team.
                 </p>
@@ -746,7 +850,7 @@
     </section>
 
     <!-- How It Works Section -->
-    <section id="how-it-works" class="spa-section h-screen flex items-center px-4 md:px-8 bg-dark-card overflow-y-auto" style="padding-top: 5rem; padding-bottom: 2rem;">
+    <section id="how-it-works" class="spa-section section-container bg-dark-card">
         <div class="max-w-4xl mx-auto w-full">
             <div class="text-center" style="margin-bottom: 2vh;">
                 <h2 class="section-title font-extrabold text-light-text mb-2">How It Works</h2>
@@ -842,7 +946,7 @@
     </section>
 
     <!-- What's Next / Scaling Section -->
-    <section id="scaling" class="spa-section h-screen flex items-center px-4 md:px-8 bg-dark-bg overflow-y-auto" style="padding-top: 5rem; padding-bottom: 2rem;">
+    <section id="scaling" class="spa-section section-container bg-dark-bg">
         <div class="max-w-4xl mx-auto w-full">
             <div class="text-center" style="margin-bottom: 2vh;">
                 <h2 class="section-title font-extrabold text-light-text mb-2">What's Next: Scaling</h2>
@@ -990,7 +1094,7 @@
     </div>
 
     <!-- Customer Dashboard Section -->
-    <section id="customer-dashboard" class="spa-section h-screen flex items-center px-4 md:px-8 bg-gray-50 overflow-y-auto" style="padding-top: 5rem; padding-bottom: 2rem;">
+    <section id="customer-dashboard" class="spa-section section-container bg-gray-50">
         <div class="max-w-4xl mx-auto w-full">
             <!-- Header -->
             <div class="text-center mb-8">
@@ -1056,7 +1160,7 @@
 
     <!-- Detail Modal -->
     <div id="detailModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4">
-        <div class="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div class="bg-white rounded-lg max-w-2xl w-full modal-content">
             <!-- Modal Header -->
             <div class="flex justify-between items-center p-6 border-b border-gray-200">
                 <h2 id="modalTitle" class="text-xl font-semibold text-gray-900">Customer Details</h2>
