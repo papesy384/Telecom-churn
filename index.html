@@ -78,6 +78,18 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 4rem 1rem 2rem 1rem;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        /* Hero section - centered content */
+        .hero-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 2rem 1rem;
@@ -87,12 +99,64 @@
 
         /* Responsive content sizing */
         .content-wrapper {
-            max-height: calc(100vh - 4rem);
+            max-height: calc(100vh - 8rem);
             overflow-y: auto;
             width: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
+        }
+
+        /* Content sections with proper spacing */
+        .content-section {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Section headers with consistent spacing */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            margin-bottom: 1rem;
+        }
+
+        .section-header .divider {
+            width: 4rem;
+            height: 2px;
+            background: #F97316;
+            margin: 0 auto 1rem auto;
+        }
+
+        /* Live demo section - special layout */
+        .live-demo-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem 1rem;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .live-demo-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .live-demo-header {
+            flex-shrink: 0;
+            margin-bottom: 1rem;
+        }
+
+        .live-demo-body {
+            flex: 1;
+            overflow-y: auto;
         }
 
         @keyframes fadeIn {
@@ -453,7 +517,7 @@
     </nav>
 
     <!-- Hero Section / Landing Page -->
-    <section id="home" class="spa-section active relative section-container overflow-hidden">
+    <section id="home" class="spa-section active relative hero-container overflow-hidden">
         <!-- Animated Background -->
         <div class="absolute inset-0 bg-gradient-to-br from-dark-bg via-dark-card to-dark-bg">
             <div class="absolute inset-0 opacity-20">
@@ -498,10 +562,10 @@
 
     <!-- Problem Section -->
     <section id="problem" class="spa-section section-container bg-dark-bg">
-        <div class="max-w-5xl mx-auto w-full">
-            <div class="text-center" style="margin-bottom: 3vh;">
-                <h2 class="section-title font-extrabold text-light-text mb-2">The Problem</h2>
-                <div class="w-16 h-0.5 bg-primary-orange mx-auto"></div>
+        <div class="content-section">
+            <div class="section-header">
+                <h2 class="section-title font-extrabold text-light-text">The Problem</h2>
+                <div class="divider"></div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 compact-gap items-center">
@@ -562,10 +626,10 @@
 
     <!-- Solution Section -->
     <section id="solution" class="spa-section section-container bg-dark-card">
-        <div class="max-w-5xl mx-auto w-full">
-            <div class="text-center" style="margin-bottom: 3vh;">
-                <h2 class="section-title font-extrabold text-light-text mb-2">Our Solution</h2>
-                <div class="w-16 h-0.5 bg-primary-orange mx-auto"></div>
+        <div class="content-section">
+            <div class="section-header">
+                <h2 class="section-title font-extrabold text-light-text">Our Solution</h2>
+                <div class="divider"></div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 compact-gap items-center">
@@ -631,9 +695,9 @@
     </section>
 
     <!-- Live Demo Section -->
-    <section id="live-demo" class="spa-section section-container bg-dark-bg">
-        <div class="content-wrapper max-w-7xl mx-auto">
-            <div class="text-center compact-spacing">
+    <section id="live-demo" class="spa-section live-demo-container bg-dark-bg">
+        <div class="live-demo-content max-w-7xl mx-auto w-full">
+            <div class="live-demo-header text-center">
                 <h2 class="section-title font-extrabold text-light-text mb-2">
                     Live Application Demo
                 </h2>
@@ -642,6 +706,7 @@
                     See how our AI delivers critical value and prescriptive actions for your CSM team.
                 </p>
             </div>
+            <div class="live-demo-body">
 
         <!-- Dashboard Tabs -->
         <div class="mb-6">
@@ -845,16 +910,16 @@
                     <!-- Playbook content will be injected here -->
                 </div>
             </div>
+            </div>
         </div>
-    </div>
     </section>
 
     <!-- How It Works Section -->
     <section id="how-it-works" class="spa-section section-container bg-dark-card">
-        <div class="max-w-4xl mx-auto w-full">
-            <div class="text-center" style="margin-bottom: 2vh;">
-                <h2 class="section-title font-extrabold text-light-text mb-2">How It Works</h2>
-                <div class="w-16 h-0.5 bg-primary-orange mx-auto mb-2"></div>
+        <div class="content-section">
+            <div class="section-header">
+                <h2 class="section-title font-extrabold text-light-text">How It Works</h2>
+                <div class="divider"></div>
                 <p class="body-text text-gray-300">AI Prediction Engine integrates in three simple steps.</p>
             </div>
 
@@ -947,10 +1012,10 @@
 
     <!-- What's Next / Scaling Section -->
     <section id="scaling" class="spa-section section-container bg-dark-bg">
-        <div class="max-w-4xl mx-auto w-full">
-            <div class="text-center" style="margin-bottom: 2vh;">
-                <h2 class="section-title font-extrabold text-light-text mb-2">What's Next: Scaling</h2>
-                <div class="w-16 h-0.5 bg-primary-orange mx-auto mb-2"></div>
+        <div class="content-section">
+            <div class="section-header">
+                <h2 class="section-title font-extrabold text-light-text">What's Next: Scaling</h2>
+                <div class="divider"></div>
             </div>
 
             <div class="space-y-4">
@@ -1095,10 +1160,11 @@
 
     <!-- Customer Dashboard Section -->
     <section id="customer-dashboard" class="spa-section section-container bg-gray-50">
-        <div class="max-w-4xl mx-auto w-full">
+        <div class="content-section">
             <!-- Header -->
-            <div class="text-center mb-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-2">Churn Intervention Dashboard</h2>
+            <div class="section-header">
+                <h2 class="text-3xl font-bold text-gray-900">Churn Intervention Dashboard</h2>
+                <div class="divider" style="background: #374151;"></div>
                 <p class="text-gray-600">Prioritize high-value customers at risk of churning</p>
             </div>
 
