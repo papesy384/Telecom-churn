@@ -252,7 +252,43 @@
                 grid-template-columns: 1fr;
                 gap: 0.75rem;
             }
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .section-container {
+                padding: 1rem 0.75rem;
+            }
             
+            .section-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .content-section {
+                padding: 0 0.5rem;
+            }
+            
+            /* Customer dashboard mobile layout */
+            #customer-dashboard-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .section-header h2 {
+                font-size: 1.25rem;
+            }
+            
+            .spa-section {
+                padding: 0.5rem;
+            }
+            
+            /* Compact filter on mobile */
+            #arr-filter {
+                font-size: 0.875rem;
+                padding: 0.5rem;
+            }
         }
 
 
@@ -583,19 +619,19 @@
                 </div>
 
                 <!-- Desktop Navigation -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a data-section="home" class="nav-link text-sm font-medium text-gray-300 pb-1 active">Home</a>
-                    <a data-section="problem" class="nav-link text-sm font-medium text-gray-300 pb-1">Problem</a>
-                    <a data-section="solution" class="nav-link text-sm font-medium text-gray-300 pb-1">Solution</a>
-                    <a data-section="live-demo" class="nav-link text-sm font-medium text-gray-300 pb-1">Live Demo</a>
-                    <a data-section="customer-dashboard" class="nav-link text-sm font-medium text-gray-300 pb-1">Customer Dashboard</a>
-                    <a data-section="how-it-works" class="nav-link text-sm font-medium text-gray-300 pb-1">How It Works</a>
-                    <a data-section="scaling" class="nav-link text-sm font-medium text-gray-300 pb-1">What's Next</a>
-                </div>
+                <nav class="hidden md:flex items-center space-x-8" role="navigation" aria-label="Main navigation">
+                    <a data-section="home" class="nav-link text-sm font-medium text-gray-300 pb-1 active" aria-current="page" tabindex="0">Home</a>
+                    <a data-section="problem" class="nav-link text-sm font-medium text-gray-300 pb-1" tabindex="0">Problem</a>
+                    <a data-section="solution" class="nav-link text-sm font-medium text-gray-300 pb-1" tabindex="0">Solution</a>
+                    <a data-section="live-demo" class="nav-link text-sm font-medium text-gray-300 pb-1" tabindex="0">Live Demo</a>
+                    <a data-section="customer-dashboard" class="nav-link text-sm font-medium text-gray-300 pb-1" tabindex="0">Customer Dashboard</a>
+                    <a data-section="how-it-works" class="nav-link text-sm font-medium text-gray-300 pb-1" tabindex="0">How It Works</a>
+                    <a data-section="scaling" class="nav-link text-sm font-medium text-gray-300 pb-1" tabindex="0">What's Next</a>
+                </nav>
 
                 <!-- Mobile Menu Button -->
-                <button id="mobile-menu-btn" class="md:hidden text-light-text">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
+                <button id="mobile-menu-btn" class="md:hidden text-light-text" aria-label="Toggle mobile menu" aria-expanded="false" tabindex="0">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                     </svg>
                 </button>
