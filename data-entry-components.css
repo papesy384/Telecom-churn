@@ -1,0 +1,12 @@
+/**
+ * Data Entry Components CSS
+ * Comprehensive styling for all data entry components
+ */
+
+/* Base Component Styles */
+.de-component {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+/* Add additional custom styles if needed */
