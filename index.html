@@ -223,132 +223,8 @@
                 gap: 0.75rem;
             }
             
-            .customer-dashboard-content {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto auto auto;
-                height: auto;
-                gap: 1rem;
-            }
-            
-            .customer-filter-section,
-            .customer-list-section {
-                grid-column: 1;
-                grid-row: auto;
-            }
-            
-            .customer-list-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .customer-dashboard-container {
-                padding: 1rem;
-            }
         }
 
-        @media (min-width: 1400px) {
-            .customer-list-container {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        /* Customer Dashboard Optimization - Horizontal 2-3 Column Grid Layout */
-        .customer-dashboard-container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            padding: 1.5rem;
-            box-sizing: border-box;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-        }
-
-        .customer-dashboard-content {
-            display: grid;
-            grid-template-columns: 320px 1fr;
-            grid-template-rows: auto auto 1fr;
-            gap: 1rem;
-            max-width: 1600px;
-            margin: 0 auto;
-            width: 100%;
-            height: calc(100vh - 3rem);
-        }
-
-        .customer-dashboard-header {
-            grid-column: 1 / -1;
-            text-align: center;
-            background: white;
-            padding: 1rem 1.5rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .customer-filter-section {
-            grid-row: 2;
-            grid-column: 1;
-            background: white;
-            border-radius: 0.75rem;
-            padding: 1.25rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e2e8f0;
-            display: flex;
-            flex-direction: column;
-            max-height: calc(100vh - 20rem);
-            overflow-y: auto;
-        }
-
-        .customer-list-section {
-            grid-row: 2;
-            grid-column: 2;
-            background: white;
-            border-radius: 0.75rem;
-            padding: 1.25rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e2e8f0;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        
-        .customer-list-section > .mb-3 {
-            flex-shrink: 0;
-        }
-        
-        .customer-list-section > .customer-list-container {
-            flex: 1;
-            min-height: 0;
-            overflow-y: auto;
-        }
-
-        .customer-list-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            padding-right: 0.5rem;
-            width: 100%;
-        }
-        
-        @media (min-width: 1400px) {
-            .customer-list-container {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-        
-        .customer-card-compact {
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            border: 1px solid #e2e8f0;
-            border-radius: 0.75rem;
-            padding: 1rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            height: fit-content;
-            min-width: 280px;
-        }
-
-        .customer-card-compact:hover {
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-            transform: translateY(-2px);
-            border-color: #3b82f6;
-        }
 
         .filter-input-enhanced {
             background: linear-gradient(135deg, #fff5ec 0%, #fed7aa 100%);
@@ -682,7 +558,6 @@
                     <a data-section="problem" class="nav-link text-sm font-medium text-gray-300 pb-1">Problem</a>
                     <a data-section="solution" class="nav-link text-sm font-medium text-gray-300 pb-1">Solution</a>
                     <a data-section="live-demo" class="nav-link text-sm font-medium text-gray-300 pb-1">Live Demo</a>
-                    <a data-section="customer-dashboard" class="nav-link text-sm font-medium text-gray-300 pb-1">Customer Dashboard</a>
                     <a data-section="how-it-works" class="nav-link text-sm font-medium text-gray-300 pb-1">How It Works</a>
                     <a data-section="scaling" class="nav-link text-sm font-medium text-gray-300 pb-1">What's Next</a>
                 </div>
@@ -702,7 +577,6 @@
                     <a data-section="problem" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">Problem</a>
                     <a data-section="solution" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">Solution</a>
                     <a data-section="live-demo" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">Live Demo</a>
-                    <a data-section="customer-dashboard" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">Customer Dashboard</a>
                     <a data-section="how-it-works" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">How It Works</a>
                     <a data-section="scaling" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">What's Next</a>
                 </div>
@@ -1344,92 +1218,6 @@
             </button>
         </div>
     </div>
-
-    <!-- Customer Dashboard Section -->
-    <section id="customer-dashboard" class="spa-section customer-dashboard-container">
-        <div class="customer-dashboard-content">
-            <!-- Header -->
-            <div class="customer-dashboard-header">
-                <h2 class="text-2xl font-bold text-gray-900 mb-2">🎯 Churn Intervention Dashboard</h2>
-                <div class="w-16 h-0.5 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-2 rounded-full"></div>
-                <div class="flex justify-center items-center space-x-6 text-xs text-gray-500">
-                    <span class="flex items-center">
-                        <div class="w-2 h-2 bg-red-500 rounded-full mr-1.5"></div>
-                        Critical (80%+)
-                    </span>
-                    <span class="flex items-center">
-                        <div class="w-2 h-2 bg-orange-500 rounded-full mr-1.5"></div>
-                        High (60-79%)
-                    </span>
-                    <span class="flex items-center">
-                        <div class="w-2 h-2 bg-green-500 rounded-full mr-1.5"></div>
-                        Low (<60%)
-                    </span>
-                </div>
-            </div>
-
-            <!-- Filter Section -->
-            <div class="customer-filter-section">
-                <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 mr-2 text-blue-600">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
-                    </svg>
-                    Smart Filter
-                </h3>
-                    <div class="space-y-4">
-                        <div class="text-center">
-                            <label for="valueThreshold" class="block text-sm font-semibold text-gray-700 mb-2">
-                                Annual Recurring Revenue (ARR) Threshold
-                            </label>
-                    <p class="text-sm text-orange-700">Set minimum ARR threshold to prioritize your most valuable at-risk customers</p>
-                </div>
-                
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <div class="flex items-center space-x-3">
-                        <label for="valueThreshold" class="text-lg font-semibold text-orange-800 whitespace-nowrap">
-                            Minimum ARR:
-                        </label>
-                        <div class="relative">
-                            <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-orange-600 font-bold text-lg">$</span>
-                            <input 
-                                type="number" 
-                                id="valueThreshold" 
-                                value="5000" 
-                                min="0" 
-                                step="1000"
-                                class="w-32 h-12 pl-8 pr-4 text-lg font-bold text-orange-800 bg-white border-2 border-orange-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-orange-200 focus:border-orange-500 transition-all duration-200 shadow-md hover:shadow-lg"
-                                oninput="updateCustomerList()"
-                            >
-                        </div>
-                    </div>
-                    
-                    <button 
-                        onclick="resetFilters()" 
-                        class="px-6 py-3 bg-orange-600 text-white font-semibold rounded-lg hover:bg-orange-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105"
-                    >
-                        🔄 Reset Filter
-                    </button>
-                </div>
-            </div>
-
-            <!-- Customer List Section -->
-            <div class="customer-list-section">
-                <div class="mb-3">
-                    <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 mr-2 text-purple-600">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
-                        </svg>
-                        Priority List
-                    </h3>
-                    <div id="filterStatus" class="mb-2 text-xs"></div>
-                </div>
-                
-                <div class="customer-list-container" id="customerListContainer">
-                    <!-- Customer cards will be rendered here -->
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Detail Modal -->
     <div id="detailModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4">
@@ -2123,11 +1911,6 @@
                 // Verify the section is actually displayed
                 const computedDisplay = window.getComputedStyle(targetSection).display;
                 
-                // Initialize customer dashboard when it becomes active
-                if (sectionId === 'customer-dashboard') {
-                    updateCustomerList();
-                    updateFilterStatus();
-                }
                 
                 // Initialize live demo when it becomes active
                 if (sectionId === 'live-demo') {
