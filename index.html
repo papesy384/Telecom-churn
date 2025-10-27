@@ -996,10 +996,10 @@
                         <!-- Contract End Month Picker -->
                         <div>
                             <label for="contract-month-filter" class="block text-sm font-semibold text-light-text mb-2">
-                                📅 Contract End Month:
+                                📅 Contract End Date (MM/DD/YYYY):
                             </label>
                             <input 
-                                type="month" 
+                                type="date" 
                                 id="contract-month-filter" 
                                 class="w-full px-4 py-2 bg-dark-bg border border-gray-600 text-light-text rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-orange"
                                 onchange="searchAndFilterCustomers()"
@@ -2205,17 +2205,19 @@
                     matchesRiskTier = customer.calculatedRiskScore < 50;
                 }
                 
-                // Contract Month Filter
-                let matchesContractMonth = true;
+                // Contract End Date Filter
+                let matchesContractDate = true;
                 if (selectedContractMonth) {
+                    const filterDate = new Date(selectedContractMonth);
                     const customerEndDate = new Date(customer.contractEndDate);
-                    const filterMonth = selectedContractMonth.substring(0, 7); // Get YYYY-MM
-                    const customerMonth = customerEndDate.getFullYear() + '-' + 
-                        String(customerEndDate.getMonth() + 1).padStart(2, '0');
-                    matchesContractMonth = customerMonth === filterMonth;
+                    // Compare if the dates match (same day, month, and year)
+                    matchesContractDate = 
+                        filterDate.getDate() === customerEndDate.getDate() &&
+                        filterDate.getMonth() === customerEndDate.getMonth() &&
+                        filterDate.getFullYear() === customerEndDate.getFullYear();
                 }
                 
-                return matchesARR && matchesSearch && matchesRiskTier && matchesContractMonth;
+                return matchesARR && matchesSearch && matchesRiskTier && matchesContractDate;
             });
             
             // Sort customers
