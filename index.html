@@ -762,218 +762,67 @@
         </div>
     </section>
 
-    <!-- Live Demo Section -->
+    <!-- Minimal Interface (Phase 2) -->
     <section id="live-demo" class="spa-section live-demo-container bg-dark-bg">
         <div class="live-demo-content">
             <div class="live-demo-header">
                 <h2 class="text-2xl font-bold text-light-text mb-2">
-                    Live Application Demo
+                    🎯 High-Risk Customer List
                 </h2>
                 <div class="w-16 h-0.5 bg-gray-600 mx-auto mb-2"></div>
                 <p class="text-sm text-gray-300">
-                    AI-powered churn prediction in action
+                    Top 10 customers with highest churn risk
                 </p>
             </div>
             
             <div class="live-demo-body">
-                <!-- Dashboard Tabs -->
-                <div class="dashboard-tabs">
-                    <div class="flex flex-wrap justify-center gap-2">
-                        <button onclick="showDashboardTab('overview')" id="tab-overview" class="dashboard-tab active px-4 py-2 bg-primary-orange text-dark-bg font-semibold rounded-lg transition duration-200 text-sm">
-                            📊 Overview
-                        </button>
-                        <button onclick="showDashboardTab('customers')" id="tab-customers" class="dashboard-tab px-4 py-2 bg-dark-card text-gray-300 hover:bg-primary-orange hover:text-dark-bg font-semibold rounded-lg transition duration-200 text-sm">
-                            👥 Customers
-                        </button>
-                        <button onclick="showDashboardTab('analytics')" id="tab-analytics" class="dashboard-tab px-4 py-2 bg-dark-card text-gray-300 hover:bg-primary-orange hover:text-dark-bg font-semibold rounded-lg transition duration-200 text-sm">
-                            📈 Analytics
-                        </button>
-                        <button onclick="showDashboardTab('playbook')" id="tab-playbook" class="dashboard-tab px-4 py-2 bg-dark-card text-gray-300 hover:bg-primary-orange hover:text-dark-bg font-semibold rounded-lg transition duration-200 text-sm">
-                            📚 Playbook
-                        </button>
-                    </div>
-                </div>
-                
                 <div class="dashboard-content">
-
-                    <!-- Dashboard Overview -->
-                    <div id="dashboard-overview" class="dashboard-panel">
-                        <div class="dashboard-grid">
-                            <!-- Left Panel: High-Risk Customers -->
-                            <div class="dashboard-card">
-                                <h3>🚨 High-Value Churn Risks</h3>
-                                <div class="dashboard-card-content">
-                                    <p class="text-xs text-gray-400 mb-3">
-                                        Risk Score ≥ 80% AND LTV ≥ $4,000
-                                    </p>
-                                    <div id="action-list-container" class="space-y-2 h-full overflow-y-auto">
-                                        <!-- High-Risk Customer Action Cards will be injected here -->
-                                        <div id="loading-list"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Right Panel: ROI Summary -->
-                            <div class="dashboard-card">
-                                <h3>📈 ROI Summary</h3>
-                                <div class="dashboard-card-content">
-                                    <div class="space-y-3">
-                                        <!-- Model Metrics -->
-                                        <div id="model-metrics-container"></div>
-                                        <!-- ROI Metrics -->
-                                        <div id="roi-summary-container"></div>
-                                    </div>
-                                    <div class="mt-4 pt-3 border-t border-gray-600">
-                                        <p class="text-xs text-gray-400">
-                                            Based on 72% Precision & 75% Recall
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-        <!-- SECTION 1.5: All High-Risk Customers Table -->
-        <div class="mt-4">
-            <div class="p-4 rounded-xl professional-shadow bg-dark-card border border-gray-700 card-hover">
-                <h2 id="high-risk-table-title" class="text-xl font-bold mb-2 text-light-text">
-                    📊 All High-Risk Customers (Risk Score ≥ 80%)
-                </h2>
-                <p class="text-sm text-gray-400 mb-3">
-                    Complete list of all customers flagged as high-risk by the AI model.
-                </p>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left" id="all-high-risk-table">
-                        <thead class="text-xs uppercase bg-dark-bg text-gray-400">
-                            <tr>
-                                <th class="px-4 py-3">Customer ID</th>
-                                <th class="px-4 py-3">Risk Score</th>
-                                <th class="px-4 py-3">LTV</th>
-                                <th class="px-4 py-3">Contract</th>
-                                <th class="px-4 py-3">Root Cause</th>
-                                <th class="px-4 py-3">Call Failure</th>
-                                <th class="px-4 py-3">Price Views</th>
-                                <th class="px-4 py-3">Days Inactive</th>
-                                <th class="px-4 py-3">Survey Score</th>
-                            </tr>
-                        </thead>
-                        <tbody id="all-high-risk-tbody">
-                            <!-- Table rows will be injected here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- SECTION 2: Root Cause Distribution & Playbook -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            <div id="root-cause-distribution" class="p-4 rounded-xl professional-shadow bg-dark-card border border-gray-700 card-hover">
-                <h2 class="text-lg font-bold mb-2 text-light-text">
-                    💡 Root Cause Distribution
-                </h2>
-                <p class="text-sm text-gray-400 mb-2">
-                    Breakdown of Root Cause Tags for High-Risk customers.
-                </p>
-                <div id="cause-chart" class="h-48 flex items-center justify-center">
-                    <!-- Cause breakdown will be injected here -->
-                </div>
-            </div>
-
-            <div id="prescriptive-playbook" class="p-4 rounded-xl professional-shadow bg-dark-card border border-gray-700 card-hover">
-                <h2 class="text-lg font-bold mb-2 text-light-text">
-                    📚 Prescriptive Playbook
-                </h2>
-                <p class="text-sm text-gray-400 mb-2">
-                    Targeted CSM actions based on root cause drivers.
-                </p>
-                <div class="space-y-3" id="playbook-content">
-                    <!-- Playbook content will be injected here -->
-                </div>
-            </div>
-        </div>
-        </div>
-
-        <!-- All Customers Panel -->
-        <div id="dashboard-customers" class="dashboard-panel hidden">
-            <div class="p-4 rounded-xl professional-shadow bg-dark-card border border-gray-700 card-hover">
-                <h2 class="text-xl font-bold mb-4 text-light-text">
-                    📊 All High-Risk Customers (Risk Score ≥ 80%)
-                </h2>
-                <p class="text-sm text-gray-400 mb-4">
-                    Complete list of all customers flagged as high-risk by the AI model.
-                </p>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left" id="all-high-risk-table-customers">
-                        <thead class="text-xs uppercase bg-dark-bg text-gray-400">
-                            <tr>
-                                <th class="px-4 py-3">Customer ID</th>
-                                <th class="px-4 py-3">Risk Score</th>
-                                <th class="px-4 py-3">LTV</th>
-                                <th class="px-4 py-3">Contract</th>
-                                <th class="px-4 py-3">Root Cause</th>
-                                <th class="px-4 py-3">Call Failure</th>
-                                <th class="px-4 py-3">Price Views</th>
-                                <th class="px-4 py-3">Days Inactive</th>
-                                <th class="px-4 py-3">Survey Score</th>
-                            </tr>
-                        </thead>
-                        <tbody id="all-high-risk-tbody-customers">
-                            <!-- Table rows will be injected here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Analytics Panel -->
-        <div id="dashboard-analytics" class="dashboard-panel hidden">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div id="root-cause-distribution" class="p-4 rounded-xl professional-shadow bg-dark-card border border-gray-700 card-hover">
-                    <h2 class="text-lg font-bold mb-2 text-light-text">
-                        💡 Root Cause Distribution
-                    </h2>
-                    <p class="text-sm text-gray-400 mb-2">
-                        Breakdown of Root Cause Tags for High-Risk customers.
-                    </p>
-                    <div id="cause-chart" class="h-48 flex items-center justify-center">
-                        <!-- Cause breakdown will be injected here -->
+                    <!-- High-Risk Customer List -->
+                    <div id="high-risk-list" class="space-y-3">
+                        <!-- Customer cards will be injected here -->
                     </div>
                 </div>
 
-                <div id="roi-summary-analytics" class="p-4 rounded-xl professional-shadow bg-dark-card border border-gray-700 card-hover">
-                    <h2 class="text-lg font-bold mb-3 text-light-text">
-                        📈 ROI Summary
-                    </h2>
-                    <div class="space-y-4">
-                        <!-- Model Metrics will be injected here -->
-                        <div id="metrics-display-analytics">
-                            <div id="model-metrics-container"></div>
-                        </div>
-                        <!-- ROI Metrics will be injected here -->
-                        <div id="roi-metrics-analytics">
-                            <div id="roi-summary-container"></div>
-                        </div>
-                    </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Playbook Panel -->
-        <div id="dashboard-playbook" class="dashboard-panel hidden">
-            <div class="p-4 rounded-xl professional-shadow bg-dark-card border border-gray-700 card-hover">
-                <h2 class="text-lg font-bold mb-2 text-light-text">
-                    📚 Prescriptive Playbook
-                </h2>
-                <p class="text-sm text-gray-400 mb-2">
-                    Targeted CSM actions based on root cause drivers.
-                </p>
-                <div class="space-y-3" id="playbook-content-tab">
-                    <!-- Playbook content will be injected here -->
-                </div>
-            </div>
             </div>
         </div>
     </section>
+
+    <!-- Detail Modal -->
+    <div id="detailModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-lg max-w-md w-full p-6">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center mb-4">
+                <h2 id="modalTitle" class="text-xl font-semibold text-gray-900">Customer Details</h2>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
+            </div>
+            
+            <!-- Modal Content -->
+            <div id="modalContent" class="mb-4">
+                <!-- Content will be generated here -->
+            </div>
+            
+            <!-- Action Log Section -->
+            <div class="border-t pt-4">
+                <h3 class="text-sm font-semibold text-gray-700 mb-2">Manual Action Log</h3>
+                <textarea 
+                    id="actionLogInput" 
+                    class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-orange text-gray-900"
+                    rows="3"
+                    placeholder="Log your intervention (e.g., 'Called John to offer training session')"
+                ></textarea>
+                <button 
+                    onclick="saveActionLog()" 
+                    class="mt-2 w-full px-4 py-2 bg-primary-orange text-dark-bg font-semibold rounded-md hover:bg-orange-600 transition-all duration-200"
+                >
+                    Save Note
+                </button>
+                <div id="saveConfirmation" class="hidden mt-2 text-sm text-green-600 font-medium">
+                    ✓ Note saved successfully
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- How It Works Section -->
     <section id="how-it-works" class="spa-section section-container bg-dark-card">
@@ -1914,13 +1763,7 @@
                 
                 // Initialize live demo when it becomes active
                 if (sectionId === 'live-demo') {
-                    renderActionList();
-                    renderAllHighRiskTable();
-                    renderModelMetrics();
-                    renderROISummary();
-                    renderRootCauseDistribution();
-                    // Initialize dashboard tabs
-                    showDashboardTab('overview');
+                    renderHighRiskCustomerList();
                 }
                 
                 // Scroll to top of page
@@ -1980,6 +1823,112 @@
             console.log(`✅ Dashboard tab switch complete`);
         }
 
+        // --- MINIMAL INTERFACE FUNCTIONS (Phase 2) ---
+        
+        let selectedCustomerId = null;
+        let actionLogs = JSON.parse(localStorage.getItem('csm-action-logs') || '{}');
+        
+        function renderHighRiskCustomerList() {
+            const container = document.getElementById('high-risk-list');
+            if (!container) return;
+            
+            // Get top 10 customers by risk score
+            const sortedCustomers = [...customerData].sort((a, b) => b.riskScore - a.riskScore).slice(0, 10);
+            
+            container.innerHTML = sortedCustomers.map(customer => {
+                const logEntry = actionLogs[customer.Customer_ID] || '';
+                return `
+                    <div class="bg-dark-card border border-gray-700 rounded-lg p-4 hover:border-primary-orange transition-all cursor-pointer" onclick="showCustomerDetail('${customer.Customer_ID}')">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <h3 class="text-lg font-bold text-light-text">${customer.Customer_Name}</h3>
+                                <p class="text-sm text-gray-400">${customer.Customer_ID}</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-red-500">${customer.riskScore}%</div>
+                                <div class="text-xs text-gray-400">Risk Score</div>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <p class="text-sm text-gray-300 mb-1">
+                                <span class="font-semibold text-primary-orange">Top 2 Drivers:</span>
+                            </p>
+                            <p class="text-sm text-gray-400">${customer.topDrivers.slice(0, 2).join(', ')}</p>
+                        </div>
+                        ${logEntry ? `<div class="mt-2 p-2 bg-orange-900/20 rounded text-xs text-gray-300 italic">${logEntry}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function showCustomerDetail(customerId) {
+            selectedCustomerId = customerId;
+            const customer = customerData.find(c => c.Customer_ID === customerId);
+            if (!customer) return;
+            
+            document.getElementById('modalTitle').textContent = customer.Customer_Name;
+            document.getElementById('modalContent').innerHTML = `
+                <div class="space-y-4">
+                    <div>
+                        <p class="text-sm font-semibold text-gray-700 mb-1">Customer Name:</p>
+                        <p class="text-lg font-bold text-gray-900">${customer.Customer_Name}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold text-gray-700 mb-1">Churn Risk Score:</p>
+                        <p class="text-3xl font-bold ${customer.riskScore >= 80 ? 'text-red-600' : customer.riskScore >= 60 ? 'text-orange-600' : 'text-green-600'}">${customer.riskScore}%</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold text-gray-700 mb-1">Top 2 Drivers:</p>
+                        <p class="text-gray-700">${customer.topDrivers.slice(0, 2).join(', ')}</p>
+                    </div>
+                </div>
+            `;
+            
+            // Load existing log entry
+            const actionLogInput = document.getElementById('actionLogInput');
+            if (actionLogInput) {
+                actionLogInput.value = actionLogs[customerId] || '';
+            }
+            
+            const modal = document.getElementById('detailModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('detailModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+            selectedCustomerId = null;
+        }
+        
+        function saveActionLog() {
+            if (!selectedCustomerId) return;
+            
+            const actionLogInput = document.getElementById('actionLogInput');
+            if (!actionLogInput) return;
+            
+            const logText = actionLogInput.value.trim();
+            actionLogs[selectedCustomerId] = logText;
+            
+            // Save to localStorage
+            localStorage.setItem('csm-action-logs', JSON.stringify(actionLogs));
+            
+            // Show confirmation
+            const confirmation = document.getElementById('saveConfirmation');
+            if (confirmation) {
+                confirmation.classList.remove('hidden');
+                setTimeout(() => {
+                    confirmation.classList.add('hidden');
+                }, 2000);
+            }
+            
+            // Refresh the customer list to show the saved note
+            renderHighRiskCustomerList();
+        }
+
         // --- 7. INITIALIZATION ---
 
         window.onload = () => {
@@ -1989,11 +1938,8 @@
                 heroAccuracy.textContent = `92%`;  // Marketing claim (model achieves 92%+)
             }
             
-            // Render all dashboard components
-            renderActionList();
-            renderAllHighRiskTable();
-            renderROISummary();
-            renderRootCauseDistribution();
+            // Render high-risk customer list
+            renderHighRiskCustomerList();
             
             // === SETUP SPA NAVIGATION EVENT LISTENERS ===
             // Navigation Click Handlers - attach to ALL elements with data-section
