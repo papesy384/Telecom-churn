@@ -558,6 +558,7 @@
                     <a data-section="problem" class="nav-link text-sm font-medium text-gray-300 pb-1">Problem</a>
                     <a data-section="solution" class="nav-link text-sm font-medium text-gray-300 pb-1">Solution</a>
                     <a data-section="live-demo" class="nav-link text-sm font-medium text-gray-300 pb-1">Live Demo</a>
+                    <a data-section="customer-dashboard" class="nav-link text-sm font-medium text-gray-300 pb-1">Customer Dashboard</a>
                     <a data-section="how-it-works" class="nav-link text-sm font-medium text-gray-300 pb-1">How It Works</a>
                     <a data-section="scaling" class="nav-link text-sm font-medium text-gray-300 pb-1">What's Next</a>
                 </div>
@@ -577,6 +578,7 @@
                     <a data-section="problem" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">Problem</a>
                     <a data-section="solution" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">Solution</a>
                     <a data-section="live-demo" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">Live Demo</a>
+                    <a data-section="customer-dashboard" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">Customer Dashboard</a>
                     <a data-section="how-it-works" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">How It Works</a>
                     <a data-section="scaling" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">What's Next</a>
                 </div>
@@ -823,6 +825,26 @@
             </div>
         </div>
     </div>
+
+    <!-- Customer Dashboard Section -->
+    <section id="customer-dashboard" class="spa-section bg-dark-bg">
+        <div class="max-w-7xl mx-auto px-4 py-12">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-light-text mb-2">
+                    🎯 Customer Dashboard
+                </h2>
+                <div class="w-16 h-0.5 bg-gray-600 mx-auto mb-2"></div>
+                <p class="text-sm text-gray-300">
+                    Comprehensive view of all high-risk customers
+                </p>
+            </div>
+            
+            <!-- Customer Grid -->
+            <div id="customer-dashboard-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Customer cards will be injected here -->
+            </div>
+        </div>
+    </section>
 
     <!-- How It Works Section -->
     <section id="how-it-works" class="spa-section section-container bg-dark-card">
@@ -1761,9 +1783,11 @@
                 const computedDisplay = window.getComputedStyle(targetSection).display;
                 
                 
-                // Initialize live demo when it becomes active
+                // Initialize sections when they become active
                 if (sectionId === 'live-demo') {
                     renderHighRiskCustomerList();
+                } else if (sectionId === 'customer-dashboard') {
+                    renderCustomerDashboard();
                 }
                 
                 // Scroll to top of page
@@ -1861,6 +1885,56 @@
             }).join('');
         }
         
+        function renderCustomerDashboard() {
+            const container = document.getElementById('customer-dashboard-grid');
+            if (!container) return;
+            
+            // Render all customers sorted by risk score
+            const sortedCustomers = [...customerData].sort((a, b) => b.riskScore - a.riskScore);
+            
+            container.innerHTML = sortedCustomers.map(customer => {
+                const logEntry = actionLogs[customer.Customer_ID] || '';
+                const riskColor = customer.riskScore >= 80 ? 'text-red-500' : customer.riskScore >= 60 ? 'text-orange-500' : 'text-green-500';
+                const borderColor = customer.riskScore >= 80 ? 'border-red-500' : customer.riskScore >= 60 ? 'border-orange-500' : 'border-green-500';
+                
+                return `
+                    <div class="bg-dark-card border border-gray-700 ${borderColor} rounded-lg p-4 hover:border-primary-orange transition-all cursor-pointer" onclick="showCustomerDetail('${customer.Customer_ID}')">
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold text-light-text">${customer.Customer_Name}</h3>
+                                <p class="text-sm text-gray-400">${customer.Customer_ID}</p>
+                            </div>
+                            <div class="text-right ml-2">
+                                <div class="text-3xl font-bold ${riskColor}">${customer.riskScore}%</div>
+                                <div class="text-xs text-gray-400">Risk</div>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-400">LTV:</span>
+                                <span class="text-light-text font-semibold">$${customer.LTV.toLocaleString()}</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-400">Contract:</span>
+                                <span class="text-light-text">${customer.Contract}</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-400">Days Inactive:</span>
+                                <span class="text-light-text">${customer.Days_Inactive}d</span>
+                            </div>
+                        </div>
+                        <div class="mt-3 pt-3 border-t border-gray-700">
+                            <p class="text-sm text-gray-300 mb-1">
+                                <span class="font-semibold text-primary-orange">Top Drivers:</span>
+                            </p>
+                            <p class="text-sm text-gray-400">${customer.topDrivers.slice(0, 2).join(', ')}</p>
+                        </div>
+                        ${logEntry ? `<div class="mt-3 p-2 bg-orange-900/20 rounded text-xs text-gray-300 italic border-l-2 border-orange-500">${logEntry}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+        
         function showCustomerDetail(customerId) {
             selectedCustomerId = customerId;
             const customer = customerData.find(c => c.Customer_ID === customerId);
@@ -1925,8 +1999,9 @@
                 }, 2000);
             }
             
-            // Refresh the customer list to show the saved note
+            // Refresh both customer lists to show the saved note
             renderHighRiskCustomerList();
+            renderCustomerDashboard();
         }
 
         // --- 7. INITIALIZATION ---
