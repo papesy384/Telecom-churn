@@ -2368,81 +2368,17 @@
         }
         
 
-        // --- 7. API SIMULATION ---
-        
-        /**
-         * Simulates fetching customer data from an external API
-         * Returns a Promise that resolves with the customer data after a 1000ms delay
-         * This demonstrates the future state architecture
-         * @returns {Promise<Array>} Promise that resolves with customer data array
-         */
-        async function fetchCustomerData() {
-            return new Promise((resolve, reject) => {
-                // Simulate network delay of 1000ms
-                setTimeout(() => {
-                    try {
-                        // Return the customerData array (simulating API response)
-                        resolve(customerData);
-                    } catch (error) {
-                        reject(error);
-                    }
-                }, 1000);
-            });
-        }
-        
-        // --- 8. INITIALIZATION ---
+        // --- 7. INITIALIZATION ---
 
-        window.onload = async () => {
-            // Show loading state
-            const loadingElements = document.querySelectorAll('[id$="-list"], #customer-dashboard-table-body');
-            loadingElements.forEach(element => {
-                if (element) {
-                    element.innerHTML = '<div class="flex items-center justify-center p-8"><div class="text-center"><div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-gray-300 border-t-primary-orange mb-4"></div><p class="text-gray-300 text-lg font-semibold">Loading customer data...</p></div></div>';
-                }
-            });
+        window.onload = () => {
+            // Set hero accuracy to marketing standard (92%)
+            const heroAccuracy = document.getElementById('hero-accuracy');
+            if (heroAccuracy) {
+                heroAccuracy.textContent = `92%`;  // Marketing claim (model achieves 92%+)
+            }
             
-            try {
-                // Fetch customer data from simulated API
-                const data = await fetchCustomerData();
-                
-                // Update the customerData array with fetched data
-                customerData.length = 0;
-                customerData.push(...data);
-                
-                // Recalculate risk scores for all customers
-                customerData.forEach(customer => {
-                    customer.calculatedRiskScore = calculateChurnRisk(customer);
-                    // Add lastActivityDate and accountManager if not present
-                    if (!customer.lastActivityDate) {
-                        const daysAgo = customer.Days_Inactive || 0;
-                        const date = new Date();
-                        date.setDate(date.getDate() - daysAgo);
-                        customer.lastActivityDate = date.toISOString().split('T')[0];
-                    }
-                    if (!customer.accountManager) {
-                        const managers = ["Sarah Johnson", "Michael Chen", "Emily Rodriguez", "David Thompson", "Jessica Martinez"];
-                        const index = parseInt(customer.Customer_ID.substring(1)) % managers.length;
-                        customer.accountManager = managers[index];
-                    }
-                    // Add contractEndDate based on contractEndDays
-                    if (!customer.contractEndDate && customer.contractEndDays !== undefined) {
-                        const endDate = new Date();
-                        endDate.setDate(endDate.getDate() + customer.contractEndDays);
-                        customer.contractEndDate = endDate.toISOString().split('T')[0];
-                    }
-                });
-                
-                // Hide loading state and render data
-                console.log('✅ Customer data loaded successfully');
-                
-                // Set hero accuracy to marketing standard (92%)
-                const heroAccuracy = document.getElementById('hero-accuracy');
-                if (heroAccuracy) {
-                    heroAccuracy.textContent = `92%`;  // Marketing claim (model achieves 92%+)
-                }
-                
-                // Render high-risk customer list
-                renderHighRiskCustomerList();
+            // Render high-risk customer list
+            renderHighRiskCustomerList();
             
             // === SETUP SPA NAVIGATION EVENT LISTENERS ===
             // Navigation Click Handlers - attach to ALL elements with data-section
@@ -2463,41 +2399,32 @@
                 });
             });
 
-                // Mobile Menu Toggle
-                const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-                if (mobileMenuBtn) {
-                    mobileMenuBtn.addEventListener('click', function() {
-                        const mobileMenu = document.getElementById('mobile-menu');
-                        if (mobileMenu) {
-                            mobileMenu.classList.toggle('hidden');
-                        }
-                    });
-                }
-
-                // Delegate handler for any anchor links with href="#..."
-                document.addEventListener('click', function(e) {
-                    const target = e.target.closest('a[href^="#"]');
-                    if (target) {
-                        e.preventDefault();
-                        const sectionId = target.getAttribute('href').substring(1);
-                        if (sectionId) {
-                            showSection(sectionId);
-                        }
-                    }
-                });
-                
-                // Show home section by default
-                showSection('home');
-            } catch (error) {
-                console.error('❌ Error loading customer data:', error);
-                // Show error message
-                const loadingElements = document.querySelectorAll('[id$="-list"], #customer-dashboard-table-body');
-                loadingElements.forEach(element => {
-                    if (element) {
-                        element.innerHTML = '<div class="flex items-center justify-center p-8"><div class="text-center"><div class="text-4xl mb-4">❌</div><p class="text-red-400 text-lg font-semibold">Error loading customer data</p><p class="text-gray-400 text-sm mt-2">Please refresh the page or contact support.</p></div></div>';
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if (mobileMenu) {
+                        mobileMenu.classList.toggle('hidden');
                     }
                 });
             }
+
+            // Delegate handler for any anchor links with href="#..."
+            document.addEventListener('click', function(e) {
+                const target = e.target.closest('a[href^="#"]');
+                if (target) {
+                    e.preventDefault();
+                    const sectionId = target.getAttribute('href').substring(1);
+                    if (sectionId) {
+                        showSection(sectionId);
+                    }
+                }
+            });
+            
+            // Show home section by default
+            showSection('home');
+            
         };
 
         // --- FEEDBACK COMPONENTS DEMO ---
