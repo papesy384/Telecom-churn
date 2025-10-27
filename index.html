@@ -309,13 +309,13 @@
         }
 
         .customer-list-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1rem;
+            display: grid !important;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+            gap: 1rem !important;
             overflow-y: auto;
             padding-right: 0.5rem;
         }
-
+        
         .customer-card-compact {
             background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
             border: 1px solid #e2e8f0;
@@ -325,6 +325,7 @@
             transition: all 0.3s ease;
             cursor: pointer;
             height: fit-content;
+            min-width: 280px;
         }
 
         .customer-card-compact:hover {
