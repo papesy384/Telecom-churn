@@ -307,13 +307,23 @@
             flex-direction: column;
             overflow: hidden;
         }
+        
+        .customer-list-section > .mb-3 {
+            flex-shrink: 0;
+        }
+        
+        .customer-list-section > .customer-list-container {
+            flex: 1;
+            min-height: 0;
+        }
 
         .customer-list-container {
             display: grid !important;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
             gap: 1rem !important;
-            overflow-y: auto;
+            overflow-y: auto !important;
             padding-right: 0.5rem;
+            width: 100%;
         }
         
         .customer-card-compact {
