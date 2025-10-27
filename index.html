@@ -1191,21 +1191,21 @@
     <script>
         // --- 1. MOCK CUSTOMER DATA (15 customers as requested) ---
         const customerData = [
-            { Customer_ID: "C1", Customer_Name: "Acme Corporation", LTV: 8500, riskScore: 85, topDrivers: ["Inactivity on Key Feature [Actionable]", "Low API Usage [Actionable]", "Support ticket spike"], notes: "", Contract: "Annual", Root_Cause: "Service Quality", Call_Failure: "High", Price_Views: 3, Days_Inactive: 7, Survey_Score: 2.1 },
-            { Customer_ID: "C2", Customer_Name: "TechStart Inc", LTV: 12000, riskScore: 65, topDrivers: ["Contract renewal approaching", "Feature adoption decline"], notes: "", Contract: "Monthly", Root_Cause: "Product Disengagement", Call_Failure: "Low", Price_Views: 1, Days_Inactive: 2, Survey_Score: 3.8 },
-            { Customer_ID: "C3", Customer_Name: "Global Solutions Ltd", LTV: 18500, riskScore: 92, topDrivers: ["Low API Usage [Actionable]", "Billing issue [Ignore]", "Competitor evaluation"], notes: "", Contract: "Annual", Root_Cause: "Network Issues", Call_Failure: "High", Price_Views: 5, Days_Inactive: 12, Survey_Score: 1.9 },
-            { Customer_ID: "C4", Customer_Name: "Enterprise Dynamics", LTV: 22000, riskScore: 55, topDrivers: ["Usage pattern change", "Team expansion"], notes: "", Contract: "Annual", Root_Cause: "Low Usage", Call_Failure: "Low", Price_Views: 1, Days_Inactive: 1, Survey_Score: 4.2 },
-            { Customer_ID: "C5", Customer_Name: "Innovation Labs", LTV: 6500, riskScore: 78, topDrivers: ["Inactivity on Key Feature [Actionable]", "Support response time"], notes: "", Contract: "Monthly", Root_Cause: "Service Quality", Call_Failure: "Medium", Price_Views: 2, Days_Inactive: 5, Survey_Score: 2.8 },
-            { Customer_ID: "C6", Customer_Name: "Digital Ventures", LTV: 15000, riskScore: 60, topDrivers: ["Feature request backlog", "Integration complexity"], notes: "", Contract: "Annual", Root_Cause: "Product Disengagement", Call_Failure: "Low", Price_Views: 2, Days_Inactive: 3, Survey_Score: 3.5 },
-            { Customer_ID: "C7", Customer_Name: "Cloud Systems Co", LTV: 3200, riskScore: 88, topDrivers: ["Low API Usage [Actionable]", "Billing issue [Ignore]", "Platform migration"], notes: "", Contract: "Monthly", Root_Cause: "Cost Sensitivity", Call_Failure: "High", Price_Views: 8, Days_Inactive: 15, Survey_Score: 1.7 },
-            { Customer_ID: "C8", Customer_Name: "Data Analytics Pro", LTV: 19500, riskScore: 52, topDrivers: ["Performance optimization", "Custom reporting needs"], notes: "", Contract: "Annual", Root_Cause: "Low Usage", Call_Failure: "Low", Price_Views: 1, Days_Inactive: 2, Survey_Score: 4.0 },
-            { Customer_ID: "C9", Customer_Name: "Mobile Solutions", LTV: 7800, riskScore: 82, topDrivers: ["Inactivity on Key Feature [Actionable]", "Mobile app usage decline"], notes: "", Contract: "Monthly", Root_Cause: "Service Quality", Call_Failure: "Medium", Price_Views: 3, Days_Inactive: 8, Survey_Score: 2.3 },
-            { Customer_ID: "C10", Customer_Name: "Security First Corp", LTV: 16800, riskScore: 58, topDrivers: ["Compliance requirements", "Security audit"], notes: "", Contract: "Annual", Root_Cause: "Product Disengagement", Call_Failure: "Low", Price_Views: 2, Days_Inactive: 4, Survey_Score: 3.6 },
-            { Customer_ID: "C11", Customer_Name: "AI Innovations", LTV: 4200, riskScore: 75, topDrivers: ["Low API Usage [Actionable]", "Model performance issues"], notes: "", Contract: "Monthly", Root_Cause: "Network Issues", Call_Failure: "Medium", Price_Views: 4, Days_Inactive: 6, Survey_Score: 2.5 },
-            { Customer_ID: "C12", Customer_Name: "E-commerce Platform", LTV: 23500, riskScore: 50, topDrivers: ["Seasonal usage patterns", "Integration updates"], notes: "", Contract: "Annual", Root_Cause: "Low Usage", Call_Failure: "Low", Price_Views: 1, Days_Inactive: 1, Survey_Score: 4.3 },
-            { Customer_ID: "C13", Customer_Name: "Healthcare Systems", LTV: 9200, riskScore: 90, topDrivers: ["Inactivity on Key Feature [Actionable]", "Billing issue [Ignore]", "Regulatory compliance"], notes: "", Contract: "Annual", Root_Cause: "Cost Sensitivity", Call_Failure: "High", Price_Views: 6, Days_Inactive: 14, Survey_Score: 1.8 },
-            { Customer_ID: "C14", Customer_Name: "Financial Services", LTV: 18200, riskScore: 62, topDrivers: ["Audit requirements", "Data retention policies"], notes: "", Contract: "Annual", Root_Cause: "Product Disengagement", Call_Failure: "Low", Price_Views: 2, Days_Inactive: 3, Survey_Score: 3.7 },
-            { Customer_ID: "C15", Customer_Name: "Manufacturing Co", LTV: 5600, riskScore: 80, topDrivers: ["Low API Usage [Actionable]", "IoT integration challenges"], notes: "", Contract: "Monthly", Root_Cause: "Service Quality", Call_Failure: "Medium", Price_Views: 3, Days_Inactive: 9, Survey_Score: 2.4 }
+            { Customer_ID: "C1", Customer_Name: "Acme Corporation", ARR: 8500, riskScore: 85, topDrivers: ["Inactivity on Key Feature [Actionable]", "Low API Usage [Actionable]", "Support ticket spike"], notes: "", Contract: "Annual", Root_Cause: "Service Quality", Call_Failure: "High", Price_Views: 3, Days_Inactive: 7, Survey_Score: 2.1 },
+            { Customer_ID: "C2", Customer_Name: "TechStart Inc", ARR: 12000, riskScore: 65, topDrivers: ["Contract renewal approaching", "Feature adoption decline"], notes: "", Contract: "Monthly", Root_Cause: "Product Disengagement", Call_Failure: "Low", Price_Views: 1, Days_Inactive: 2, Survey_Score: 3.8 },
+            { Customer_ID: "C3", Customer_Name: "Global Solutions Ltd", ARR: 18500, riskScore: 92, topDrivers: ["Low API Usage [Actionable]", "Billing issue [Ignore]", "Competitor evaluation"], notes: "", Contract: "Annual", Root_Cause: "Network Issues", Call_Failure: "High", Price_Views: 5, Days_Inactive: 12, Survey_Score: 1.9 },
+            { Customer_ID: "C4", Customer_Name: "Enterprise Dynamics", ARR: 22000, riskScore: 55, topDrivers: ["Usage pattern change", "Team expansion"], notes: "", Contract: "Annual", Root_Cause: "Low Usage", Call_Failure: "Low", Price_Views: 1, Days_Inactive: 1, Survey_Score: 4.2 },
+            { Customer_ID: "C5", Customer_Name: "Innovation Labs", ARR: 6500, riskScore: 78, topDrivers: ["Inactivity on Key Feature [Actionable]", "Support response time"], notes: "", Contract: "Monthly", Root_Cause: "Service Quality", Call_Failure: "Medium", Price_Views: 2, Days_Inactive: 5, Survey_Score: 2.8 },
+            { Customer_ID: "C6", Customer_Name: "Digital Ventures", ARR: 15000, riskScore: 60, topDrivers: ["Feature request backlog", "Integration complexity"], notes: "", Contract: "Annual", Root_Cause: "Product Disengagement", Call_Failure: "Low", Price_Views: 2, Days_Inactive: 3, Survey_Score: 3.5 },
+            { Customer_ID: "C7", Customer_Name: "Cloud Systems Co", ARR: 3200, riskScore: 88, topDrivers: ["Low API Usage [Actionable]", "Billing issue [Ignore]", "Platform migration"], notes: "", Contract: "Monthly", Root_Cause: "Cost Sensitivity", Call_Failure: "High", Price_Views: 8, Days_Inactive: 15, Survey_Score: 1.7 },
+            { Customer_ID: "C8", Customer_Name: "Data Analytics Pro", ARR: 19500, riskScore: 52, topDrivers: ["Performance optimization", "Custom reporting needs"], notes: "", Contract: "Annual", Root_Cause: "Low Usage", Call_Failure: "Low", Price_Views: 1, Days_Inactive: 2, Survey_Score: 4.0 },
+            { Customer_ID: "C9", Customer_Name: "Mobile Solutions", ARR: 7800, riskScore: 82, topDrivers: ["Inactivity on Key Feature [Actionable]", "Mobile app usage decline"], notes: "", Contract: "Monthly", Root_Cause: "Service Quality", Call_Failure: "Medium", Price_Views: 3, Days_Inactive: 8, Survey_Score: 2.3 },
+            { Customer_ID: "C10", Customer_Name: "Security First Corp", ARR: 16800, riskScore: 58, topDrivers: ["Compliance requirements", "Security audit"], notes: "", Contract: "Annual", Root_Cause: "Product Disengagement", Call_Failure: "Low", Price_Views: 2, Days_Inactive: 4, Survey_Score: 3.6 },
+            { Customer_ID: "C11", Customer_Name: "AI Innovations", ARR: 4200, riskScore: 75, topDrivers: ["Low API Usage [Actionable]", "Model performance issues"], notes: "", Contract: "Monthly", Root_Cause: "Network Issues", Call_Failure: "Medium", Price_Views: 4, Days_Inactive: 6, Survey_Score: 2.5 },
+            { Customer_ID: "C12", Customer_Name: "E-commerce Platform", ARR: 23500, riskScore: 50, topDrivers: ["Seasonal usage patterns", "Integration updates"], notes: "", Contract: "Annual", Root_Cause: "Low Usage", Call_Failure: "Low", Price_Views: 1, Days_Inactive: 1, Survey_Score: 4.3 },
+            { Customer_ID: "C13", Customer_Name: "Healthcare Systems", ARR: 9200, riskScore: 90, topDrivers: ["Inactivity on Key Feature [Actionable]", "Billing issue [Ignore]", "Regulatory compliance"], notes: "", Contract: "Annual", Root_Cause: "Cost Sensitivity", Call_Failure: "High", Price_Views: 6, Days_Inactive: 14, Survey_Score: 1.8 },
+            { Customer_ID: "C14", Customer_Name: "Financial Services", ARR: 18200, riskScore: 62, topDrivers: ["Audit requirements", "Data retention policies"], notes: "", Contract: "Annual", Root_Cause: "Product Disengagement", Call_Failure: "Low", Price_Views: 2, Days_Inactive: 3, Survey_Score: 3.7 },
+            { Customer_ID: "C15", Customer_Name: "Manufacturing Co", ARR: 5600, riskScore: 80, topDrivers: ["Low API Usage [Actionable]", "IoT integration challenges"], notes: "", Contract: "Monthly", Root_Cause: "Service Quality", Call_Failure: "Medium", Price_Views: 3, Days_Inactive: 9, Survey_Score: 2.4 }
         ];
 
         // Use the customerData for MOCK_CUSTOMERS to maintain compatibility
@@ -1213,8 +1213,8 @@
             Customer_ID: customer.Customer_ID,
             Contract_Type: customer.Contract,
             Customer_Name: customer.Customer_Name,
-            Monthly_Charge: Math.round(customer.LTV / 12),
-            LTV: customer.LTV,
+            Monthly_Charge: Math.round(customer.ARR / 12),
+            ARR: customer.ARR,
             Has_Early_Termination_Fee: customer.riskScore < 60 ? 1 : 0,
             Total_Data_Usage: 50 + (parseInt(customer.Customer_ID.substring(1)) * 10), // Consistent data based on ID
             Days_Since_Last_Login: customer.Days_Inactive,
@@ -1228,7 +1228,7 @@
             Root_Cause_Tag: customer.Root_Cause,
             // Add original fields for compatibility
             name: customer.Customer_Name,
-            arr: customer.LTV,
+            arr: customer.ARR,
             riskScore: customer.riskScore,
             topDrivers: customer.topDrivers,
             notes: customer.notes
@@ -1239,12 +1239,12 @@
         
         // Hypothetical ROI Variables (as specified in the PoC Summary Plan)
         const ROI_CONFIG = {
-            AVG_LTV_HV: 5000,           // Average LTV of High-Value Customer
+            AVG_ARR_HV: 5000,           // Average ARR of High-Value Customer
             COST_INTERVENTION: 100,     // Cost of Intervention per Customer
             SIMULATED_SAVE_RATE: 0.40,  // Assumed success rate of root-cause driven intervention (40%)
             TARGET_PRECISION: 0.72,     // PoC Success Target
             TARGET_RECALL: 0.75,        // PoC Success Target
-            LTV_70TH_PERCENTILE: 4000,  // Threshold for High-Value Customer filter (using ARR)
+            ARR_70TH_PERCENTILE: 4000,  // Threshold for High-Value Customer filter (using ARR)
         };
 
         /**
@@ -1379,7 +1379,7 @@
                 Customer_ID: `C${customer.id}`,
                 Contract_Type: customer.riskScore >= 80 ? 'Month-to-Month' : customer.riskScore >= 60 ? '1-Year' : '2-Year',
                 Monthly_Charge: Math.round(customer.arr / 12),
-                LTV: customer.arr,
+                ARR: customer.arr,
                 Has_Early_Termination_Fee: customer.riskScore < 60 ? 1 : 0,
                 Total_Data_Usage: 50 + (customer.id * 10), // Consistent data based on ID
                 Days_Since_Last_Login: customer.riskScore >= 80 ? (customer.id % 10) + 1 : (customer.id % 30) + 1,
@@ -1402,7 +1402,7 @@
                 ...mockCustomer,
                 ...mlResult,
                 riskScore: customer.riskScore, // Use original riskScore from customerData
-                isHighValue: customer.arr >= ROI_CONFIG.LTV_70TH_PERCENTILE,
+                isHighValue: customer.arr >= ROI_CONFIG.ARR_70TH_PERCENTILE,
                 isHighRisk: customer.riskScore >= 80,
                 predictedChurn: customer.riskScore >= 62, // Use original riskScore for consistency
             };
@@ -1555,7 +1555,7 @@
                     <tr class="border-b border-gray-700 hover:bg-dark-bg">
                         <td class="px-4 py-3 font-mono text-primary-orange">${customer.Customer_ID}</td>
                         <td class="px-4 py-3 font-bold text-primary-orange">${customer.riskScore}%</td>
-                        <td class="px-4 py-3 ${customer.isHighValue ? 'text-green-400 font-semibold' : 'text-gray-400'}">${formatCurrency(customer.LTV)}</td>
+                        <td class="px-4 py-3 ${customer.isHighValue ? 'text-green-400 font-semibold' : 'text-gray-400'}">${formatCurrency(customer.ARR)}</td>
                         <td class="px-4 py-3 text-gray-300">${customer.Contract_Type}</td>
                         <td class="px-4 py-3"><span class="px-2 py-1 text-xs rounded ${tagClass}">${customer.rootCauseTag}</span></td>
                         <td class="px-4 py-3 ${customer.Call_Failure_Rate >= 0.05 ? 'text-red-400 font-semibold' : 'text-gray-400'}">${(customer.Call_Failure_Rate * 100).toFixed(1)}%</td>
@@ -1595,7 +1595,7 @@
                         <!-- Customer Info -->
                         <div class="flex-grow space-y-0.5 mb-2 md:mb-0 md:mr-3 w-full md:w-auto">
                             <p class="text-base font-semibold text-light-text">${customer.Customer_ID} <span class="text-xs font-normal text-gray-400">| ${customer.Contract_Type}</span></p>
-                            <p class="text-sm font-medium text-primary-orange">${formatCurrency(customer.LTV)} <span class="text-gray-400 text-xs">LTV</span></p>
+                            <p class="text-sm font-medium text-primary-orange">${formatCurrency(customer.ARR)} <span class="text-gray-400 text-xs">ARR</span></p>
                         </div>
                         
                         <!-- Score & Cause Tag -->
@@ -1648,8 +1648,8 @@
             const totalInterventions = Math.round(truePositives / ROI_CONFIG.TARGET_PRECISION);
 
             // 3. Calculate VALUE SAVED (Simulated Net Value)
-            // Gross Savings = TP * Save Rate * Avg LTV
-            const grossSavings = truePositives * ROI_CONFIG.SIMULATED_SAVE_RATE * ROI_CONFIG.AVG_LTV_HV;
+            // Gross Savings = TP * Save Rate * Avg ARR
+            const grossSavings = truePositives * ROI_CONFIG.SIMULATED_SAVE_RATE * ROI_CONFIG.AVG_ARR_HV;
             
             // Total Cost = Total Interventions * Cost per Intervention
             const totalCost = totalInterventions * ROI_CONFIG.COST_INTERVENTION;
@@ -1660,7 +1660,7 @@
             const html = `
                 <div class="text-center">
                     <p class="text-6xl font-extrabold text-primary-orange mb-2">${formatCurrency(netSavings).replace('$', '$ ')}</p>
-                    <p class="text-xl font-medium text-light-text">Hypothetical Net LTV Saved</p>
+                    <p class="text-xl font-medium text-light-text">Hypothetical Net ARR Saved</p>
                 </div>
                 
                 <div class="grid grid-cols-2 gap-4 text-center mt-6">
@@ -1779,7 +1779,7 @@
             const tagClass = getTagClass(customer.rootCauseTag);
             
             const detailsHtml = `
-                <p><strong>LTV:</strong> ${formatCurrency(customer.LTV)}</p>
+                <p><strong>ARR:</strong> ${formatCurrency(customer.ARR)}</p>
                 <p><strong>Risk Score:</strong> <span class="text-primary-orange font-bold">${customer.riskScore}%</span></p>
                 <p><strong>Root Cause:</strong> <span class="px-2 py-0.5 rounded ${tagClass} font-bold">${customer.rootCauseTag}</span></p>
                 <p><strong>Key Driver:</strong> ${customer.rootCauseTag === 'Service Quality' ? `Call Failure Rate: ${(customer.Call_Failure_Rate * 100).toFixed(1)}%` : 
@@ -1928,7 +1928,7 @@
             
             // Filter and sort customers by risk score
             const sortedCustomers = [...customerData]
-                .filter(customer => customer.LTV >= minARR)
+                .filter(customer => customer.ARR >= minARR)
                 .sort((a, b) => b.riskScore - a.riskScore);
             
             container.innerHTML = sortedCustomers.map(customer => {
@@ -1950,8 +1950,8 @@
                         </div>
                         <div class="space-y-2">
                             <div class="flex justify-between text-sm">
-                                <span class="text-gray-400">LTV:</span>
-                                <span class="text-light-text font-semibold">$${customer.LTV.toLocaleString()}</span>
+                                <span class="text-gray-400">ARR:</span>
+                                <span class="text-light-text font-semibold">$${customer.ARR.toLocaleString()}</span>
                             </div>
                             <div class="flex justify-between text-sm">
                                 <span class="text-gray-400">Contract:</span>
