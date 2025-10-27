@@ -839,6 +839,39 @@
                 </p>
             </div>
             
+            <!-- Filter Section -->
+            <div class="mb-6 flex justify-center">
+                <div class="bg-dark-card border border-gray-700 rounded-lg p-4 w-full max-w-md">
+                    <label for="arr-filter" class="block text-sm font-semibold text-light-text mb-2">
+                        Filter by Minimum Annual Recurring Revenue (ARR):
+                    </label>
+                    <div class="flex items-center gap-3">
+                        <div class="relative flex-1">
+                            <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary-orange font-bold">$</span>
+                            <input 
+                                type="number" 
+                                id="arr-filter" 
+                                value="0" 
+                                min="0" 
+                                step="1000"
+                                class="w-full pl-8 pr-4 py-2 bg-dark-bg border border-gray-600 text-light-text rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-orange"
+                                placeholder="0"
+                                oninput="filterCustomersByARR()"
+                            >
+                        </div>
+                        <button 
+                            onclick="resetARRFilter()" 
+                            class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-light-text font-semibold rounded-lg transition-all duration-200"
+                        >
+                            Reset
+                        </button>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-2">
+                        Only customers with ARR above the threshold will be displayed
+                    </p>
+                </div>
+            </div>
+            
             <!-- Customer Grid -->
             <div id="customer-dashboard-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <!-- Customer cards will be injected here -->
@@ -1889,8 +1922,14 @@
             const container = document.getElementById('customer-dashboard-grid');
             if (!container) return;
             
-            // Render all customers sorted by risk score
-            const sortedCustomers = [...customerData].sort((a, b) => b.riskScore - a.riskScore);
+            // Get ARR filter value
+            const arrFilter = document.getElementById('arr-filter');
+            const minARR = arrFilter ? parseInt(arrFilter.value) || 0 : 0;
+            
+            // Filter and sort customers by risk score
+            const sortedCustomers = [...customerData]
+                .filter(customer => customer.LTV >= minARR)
+                .sort((a, b) => b.riskScore - a.riskScore);
             
             container.innerHTML = sortedCustomers.map(customer => {
                 const logEntry = actionLogs[customer.Customer_ID] || '';
@@ -2010,6 +2049,18 @@
             // Refresh both customer lists to show the saved note
             renderHighRiskCustomerList();
             renderCustomerDashboard();
+        }
+        
+        function filterCustomersByARR() {
+            renderCustomerDashboard();
+        }
+        
+        function resetARRFilter() {
+            const arrFilter = document.getElementById('arr-filter');
+            if (arrFilter) {
+                arrFilter.value = '0';
+                renderCustomerDashboard();
+            }
         }
 
         // --- 7. INITIALIZATION ---
