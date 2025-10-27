@@ -164,6 +164,23 @@
             opacity: 0.5;
             transition: opacity 0.3s ease;
         }
+        
+        /* Table styles for Customer Dashboard */
+        #customer-dashboard table {
+            min-height: 200px;
+        }
+        
+        #customer-dashboard table thead th {
+            user-select: none;
+        }
+        
+        #customer-dashboard table tbody tr {
+            transition: background-color 0.2s ease;
+        }
+        
+        #customer-dashboard table tbody tr:hover {
+            background-color: rgba(107, 114, 128, 0.3);
+        }
 
         /* Live demo section - optimized layout */
         .live-demo-container {
@@ -914,42 +931,89 @@
                 </p>
             </div>
             
-            <!-- Filter Section -->
+            <!-- Search and Filter Section -->
             <div class="mb-4 flex justify-center flex-shrink-0">
-                <div class="bg-dark-card border border-gray-700 rounded-lg p-4 w-full max-w-md">
-                    <label for="arr-filter" class="block text-sm font-semibold text-light-text mb-2">
-                        Filter by Minimum Annual Recurring Revenue (ARR):
-                    </label>
-                    <div class="flex items-center gap-3">
-                        <div class="relative flex-1">
-                            <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary-orange font-bold">$</span>
-                            <input 
-                                type="number" 
-                                id="arr-filter" 
-                                value="0" 
-                                min="0" 
-                                step="1000"
-                                class="w-full pl-8 pr-4 py-2 bg-dark-bg border border-gray-600 text-light-text rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-orange"
-                                placeholder="0"
-                                oninput="filterCustomersByARR()"
-                            >
+                <div class="bg-dark-card border border-gray-700 rounded-lg p-4 w-full max-w-4xl">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <!-- Search Bar -->
+                        <div>
+                            <label for="customer-search" class="block text-sm font-semibold text-light-text mb-2">
+                                🔍 Search Customers:
+                            </label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary-orange font-bold">🔎</span>
+                                <input 
+                                    type="text" 
+                                    id="customer-search" 
+                                    placeholder="Search by Customer Name or Account Manager..."
+                                    class="w-full pl-10 pr-4 py-2 bg-dark-bg border border-gray-600 text-light-text rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-orange"
+                                    oninput="searchAndFilterCustomers()"
+                                >
+                            </div>
                         </div>
-                        <button 
-                            onclick="resetARRFilter()" 
-                            class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-light-text font-semibold rounded-lg transition-all duration-200"
-                        >
-                            Reset
-                        </button>
+                        
+                        <!-- ARR Filter -->
+                        <div>
+                            <label for="arr-filter" class="block text-sm font-semibold text-light-text mb-2">
+                                💰 Filter by Minimum ARR:
+                            </label>
+                            <div class="flex items-center gap-3">
+                                <div class="relative flex-1">
+                                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary-orange font-bold">$</span>
+                                    <input 
+                                        type="number" 
+                                        id="arr-filter" 
+                                        value="0" 
+                                        min="0" 
+                                        step="1000"
+                                        class="w-full pl-8 pr-4 py-2 bg-dark-bg border border-gray-600 text-light-text rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-orange"
+                                        placeholder="0"
+                                        oninput="searchAndFilterCustomers()"
+                                    >
+                                </div>
+                                <button 
+                                    onclick="resetAllFilters()" 
+                                    class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-light-text font-semibold rounded-lg transition-all duration-200"
+                                >
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <p class="text-xs text-gray-400 mt-2">
-                        Only customers with ARR above the threshold will be displayed
-                    </p>
                 </div>
             </div>
             
-            <!-- Customer Grid -->
-            <div id="customer-dashboard-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 flex-1 overflow-y-auto pb-4">
-                <!-- Customer cards will be injected here -->
+            <!-- Sortable Customer Table -->
+            <div class="bg-dark-card border border-gray-700 rounded-lg overflow-hidden flex-1 flex flex-col">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-dark-bg">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-sm font-semibold text-light-text cursor-pointer hover:bg-gray-700 transition-colors" onclick="sortCustomers('name')">
+                                    Customer Name <span id="sort-indicator-name" class="text-primary-orange">↓</span>
+                                </th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold text-light-text cursor-pointer hover:bg-gray-700 transition-colors" onclick="sortCustomers('risk')">
+                                    Risk Score <span id="sort-indicator-risk" class="text-primary-orange">↓</span>
+                                </th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold text-light-text">
+                                    Account Manager
+                                </th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold text-light-text">
+                                    ARR
+                                </th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold text-light-text cursor-pointer hover:bg-gray-700 transition-colors" onclick="sortCustomers('date')">
+                                    Last Activity <span id="sort-indicator-date" class="text-primary-orange">↓</span>
+                                </th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold text-light-text">
+                                    Status
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="customer-dashboard-table-body" class="divide-y divide-gray-700">
+                            <!-- Customer rows will be injected here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </section>
@@ -1332,6 +1396,18 @@
         // Calculate risk scores for all customers using the new function
         customerData.forEach(customer => {
             customer.calculatedRiskScore = calculateChurnRisk(customer);
+            // Add lastActivityDate and accountManager if not present
+            if (!customer.lastActivityDate) {
+                const daysAgo = customer.Days_Inactive || 0;
+                const date = new Date();
+                date.setDate(date.getDate() - daysAgo);
+                customer.lastActivityDate = date.toISOString().split('T')[0];
+            }
+            if (!customer.accountManager) {
+                const managers = ["Sarah Johnson", "Michael Chen", "Emily Rodriguez", "David Thompson", "Jessica Martinez"];
+                const index = parseInt(customer.Customer_ID.substring(1)) % managers.length;
+                customer.accountManager = managers[index];
+            }
         });
 
         // Use the customerData for MOCK_CUSTOMERS to maintain compatibility
@@ -2047,77 +2123,104 @@
             }).join('');
         }
         
+        // Global variables for sorting and search
+        let currentSortColumn = 'risk';
+        let currentSortDirection = 'desc';
+        let searchQuery = '';
+        
         function renderCustomerDashboard() {
-            const container = document.getElementById('customer-dashboard-grid');
+            const container = document.getElementById('customer-dashboard-table-body');
             if (!container) return;
             
-            // Show loading state
-            container.classList.add('opacity-50');
-            
-            // Get ARR filter value
+            // Get filter values
             const arrFilter = document.getElementById('arr-filter');
             const minARR = arrFilter ? parseInt(arrFilter.value) || 0 : 0;
+            const searchInput = document.getElementById('customer-search');
+            searchQuery = searchInput ? searchInput.value.toLowerCase() : '';
             
-            // Filter and sort customers by calculated risk score
-            const sortedCustomers = [...customerData]
-                .filter(customer => customer.ARR >= minARR)
-                .sort((a, b) => b.calculatedRiskScore - a.calculatedRiskScore);
+            // Filter customers
+            let filteredCustomers = [...customerData].filter(customer => {
+                const matchesARR = customer.ARR >= minARR;
+                const matchesSearch = searchQuery === '' || 
+                    customer.Customer_Name.toLowerCase().includes(searchQuery) ||
+                    customer.accountManager.toLowerCase().includes(searchQuery);
+                return matchesARR && matchesSearch;
+            });
             
-            // Clear and restore with fade-in animation
-            setTimeout(() => {
-                container.classList.remove('opacity-50');
-                container.classList.add('opacity-100');
-            }, 100);
+            // Sort customers
+            filteredCustomers.sort((a, b) => {
+                let comparison = 0;
+                if (currentSortColumn === 'name') {
+                    comparison = a.Customer_Name.localeCompare(b.Customer_Name);
+                } else if (currentSortColumn === 'risk') {
+                    comparison = a.calculatedRiskScore - b.calculatedRiskScore;
+                } else if (currentSortColumn === 'date') {
+                    comparison = new Date(a.lastActivityDate) - new Date(b.lastActivityDate);
+                }
+                return currentSortDirection === 'asc' ? comparison : -comparison;
+            });
             
-            container.innerHTML = sortedCustomers.map(customer => {
+            // Render table rows
+            container.innerHTML = filteredCustomers.map(customer => {
                 const logEntry = actionLogs[customer.Customer_ID] || '';
                 const riskColor = customer.calculatedRiskScore >= 80 ? 'text-red-500' : customer.calculatedRiskScore >= 60 ? 'text-orange-500' : 'text-green-500';
-                const borderColor = customer.calculatedRiskScore >= 80 ? 'border-red-500' : customer.calculatedRiskScore >= 60 ? 'border-orange-500' : 'border-green-500';
+                const statusColor = customer.calculatedRiskScore >= 80 ? 'bg-red-900/30 text-red-400' : customer.calculatedRiskScore >= 60 ? 'bg-orange-900/30 text-orange-400' : 'bg-green-900/30 text-green-400';
                 
                 return `
-                    <div class="bg-dark-card border border-gray-700 ${borderColor} rounded-lg p-4 hover:border-primary-orange transition-all cursor-pointer" onclick="showCustomerDetail('${customer.Customer_ID}')">
-                        <div class="flex justify-between items-start mb-3">
-                            <div class="flex-1">
-                                <h3 class="text-lg font-bold text-light-text">${customer.Customer_Name}</h3>
-                                <p class="text-sm text-gray-400">${customer.Customer_ID}</p>
-                            </div>
-                            <div class="text-right ml-2">
-                                <div class="text-3xl font-bold ${riskColor}">${Math.round(customer.calculatedRiskScore)}%</div>
-                                <div class="text-xs text-gray-400">Risk</div>
-                            </div>
-                        </div>
-                        <div class="space-y-2">
-                            <div class="flex justify-between text-sm">
-                                <span class="text-gray-400">ARR:</span>
-                                <span class="text-light-text font-semibold">$${customer.ARR.toLocaleString()}</span>
-                            </div>
-                            <div class="flex justify-between text-sm">
-                                <span class="text-gray-400">Contract:</span>
-                                <span class="text-light-text">${customer.Contract}</span>
-                            </div>
-                            <div class="flex justify-between text-sm">
-                                <span class="text-gray-400">Days Inactive:</span>
-                                <span class="text-light-text">${customer.Days_Inactive}d</span>
-                            </div>
-                        </div>
-                        <div class="mt-3 pt-3 border-t border-gray-700">
-                            <p class="text-sm text-gray-300 mb-1">
-                                <span class="font-semibold text-primary-orange">Top Drivers:</span>
-                            </p>
-                            <div class="text-sm space-y-1">${customer.topDrivers.slice(0, 2).map(driver => {
-                                if (driver.includes('[Actionable]')) {
-                                    return `<p class="font-bold text-green-400">${driver}</p>`;
-                                } else if (driver.includes('[Ignore]')) {
-                                    return `<p class="font-bold text-gray-500 line-through">${driver}</p>`;
-                                } else {
-                                    return `<p class="text-gray-400">${driver}</p>`;
-                                }
-                            }).join('')}</div>
-                        </div>
-                        ${logEntry ? `<div class="mt-3 p-2 bg-orange-900/20 rounded text-xs text-gray-300 italic border-l-2 border-orange-500">${logEntry}</div>` : ''}
-                    </div>
+                    <tr class="border-b border-gray-700 hover:bg-gray-700/50 cursor-pointer transition-colors" onclick="showCustomerDetail('${customer.Customer_ID}')">
+                        <td class="px-4 py-3">
+                            <div class="font-semibold text-light-text">${customer.Customer_Name}</div>
+                            <div class="text-sm text-gray-400">${customer.Customer_ID}</div>
+                        </td>
+                        <td class="px-4 py-3">
+                            <span class="text-2xl font-bold ${riskColor}">${Math.round(customer.calculatedRiskScore)}%</span>
+                        </td>
+                        <td class="px-4 py-3 text-gray-300">${customer.accountManager}</td>
+                        <td class="px-4 py-3 text-gray-300">$${customer.ARR.toLocaleString()}</td>
+                        <td class="px-4 py-3 text-gray-300">${customer.lastActivityDate}</td>
+                        <td class="px-4 py-3">
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold ${statusColor}">
+                                ${customer.calculatedRiskScore >= 80 ? 'High Risk' : customer.calculatedRiskScore >= 60 ? 'Medium Risk' : 'Low Risk'}
+                            </span>
+                            ${logEntry ? `<div class="mt-1 text-xs text-orange-400 italic">📝 Has note</div>` : ''}
+                        </td>
+                    </tr>
                 `;
             }).join('');
+        }
+        
+        function sortCustomers(column) {
+            // Update sort column and direction
+            if (currentSortColumn === column) {
+                currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSortColumn = column;
+                currentSortDirection = 'asc';
+            }
+            
+            // Update sort indicators
+            document.querySelectorAll('[id^="sort-indicator-"]').forEach(indicator => {
+                indicator.textContent = '';
+            });
+            
+            const indicator = document.getElementById(`sort-indicator-${column}`);
+            if (indicator) {
+                indicator.textContent = currentSortDirection === 'asc' ? '↑' : '↓';
+            }
+            
+            // Re-render table
+            renderCustomerDashboard();
+        }
+        
+        function searchAndFilterCustomers() {
+            renderCustomerDashboard();
+        }
+        
+        function resetAllFilters() {
+            document.getElementById('arr-filter').value = '0';
+            document.getElementById('customer-search').value = '';
+            searchQuery = '';
+            renderCustomerDashboard();
         }
         
         function showCustomerDetail(customerId) {
@@ -2189,17 +2292,6 @@
             renderCustomerDashboard();
         }
         
-        function filterCustomersByARR() {
-            renderCustomerDashboard();
-        }
-        
-        function resetARRFilter() {
-            const arrFilter = document.getElementById('arr-filter');
-            if (arrFilter) {
-                arrFilter.value = '0';
-                renderCustomerDashboard();
-            }
-        }
 
         // --- 7. INITIALIZATION ---
 
