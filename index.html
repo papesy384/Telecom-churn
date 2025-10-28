@@ -76,6 +76,19 @@
             }
         }
         
+        /* Filter collapse animation */
+        #filter-content {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 1000px;
+            opacity: 1;
+        }
+        
+        #filter-content.hidden {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        
         /* Date input styling for visibility */
         input[type="date"] {
             color-scheme: dark;
@@ -140,7 +153,10 @@
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
-            padding: 1.5rem 1rem;
+            padding-top: 6rem; /* Account for fixed nav (4rem) + extra spacing */
+            padding-left: 1rem;
+            padding-right: 1rem;
+            padding-bottom: 1.5rem;
             box-sizing: border-box;
             overflow: hidden;
         }
@@ -718,9 +734,9 @@
 <body>
 
     <!-- Fixed Navigation Header -->
-    <nav class="fixed top-0 left-0 right-0 bg-dark-bg/95 backdrop-blur-sm border-b border-gray-800 z-50 shadow-lg">
+    <nav class="fixed top-0 left-0 right-0 bg-dark-bg/98 backdrop-blur-md border-b border-gray-800/50 z-50 shadow-xl">
         <div class="max-w-7xl mx-auto px-4 md:px-8">
-            <div class="flex items-center justify-between h-20">
+            <div class="flex items-center justify-between h-16">
                 <!-- Logo -->
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 bg-primary-orange rounded-lg flex items-center justify-center">
@@ -1033,6 +1049,16 @@
             <!-- Search and Filter Section -->
             <div class="mb-4 flex justify-center flex-shrink-0">
                 <div class="bg-dark-card border border-gray-700 rounded-lg p-4 w-full max-w-6xl">
+                    <!-- Collapsible Filter Header -->
+                    <div class="flex items-center justify-between mb-4 cursor-pointer group" onclick="toggleFilters()">
+                        <h3 class="text-lg font-bold text-light-text">🔍 Filters & Search</h3>
+                        <svg id="filter-chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 text-gray-400 group-hover:text-primary-orange transition-transform">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </div>
+                    
+                    <!-- Filter Content (Collapsible) -->
+                    <div id="filter-content">
                     <!-- Row 1: Search Bar and ARR Filter -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <!-- Search Bar -->
@@ -1116,6 +1142,8 @@
                             🔄 Reset All Filters
                         </button>
                     </div>
+                    </div>
+                    <!-- End Filter Content -->
                 </div>
             </div>
             
@@ -2510,6 +2538,19 @@
         
         function searchAndFilterCustomers() {
             renderCustomerDashboard();
+        }
+        
+        function toggleFilters() {
+            const content = document.getElementById('filter-content');
+            const chevron = document.getElementById('filter-chevron');
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                chevron.style.transform = 'rotate(0deg)';
+            } else {
+                content.classList.add('hidden');
+                chevron.style.transform = 'rotate(180deg)';
+            }
         }
         
         function resetAllFilters() {
