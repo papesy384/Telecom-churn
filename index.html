@@ -75,6 +75,35 @@
                 height: 4px;
             }
         }
+        
+        /* Date input styling for visibility */
+        input[type="date"] {
+            color-scheme: dark;
+        }
+        
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        
+        input[type="date"]::-webkit-calendar-picker-indicator:hover {
+            opacity: 1;
+        }
+        
+        input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+            color: #f5f5f5;
+        }
+        
+        input[type="date"]::-webkit-datetime-edit-text {
+            color: #9ca3af;
+        }
+        
+        input[type="date"]::-webkit-datetime-edit-month-field,
+        input[type="date"]::-webkit-datetime-edit-day-field,
+        input[type="date"]::-webkit-datetime-edit-year-field {
+            color: #f5f5f5;
+        }
 
         /* Custom scrollbar for the high-risk list */
         .scroll-container::-webkit-scrollbar {
@@ -1068,12 +1097,13 @@
                             <label for="contract-month-filter" class="block text-sm font-semibold text-light-text mb-2">
                                 📅 Contract End Date (MM/DD/YYYY):
                             </label>
-                            <input 
-                                type="date" 
-                                id="contract-month-filter" 
-                                class="w-full px-4 py-2 bg-dark-bg border border-gray-600 text-light-text rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-orange"
-                                onchange="searchAndFilterCustomers()"
-                            >
+            <input 
+                type="date" 
+                id="contract-month-filter" 
+                class="w-full px-4 py-2 bg-dark-bg border-2 border-gray-600 text-light-text rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-primary-orange"
+                onchange="searchAndFilterCustomers()"
+                style="color-scheme: dark;"
+            >
                         </div>
                     </div>
                     
