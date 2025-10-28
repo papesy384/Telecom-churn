@@ -1069,7 +1069,8 @@
             
             <!-- Sortable Customer Table -->
             <div class="bg-dark-card border border-gray-700 rounded-lg overflow-hidden flex-1 flex flex-col max-h-[calc(100vh-300px)]">
-                <div class="overflow-x-auto overflow-y-auto">
+                <div class="overflow-y-auto" style="max-height: calc(100vh - 300px);">
+                    <div class="overflow-x-auto">
                     <table class="w-full">
                         <thead class="bg-dark-bg">
                             <tr>
@@ -1097,6 +1098,7 @@
                             <!-- Customer rows will be injected here -->
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>
