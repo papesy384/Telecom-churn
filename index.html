@@ -2132,6 +2132,28 @@
         let selectedCustomerId = null;
         let actionLogs = JSON.parse(localStorage.getItem('csm-action-logs') || '{}');
         
+        function handleCustomerCardKeydown(event, customerId, index) {
+            const cards = document.querySelectorAll('#high-risk-list > div');
+            let nextIndex = index;
+            
+            if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                event.preventDefault();
+                
+                if (event.key === 'ArrowDown') {
+                    nextIndex = Math.min(index + 1, cards.length - 1);
+                } else {
+                    nextIndex = Math.max(index - 1, 0);
+                }
+                
+                if (cards[nextIndex]) {
+                    cards[nextIndex].focus();
+                }
+            } else if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                showCustomerDetail(customerId);
+            }
+        }
+        
         function renderHighRiskCustomerList() {
             const container = document.getElementById('high-risk-list');
             if (!container) return;
@@ -2139,10 +2161,16 @@
             // Get top 10 customers by calculated risk score
             const sortedCustomers = [...customerData].sort((a, b) => b.calculatedRiskScore - a.calculatedRiskScore).slice(0, 10);
             
-            container.innerHTML = sortedCustomers.map(customer => {
+            container.innerHTML = sortedCustomers.map((customer, index) => {
                 const logEntry = actionLogs[customer.Customer_ID] || '';
                 return `
-                    <div class="bg-dark-card border border-gray-700 rounded-lg p-4 hover:border-primary-orange transition-all cursor-pointer" onclick="showCustomerDetail('${customer.Customer_ID}')">
+                    <div 
+                        class="bg-dark-card border border-gray-700 rounded-lg p-4 hover:border-primary-orange transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-orange focus:ring-offset-2 focus:ring-offset-dark-bg" 
+                        tabindex="0"
+                        onclick="showCustomerDetail('${customer.Customer_ID}')"
+                        onkeydown="handleCustomerCardKeydown(event, '${customer.Customer_ID}', ${index})"
+                        aria-label="Customer ${customer.Customer_Name}, Risk Score ${Math.round(customer.calculatedRiskScore)}%"
+                    >
                         <div class="flex justify-between items-start mb-2">
                             <div>
                                 <h3 class="text-lg font-bold text-light-text">${customer.Customer_Name}</h3>
