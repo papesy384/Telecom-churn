@@ -2156,22 +2156,20 @@
         let actionLogs = JSON.parse(localStorage.getItem('csm-action-logs') || '{}');
         
         window.handleCustomerCardKeydown = function(event, customerId, index) {
-            console.log('Key pressed:', event.key, 'KeyCode:', event.keyCode, 'Index:', index);
-            
-            const cards = document.querySelectorAll('#high-risk-list > div');
-            console.log('Total cards:', cards.length);
-            
-            let nextIndex = index;
+            // Get all focusable cards
+            const cards = Array.from(document.querySelectorAll('#high-risk-list > div[tabindex="0"]'));
             
             // Handle arrow keys with explicit key codes for macOS compatibility
             const isArrowDown = event.key === 'ArrowDown' || event.keyCode === 40;
             const isArrowUp = event.key === 'ArrowUp' || event.keyCode === 38;
-            
-            console.log('Is arrow down:', isArrowDown, 'Is arrow up:', isArrowUp);
+            const isEnter = event.key === 'Enter' || event.keyCode === 13;
+            const isSpace = event.key === ' ' || event.keyCode === 32;
             
             if (isArrowDown || isArrowUp) {
                 event.preventDefault();
                 event.stopPropagation();
+                
+                let nextIndex = index;
                 
                 if (isArrowDown) {
                     nextIndex = Math.min(index + 1, cards.length - 1);
@@ -2179,15 +2177,12 @@
                     nextIndex = Math.max(index - 1, 0);
                 }
                 
-                console.log('Next index:', nextIndex);
-                
+                // Focus the next card and scroll it into view
                 if (cards[nextIndex]) {
                     cards[nextIndex].focus();
-                    console.log('Focused card:', nextIndex);
-                } else {
-                    console.error('Card not found at index:', nextIndex);
+                    cards[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
-            } else if (event.key === 'Enter' || event.key === ' ' || event.keyCode === 13 || event.keyCode === 32) {
+            } else if (isEnter || isSpace) {
                 event.preventDefault();
                 event.stopPropagation();
                 showCustomerDetail(customerId);
