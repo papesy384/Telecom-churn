@@ -49,6 +49,32 @@
             margin: 0;
             padding: 0;
         }
+        
+        /* Global thin scrollbar styling */
+        *::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        *::-webkit-scrollbar-thumb {
+            background-color: rgba(249, 115, 22, 0.6);
+            border-radius: 3px;
+        }
+        
+        *::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(249, 115, 22, 0.8);
+        }
+        
+        *::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+        
+        @media (max-width: 768px) {
+            *::-webkit-scrollbar {
+                width: 4px;
+                height: 4px;
+            }
+        }
 
         /* Custom scrollbar for the high-risk list */
         .scroll-container::-webkit-scrollbar {
@@ -1042,8 +1068,8 @@
             </div>
             
             <!-- Sortable Customer Table -->
-            <div class="bg-dark-card border border-gray-700 rounded-lg overflow-hidden flex-1 flex flex-col">
-                <div class="overflow-x-auto">
+            <div class="bg-dark-card border border-gray-700 rounded-lg overflow-hidden flex-1 flex flex-col max-h-[calc(100vh-300px)]">
+                <div class="overflow-x-auto overflow-y-auto">
                     <table class="w-full">
                         <thead class="bg-dark-bg">
                             <tr>
