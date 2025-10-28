@@ -259,7 +259,10 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
-            padding: 1rem;
+            padding-top: 1rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            padding-bottom: 0;
             box-sizing: border-box;
             overflow: hidden;
         }
@@ -276,8 +279,8 @@
 
         .live-demo-header {
             flex-shrink: 0;
-            margin-bottom: 1rem;
             text-align: center;
+            margin-bottom: 0.5rem;
         }
 
         .live-demo-body {
@@ -964,11 +967,11 @@
     <section id="live-demo" class="spa-section live-demo-container bg-dark-bg">
         <div class="live-demo-content">
             <div class="live-demo-header">
-                <h2 class="text-2xl font-bold text-light-text mb-2">
+                <h2 class="text-xl font-bold text-light-text mb-1">
                     🎯 High-Risk Customer List
                 </h2>
-                <div class="w-16 h-0.5 bg-gray-600 mx-auto mb-2"></div>
-                <p class="text-sm text-gray-300">
+                <div class="w-12 h-0.5 bg-gray-600 mx-auto mb-1"></div>
+                <p class="text-xs text-gray-400">
                     Top 10 customers with highest churn risk
                 </p>
             </div>
