@@ -216,6 +216,29 @@
             flex-direction: column;
             min-height: 0;
         }
+        
+        .live-demo-body::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .live-demo-body::-webkit-scrollbar-thumb {
+            background-color: rgba(249, 115, 22, 0.6);
+            border-radius: 3px;
+        }
+        
+        .live-demo-body::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(249, 115, 22, 0.8);
+        }
+        
+        .live-demo-body::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+        
+        @media (max-width: 768px) {
+            .live-demo-body::-webkit-scrollbar {
+                width: 4px;
+            }
+        }
 
         /* Dashboard tabs optimization */
         .dashboard-tabs {
