@@ -1443,21 +1443,21 @@
             const minARR = Math.min(...customerData.map(c => c.ARR));
             const maxARR = Math.max(...customerData.map(c => c.ARR));
             
-            // Weight 1: ARR (40%) - Scaled linearly from min to max
+            // Weight 1: ARR (20%) - Scaled linearly from min to max
             const arrRange = maxARR - minARR;
             const arrScore = arrRange > 0 ? ((customer.ARR - minARR) / arrRange) * 100 : 50;
-            const weightedARR = arrScore * 0.40;
+            const weightedARR = arrScore * 0.20;
             
-            // Weight 2: Support Tickets (30%) - Higher tickets = higher risk
+            // Weight 2: Support Tickets (40%) - Higher tickets = higher risk (INCREASED)
             const maxTickets = 50; // Range is 0-50
             const ticketScore = (customer.supportTicketsLast90Days / maxTickets) * 100;
-            const weightedTickets = ticketScore * 0.30;
+            const weightedTickets = ticketScore * 0.40;
             
-            // Weight 3: Product Usage Score (20%) - Lower score = higher risk (inverted)
+            // Weight 3: Product Usage Score (25%) - Lower score = higher risk (inverted)
             const usageRisk = (1 - customer.productUsageScore) * 100;
-            const weightedUsage = usageRisk * 0.20;
+            const weightedUsage = usageRisk * 0.25;
             
-            // Weight 4: Contract End Date Proximity (10%) - Closer date = higher risk
+            // Weight 4: Contract End Date Proximity (15%) - Closer date = higher risk (INCREASED)
             let contractRisk = 0;
             if (customer.contractEndDays < 90) {
                 // Contracts ending in < 90 days get max risk (100% of this factor)
@@ -1470,7 +1470,7 @@
                 contractRisk = 100 - ((daysRemaining / maxDays) * 100);
                 contractRisk = Math.max(0, contractRisk); // Ensure non-negative
             }
-            const weightedContract = contractRisk * 0.10;
+            const weightedContract = contractRisk * 0.15;
             
             // Sum all weighted factors
             const totalRisk = weightedARR + weightedTickets + weightedUsage + weightedContract;
@@ -1482,6 +1482,10 @@
         // Calculate risk scores for all customers using the new function
         customerData.forEach(customer => {
             customer.calculatedRiskScore = calculateChurnRisk(customer);
+            // Debug log to verify high-risk customers
+            if (customer.calculatedRiskScore >= 80) {
+                console.log(`High Risk: ${customer.Customer_Name} - ${customer.calculatedRiskScore.toFixed(1)}%`);
+            }
             // Add lastActivityDate and accountManager if not present
             if (!customer.lastActivityDate) {
                 const daysAgo = customer.Days_Inactive || 0;
