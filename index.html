@@ -865,7 +865,7 @@
             <div class="live-demo-body">
                 <div class="dashboard-content">
                     <!-- High-Risk Customer List -->
-                    <div id="high-risk-list" class="space-y-3">
+                    <div id="high-risk-list" class="space-y-3" role="list">
                         <!-- Customer cards will be injected here -->
                     </div>
                 </div>
@@ -2136,10 +2136,15 @@
             const cards = document.querySelectorAll('#high-risk-list > div');
             let nextIndex = index;
             
-            if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+            // Handle arrow keys with explicit key codes for macOS compatibility
+            const isArrowDown = event.key === 'ArrowDown' || event.keyCode === 40;
+            const isArrowUp = event.key === 'ArrowUp' || event.keyCode === 38;
+            
+            if (isArrowDown || isArrowUp) {
                 event.preventDefault();
+                event.stopPropagation();
                 
-                if (event.key === 'ArrowDown') {
+                if (isArrowDown) {
                     nextIndex = Math.min(index + 1, cards.length - 1);
                 } else {
                     nextIndex = Math.max(index - 1, 0);
@@ -2148,8 +2153,9 @@
                 if (cards[nextIndex]) {
                     cards[nextIndex].focus();
                 }
-            } else if (event.key === 'Enter' || event.key === ' ') {
+            } else if (event.key === 'Enter' || event.key === ' ' || event.keyCode === 13 || event.keyCode === 32) {
                 event.preventDefault();
+                event.stopPropagation();
                 showCustomerDetail(customerId);
             }
         }
@@ -2166,6 +2172,7 @@
                 return `
                     <div 
                         class="bg-dark-card border border-gray-700 rounded-lg p-4 hover:border-primary-orange transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-orange focus:ring-offset-2 focus:ring-offset-dark-bg" 
+                        role="listitem"
                         tabindex="0"
                         onclick="showCustomerDetail('${customer.Customer_ID}')"
                         onkeydown="handleCustomerCardKeydown(event, '${customer.Customer_ID}', ${index})"
