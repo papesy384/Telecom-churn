@@ -1593,6 +1593,42 @@
             return Math.max(0, Math.min(100, totalRisk));
         }
 
+        /**
+         * Generate single-action recommendation based on actionable drivers
+         * @param {Object} customer - Customer object with topDrivers
+         * @returns {string} Specific actionable recommendation
+         */
+        function generateSingleActionRecommendation(customer) {
+            if (!customer || !customer.topDrivers) {
+                return 'Monitor this customer closely for any emerging risk signals.';
+            }
+            
+            const actionableDrivers = customer.topDrivers.filter(d => d.includes('[Actionable]'));
+            
+            if (actionableDrivers.length === 0) {
+                return 'Monitor this customer closely. Current drivers suggest stable usage patterns.';
+            }
+            
+            const primaryDriver = actionableDrivers[0].replace(' [Actionable]', '');
+            
+            // Generate specific recommendations based on actionable drivers
+            if (primaryDriver.includes('Inactivity on Key Feature')) {
+                return 'Offer a free 1-on-1 feature adoption session to demonstrate key features and provide personalized training.';
+            } else if (primaryDriver.includes('Low API Usage')) {
+                return 'Schedule API consultation call to understand integration challenges and provide developer resources.';
+            } else if (primaryDriver.includes('Billing issue')) {
+                return 'Contact finance team directly to resolve billing concerns and offer flexible payment options.';
+            } else if (primaryDriver.includes('Support ticket spike')) {
+                return 'Escalate to senior support engineer and schedule proactive check-in call to address root cause.';
+            } else if (primaryDriver.includes('Contract renewal approaching')) {
+                return 'Initiate renewal conversation 90 days early with value demonstration showing ROI and usage analytics.';
+            } else if (primaryDriver.includes('Feature adoption decline')) {
+                return 'Send personalized feature adoption report with specific recommendations and schedule product demo focusing on unused features.';
+            } else {
+                return 'Schedule immediate executive check-in call to discuss current challenges and customize success plan.';
+            }
+        }
+        
         // Calculate risk scores for all customers using the new function
         customerData.forEach(customer => {
             customer.calculatedRiskScore = calculateChurnRisk(customer);
@@ -2629,6 +2665,9 @@
             const actionableDrivers = topDrivers.filter(d => d.includes('[Actionable]')).map(d => d.replace(' [Actionable]', ''));
             const otherDrivers = topDrivers.filter(d => !d.includes('[Actionable]') && !d.includes('[Ignore]')).map(d => d.replace(' [Ignore]', ''));
             
+            // Generate single-action recommendation
+            const recommendation = generateSingleActionRecommendation(customer);
+            
             document.getElementById('modalContent').innerHTML = `
                 <div class="space-y-4">
                     <!-- Risk Score Badge -->
@@ -2657,10 +2696,23 @@
                         </div>
                     </div>
                     
-                    <!-- Action Required -->
+                    <!-- Single-Action Recommendation -->
+                    ${actionableDrivers.length > 0 ? `
+                        <div class="bg-primary-orange/10 border-2 border-primary-orange/50 p-4 rounded-lg shadow-lg">
+                            <div class="flex items-start gap-2 mb-2">
+                                <span class="text-primary-orange text-2xl">🎯</span>
+                                <div>
+                                    <p class="text-sm font-bold text-primary-orange mb-1">Single-Action Recommendation</p>
+                                    <p class="text-sm font-bold text-gray-800">${recommendation}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    <!-- Action Required Drivers -->
                     ${actionableDrivers.length > 0 ? `
                         <div class="bg-green-50 border-2 border-green-200 p-3 rounded-lg">
-                            <p class="text-sm font-bold text-green-700 mb-2">⚡ Action Required:</p>
+                            <p class="text-sm font-bold text-green-700 mb-2">📊 Diagnosis:</p>
                             ${actionableDrivers.map(driver => `
                                 <p class="text-sm text-green-800">• ${driver}</p>
                             `).join('')}
