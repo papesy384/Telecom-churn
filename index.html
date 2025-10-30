@@ -1278,23 +1278,13 @@
             
             <!-- Sortable Customer Table -->
             <div class="bg-dark-card border border-gray-700 rounded-lg overflow-hidden flex-1 flex flex-col max-h-[calc(100vh-300px)]">
-                <!-- Batch Actions Toolbar -->
-                <div class="flex items-center justify-between px-3 py-2 border-b border-gray-700 bg-dark-bg">
-                    <div class="text-sm text-gray-300">Batch Actions</div>
-                    <div class="flex items-center gap-2">
-                        <button class="px-3 py-1.5 text-xs rounded bg-blue-600 hover:bg-blue-500 text-white" onclick="batchTrigger()" aria-label="Trigger action for selected">Trigger</button>
-                        <button class="px-3 py-1.5 text-xs rounded bg-indigo-600 hover:bg-indigo-500 text-white" onclick="batchSchedule()" aria-label="Schedule action for selected">Schedule</button>
-                        <button class="px-3 py-1.5 text-xs rounded bg-green-600 hover:bg-green-500 text-white" onclick="batchComplete()" aria-label="Mark action as completed for selected">Complete</button>
-                    </div>
-                </div>
+                
                 <div class="overflow-y-auto" style="max-height: calc(100vh - 300px);">
                     <div class="overflow-x-auto">
                     <table class="w-full" aria-label="Customer table">
                         <thead class="bg-dark-bg">
                             <tr>
-                                <th class="px-3 py-3 text-left text-sm font-semibold text-light-text">
-                                    <input id="select-all" type="checkbox" aria-label="Select all" onclick="toggleSelectAll(this)">
-                                </th>
+                                
                                 <th class="px-4 py-3 text-left text-sm font-semibold text-light-text cursor-pointer hover:bg-gray-700 transition-colors" onclick="sortCustomers('name')">
                                     Customer Name <span id="sort-indicator-name" class="text-primary-orange" title="Sort by name">↓</span>
                                 </th>
@@ -2822,9 +2812,7 @@
                 
                 return `
                     <tr class="border-b border-gray-700 hover:bg-gray-700/30 transition-colors">
-                        <td class="px-3 py-4 align-top">
-                            <input type="checkbox" aria-label="Select ${customer.Customer_Name}" value="${customer.Customer_ID}" onclick="toggleRowSelect(this)">
-                        </td>
+                        
                         <td class="px-4 py-4">
                             <div class="flex items-start gap-2">
                                 ${hasActionable ? '<span class="text-green-400 text-lg">⚡</span>' : ''}
@@ -2910,33 +2898,7 @@
             renderCustomerDashboard();
         }
 
-        // Selection state for batch actions
-        let selectedIds = new Set();
-        function toggleRowSelect(el) {
-            const id = el.value;
-            if (el.checked) selectedIds.add(id); else selectedIds.delete(id);
-        }
-        function toggleSelectAll(el) {
-            const checkboxes = document.querySelectorAll('#customer-dashboard-table-body input[type="checkbox"]');
-            selectedIds.clear();
-            checkboxes.forEach(cb => { cb.checked = el.checked; if (el.checked) selectedIds.add(cb.value); });
-        }
-        function requireSelection() { return Array.from(selectedIds); }
-        function batchTrigger() {
-            const ids = requireSelection();
-            if (ids.length === 0) return alert('Select at least one customer.');
-            alert(`Triggered action for ${ids.length} customers.`);
-        }
-        function batchSchedule() {
-            const ids = requireSelection();
-            if (ids.length === 0) return alert('Select at least one customer.');
-            alert(`Scheduled action for ${ids.length} customers.`);
-        }
-        function batchComplete() {
-            const ids = requireSelection();
-            if (ids.length === 0) return alert('Select at least one customer.');
-            alert(`Marked action complete for ${ids.length} customers.`);
-        }
+        // Batch actions removed per request
         
         window.showCustomerDetail = function(customerId) {
             selectedCustomerId = customerId;
@@ -3001,12 +2963,7 @@
                                     <p class="text-sm font-bold text-gray-800">${recommendation}</p>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-2 mt-2">
-                                <button class="px-3 py-1.5 text-xs rounded bg-blue-600 hover:bg-blue-500 text-white" onclick="actionTrigger('${customer.Customer_ID}')" aria-label="Trigger action">Trigger</button>
-                                <button class="px-3 py-1.5 text-xs rounded bg-indigo-600 hover:bg-indigo-500 text-white" onclick="actionSchedule('${customer.Customer_ID}')" aria-label="Schedule action">Schedule</button>
-                                <button class="px-3 py-1.5 text-xs rounded bg-green-600 hover:bg-green-500 text-white" onclick="actionComplete('${customer.Customer_ID}')" aria-label="Mark as complete">Complete</button>
-                            </div>
-                            <div class="mt-3 text-xs text-gray-600" id="action-outcome"></div>
+                            
                         </div>
                     ` : ''}
                     
@@ -3092,36 +3049,7 @@
             renderCustomerDashboard();
         }
 
-        // Interactive actions + feedback
-        function actionTrigger(customerId) {
-            showFeedbackPrompt(customerId, 'Triggered');
-        }
-        function actionSchedule(customerId) {
-            showFeedbackPrompt(customerId, 'Scheduled');
-        }
-        function actionComplete(customerId) {
-            showFeedbackPrompt(customerId, 'Completed');
-        }
-        function showFeedbackPrompt(customerId, status) {
-            const outcome = document.getElementById('action-outcome');
-            if (!outcome) return;
-            outcome.innerHTML = `
-                <div class="mt-2 p-2 bg-gray-100 rounded border text-gray-800">
-                    <div class="text-xs mb-1">Action ${status}. Was this recommendation helpful?</div>
-                    <div class="flex items-center gap-2">
-                        <button class="px-2 py-1 text-xs rounded bg-green-600 text-white" onclick="recordFeedback('${customerId}', true)">Yes</button>
-                        <button class="px-2 py-1 text-xs rounded bg-red-600 text-white" onclick="recordFeedback('${customerId}', false)">No</button>
-                    </div>
-                </div>`;
-        }
-        function recordFeedback(customerId, helpful) {
-            const key = 'csm-feedback';
-            const store = JSON.parse(localStorage.getItem(key) || '{}');
-            store[customerId] = { helpful, ts: Date.now() };
-            localStorage.setItem(key, JSON.stringify(store));
-            const outcome = document.getElementById('action-outcome');
-            if (outcome) outcome.innerHTML = `<span class="text-xs text-green-700">Thanks for the feedback.</span>`;
-        }
+        // Interactive action buttons removed per request; feedback retained via manual notes
         
         function updateActionHistory() {
             const historyContainer = document.getElementById('action-history-content');
