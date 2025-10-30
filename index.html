@@ -850,7 +850,12 @@
                         <h3 class="text-lg font-bold text-light-text">ARR</h3>
                     </div>
                     <p class="text-sm text-gray-300">Annual Recurring Revenue — the yearly value of a customer's subscription.</p>
-                    <div class="mt-3 text-xs text-gray-400">Example: $12,000 ARR → $1,000/mo</div>
+                    <ul class="mt-2 text-sm text-gray-300 list-disc pl-5 space-y-1">
+                        <li><span class="font-semibold">How it’s scored (10%)</span>: each customer's ARR is scaled linearly between the dataset's min and max ARR, then mapped to 0–100.</li>
+                        <li><span class="font-semibold">Why it matters</span>: lower ARR customers are more price‑sensitive and generally at slightly higher churn risk in this model.</li>
+                        <li><span class="font-semibold">Effect</span>: higher ARR → lower contribution to risk (after scaling); lower ARR → higher contribution.</li>
+                    </ul>
+                    <div class="mt-3 text-xs text-gray-400">Example: if dataset ARR ranges $3k–$25k, a $7k ARR maps near 20–30 on the 0–100 scale before weighting (10%).</div>
                 </div>
 
                 <!-- Risk Tiers -->
@@ -874,6 +879,12 @@
                         <h3 class="text-lg font-bold text-light-text">Support Tickets (90 days)</h3>
                     </div>
                     <p class="text-sm text-gray-300">Count of tickets in the last 90 days — higher values typically increase risk.</p>
+                    <ul class="mt-2 text-sm text-gray-300 list-disc pl-5 space-y-1">
+                        <li><span class="font-semibold">How it’s scored (50%)</span>: tickets are divided by the max (50) → 0–100 risk. More tickets → higher score.</li>
+                        <li><span class="font-semibold">Why it matters</span>: frequent issues or unresolved pain points are strong churn predictors.</li>
+                        <li><span class="font-semibold">Effect</span>: doubling tickets roughly doubles this factor’s risk contribution (up to cap).</li>
+                    </ul>
+                    <div class="mt-3 text-xs text-gray-400">Example: 25 tickets → 25/50 = 0.5 → 50/100, weighted at 50% → contributes ~25 points to total risk.</div>
                 </div>
 
                 <!-- Product Usage Score -->
@@ -883,6 +894,12 @@
                         <h3 class="text-lg font-bold text-light-text">Product Usage Score</h3>
                     </div>
                     <p class="text-sm text-gray-300">0.0–1.0 index for feature engagement and frequency. Lower usage increases risk.</p>
+                    <ul class="mt-2 text-sm text-gray-300 list-disc pl-5 space-y-1">
+                        <li><span class="font-semibold">How it’s scored (25%)</span>: risk uses <span class="italic">(1 − usage)</span> × 100 → 0–100. Lower usage → higher risk.</li>
+                        <li><span class="font-semibold">Why it matters</span>: disengagement precedes churn; consistent feature use is a retention signal.</li>
+                        <li><span class="font-semibold">Effect</span>: usage 0.20 → risk 80 (pre‑weight); usage 0.80 → risk 20.</li>
+                    </ul>
+                    <div class="mt-3 text-xs text-gray-400">Example: usage 0.35 → (1 − 0.35) × 100 = 65, then × 25% weight → ~16 points to total risk.</div>
                 </div>
 
                 <!-- Contract End Date -->
@@ -892,6 +909,12 @@
                         <h3 class="text-lg font-bold text-light-text">Contract End Proximity</h3>
                     </div>
                     <p class="text-sm text-gray-300">Closer renewal dates raise risk: &lt; 30 days (max), 30–90 (high), &gt; 90 (scaled).</p>
+                    <ul class="mt-2 text-sm text-gray-300 list-disc pl-5 space-y-1">
+                        <li><span class="font-semibold">How it’s scored (15%)</span>: &lt;30d → 100; 30–90d → 80; &gt;90d → declines from 60 to 0 as distance increases.</li>
+                        <li><span class="font-semibold">Why it matters</span>: churn decisions cluster near renewal; urgency increases as end date approaches.</li>
+                        <li><span class="font-semibold">Effect</span>: very near renewals can add up to 15 points to total risk by themselves.</li>
+                    </ul>
+                    <div class="mt-3 text-xs text-gray-400">Example: 14 days to end → 100 × 15% weight → +15 risk; 180 days → ~40 × 15% → +6.</div>
                 </div>
 
                 <!-- Risk Score Calculation -->
@@ -900,13 +923,14 @@
                         <div class="w-9 h-9 rounded-lg bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-300 font-black">Σ</div>
                         <h3 class="text-lg font-bold text-light-text">Risk Score Formula</h3>
                     </div>
-                    <p class="text-sm text-gray-300">Weighted blend of factors (0–100):</p>
+                    <p class="text-sm text-gray-300">Weighted blend of normalized factors (0–100 each), then clamped to 0–100:</p>
                     <ul class="text-sm text-gray-300 list-disc pl-5 mt-1 space-y-0.5">
-                        <li>ARR (10%)</li>
-                        <li>Support Tickets (50%)</li>
-                        <li>Product Usage (25%)</li>
-                        <li>Contract End Proximity (15%)</li>
+                        <li>ARR (10%): linear min–max scaling across dataset.</li>
+                        <li>Support Tickets (50%): tickets ÷ 50 cap → 0–100.</li>
+                        <li>Product Usage (25%): (1 − usage) × 100.</li>
+                        <li>Contract End Proximity (15%): tiered mapping (100/80/≤60→0).</li>
                     </ul>
+                    <div class="mt-3 text-xs text-gray-400">Final score = sum of weighted factors; used for tiering, sorting, and recommendations.</div>
                 </div>
             </div>
 
