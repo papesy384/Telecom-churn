@@ -1206,7 +1206,8 @@
                         <!-- ARR Filter -->
                         <div>
                             <label for="arr-filter" class="block text-sm font-semibold text-light-text mb-2">
-                                💰 Minimum ARR:
+                                💰 Minimum ARR
+                                <span class="ml-1 text-xs text-gray-400 cursor-help" title="ARR = Annual Recurring Revenue. Filters customers whose ARR is at least this amount.">ⓘ</span>
                             </label>
                             <div class="relative">
                                 <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary-orange font-bold">$</span>
@@ -1229,7 +1230,8 @@
                         <!-- Risk Tier Selector -->
                         <div>
                             <label for="risk-tier-filter" class="block text-sm font-semibold text-light-text mb-2">
-                                ⚠️ Risk Tier (per Glossary):
+                                ⚠️ Risk Tier (per Glossary)
+                                <span class="ml-1 text-xs text-gray-400 cursor-help" title="High > 80%, Medium 50–80%, Low < 50%.">ⓘ</span>
                             </label>
                             <select 
                                 id="risk-tier-filter" 
@@ -1247,7 +1249,8 @@
                         <!-- Contract End Month Picker -->
                         <div>
                             <label for="contract-month-filter" class="block text-sm font-semibold text-light-text mb-2">
-                                📅 Contract End Date (MM/DD/YYYY):
+                                📅 Contract End Date (MM/DD/YYYY)
+                                <span class="ml-1 text-xs text-gray-400 cursor-help" title="Filter customers whose contract end date matches the selected day.">ⓘ</span>
                             </label>
             <input 
                 type="date" 
@@ -1275,25 +1278,37 @@
             
             <!-- Sortable Customer Table -->
             <div class="bg-dark-card border border-gray-700 rounded-lg overflow-hidden flex-1 flex flex-col max-h-[calc(100vh-300px)]">
+                <!-- Batch Actions Toolbar -->
+                <div class="flex items-center justify-between px-3 py-2 border-b border-gray-700 bg-dark-bg">
+                    <div class="text-sm text-gray-300">Batch Actions</div>
+                    <div class="flex items-center gap-2">
+                        <button class="px-3 py-1.5 text-xs rounded bg-blue-600 hover:bg-blue-500 text-white" onclick="batchTrigger()" aria-label="Trigger action for selected">Trigger</button>
+                        <button class="px-3 py-1.5 text-xs rounded bg-indigo-600 hover:bg-indigo-500 text-white" onclick="batchSchedule()" aria-label="Schedule action for selected">Schedule</button>
+                        <button class="px-3 py-1.5 text-xs rounded bg-green-600 hover:bg-green-500 text-white" onclick="batchComplete()" aria-label="Mark action as completed for selected">Complete</button>
+                    </div>
+                </div>
                 <div class="overflow-y-auto" style="max-height: calc(100vh - 300px);">
                     <div class="overflow-x-auto">
-                    <table class="w-full">
+                    <table class="w-full" aria-label="Customer table">
                         <thead class="bg-dark-bg">
                             <tr>
+                                <th class="px-3 py-3 text-left text-sm font-semibold text-light-text">
+                                    <input id="select-all" type="checkbox" aria-label="Select all" onclick="toggleSelectAll(this)">
+                                </th>
                                 <th class="px-4 py-3 text-left text-sm font-semibold text-light-text cursor-pointer hover:bg-gray-700 transition-colors" onclick="sortCustomers('name')">
-                                    Customer Name <span id="sort-indicator-name" class="text-primary-orange">↓</span>
+                                    Customer Name <span id="sort-indicator-name" class="text-primary-orange" title="Sort by name">↓</span>
                                 </th>
                                 <th class="px-4 py-3 text-left text-sm font-semibold text-light-text cursor-pointer hover:bg-gray-700 transition-colors" onclick="sortCustomers('risk')">
-                                    Risk Score <span id="sort-indicator-risk" class="text-primary-orange">↓</span>
+                                    Risk Score <span id="sort-indicator-risk" class="text-primary-orange" title="Sort by risk">↓</span>
                                 </th>
                                 <th class="px-4 py-3 text-left text-sm font-semibold text-light-text">
-                                    Account Manager
+                                    Account Manager <span class="ml-1 text-xs text-gray-400 cursor-help" title="Assigned CSM or owner">ⓘ</span>
                                 </th>
                                 <th class="px-4 py-3 text-left text-sm font-semibold text-light-text">
-                                    ARR
+                                    ARR <span class="ml-1 text-xs text-gray-400 cursor-help" title="Annual Recurring Revenue">ⓘ</span>
                                 </th>
                                 <th class="px-4 py-3 text-left text-sm font-semibold text-light-text cursor-pointer hover:bg-gray-700 transition-colors" onclick="sortCustomers('date')">
-                                    Last Activity <span id="sort-indicator-date" class="text-primary-orange">↓</span>
+                                    Last Activity <span id="sort-indicator-date" class="text-primary-orange" title="Sort by last activity">↓</span>
                                 </th>
                                 <th class="px-4 py-3 text-left text-sm font-semibold text-light-text">
                                     Status
@@ -2803,14 +2818,18 @@
                 // Get first actionable driver for quick scan
                 const actionableDriver = customer.topDrivers.find(d => d.includes('[Actionable]'));
                 const hasActionable = !!actionableDriver;
+                const initials = (customer.accountManager || 'NA').split(' ').map(w => w[0]).slice(0,2).join('').toUpperCase();
                 
                 return `
-                    <tr class="border-b border-gray-700 hover:bg-gray-700/30 cursor-pointer transition-colors" onclick="showCustomerDetail('${customer.Customer_ID}')">
+                    <tr class="border-b border-gray-700 hover:bg-gray-700/30 transition-colors">
+                        <td class="px-3 py-4 align-top">
+                            <input type="checkbox" aria-label="Select ${customer.Customer_Name}" value="${customer.Customer_ID}" onclick="toggleRowSelect(this)">
+                        </td>
                         <td class="px-4 py-4">
                             <div class="flex items-start gap-2">
                                 ${hasActionable ? '<span class="text-green-400 text-lg">⚡</span>' : ''}
                                 <div>
-                                    <div class="font-semibold text-light-text">${customer.Customer_Name}</div>
+                                    <button class="font-semibold text-light-text text-left hover:underline" onclick="showCustomerDetail('${customer.Customer_ID}')" aria-label="Open details for ${customer.Customer_Name}">${customer.Customer_Name}</button>
                                     <div class="text-xs text-gray-400 font-mono">${customer.Customer_ID}</div>
                                 </div>
                             </div>
@@ -2821,7 +2840,12 @@
                                 <span class="text-xs text-gray-500">/100</span>
                             </div>
                         </td>
-                        <td class="px-4 py-4 text-gray-300 text-sm hidden md:table-cell">${customer.accountManager}</td>
+                        <td class="px-4 py-4 text-gray-300 text-sm hidden md:table-cell">
+                            <span class="inline-flex items-center gap-2">
+                                <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-700 text-gray-200 text-xs font-bold" aria-hidden="true">${initials}</span>
+                                <span>${customer.accountManager}</span>
+                            </span>
+                        </td>
                         <td class="px-4 py-4 text-gray-300 text-sm hidden lg:table-cell">$${customer.ARR.toLocaleString()}</td>
                         <td class="px-4 py-4 text-gray-400 text-xs hidden xl:table-cell">${customer.lastActivityDate}</td>
                         <td class="px-4 py-4">
@@ -2884,6 +2908,34 @@
             document.getElementById('contract-month-filter').value = '';
             searchQuery = '';
             renderCustomerDashboard();
+        }
+
+        // Selection state for batch actions
+        let selectedIds = new Set();
+        function toggleRowSelect(el) {
+            const id = el.value;
+            if (el.checked) selectedIds.add(id); else selectedIds.delete(id);
+        }
+        function toggleSelectAll(el) {
+            const checkboxes = document.querySelectorAll('#customer-dashboard-table-body input[type="checkbox"]');
+            selectedIds.clear();
+            checkboxes.forEach(cb => { cb.checked = el.checked; if (el.checked) selectedIds.add(cb.value); });
+        }
+        function requireSelection() { return Array.from(selectedIds); }
+        function batchTrigger() {
+            const ids = requireSelection();
+            if (ids.length === 0) return alert('Select at least one customer.');
+            alert(`Triggered action for ${ids.length} customers.`);
+        }
+        function batchSchedule() {
+            const ids = requireSelection();
+            if (ids.length === 0) return alert('Select at least one customer.');
+            alert(`Scheduled action for ${ids.length} customers.`);
+        }
+        function batchComplete() {
+            const ids = requireSelection();
+            if (ids.length === 0) return alert('Select at least one customer.');
+            alert(`Marked action complete for ${ids.length} customers.`);
         }
         
         window.showCustomerDetail = function(customerId) {
@@ -2949,6 +3001,12 @@
                                     <p class="text-sm font-bold text-gray-800">${recommendation}</p>
                                 </div>
                             </div>
+                            <div class="flex items-center gap-2 mt-2">
+                                <button class="px-3 py-1.5 text-xs rounded bg-blue-600 hover:bg-blue-500 text-white" onclick="actionTrigger('${customer.Customer_ID}')" aria-label="Trigger action">Trigger</button>
+                                <button class="px-3 py-1.5 text-xs rounded bg-indigo-600 hover:bg-indigo-500 text-white" onclick="actionSchedule('${customer.Customer_ID}')" aria-label="Schedule action">Schedule</button>
+                                <button class="px-3 py-1.5 text-xs rounded bg-green-600 hover:bg-green-500 text-white" onclick="actionComplete('${customer.Customer_ID}')" aria-label="Mark as complete">Complete</button>
+                            </div>
+                            <div class="mt-3 text-xs text-gray-600" id="action-outcome"></div>
                         </div>
                     ` : ''}
                     
@@ -3032,6 +3090,37 @@
             
             // Refresh dashboard table
             renderCustomerDashboard();
+        }
+
+        // Interactive actions + feedback
+        function actionTrigger(customerId) {
+            showFeedbackPrompt(customerId, 'Triggered');
+        }
+        function actionSchedule(customerId) {
+            showFeedbackPrompt(customerId, 'Scheduled');
+        }
+        function actionComplete(customerId) {
+            showFeedbackPrompt(customerId, 'Completed');
+        }
+        function showFeedbackPrompt(customerId, status) {
+            const outcome = document.getElementById('action-outcome');
+            if (!outcome) return;
+            outcome.innerHTML = `
+                <div class="mt-2 p-2 bg-gray-100 rounded border text-gray-800">
+                    <div class="text-xs mb-1">Action ${status}. Was this recommendation helpful?</div>
+                    <div class="flex items-center gap-2">
+                        <button class="px-2 py-1 text-xs rounded bg-green-600 text-white" onclick="recordFeedback('${customerId}', true)">Yes</button>
+                        <button class="px-2 py-1 text-xs rounded bg-red-600 text-white" onclick="recordFeedback('${customerId}', false)">No</button>
+                    </div>
+                </div>`;
+        }
+        function recordFeedback(customerId, helpful) {
+            const key = 'csm-feedback';
+            const store = JSON.parse(localStorage.getItem(key) || '{}');
+            store[customerId] = { helpful, ts: Date.now() };
+            localStorage.setItem(key, JSON.stringify(store));
+            const outcome = document.getElementById('action-outcome');
+            if (outcome) outcome.innerHTML = `<span class="text-xs text-green-700">Thanks for the feedback.</span>`;
         }
         
         function updateActionHistory() {
