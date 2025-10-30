@@ -756,7 +756,7 @@
                     <a data-section="home" class="nav-link text-sm font-medium text-gray-300 pb-1 active" aria-current="page" tabindex="0">Home</a>
                     <a data-section="problem" class="nav-link text-sm font-medium text-gray-300 pb-1" tabindex="0">Problem</a>
                     <a data-section="solution" class="nav-link text-sm font-medium text-gray-300 pb-1" tabindex="0">Solution</a>
-                    <a data-section="live-demo" class="nav-link text-sm font-medium text-gray-300 pb-1" tabindex="0">Live Demo</a>
+                    
                     <a data-section="customer-dashboard" class="nav-link text-sm font-medium text-gray-300 pb-1" tabindex="0">Customer Dashboard</a>
                     <a data-section="risk-trends" class="nav-link text-sm font-medium text-gray-300 pb-1" tabindex="0">Risk Trends</a>
                     <a data-section="glossary" class="nav-link text-sm font-medium text-gray-300 pb-1" tabindex="0">Glossary</a>
@@ -778,7 +778,7 @@
                     <a data-section="home" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">Home</a>
                     <a data-section="problem" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">Problem</a>
                     <a data-section="solution" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">Solution</a>
-                    <a data-section="live-demo" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">Live Demo</a>
+                    
                     <a data-section="customer-dashboard" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">Customer Dashboard</a>
                     <a data-section="risk-trends" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">Risk Trends</a>
                     <a data-section="glossary" class="nav-link text-sm font-medium text-gray-300 hover:text-primary-orange">Glossary</a>
@@ -1109,57 +1109,7 @@
         </div>
     </section>
 
-    <!-- Minimal Interface (Phase 2) -->
-    <section id="live-demo" class="spa-section live-demo-container bg-dark-bg">
-        <div class="live-demo-content">
-            <div class="live-demo-header">
-                <h2 class="text-xl font-bold text-light-text mb-1">
-                    🎯 High-Risk Customer List
-                </h2>
-                <div class="w-12 h-0.5 bg-gray-600 mx-auto mb-1"></div>
-                <p class="text-xs text-gray-400">
-                    Top 10 customers with highest churn risk
-                </p>
-            </div>
-            
-            <div class="live-demo-body">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                    <!-- Main Content (2/3 width on large screens) -->
-                    <div class="lg:col-span-2">
-                        <div class="dashboard-content">
-                            <!-- Quick Stats Summary -->
-                            <div id="live-demo-stats" class="mb-4 grid grid-cols-3 gap-3">
-                                <!-- Stats will be injected here -->
-                            </div>
-                            
-                            <!-- High-Risk Customer List -->
-                            <div id="high-risk-list" class="space-y-1" role="list">
-                                <!-- Customer cards will be injected here -->
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Action History Sidebar (1/3 width on large screens) -->
-                    <div class="lg:col-span-1">
-                        <div class="bg-dark-card border border-gray-700 rounded-lg p-4 max-h-[calc(100vh-250px)] overflow-hidden flex flex-col">
-                            <!-- Sidebar Header -->
-                            <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-700">
-                                <h3 class="text-lg font-bold text-light-text">📝 Action History</h3>
-                                <button onclick="clearActionHistory()" class="text-xs text-gray-400 hover:text-primary-orange transition-colors" title="Clear all">
-                                    Clear All
-                                </button>
-                            </div>
-                            
-                            <!-- History Content (Scrollable) -->
-                            <div id="action-history-content" class="flex-1 overflow-y-auto space-y-2 pr-2">
-                                <p class="text-sm text-gray-500 text-center py-4">No actions logged yet</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
 
     <!-- Detail Modal -->
     <div id="detailModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 backdrop-blur-sm" aria-labelledby="modalTitle" role="dialog" aria-modal="true">
@@ -2560,9 +2510,7 @@
                 
                 
                 // Initialize sections when they become active
-                if (sectionId === 'live-demo') {
-                    renderHighRiskCustomerList();
-                } else if (sectionId === 'customer-dashboard') {
+                if (sectionId === 'customer-dashboard') {
                     renderCustomerDashboard();
                 } else if (sectionId === 'risk-trends') {
                     initRiskTrends();
@@ -3082,8 +3030,7 @@
             // Update action history sidebar
             updateActionHistory();
             
-            // Refresh both customer lists to show the saved note
-            renderHighRiskCustomerList();
+            // Refresh dashboard table
             renderCustomerDashboard();
         }
         
@@ -3118,7 +3065,6 @@
             actionLogs = {};
             localStorage.setItem('csm-action-logs', JSON.stringify(actionLogs));
             updateActionHistory();
-            renderHighRiskCustomerList();
             renderCustomerDashboard();
         }
         
@@ -3132,8 +3078,7 @@
                 heroAccuracy.textContent = `92%`;  // Marketing claim (model achieves 92%+)
             }
             
-            // Render high-risk customer list
-            renderHighRiskCustomerList();
+            // Live Demo removed
             
             // Update action history sidebar
             updateActionHistory();
