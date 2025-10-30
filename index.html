@@ -969,7 +969,32 @@
                         <div class="text-center">−6m</div>
                         <div class="text-right">Now</div>
                     </div>
-                    <div class="mt-1 text-xs text-gray-500">Line shows monthly risk score; colored bands indicate risk tiers.</div>
+                    <div class="mt-2 p-2 bg-dark-bg rounded border border-gray-700">
+                        <div class="text-xs font-semibold text-gray-300 mb-1">Visualization Guide:</div>
+                        <div class="grid grid-cols-2 gap-2 text-xs text-gray-400">
+                            <div class="flex items-center gap-2">
+                                <div class="w-4 h-0.5 bg-red-500 rounded"></div>
+                                <span>🔴 Worsening trend (rising risk)</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-4 h-0.5 bg-green-500 rounded"></div>
+                                <span>🟢 Improving trend (falling risk)</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-red-400">●</span>
+                                <span>High risk data points (≥80%)</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-green-400">●</span>
+                                <span>Low risk data points (&lt;60%)</span>
+                            </div>
+                        </div>
+                        <div class="mt-2 pt-2 border-t border-gray-700">
+                            <div class="text-xs font-semibold text-red-400 mb-1">⚠️ Action Required:</div>
+                            <div class="text-xs text-gray-400">Customers with worsening trends (🔴) need immediate intervention. Prioritize those with rising risk scores over time.</div>
+                        </div>
+                        <div class="mt-1 text-xs text-gray-500 italic">Trends show realistic volatility - some customers are actively getting worse while others improve, forcing prioritization.</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1737,19 +1762,82 @@
         function generateCustomerHistory(customer) {
             const seed = parseInt(customer.Customer_ID.replace(/\D/g, '')) || 1;
             const rand = (i) => {
-                // simple LCG based on seed and index
                 const a = 1664525, c = 1013904223, m = 2**32;
                 let x = (seed + i * 97) >>> 0;
                 x = (a * x + c) % m;
                 return (x / m);
             };
+            
+            // Determine overall trend direction based on customer characteristics
+            // Customers with risk factors (high tickets, low usage, contract ending) tend to worsen
+            // Customers without major risk factors tend to improve
+            const determineTrendDirection = (customer) => {
+                const riskFactors = {
+                    supportTickets: customer.supportTicketsLast90Days > 10 ? 1 : 0,
+                    lowUsage: (customer.productUsageScore || 0.6) < 0.5 ? 1 : 0,
+                    contractEnding: (customer.contractEndDays || 365) < 90 ? 1 : 0,
+                    highRisk: (customer.calculatedRiskScore || 60) > 70 ? 1 : 0
+                };
+                const riskScore = riskFactors.supportTickets + riskFactors.lowUsage + riskFactors.contractEnding + riskFactors.highRisk;
+                
+                // Use customer ID for deterministic but varied trend assignment
+                const trendSeed = parseInt(customer.Customer_ID.replace(/\D/g, '')) % 10;
+                
+                // 60% of customers worsen (rising trend), 40% improve (falling trend)
+                // But customers with 3+ risk factors almost always worsen
+                if (riskScore >= 3) {
+                    return 'worsening'; // Strong worsening trend
+                } else if (riskScore >= 2) {
+                    return trendSeed < 7 ? 'worsening' : 'improving'; // 70% worsen
+                } else if (riskScore >= 1) {
+                    return trendSeed < 5 ? 'worsening' : 'improving'; // 50% worsen
+                } else {
+                    return trendSeed < 2 ? 'worsening' : 'improving'; // 20% worsen, 80% improve
+                }
+            };
+            
+            const trendDirection = determineTrendDirection(customer);
+            const isWorsening = trendDirection === 'worsening';
+            
+            // Calculate trend magnitude ONCE per customer (not per month) for consistent directional movement
+            // Worsening customers: +15 to +40 points over 12 months
+            // Improving customers: -15 to -40 points over 12 months
+            const baseTrendMagnitude = isWorsening ? 
+                (15 + rand(100) * 25) :  // Rising: 15-40 points
+                (-15 - rand(100) * 25);  // Falling: -15 to -40 points
+            
+            // Non-linear volatility generator with realistic directional trends
+            const createVolatility = (baseRisk, month, trendMagnitude) => {
+                const phase = month / 12 * Math.PI * 2; // Full cycle over 12 months
+                const r1 = rand(month * 3);
+                const r2 = rand(month * 7 + 100);
+                const r3 = rand(month * 11 + 200);
+                const r4 = rand(month * 17 + 300);
+                
+                // DIRECTIONAL TREND: Gradual but clear movement over 12 months
+                // Apply trend linearly from 0% (month 0) to 100% (month 11)
+                const directionalTrend = (month / 11) * trendMagnitude;
+                
+                // Volatility components (spikes, dips, turbulence)
+                const seasonal = Math.sin(phase * 2.5) * 18 + Math.cos(phase * 1.3) * 10; // Multi-frequency seasonal pattern
+                const spike = r1 > 0.65 ? (r1 - 0.65) * 55 : 0; // Spikes (more frequent for worsening customers)
+                const dip = r2 > 0.7 ? -(r2 - 0.7) * 45 : 0; // Dips (more frequent for improving customers)
+                const turbulence = (r3 - 0.5) * 28; // Continuous volatility
+                const shock = r4 > 0.75 ? (r4 - 0.75) * 40 : (r4 < 0.25 ? -(0.25 - r4) * 40 : 0); // Random shocks
+                const volatilityWave = Math.sin(phase * 3) * 12; // Additional wave pattern
+                
+                // For worsening customers: more upward spikes, fewer dips
+                // For improving customers: more downward dips, fewer spikes
+                const adjustedSpike = isWorsening ? spike * 1.3 : spike * 0.7;
+                const adjustedDip = isWorsening ? dip * 0.7 : dip * 1.3;
+                
+                const risk = baseRisk + directionalTrend + seasonal + adjustedSpike + adjustedDip + turbulence + shock + volatilityWave;
+                return Math.max(0, Math.min(100, Math.round(risk)));
+            };
+            
             const months = Array.from({ length: 12 }, (_, i) => i);
             const baseRisk = customer.calculatedRiskScore || 60;
-            const riskScores = months.map(i => {
-                const noise = (rand(i) - 0.5) * 20; // +-10
-                const drift = (i - 11) * 0.8; // slight trend
-                return Math.max(0, Math.min(100, Math.round(baseRisk + noise + drift)));
-            });
+            const riskScores = months.map(i => createVolatility(baseRisk, i, baseTrendMagnitude));
             const usageScores = months.map(i => {
                 const base = customer.productUsageScore ?? 0.6;
                 const noise = (rand(i + 13) - 0.5) * 0.2; // +-0.1
@@ -1804,10 +1892,28 @@
             if (!select) return;
             // Populate once
             if (select.options.length === 0) {
+                const determineTrendDisplay = (customer) => {
+                    const riskFactors = {
+                        supportTickets: customer.supportTicketsLast90Days > 10 ? 1 : 0,
+                        lowUsage: (customer.productUsageScore || 0.6) < 0.5 ? 1 : 0,
+                        contractEnding: (customer.contractEndDays || 365) < 90 ? 1 : 0,
+                        highRisk: (customer.calculatedRiskScore || 60) > 70 ? 1 : 0
+                    };
+                    const riskScore = riskFactors.supportTickets + riskFactors.lowUsage + riskFactors.contractEnding + riskFactors.highRisk;
+                    const trendSeed = parseInt(customer.Customer_ID.replace(/\D/g, '')) % 10;
+                    
+                    if (riskScore >= 3) return 'worsening';
+                    else if (riskScore >= 2) return trendSeed < 7 ? 'worsening' : 'improving';
+                    else if (riskScore >= 1) return trendSeed < 5 ? 'worsening' : 'improving';
+                    else return trendSeed < 2 ? 'worsening' : 'improving';
+                };
+                
                 customerData.forEach(c => {
                     const opt = document.createElement('option');
                     opt.value = c.Customer_ID;
-                    opt.textContent = `${c.Customer_Name} (${Math.round(c.calculatedRiskScore)}%)`;
+                    const trend = determineTrendDisplay(c);
+                    const trendIcon = trend === 'worsening' ? '🔴' : '🟢';
+                    opt.textContent = `${c.Customer_Name} (${Math.round(c.calculatedRiskScore)}%) ${trendIcon}`;
                     select.appendChild(opt);
                 });
             }
@@ -1821,13 +1927,46 @@
             const id = select.value || (customerData[0] && customerData[0].Customer_ID);
             const customer = customerData.find(c => c.Customer_ID === id);
             if (!customer) return;
+            
+            // Determine trend direction for display
+            const determineTrendDisplay = (customer) => {
+                const riskFactors = {
+                    supportTickets: customer.supportTicketsLast90Days > 10 ? 1 : 0,
+                    lowUsage: (customer.productUsageScore || 0.6) < 0.5 ? 1 : 0,
+                    contractEnding: (customer.contractEndDays || 365) < 90 ? 1 : 0,
+                    highRisk: (customer.calculatedRiskScore || 60) > 70 ? 1 : 0
+                };
+                const riskScore = riskFactors.supportTickets + riskFactors.lowUsage + riskFactors.contractEnding + riskFactors.highRisk;
+                const trendSeed = parseInt(customer.Customer_ID.replace(/\D/g, '')) % 10;
+                
+                if (riskScore >= 3) return { direction: 'worsening', label: '🔴 Worsening' };
+                else if (riskScore >= 2) return trendSeed < 7 ? { direction: 'worsening', label: '🔴 Worsening' } : { direction: 'improving', label: '🟢 Improving' };
+                else if (riskScore >= 1) return trendSeed < 5 ? { direction: 'worsening', label: '🔴 Worsening' } : { direction: 'improving', label: '🟢 Improving' };
+                else return trendSeed < 2 ? { direction: 'worsening', label: '🔴 Worsening' } : { direction: 'improving', label: '🟢 Improving' };
+            };
+            
+            const trendInfo = determineTrendDisplay(customer);
             const history = generateCustomerHistory(customer);
-            drawRiskChart('risk-trend-chart', history.riskScores);
+            
+            // Update dropdown label to show trend
+            const option = Array.from(select.options).find(opt => opt.value === id);
+            if (option) {
+                const trendIcon = trendInfo.direction === 'worsening' ? '🔴' : '🟢';
+                option.textContent = `${customer.Customer_Name} (${Math.round(customer.calculatedRiskScore)}%) ${trendIcon}`;
+            }
+            
+            drawRiskChart('risk-trend-chart', history.riskScores, trendInfo);
         }
 
-        function drawRiskChart(containerId, values) {
+        function drawRiskChart(containerId, values, trendInfo = null) {
             const el = document.getElementById(containerId);
             if (!el || !values || values.length === 0) return;
+            
+            // Calculate trend for display
+            const startRisk = values[0];
+            const endRisk = values[values.length - 1];
+            const trendChange = endRisk - startRisk;
+            const isWorsening = trendChange > 0;
             const w = 800, h = 260, padL = 42, padR = 12, padT = 10, padB = 28;
             const max = 100, min = 0;
             const innerW = w - padL - padR;
@@ -1836,7 +1975,46 @@
             const yScale = (v) => padT + innerH - ((v - min) / (max - min)) * innerH;
             const xScale = (i) => padL + i * step;
 
-            const points = values.map((v, i) => `${xScale(i)},${yScale(v)}`).join(' ');
+            // Create smooth curved path using quadratic Bezier curves for non-linear visualization
+            const createCurvedPath = (vals) => {
+                if (vals.length < 2) return '';
+                
+                let path = `M ${xScale(0)},${yScale(vals[0])}`;
+                
+                for (let i = 0; i < vals.length - 1; i++) {
+                    const x1 = xScale(i);
+                    const y1 = yScale(vals[i]);
+                    const x2 = xScale(i + 1);
+                    const y2 = yScale(vals[i + 1]);
+                    
+                    // Calculate control point for smooth curve (midpoint with curvature based on volatility) - ENHANCED
+                    const midX = (x1 + x2) / 2;
+                    const volatility = Math.abs(vals[i + 1] - vals[i]);
+                    // Increased curve intensity for more visible curves
+                    const curveIntensity = Math.min(40, volatility * 3); // More volatility = more curve
+                    // Add directional curvature based on trend
+                    const trendDirection = vals[i + 1] > vals[i] ? 1 : -1;
+                    const midY = (y1 + y2) / 2 + (trendDirection * curveIntensity);
+                    
+                    // Use quadratic Bezier for smooth, dynamic curves
+                    path += ` Q ${midX},${midY} ${x2},${y2}`;
+                }
+                
+                return path;
+            };
+            
+            const curvedPath = createCurvedPath(values);
+            
+            // Also create a jagged volatility line overlay to show behavioral volatility
+            const createVolatilityOverlay = (vals) => {
+                let path = `M ${xScale(0)},${yScale(vals[0])}`;
+                for (let i = 1; i < vals.length; i++) {
+                    path += ` L ${xScale(i)},${yScale(vals[i])}`;
+                }
+                return path;
+            };
+            
+            const volatilityPath = createVolatilityOverlay(values);
 
             // Bands for risk tiers
             const highY = yScale(80);
@@ -1858,8 +2036,43 @@
                         </g>`;
                     }).join('')}
                     
-                    <!-- Trend line -->
-                    <polyline points="${points}" fill="none" stroke="#F97316" stroke-width="2.5" />
+                    <!-- Volatility overlay (jagged line showing raw data points) - MORE VISIBLE -->
+                    <path d="${volatilityPath}" fill="none" stroke="#F97316" stroke-width="2" opacity="0.4" stroke-linecap="round" stroke-dasharray="3,2" />
+                    
+                    <!-- Smooth curved trend line (non-linear, dynamic) - COLOR CODED BY TREND -->
+                    <path d="${curvedPath}" fill="none" stroke="${isWorsening ? '#DC2626' : '#10B981'}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                    
+                    <!-- Data points for emphasis - LARGER -->
+                    ${values.map((v, i) => {
+                        const x = xScale(i);
+                        const y = yScale(v);
+                        const intensity = v >= 80 ? 'rgba(220,38,38,0.9)' : v >= 60 ? 'rgba(245,158,11,0.9)' : 'rgba(16,185,129,0.9)';
+                        return `<circle cx="${x}" cy="${y}" r="4.5" fill="${intensity}" stroke="${isWorsening ? '#DC2626' : '#10B981'}" stroke-width="1.5" />`;
+                    }).join('')}
+                    
+                    <!-- Trend indicator at end of line -->
+                    ${(() => {
+                        const lastX = xScale(values.length - 1);
+                        const lastY = yScale(endRisk);
+                        const arrowSize = 8;
+                        const arrowAngle = isWorsening ? 270 : 90; // Pointing up for worsening, down for improving
+                        const arrowX = lastX;
+                        const arrowY = isWorsening ? lastY - 12 : lastY + 12;
+                        
+                        return `
+                            <!-- Trend arrow -->
+                            <polygon 
+                                points="${arrowX},${arrowY} ${arrowX - arrowSize},${arrowY - (isWorsening ? -arrowSize : arrowSize)} ${arrowX + arrowSize},${arrowY - (isWorsening ? -arrowSize : arrowSize)}"
+                                fill="${isWorsening ? '#DC2626' : '#10B981'}"
+                                opacity="0.9"
+                            />
+                            <!-- Trend label -->
+                            <rect x="${arrowX - 25}" y="${arrowY - (isWorsening ? 22 : -8)}" width="50" height="14" fill="${isWorsening ? 'rgba(220,38,38,0.9)' : 'rgba(16,185,129,0.9)'}" rx="2" />
+                            <text x="${arrowX}" y="${arrowY - (isWorsening ? 13 : 3)}" font-size="9" fill="white" text-anchor="middle" font-weight="bold">
+                                ${isWorsening ? '+' : ''}${Math.round(trendChange)}%
+                            </text>
+                        `;
+                    })()}
                     
                     <!-- X Axis baseline -->
                     <line x1="${padL}" y1="${padT+innerH}" x2="${padL+innerW}" y2="${padT+innerH}" stroke="#374151" />
