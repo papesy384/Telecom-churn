@@ -989,7 +989,9 @@
                                 <span>Intervention marker with risk drop</span>
                             </div>
                         </div>
-                        <div class="mt-2 text-xs text-gray-500 italic">When an action is logged, the chart shows a simulated intervention with rapid risk mitigation at that point.</div>
+                        <div class="mt-2 text-xs text-gray-500 italic">
+                            <span class="text-green-400 font-semibold">Tip:</span> Select a customer with actionable drivers (⚡ icon) or a logged action to see the intervention visualization with risk drop.
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1842,8 +1844,14 @@
             const id = select.value || (customerData[0] && customerData[0].Customer_ID);
             const customer = customerData.find(c => c.Customer_ID === id);
             if (!customer) return;
+            // Check for logged action
             const hasIntervention = !!actionLogs[customer.Customer_ID];
-            const history = generateCustomerHistoryWithInterventions(customer, hasIntervention);
+            
+            // For demo: Always show intervention for customers with actionable drivers (to demonstrate the feature)
+            const hasActionableDriver = customer.topDrivers.some(d => d.includes('[Actionable]'));
+            const showIntervention = hasIntervention || hasActionableDriver;
+            
+            const history = generateCustomerHistoryWithInterventions(customer, showIntervention);
             drawRiskChart('risk-trend-chart', history.riskScores, history.interventions, customer.Customer_Name);
         }
 
