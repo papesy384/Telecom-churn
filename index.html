@@ -969,7 +969,28 @@
                         <div class="text-center">−6m</div>
                         <div class="text-right">Now</div>
                     </div>
-                    <div class="mt-1 text-xs text-gray-500">Line shows monthly risk score; colored bands indicate risk tiers.</div>
+                    <div class="mt-3 p-2 bg-dark-bg rounded border border-gray-700">
+                        <div class="text-xs font-semibold text-gray-300 mb-2">Visualization Guide:</div>
+                        <div class="grid grid-cols-2 gap-2 text-xs text-gray-400">
+                            <div class="flex items-center gap-2">
+                                <div class="w-3 h-0.5 bg-orange-500"></div>
+                                <span>Pre-intervention risk</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-3 h-0.5 bg-green-500"></div>
+                                <span>Intervention impact</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-3 h-0.5 bg-orange-500 opacity-50" style="background-image: repeating-linear-gradient(to right, #F97316 0px, #F97316 3px, transparent 3px, transparent 6px);"></div>
+                                <span>Post-intervention (improved)</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-green-400">✓</span>
+                                <span>Intervention marker with risk drop</span>
+                            </div>
+                        </div>
+                        <div class="mt-2 text-xs text-gray-500 italic">When an action is logged, the chart shows a simulated intervention with rapid risk mitigation at that point.</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1821,11 +1842,56 @@
             const id = select.value || (customerData[0] && customerData[0].Customer_ID);
             const customer = customerData.find(c => c.Customer_ID === id);
             if (!customer) return;
-            const history = generateCustomerHistory(customer);
-            drawRiskChart('risk-trend-chart', history.riskScores);
+            const hasIntervention = !!actionLogs[customer.Customer_ID];
+            const history = generateCustomerHistoryWithInterventions(customer, hasIntervention);
+            drawRiskChart('risk-trend-chart', history.riskScores, history.interventions, customer.Customer_Name);
         }
 
-        function drawRiskChart(containerId, values) {
+        function generateCustomerHistoryWithInterventions(customer, hasIntervention) {
+            const seed = parseInt(customer.Customer_ID.replace(/\D/g, '')) || 1;
+            const rand = (i) => {
+                const a = 1664525, c = 1013904223, m = 2**32;
+                let x = (seed + i * 97) >>> 0;
+                x = (a * x + c) % m;
+                return (x / m);
+            };
+            const baseRisk = customer.calculatedRiskScore || 60;
+            const months = Array.from({ length: 12 }, (_, i) => i);
+            let riskScores = [];
+            const interventions = [];
+            
+            // Determine intervention month (if action log exists, simulate it around month 8-10)
+            const interventionMonth = hasIntervention ? 9 : -1;
+            
+            months.forEach((i) => {
+                let risk = baseRisk;
+                const noise = (rand(i) - 0.5) * 20;
+                const drift = (i - 11) * 0.8;
+                
+                // Before intervention: normal trend
+                if (interventionMonth < 0 || i < interventionMonth) {
+                    risk = Math.max(0, Math.min(100, Math.round(risk + noise + drift)));
+                } else if (i === interventionMonth) {
+                    // Intervention happens - risk drops significantly
+                    const drop = Math.min(30, baseRisk * 0.25);
+                    risk = Math.max(0, Math.min(100, Math.round(risk - drop + noise * 0.5)));
+                    interventions.push({ month: i, riskBefore: riskScores[i-1] || baseRisk, riskAfter: risk, drop });
+                } else {
+                    // Post-intervention: sustained lower risk with recovery trend
+                    const sustainedBenefit = -15 + (i - interventionMonth) * 1.5;
+                    risk = Math.max(0, Math.min(100, Math.round(risk + noise * 0.7 + sustainedBenefit)));
+                    if ((i - interventionMonth) <= 1) {
+                        interventions.push({ month: i, isContinued: true });
+                    }
+                }
+                
+                riskScores.push(risk);
+            });
+            
+            return { riskScores, interventions };
+        }
+
+        function drawRiskChart(containerId, values, interventions = [], customerName = '') {
             const el = document.getElementById(containerId);
             if (!el || !values || values.length === 0) return;
             const w = 800, h = 260, padL = 42, padR = 12, padT = 10, padB = 28;
@@ -1835,12 +1901,54 @@
             const step = innerW / (values.length - 1);
             const yScale = (v) => padT + innerH - ((v - min) / (max - min)) * innerH;
             const xScale = (i) => padL + i * step;
-
-            const points = values.map((v, i) => `${xScale(i)},${yScale(v)}`).join(' ');
+            
+            // Split line segments: pre-intervention, intervention drop, post-intervention
+            const interventionMonth = interventions.length > 0 ? interventions[0].month : -1;
+            let prePoints = [], dropPoints = [], postPoints = [];
+            
+            values.forEach((v, i) => {
+                const point = `${xScale(i)},${yScale(v)}`;
+                if (interventionMonth < 0 || i < interventionMonth) {
+                    prePoints.push(point);
+                } else if (i === interventionMonth || (interventionMonth >= 0 && i === interventionMonth + 1)) {
+                    dropPoints.push(point);
+                } else {
+                    postPoints.push(point);
+                }
+            });
+            
+            const preLine = prePoints.join(' ');
+            const dropLine = dropPoints.length > 0 ? dropPoints.join(' ') : '';
+            const postLine = postPoints.length > 0 ? postPoints.join(' ') : '';
 
             // Bands for risk tiers
             const highY = yScale(80);
             const medY = yScale(50);
+            
+            // Intervention markers
+            let interventionMarkers = '';
+            if (interventions.length > 0) {
+                interventions.forEach(iv => {
+                    if (iv.month !== undefined && iv.riskBefore && iv.riskAfter) {
+                        const x = xScale(iv.month);
+                        const yBefore = yScale(iv.riskBefore);
+                        const yAfter = yScale(iv.riskAfter);
+                        
+                        // Vertical intervention line
+                        interventionMarkers += `
+                            <line x1="${x}" y1="${padT}" x2="${x}" y2="${padT + innerH}" stroke="#10B981" stroke-width="2" stroke-dasharray="4,2" opacity="0.6" />
+                            <!-- Intervention icon -->
+                            <g transform="translate(${x},${Math.min(yBefore, yAfter) - 15})">
+                                <circle cx="0" cy="0" r="8" fill="#10B981" opacity="0.9" />
+                                <text x="0" y="3" font-size="8" fill="white" text-anchor="middle" font-weight="bold">✓</text>
+                            </g>
+                            <!-- Drop arrow -->
+                            <path d="M ${x-8},${yBefore} L ${x},${yAfter} L ${x+8},${yBefore}" fill="#10B981" opacity="0.7" />
+                            <text x="${x}" y="${Math.max(yBefore, yAfter) + 15}" font-size="9" fill="#10B981" text-anchor="middle" font-weight="bold">-${Math.round(iv.drop)}%</text>
+                        `;
+                    }
+                });
+            }
 
             el.innerHTML = `
                 <svg width="100%" height="${h}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" role="img" aria-label="Risk trend last 12 months">
@@ -1858,8 +1966,17 @@
                         </g>`;
                     }).join('')}
                     
-                    <!-- Trend line -->
-                    <polyline points="${points}" fill="none" stroke="#F97316" stroke-width="2.5" />
+                    <!-- Pre-intervention trend (solid orange) -->
+                    ${preLine ? `<polyline points="${preLine}" fill="none" stroke="#F97316" stroke-width="2.5" />` : ''}
+                    
+                    <!-- Intervention drop (bold green, thicker) -->
+                    ${dropLine ? `<polyline points="${dropLine}" fill="none" stroke="#10B981" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />` : ''}
+                    
+                    <!-- Post-intervention trend (dashed, lighter orange, showing sustained improvement) -->
+                    ${postLine ? `<polyline points="${postLine}" fill="none" stroke="#F97316" stroke-width="2.5" stroke-dasharray="5,3" opacity="0.8" />` : ''}
+                    
+                    <!-- Intervention markers and annotations -->
+                    ${interventionMarkers}
                     
                     <!-- X Axis baseline -->
                     <line x1="${padL}" y1="${padT+innerH}" x2="${padL+innerW}" y2="${padT+innerH}" stroke="#374151" />
