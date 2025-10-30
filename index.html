@@ -1060,6 +1060,41 @@
         </div>
     </div>
 
+    <!-- Legend / Glossary Modal -->
+    <div id="legendModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="legendTitle">
+        <div class="bg-white rounded-lg max-w-lg w-full p-6 shadow-2xl">
+            <div class="flex items-center justify-between mb-3 pb-3 border-b border-gray-200">
+                <h2 id="legendTitle" class="text-xl font-semibold text-gray-900">Glossary & Definitions</h2>
+                <button onclick="closeLegend()" class="text-gray-400 hover:text-gray-600 text-2xl font-bold" aria-label="Close legend">&times;</button>
+            </div>
+            <div class="space-y-3 text-gray-800">
+                <div>
+                    <p class="text-sm font-semibold">ARR (Annual Recurring Revenue)</p>
+                    <p class="text-sm text-gray-600">Total yearly subscription value of a customer account.</p>
+                </div>
+                <div>
+                    <p class="text-sm font-semibold">Risk Tiers</p>
+                    <ul class="text-sm text-gray-600 list-disc pl-5">
+                        <li><span class="font-semibold">High Risk</span>: &gt; 80%</li>
+                        <li><span class="font-semibold">Medium Risk</span>: 50% - 80%</li>
+                        <li><span class="font-semibold">Low Risk</span>: &lt; 50%</li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="text-sm font-semibold">Support Tickets (90 days)</p>
+                    <p class="text-sm text-gray-600">Total number of tickets created by the customer in the last 90 days.</p>
+                </div>
+                <div>
+                    <p class="text-sm font-semibold">Product Usage Score</p>
+                    <p class="text-sm text-gray-600">0.0 – 1.0 index of feature usage depth and frequency. Lower implies disengagement.</p>
+                </div>
+            </div>
+            <div class="mt-4 flex justify-end">
+                <button onclick="closeLegend()" class="px-4 py-2 bg-primary-orange text-white font-semibold rounded-md hover:bg-orange-600">Close</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Customer Dashboard Section -->
     <section id="customer-dashboard" class="spa-section bg-dark-bg">
         <div class="max-w-7xl mx-auto px-4 py-6 h-full flex flex-col">
@@ -1131,7 +1166,7 @@
                         <!-- Risk Tier Selector -->
                         <div>
                             <label for="risk-tier-filter" class="block text-sm font-semibold text-light-text mb-2">
-                                ⚠️ Risk Tier:
+                                ⚠️ Risk Tier (per Glossary):
                             </label>
                             <select 
                                 id="risk-tier-filter" 
@@ -1139,10 +1174,11 @@
                                 onchange="searchAndFilterCustomers()"
                             >
                                 <option value="all">All</option>
-                                <option value="high">High (>80%)</option>
-                                <option value="medium">Medium (50-80%)</option>
-                                <option value="low">Low (<50%)</option>
+                                <option value="high">High Risk (>80%)</option>
+                                <option value="medium">Medium Risk (50-80%)</option>
+                                <option value="low">Low Risk (<50%)</option>
                             </select>
+                            <p class="mt-1 text-xs text-gray-500">Defined tiers: High &gt; 80%, Medium 50–80%, Low &lt; 50%.</p>
                         </div>
                         
                         <!-- Contract End Month Picker -->
@@ -1627,6 +1663,71 @@
             } else {
                 return 'Schedule immediate executive check-in call to discuss current challenges and customize success plan.';
             }
+        }
+
+        // Generate deterministic 12-month history per customer
+        function generateCustomerHistory(customer) {
+            const seed = parseInt(customer.Customer_ID.replace(/\D/g, '')) || 1;
+            const rand = (i) => {
+                // simple LCG based on seed and index
+                const a = 1664525, c = 1013904223, m = 2**32;
+                let x = (seed + i * 97) >>> 0;
+                x = (a * x + c) % m;
+                return (x / m);
+            };
+            const months = Array.from({ length: 12 }, (_, i) => i);
+            const baseRisk = customer.calculatedRiskScore || 60;
+            const riskScores = months.map(i => {
+                const noise = (rand(i) - 0.5) * 20; // +-10
+                const drift = (i - 11) * 0.8; // slight trend
+                return Math.max(0, Math.min(100, Math.round(baseRisk + noise + drift)));
+            });
+            const usageScores = months.map(i => {
+                const base = customer.productUsageScore ?? 0.6;
+                const noise = (rand(i + 13) - 0.5) * 0.2; // +-0.1
+                const val = Math.max(0, Math.min(1, base + noise));
+                return parseFloat(val.toFixed(2));
+            });
+            const tickets = months.map(i => {
+                const base = customer.supportTicketsLast90Days ?? 5;
+                const noise = Math.round((rand(i + 29) - 0.5) * 6); // +-3
+                return Math.max(0, Math.min(50, Math.round(base / 3 + noise)));
+            });
+            return { riskScores, usageScores, tickets };
+        }
+
+        // Simple SVG sparkline for risk
+        function renderRiskSparkline(containerId, values) {
+            const el = document.getElementById(containerId);
+            if (!el || !values || values.length === 0) return;
+            const w = 300, h = 60, pad = 4;
+            const max = 100, min = 0;
+            const step = (w - pad * 2) / (values.length - 1);
+            const points = values.map((v, i) => {
+                const x = pad + i * step;
+                const y = h - pad - ((v - min) / (max - min)) * (h - pad * 2);
+                return `${x},${y}`;
+            }).join(' ');
+            el.innerHTML = `
+                <svg width="100%" height="${h}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+                    <polyline points="${points}" fill="none" stroke="#F97316" stroke-width="2" />
+                </svg>
+                <div class="text-[10px] text-gray-600 mt-1">Risk trend (last 12 months)</div>
+            `;
+        }
+
+        // Mini bar series renderer
+        function renderMiniBars(containerId, label, values, maxValue) {
+            const el = document.getElementById(containerId);
+            if (!el || !values) return;
+            const bars = values.map(v => {
+                const pct = Math.max(0, Math.min(100, Math.round((v / maxValue) * 100)));
+                return `<div class="h-1.5 bg-orange-500" style="width:${pct}%;"></div>`;
+            }).join('');
+            el.innerHTML = `
+                <div class="mb-1 text-[10px] text-gray-600">${label}</div>
+                <div class="space-y-0.5">${bars}</div>
+            `;
         }
         
         // Calculate risk scores for all customers using the new function
@@ -2696,6 +2797,16 @@
                         </div>
                     </div>
                     
+                    <!-- 12-Month Timeline Tracker -->
+                    <div class="bg-gray-50 p-3 rounded-lg">
+                        <p class="text-sm font-semibold text-gray-700 mb-2">Timeline (12 months)</p>
+                        <div id="timeline-risk" class="mb-2"></div>
+                        <div class="grid grid-cols-2 gap-2 text-xs text-gray-700">
+                            <div id="timeline-usage"></div>
+                            <div id="timeline-tickets"></div>
+                        </div>
+                    </div>
+
                     <!-- Single-Action Recommendation -->
                     ${actionableDrivers.length > 0 ? `
                         <div class="bg-primary-orange/10 border-2 border-primary-orange/50 p-4 rounded-lg shadow-lg">
@@ -2737,6 +2848,16 @@
                 actionLogInput.value = actionLogs[customerId] || '';
             }
             
+            // Render timeline tracker after modal DOM is set
+            try {
+                const history = generateCustomerHistory(customer);
+                renderRiskSparkline('timeline-risk', history.riskScores);
+                renderMiniBars('timeline-usage', 'Usage Score', history.usageScores, 1);
+                renderMiniBars('timeline-tickets', 'Support Tickets', history.tickets, 50);
+            } catch (e) {
+                console.warn('Timeline render failed:', e);
+            }
+
             const modal = document.getElementById('detailModal');
             modal.classList.remove('hidden');
             modal.classList.add('flex');
@@ -2832,6 +2953,18 @@
             
             // Update action history sidebar
             updateActionHistory();
+
+            // Legend button (attach to nav dynamically)
+            const nav = document.querySelector('nav[role="navigation"]');
+            if (nav && !document.getElementById('legend-button')) {
+                const btn = document.createElement('button');
+                btn.id = 'legend-button';
+                btn.className = 'ml-4 text-sm px-3 py-1 rounded border border-gray-700 text-gray-300 hover:text-primary-orange hover:border-primary-orange transition-all';
+                btn.setAttribute('aria-label', 'Open glossary');
+                btn.innerHTML = 'i';
+                btn.onclick = openLegend;
+                nav.appendChild(btn);
+            }
             
             // === SETUP SPA NAVIGATION EVENT LISTENERS ===
             // Navigation Click Handlers - attach to ALL elements with data-section
@@ -2879,6 +3012,20 @@
             showSection('home');
             
         };
+
+        function openLegend() {
+            const modal = document.getElementById('legendModal');
+            if (!modal) return;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeLegend() {
+            const modal = document.getElementById('legendModal');
+            if (!modal) return;
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
 
         // --- FEEDBACK COMPONENTS DEMO ---
 
