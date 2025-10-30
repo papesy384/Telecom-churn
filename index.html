@@ -1206,40 +1206,7 @@
         </div>
     </div>
 
-    <!-- Legend / Glossary Modal -->
-    <div id="legendModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="legendTitle">
-        <div class="bg-white rounded-lg max-w-lg w-full p-6 shadow-2xl">
-            <div class="flex items-center justify-between mb-3 pb-3 border-b border-gray-200">
-                <h2 id="legendTitle" class="text-xl font-semibold text-gray-900">Glossary & Definitions</h2>
-                <button onclick="closeLegend()" class="text-gray-400 hover:text-gray-600 text-2xl font-bold" aria-label="Close legend">&times;</button>
-            </div>
-            <div class="space-y-3 text-gray-800">
-                <div>
-                    <p class="text-sm font-semibold">ARR (Annual Recurring Revenue)</p>
-                    <p class="text-sm text-gray-600">Total yearly subscription value of a customer account.</p>
-                </div>
-                <div>
-                    <p class="text-sm font-semibold">Risk Tiers</p>
-                    <ul class="text-sm text-gray-600 list-disc pl-5">
-                        <li><span class="font-semibold">High Risk</span>: &gt; 80%</li>
-                        <li><span class="font-semibold">Medium Risk</span>: 50% - 80%</li>
-                        <li><span class="font-semibold">Low Risk</span>: &lt; 50%</li>
-                    </ul>
-                </div>
-                <div>
-                    <p class="text-sm font-semibold">Support Tickets (90 days)</p>
-                    <p class="text-sm text-gray-600">Total number of tickets created by the customer in the last 90 days.</p>
-                </div>
-                <div>
-                    <p class="text-sm font-semibold">Product Usage Score</p>
-                    <p class="text-sm text-gray-600">0.0 – 1.0 index of feature usage depth and frequency. Lower implies disengagement.</p>
-                </div>
-            </div>
-            <div class="mt-4 flex justify-end">
-                <button onclick="closeLegend()" class="px-4 py-2 bg-primary-orange text-white font-semibold rounded-md hover:bg-orange-600">Close</button>
-            </div>
-        </div>
-    </div>
+    
 
     <!-- Customer Dashboard Section -->
     <section id="customer-dashboard" class="spa-section bg-dark-bg">
@@ -3171,17 +3138,7 @@
             // Update action history sidebar
             updateActionHistory();
 
-            // Legend button (attach to nav dynamically)
-            const nav = document.querySelector('nav[role="navigation"]');
-            if (nav && !document.getElementById('legend-button')) {
-                const btn = document.createElement('button');
-                btn.id = 'legend-button';
-                btn.className = 'ml-4 text-sm px-3 py-1 rounded border border-gray-700 text-gray-300 hover:text-primary-orange hover:border-primary-orange transition-all';
-                btn.setAttribute('aria-label', 'Open glossary');
-                btn.innerHTML = 'i';
-                btn.onclick = openLegend;
-                nav.appendChild(btn);
-            }
+            // Legend button removed (now a full section exists)
             
             // === SETUP SPA NAVIGATION EVENT LISTENERS ===
             // Navigation Click Handlers - attach to ALL elements with data-section
@@ -3230,19 +3187,7 @@
             
         };
 
-        function openLegend() {
-            const modal = document.getElementById('legendModal');
-            if (!modal) return;
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        }
-
-        function closeLegend() {
-            const modal = document.getElementById('legendModal');
-            if (!modal) return;
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        }
+        // Legend modal handlers removed
 
         // --- FEEDBACK COMPONENTS DEMO ---
 
