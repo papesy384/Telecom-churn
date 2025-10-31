@@ -2,7 +2,10 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -387,10 +390,42 @@
             }
         }
         
+        /* iOS Safari Safe Area Insets (for notches) */
+        :root {
+            --safe-area-inset-top: env(safe-area-inset-top, 0px);
+            --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+            --safe-area-inset-left: env(safe-area-inset-left, 0px);
+            --safe-area-inset-right: env(safe-area-inset-right, 0px);
+        }
+        
+        /* Mobile-optimized touch targets (minimum 44px for iOS/Android) */
+        button, 
+        .nav-link,
+        a[data-section],
+        .customer-card-compact,
+        table tbody tr,
+        .cursor-pointer {
+            min-height: 44px;
+            min-width: 44px;
+            -webkit-tap-highlight-color: rgba(249, 115, 22, 0.3);
+            touch-action: manipulation;
+        }
+        
+        /* Fix iOS Safari viewport height issues */
+        @supports (-webkit-touch-callout: none) {
+            .section-container,
+            .spa-section {
+                height: -webkit-fill-available;
+                min-height: -webkit-fill-available;
+            }
+        }
+        
         /* Mobile optimizations */
         @media (max-width: 768px) {
             .section-container {
                 padding: 1rem 0.75rem;
+                padding-top: calc(1rem + var(--safe-area-inset-top));
+                padding-bottom: calc(1rem + var(--safe-area-inset-bottom));
             }
             
             .section-header h2 {
@@ -406,6 +441,50 @@
                 grid-template-columns: 1fr !important;
                 gap: 1rem;
             }
+            
+            /* Mobile-optimized buttons */
+            button {
+                padding: 0.75rem 1rem;
+                font-size: 1rem;
+            }
+            
+            /* Better mobile scrolling */
+            .spa-section,
+            .content-section {
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            /* Mobile table optimizations */
+            #customer-dashboard table {
+                font-size: 0.875rem;
+            }
+            
+            #customer-dashboard table th,
+            #customer-dashboard table td {
+                padding: 0.75rem 0.5rem;
+            }
+            
+            /* Mobile input optimizations */
+            input[type="text"],
+            input[type="number"],
+            input[type="date"],
+            select,
+            textarea {
+                font-size: 16px; /* Prevents iOS zoom on focus */
+                padding: 0.75rem;
+                min-height: 44px;
+            }
+            
+            /* Mobile modal optimizations */
+            #detailModal,
+            #customerDetailModal {
+                padding: 1rem;
+                margin: 0;
+                max-height: 90vh;
+                max-height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
         }
         
         @media (max-width: 480px) {
@@ -415,12 +494,37 @@
             
             .spa-section {
                 padding: 0.5rem;
+                padding-top: calc(0.5rem + var(--safe-area-inset-top));
+                padding-bottom: calc(0.5rem + var(--safe-area-inset-bottom));
             }
             
             /* Compact filter on mobile */
             #arr-filter {
                 font-size: 0.875rem;
-                padding: 0.5rem;
+                padding: 0.75rem;
+                min-height: 44px;
+            }
+            
+            /* Extra small screens */
+            button {
+                padding: 0.875rem 1rem;
+            }
+            
+            /* Smaller text on very small screens */
+            .text-sm {
+                font-size: 0.813rem;
+            }
+        }
+        
+        /* Landscape mobile optimizations */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .section-header h2 {
+                font-size: 1.25rem;
+            }
+            
+            .spa-section {
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
             }
         }
 
@@ -738,7 +842,7 @@
 <body>
 
     <!-- Fixed Navigation Header -->
-    <nav class="fixed top-0 left-0 right-0 bg-dark-bg/98 backdrop-blur-md border-b border-gray-800/50 z-50 shadow-xl">
+    <nav class="fixed top-0 left-0 right-0 bg-dark-bg/98 backdrop-blur-md border-b border-gray-800/50 z-50 shadow-xl" style="padding-top: env(safe-area-inset-top, 0px); padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px);">
         <div class="max-w-7xl mx-auto px-4 md:px-8">
             <div class="flex items-center justify-between h-16">
                 <!-- Logo -->
@@ -3302,6 +3406,49 @@
         // --- 7. INITIALIZATION ---
 
         window.onload = () => {
+            // === MOBILE VIEWPORT FIXES ===
+            // Fix iOS Safari viewport height issues
+            function fixMobileViewport() {
+                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                if (isMobile) {
+                    // Set CSS custom property for actual viewport height
+                    const vh = window.innerHeight * 0.01;
+                    document.documentElement.style.setProperty('--vh', `${vh}px`);
+                    
+                    // Update on resize and orientation change
+                    window.addEventListener('resize', () => {
+                        const vh = window.innerHeight * 0.01;
+                        document.documentElement.style.setProperty('--vh', `${vh}px`);
+                    });
+                    
+                    // Prevent iOS bounce scroll at edges
+                    document.body.style.overscrollBehavior = 'none';
+                    
+                    // Improve touch scrolling
+                    const sections = document.querySelectorAll('.spa-section, .content-section');
+                    sections.forEach(section => {
+                        section.style.webkitOverflowScrolling = 'touch';
+                        section.style.overflowScrolling = 'touch';
+                    });
+                }
+            }
+            fixMobileViewport();
+            
+            // Prevent double-tap zoom on interactive elements (iOS Safari)
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function(event) {
+                // Only prevent on buttons, links, and interactive elements
+                const target = event.target;
+                const isInteractive = target.closest('button, a, [onclick], .cursor-pointer, table tbody tr');
+                if (isInteractive) {
+                    const now = Date.now();
+                    if (now - lastTouchEnd <= 300) {
+                        event.preventDefault();
+                    }
+                    lastTouchEnd = now;
+                }
+            }, { passive: false });
+            
             // Set hero accuracy to marketing standard (92%)
             const heroAccuracy = document.getElementById('hero-accuracy');
             if (heroAccuracy) {
