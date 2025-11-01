@@ -1015,95 +1015,95 @@
                 <div class="p-4 rounded-xl border-2 border-primary-orange/30 bg-gradient-to-br from-dark-card to-dark-bg">
                     <div class="flex items-center gap-2 mb-2">
                         <div class="w-9 h-9 rounded-lg bg-primary-orange/20 border border-primary-orange/40 flex items-center justify-center text-primary-orange font-black">$</div>
-                        <h3 class="text-lg font-bold text-light-text">ARR</h3>
+                        <h3 class="text-lg font-bold text-light-text" data-translate="glossary.arr.title">ARR</h3>
                     </div>
-                    <p class="text-sm text-gray-300">Annual Recurring Revenue — the yearly value of a customer's subscription.</p>
+                    <p class="text-sm text-gray-300" data-translate="glossary.arr.description">Annual Recurring Revenue — the yearly value of a customer's subscription.</p>
                     <ul class="mt-2 text-sm text-gray-300 list-disc pl-5 space-y-1">
-                        <li><span class="font-semibold">How it’s scored (10%)</span>: each customer's ARR is scaled linearly between the dataset's min and max ARR, then mapped to 0–100.</li>
-                        <li><span class="font-semibold">Why it matters</span>: lower ARR customers are more price‑sensitive and generally at slightly higher churn risk in this model.</li>
-                        <li><span class="font-semibold">Effect</span>: higher ARR → lower contribution to risk (after scaling); lower ARR → higher contribution.</li>
+                        <li><span class="font-semibold" data-translate="glossary.arr.howScored">How it's scored (10%)</span>: <span data-translate="glossary.arr.howScoredDesc">each customer's ARR is scaled linearly between the dataset's min and max ARR, then mapped to 0–100.</span></li>
+                        <li><span class="font-semibold" data-translate="glossary.arr.whyMatters">Why it matters</span>: <span data-translate="glossary.arr.whyMattersDesc">lower ARR customers are more price‑sensitive and generally at slightly higher churn risk in this model.</span></li>
+                        <li><span class="font-semibold" data-translate="glossary.arr.effect">Effect</span>: <span data-translate="glossary.arr.effectDesc">higher ARR → lower contribution to risk (after scaling); lower ARR → higher contribution.</span></li>
                     </ul>
-                    <div class="mt-3 text-xs text-gray-400">Example: if dataset ARR ranges $3k–$25k, a $7k ARR maps near 20–30 on the 0–100 scale before weighting (10%).</div>
+                    <div class="mt-3 text-xs text-gray-400" data-translate="glossary.arr.example">Example: if dataset ARR ranges $3k–$25k, a $7k ARR maps near 20–30 on the 0–100 scale before weighting (10%).</div>
                 </div>
 
                 <!-- Risk Tiers -->
                 <div class="p-4 rounded-xl border-2 border-primary-orange/30 bg-gradient-to-br from-dark-card to-dark-bg">
                     <div class="flex items-center gap-2 mb-2">
                         <div class="w-9 h-9 rounded-lg bg-red-500/20 border border-red-500/40 flex items-center justify-center text-red-300 font-black">%</div>
-                        <h3 class="text-lg font-bold text-light-text">Risk Tiers</h3>
+                        <h3 class="text-lg font-bold text-light-text" data-translate="glossary.riskTiers.title">Risk Tiers</h3>
                     </div>
                     <ul class="text-sm text-gray-300 space-y-1">
-                        <li><span class="text-red-300 font-semibold">High Risk</span>: &gt; 80%</li>
-                        <li><span class="text-orange-300 font-semibold">Medium Risk</span>: 50–80%</li>
-                        <li><span class="text-green-300 font-semibold">Low Risk</span>: &lt; 50%</li>
+                        <li><span class="text-red-300 font-semibold" data-translate="glossary.riskTiers.highRisk">High Risk</span>: &gt; 80%</li>
+                        <li><span class="text-orange-300 font-semibold" data-translate="glossary.riskTiers.mediumRisk">Medium Risk</span>: 50–80%</li>
+                        <li><span class="text-green-300 font-semibold" data-translate="glossary.riskTiers.lowRisk">Low Risk</span>: &lt; 50%</li>
                     </ul>
-                    <div class="mt-3 text-xs text-gray-400">Used in filters, badges, and visual bands.</div>
+                    <div class="mt-3 text-xs text-gray-400" data-translate="glossary.riskTiers.usedIn">Used in filters, badges, and visual bands.</div>
                 </div>
 
                 <!-- Support Tickets -->
                 <div class="p-4 rounded-xl border-2 border-primary-orange/30 bg-gradient-to-br from-dark-card to-dark-bg">
                     <div class="flex items-center gap-2 mb-2">
                         <div class="w-9 h-9 rounded-lg bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-blue-300 font-black">🛠</div>
-                        <h3 class="text-lg font-bold text-light-text">Support Tickets (90 days)</h3>
+                        <h3 class="text-lg font-bold text-light-text" data-translate="glossary.supportTickets.title">Support Tickets (90 days)</h3>
                     </div>
-                    <p class="text-sm text-gray-300">Count of tickets in the last 90 days — higher values typically increase risk.</p>
+                    <p class="text-sm text-gray-300" data-translate="glossary.supportTickets.description">Count of tickets in the last 90 days — higher values typically increase risk.</p>
                     <ul class="mt-2 text-sm text-gray-300 list-disc pl-5 space-y-1">
-                        <li><span class="font-semibold">How it’s scored (50%)</span>: tickets are divided by the max (50) → 0–100 risk. More tickets → higher score.</li>
-                        <li><span class="font-semibold">Why it matters</span>: frequent issues or unresolved pain points are strong churn predictors.</li>
-                        <li><span class="font-semibold">Effect</span>: doubling tickets roughly doubles this factor’s risk contribution (up to cap).</li>
+                        <li><span class="font-semibold" data-translate="glossary.supportTickets.howScored">How it's scored (50%)</span>: <span data-translate="glossary.supportTickets.howScoredDesc">tickets are divided by the max (50) → 0–100 risk. More tickets → higher score.</span></li>
+                        <li><span class="font-semibold" data-translate="glossary.supportTickets.whyMatters">Why it matters</span>: <span data-translate="glossary.supportTickets.whyMattersDesc">frequent issues or unresolved pain points are strong churn predictors.</span></li>
+                        <li><span class="font-semibold" data-translate="glossary.supportTickets.effect">Effect</span>: <span data-translate="glossary.supportTickets.effectDesc">doubling tickets roughly doubles this factor's risk contribution (up to cap).</span></li>
                     </ul>
-                    <div class="mt-3 text-xs text-gray-400">Example: 25 tickets → 25/50 = 0.5 → 50/100, weighted at 50% → contributes ~25 points to total risk.</div>
+                    <div class="mt-3 text-xs text-gray-400" data-translate="glossary.supportTickets.example">Example: 25 tickets → 25/50 = 0.5 → 50/100, weighted at 50% → contributes ~25 points to total risk.</div>
                 </div>
 
                 <!-- Product Usage Score -->
                 <div class="p-4 rounded-xl border-2 border-primary-orange/30 bg-gradient-to-br from-dark-card to-dark-bg">
                     <div class="flex items-center gap-2 mb-2">
                         <div class="w-9 h-9 rounded-lg bg-green-500/20 border border-green-500/40 flex items-center justify-center text-green-300 font-black">⚙</div>
-                        <h3 class="text-lg font-bold text-light-text">Product Usage Score</h3>
+                        <h3 class="text-lg font-bold text-light-text" data-translate="glossary.productUsage.title">Product Usage Score</h3>
                     </div>
-                    <p class="text-sm text-gray-300">0.0–1.0 index for feature engagement and frequency. Lower usage increases risk.</p>
+                    <p class="text-sm text-gray-300" data-translate="glossary.productUsage.description">0.0–1.0 index for feature engagement and frequency. Lower usage increases risk.</p>
                     <ul class="mt-2 text-sm text-gray-300 list-disc pl-5 space-y-1">
-                        <li><span class="font-semibold">How it’s scored (25%)</span>: risk uses <span class="italic">(1 − usage)</span> × 100 → 0–100. Lower usage → higher risk.</li>
-                        <li><span class="font-semibold">Why it matters</span>: disengagement precedes churn; consistent feature use is a retention signal.</li>
-                        <li><span class="font-semibold">Effect</span>: usage 0.20 → risk 80 (pre‑weight); usage 0.80 → risk 20.</li>
+                        <li><span class="font-semibold" data-translate="glossary.productUsage.howScored">How it's scored (25%)</span>: <span data-translate="glossary.productUsage.howScoredDesc">risk uses (1 − usage) × 100 → 0–100. Lower usage → higher risk.</span></li>
+                        <li><span class="font-semibold" data-translate="glossary.productUsage.whyMatters">Why it matters</span>: <span data-translate="glossary.productUsage.whyMattersDesc">disengagement precedes churn; consistent feature use is a retention signal.</span></li>
+                        <li><span class="font-semibold" data-translate="glossary.productUsage.effect">Effect</span>: <span data-translate="glossary.productUsage.effectDesc">usage 0.20 → risk 80 (pre‑weight); usage 0.80 → risk 20.</span></li>
                     </ul>
-                    <div class="mt-3 text-xs text-gray-400">Example: usage 0.35 → (1 − 0.35) × 100 = 65, then × 25% weight → ~16 points to total risk.</div>
+                    <div class="mt-3 text-xs text-gray-400" data-translate="glossary.productUsage.example">Example: usage 0.35 → (1 − 0.35) × 100 = 65, then × 25% weight → ~16 points to total risk.</div>
                 </div>
 
                 <!-- Contract End Date -->
                 <div class="p-4 rounded-xl border-2 border-primary-orange/30 bg-gradient-to-br from-dark-card to-dark-bg">
                     <div class="flex items-center gap-2 mb-2">
                         <div class="w-9 h-9 rounded-lg bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-purple-300 font-black">📅</div>
-                        <h3 class="text-lg font-bold text-light-text">Contract End Proximity</h3>
+                        <h3 class="text-lg font-bold text-light-text" data-translate="glossary.contractEnd.title">Contract End Proximity</h3>
                     </div>
-                    <p class="text-sm text-gray-300">Closer renewal dates raise risk: &lt; 30 days (max), 30–90 (high), &gt; 90 (scaled).</p>
+                    <p class="text-sm text-gray-300" data-translate="glossary.contractEnd.description">Closer renewal dates raise risk: < 30 days (max), 30–90 (high), > 90 (scaled).</p>
                     <ul class="mt-2 text-sm text-gray-300 list-disc pl-5 space-y-1">
-                        <li><span class="font-semibold">How it’s scored (15%)</span>: &lt;30d → 100; 30–90d → 80; &gt;90d → declines from 60 to 0 as distance increases.</li>
-                        <li><span class="font-semibold">Why it matters</span>: churn decisions cluster near renewal; urgency increases as end date approaches.</li>
-                        <li><span class="font-semibold">Effect</span>: very near renewals can add up to 15 points to total risk by themselves.</li>
+                        <li><span class="font-semibold" data-translate="glossary.contractEnd.howScored">How it's scored (15%)</span>: <span data-translate="glossary.contractEnd.howScoredDesc"><30d → 100; 30–90d → 80; >90d → declines from 60 to 0 as distance increases.</span></li>
+                        <li><span class="font-semibold" data-translate="glossary.contractEnd.whyMatters">Why it matters</span>: <span data-translate="glossary.contractEnd.whyMattersDesc">churn decisions cluster near renewal; urgency increases as end date approaches.</span></li>
+                        <li><span class="font-semibold" data-translate="glossary.contractEnd.effect">Effect</span>: <span data-translate="glossary.contractEnd.effectDesc">very near renewals can add up to 15 points to total risk by themselves.</span></li>
                     </ul>
-                    <div class="mt-3 text-xs text-gray-400">Example: 14 days to end → 100 × 15% weight → +15 risk; 180 days → ~40 × 15% → +6.</div>
+                    <div class="mt-3 text-xs text-gray-400" data-translate="glossary.contractEnd.example">Example: 14 days to end → 100 × 15% weight → +15 risk; 180 days → ~40 × 15% → +6.</div>
                 </div>
 
                 <!-- Risk Score Calculation -->
                 <div class="p-4 rounded-xl border-2 border-primary-orange/30 bg-gradient-to-br from-dark-card to-dark-bg">
                     <div class="flex items-center gap-2 mb-2">
                         <div class="w-9 h-9 rounded-lg bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-300 font-black">Σ</div>
-                        <h3 class="text-lg font-bold text-light-text">Risk Score Formula</h3>
+                        <h3 class="text-lg font-bold text-light-text" data-translate="glossary.riskFormula.title">Risk Score Formula</h3>
                     </div>
-                    <p class="text-sm text-gray-300">Weighted blend of normalized factors (0–100 each), then clamped to 0–100:</p>
+                    <p class="text-sm text-gray-300" data-translate="glossary.riskFormula.description">Weighted blend of normalized factors (0–100 each), then clamped to 0–100:</p>
                     <ul class="text-sm text-gray-300 list-disc pl-5 mt-1 space-y-0.5">
-                        <li>ARR (10%): linear min–max scaling across dataset.</li>
-                        <li>Support Tickets (50%): tickets ÷ 50 cap → 0–100.</li>
-                        <li>Product Usage (25%): (1 − usage) × 100.</li>
-                        <li>Contract End Proximity (15%): tiered mapping (100/80/≤60→0).</li>
+                        <li data-translate="glossary.riskFormula.arrWeight">ARR (10%): linear min–max scaling across dataset.</li>
+                        <li data-translate="glossary.riskFormula.ticketsWeight">Support Tickets (50%): tickets ÷ 50 cap → 0–100.</li>
+                        <li data-translate="glossary.riskFormula.usageWeight">Product Usage (25%): (1 − usage) × 100.</li>
+                        <li data-translate="glossary.riskFormula.contractWeight">Contract End Proximity (15%): tiered mapping (100/80/≤60→0).</li>
                     </ul>
-                    <div class="mt-3 text-xs text-gray-400">Final score = sum of weighted factors; used for tiering, sorting, and recommendations.</div>
+                    <div class="mt-3 text-xs text-gray-400" data-translate="glossary.riskFormula.finalScore">Final score = sum of weighted factors; used for tiering, sorting, and recommendations.</div>
                 </div>
             </div>
 
             <div class="mt-6 text-center">
-                <p class="text-xs text-gray-400">These definitions drive filters, visuals, and recommendations across the app.</p>
+                <p class="text-xs text-gray-400" data-translate="glossary.definitionsDrive">These definitions drive filters, visuals, and recommendations across the app.</p>
             </div>
         </div>
     </section>
@@ -1133,35 +1133,35 @@
                 <div class="mt-4 bg-dark-card rounded-lg p-3">
                     <div id="risk-trend-chart" class="w-full overflow-hidden"></div>
                     <div class="mt-2 grid grid-cols-3 text-xs text-gray-400">
-                        <div>−12m</div>
-                        <div class="text-center">−6m</div>
-                        <div class="text-right">Now</div>
+                        <div data-translate="riskTrends.time12m">−12m</div>
+                        <div class="text-center" data-translate="riskTrends.time6m">−6m</div>
+                        <div class="text-right" data-translate="riskTrends.timeNow">Now</div>
                     </div>
                     <div class="mt-2 p-2 bg-dark-bg rounded border border-gray-700">
-                        <div class="text-xs font-semibold text-gray-300 mb-1">Visualization Guide:</div>
+                        <div class="text-xs font-semibold text-gray-300 mb-1" data-translate="riskTrends.vizGuide">Visualization Guide:</div>
                         <div class="grid grid-cols-2 gap-2 text-xs text-gray-400">
                             <div class="flex items-center gap-2">
                                 <div class="w-4 h-0.5 bg-red-500 rounded"></div>
-                                <span>🔴 Worsening trend (rising risk)</span>
+                                <span data-translate="riskTrends.worseningTrend">🔴 Worsening trend (rising risk)</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <div class="w-4 h-0.5 bg-green-500 rounded"></div>
-                                <span>🟢 Improving trend (falling risk)</span>
+                                <span data-translate="riskTrends.improvingTrend">🟢 Improving trend (falling risk)</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <span class="text-red-400">●</span>
-                                <span>High risk data points (≥80%)</span>
+                                <span data-translate="riskTrends.highRiskPoints">High risk data points (≥80%)</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <span class="text-green-400">●</span>
-                                <span>Low risk data points (&lt;60%)</span>
+                                <span data-translate="riskTrends.lowRiskPoints">Low risk data points (<60%)</span>
                             </div>
                         </div>
                         <div class="mt-2 pt-2 border-t border-gray-700">
-                            <div class="text-xs font-semibold text-red-400 mb-1">⚠️ Action Required:</div>
-                            <div class="text-xs text-gray-400">Customers with worsening trends (🔴) need immediate intervention. Prioritize those with rising risk scores over time.</div>
+                            <div class="text-xs font-semibold text-red-400 mb-1" data-translate="riskTrends.actionRequired">⚠️ Action Required:</div>
+                            <div class="text-xs text-gray-400" data-translate="riskTrends.actionRequiredDesc">Customers with worsening trends (🔴) need immediate intervention. Prioritize those with rising risk scores over time.</div>
                         </div>
-                        <div class="mt-1 text-xs text-gray-500 italic">Trends show realistic volatility - some customers are actively getting worse while others improve, forcing prioritization.</div>
+                        <div class="mt-1 text-xs text-gray-500 italic" data-translate="riskTrends.trendsVolatility">Trends show realistic volatility - some customers are actively getting worse while others improve, forcing prioritization.</div>
                     </div>
                 </div>
             </div>
@@ -1309,8 +1309,8 @@
         <div class="bg-white rounded-lg max-w-md w-full p-6 shadow-2xl transform transition-all">
             <!-- Modal Header -->
             <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-200">
-                <h2 id="modalTitle" class="text-xl font-semibold text-gray-900">Customer Details</h2>
-                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 text-2xl font-bold transition-colors" aria-label="Close modal">&times;</button>
+                <h2 id="modalTitle" class="text-xl font-semibold text-gray-900" data-translate="modal.customerDetails">Customer Details</h2>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 text-2xl font-bold transition-colors" data-translate-aria-label="modal.closeModal" aria-label="Close modal">&times;</button>
             </div>
             
             <!-- Modal Content -->
@@ -1320,11 +1320,12 @@
             
             <!-- Action Log Section -->
             <div class="border-t border-gray-200 pt-4">
-                <h3 class="text-sm font-semibold text-gray-700 mb-2">Manual Action Log</h3>
+                <h3 class="text-sm font-semibold text-gray-700 mb-2" data-translate="modal.manualActionLog">Manual Action Log</h3>
                 <textarea 
                     id="actionLogInput" 
                     class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-primary-orange text-gray-900 transition-all"
                     rows="3"
+                    data-translate="modal.actionLogPlaceholder"
                     placeholder="Log your intervention (e.g., 'Called John to offer training session')"
                     aria-label="Action log input"
                 ></textarea>
@@ -1332,17 +1333,19 @@
                     <button 
                         onclick="closeModal()" 
                         class="px-4 py-2 bg-gray-200 text-gray-700 font-semibold rounded-md hover:bg-gray-300 transition-all duration-200"
+                        data-translate="modal.close"
                     >
                         Close
                     </button>
                     <button 
                         onclick="saveActionLog()" 
                         class="px-6 py-2 bg-primary-orange text-white font-semibold rounded-md hover:bg-orange-600 transition-all duration-200 shadow-md"
+                        data-translate="modal.saveNote"
                     >
                         💾 Save Note
                     </button>
                 </div>
-                <div id="saveConfirmation" class="hidden mt-3 p-3 bg-green-50 border border-green-200 rounded-md text-sm text-green-700 font-medium text-center">
+                <div id="saveConfirmation" class="hidden mt-3 p-3 bg-green-50 border border-green-200 rounded-md text-sm text-green-700 font-medium text-center" data-translate="modal.noteSaved">
                     ✓ Note saved successfully
                 </div>
             </div>
@@ -1355,11 +1358,11 @@
     <section id="customer-dashboard" class="spa-section bg-dark-bg">
         <div class="max-w-7xl mx-auto px-4 py-6 h-full flex flex-col">
             <div class="text-center mb-4 flex-shrink-0">
-                <h2 class="text-2xl font-bold text-light-text mb-2">
+                <h2 class="text-2xl font-bold text-light-text mb-2" data-translate="dashboard.title">
                     🎯 Customer Dashboard
                 </h2>
                 <div class="w-16 h-0.5 bg-gray-600 mx-auto mb-2"></div>
-                <p class="text-sm text-gray-300">
+                <p class="text-sm text-gray-300" data-translate="dashboard.subtitle">
                     Comprehensive view of all customers with ARR filtering
                 </p>
             </div>
@@ -1369,7 +1372,7 @@
                 <div class="bg-dark-card border border-gray-700 rounded-lg p-4 w-full max-w-6xl">
                     <!-- Collapsible Filter Header -->
                     <div class="flex items-center justify-between mb-4 cursor-pointer group" onclick="toggleFilters()">
-                        <h3 class="text-lg font-bold text-light-text">🔍 Filters & Search</h3>
+                        <h3 class="text-lg font-bold text-light-text" data-translate="dashboard.filtersSearch">🔍 Filters & Search</h3>
                         <svg id="filter-chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 text-gray-400 group-hover:text-primary-orange transition-transform">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                         </svg>
@@ -1381,7 +1384,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <!-- Search Bar -->
                         <div>
-                            <label for="customer-search" class="block text-sm font-semibold text-light-text mb-2">
+                            <label for="customer-search" class="block text-sm font-semibold text-light-text mb-2" data-translate="dashboard.searchCustomers">
                                 🔍 Search Customers:
                             </label>
                             <div class="relative">
@@ -1389,6 +1392,7 @@
                                 <input 
                                     type="text" 
                                     id="customer-search" 
+                                    data-translate="dashboard.searchPlaceholder"
                                     placeholder="Search by Customer Name or Account Manager..."
                                     class="w-full pl-10 pr-4 py-2 bg-dark-bg border border-gray-600 text-light-text rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-orange"
                                     oninput="searchAndFilterCustomers()"
@@ -1398,7 +1402,7 @@
                         
                         <!-- ARR Filter -->
                         <div>
-                            <label for="arr-filter" class="block text-sm font-semibold text-light-text mb-2">
+                            <label for="arr-filter" class="block text-sm font-semibold text-light-text mb-2" data-translate="dashboard.minimumARR">
                                 💰 Minimum ARR
                                 <span class="ml-1 text-xs text-gray-400 cursor-help" title="ARR = Annual Recurring Revenue. Filters customers whose ARR is at least this amount.">ⓘ</span>
                             </label>
@@ -1422,7 +1426,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <!-- Risk Tier Selector -->
                         <div>
-                            <label for="risk-tier-filter" class="block text-sm font-semibold text-light-text mb-2">
+                            <label for="risk-tier-filter" class="block text-sm font-semibold text-light-text mb-2" data-translate="dashboard.riskTier">
                                 ⚠️ Risk Tier (per Glossary)
                                 <span class="ml-1 text-xs text-gray-400 cursor-help" title="High > 80%, Medium 50–80%, Low < 50%.">ⓘ</span>
                             </label>
@@ -1431,17 +1435,17 @@
                                 class="w-full px-4 py-2 bg-dark-bg border border-gray-600 text-light-text rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-orange"
                                 onchange="searchAndFilterCustomers()"
                             >
-                                <option value="all">All</option>
-                                <option value="high">High Risk (>80%)</option>
-                                <option value="medium">Medium Risk (50-80%)</option>
-                                <option value="low">Low Risk (<50%)</option>
+                                <option value="all" data-translate="dashboard.all">All</option>
+                                <option value="high" data-translate="common.highRisk">High Risk (>80%)</option>
+                                <option value="medium" data-translate="common.mediumRisk">Medium Risk (50-80%)</option>
+                                <option value="low" data-translate="common.lowRisk">Low Risk (<50%)</option>
                             </select>
-                            <p class="mt-1 text-xs text-gray-500">Defined tiers: High &gt; 80%, Medium 50–80%, Low &lt; 50%.</p>
+                            <p class="mt-1 text-xs text-gray-500" data-translate="modal.definedTiers">Defined tiers: High > 80%, Medium 50–80%, Low < 50%.</p>
                         </div>
                         
                         <!-- Contract End Month Picker -->
                         <div>
-                            <label for="contract-month-filter" class="block text-sm font-semibold text-light-text mb-2">
+                            <label for="contract-month-filter" class="block text-sm font-semibold text-light-text mb-2" data-translate="dashboard.contractEndDate">
                                 📅 Contract End Date (MM/DD/YYYY)
                                 <span class="ml-1 text-xs text-gray-400 cursor-help" title="Filter customers whose contract end date matches the selected day.">ⓘ</span>
                             </label>
@@ -1460,6 +1464,7 @@
                         <button 
                             onclick="resetAllFilters()" 
                             class="px-6 py-2 bg-gray-700 hover:bg-gray-600 text-light-text font-semibold rounded-lg transition-all duration-200"
+                            data-translate="dashboard.resetFilters"
                         >
                             🔄 Reset All Filters
                         </button>
@@ -1479,22 +1484,22 @@
                             <tr>
                                 
                                 <th class="px-4 py-3 text-left text-sm font-semibold text-light-text cursor-pointer hover:bg-gray-700 transition-colors" onclick="sortCustomers('name')">
-                                    Customer Name <span id="sort-indicator-name" class="text-primary-orange" title="Sort by name">↓</span>
+                                    <span data-translate="dashboard.customerName">Customer Name</span> <span id="sort-indicator-name" class="text-primary-orange" data-translate="dashboard.sortByName" title="Sort by name">↓</span>
                                 </th>
                                 <th class="px-4 py-3 text-left text-sm font-semibold text-light-text cursor-pointer hover:bg-gray-700 transition-colors" onclick="sortCustomers('risk')">
-                                    Risk Score <span id="sort-indicator-risk" class="text-primary-orange" title="Sort by risk">↓</span>
+                                    <span data-translate="dashboard.riskScore">Risk Score</span> <span id="sort-indicator-risk" class="text-primary-orange" data-translate="dashboard.sortByRisk" title="Sort by risk">↓</span>
                                 </th>
                                 <th class="px-4 py-3 text-left text-sm font-semibold text-light-text">
-                                    Account Manager <span class="ml-1 text-xs text-gray-400 cursor-help" title="Assigned CSM or owner">ⓘ</span>
+                                    <span data-translate="dashboard.accountManager">Account Manager</span> <span class="ml-1 text-xs text-gray-400 cursor-help" title="Assigned CSM or owner">ⓘ</span>
                                 </th>
                                 <th class="px-4 py-3 text-left text-sm font-semibold text-light-text">
-                                    ARR <span class="ml-1 text-xs text-gray-400 cursor-help" title="Annual Recurring Revenue">ⓘ</span>
+                                    <span data-translate="dashboard.arr">ARR</span> <span class="ml-1 text-xs text-gray-400 cursor-help" title="Annual Recurring Revenue">ⓘ</span>
                                 </th>
                                 <th class="px-4 py-3 text-left text-sm font-semibold text-light-text cursor-pointer hover:bg-gray-700 transition-colors" onclick="sortCustomers('date')">
-                                    Last Activity <span id="sort-indicator-date" class="text-primary-orange" title="Sort by last activity">↓</span>
+                                    <span data-translate="dashboard.lastActivity">Last Activity</span> <span id="sort-indicator-date" class="text-primary-orange" data-translate="dashboard.sortByDate" title="Sort by last activity">↓</span>
                                 </th>
                                 <th class="px-4 py-3 text-left text-sm font-semibold text-light-text">
-                                    Status
+                                    <span data-translate="dashboard.status">Status</span>
                                 </th>
                             </tr>
                         </thead>
@@ -1657,8 +1662,8 @@
                         <h3 class="text-sm font-bold text-primary-orange" data-translate="whatsNext.nextStep">→ Next Step: Full CRM Integration</h3>
                     </div>
                     
-                    <p class="body-text text-gray-300 mb-3">
-                        Fund the <span class="text-primary-orange font-semibold">full two-way API synchronization</span> with your CRM.
+                    <p class="body-text text-gray-300 mb-3" data-translate="whatsNext.nextStepDesc">
+                        Fund the full two-way API synchronization with your CRM.
                     </p>
 
                     <div class="grid grid-cols-2 gap-2 mb-3">
@@ -1678,19 +1683,19 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3 h-3 text-primary-orange flex-shrink-0 mt-0.5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
                                 </svg>
-                                <span class="text-xs text-gray-300"><span class="font-semibold">Real-time delivery</span> - Instant CRM tasks</span>
+                                <span class="text-xs text-gray-300"><span class="font-semibold" data-translate="whatsNext.realtimeDelivery">Real-time delivery</span> <span data-translate="whatsNext.realtimeDeliveryDesc">- Instant CRM tasks</span></span>
                             </div>
                             <div class="flex items-start space-x-1.5">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3 h-3 text-primary-orange flex-shrink-0 mt-0.5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
                                 </svg>
-                                <span class="text-xs text-gray-300"><span class="font-semibold">Auto offers</span> - Trigger instantly</span>
+                                <span class="text-xs text-gray-300"><span class="font-semibold" data-translate="whatsNext.autoOffers">Auto offers</span> <span data-translate="whatsNext.autoOffersDesc">- Trigger instantly</span></span>
                             </div>
                             <div class="flex items-start space-x-1.5">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3 h-3 text-primary-orange flex-shrink-0 mt-0.5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
                                 </svg>
-                                <span class="text-xs text-gray-300"><span class="font-semibold">Zero disruption</span> - Familiar tools</span>
+                                <span class="text-xs text-gray-300"><span class="font-semibold" data-translate="whatsNext.zeroDisruption">Zero disruption</span> <span data-translate="whatsNext.zeroDisruptionDesc">- Familiar tools</span></span>
                             </div>
                         </div>
                     </div>
@@ -1698,17 +1703,17 @@
 
                 <!-- Value Proposition -->
                 <div class="text-center bg-gradient-to-br from-dark-card via-dark-bg to-dark-card p-5 rounded-xl border-2 border-primary-orange/50 shadow-2xl card-hover">
-                    <h3 class="text-2xl font-extrabold gradient-text mb-3">
+                    <h3 class="text-2xl font-extrabold gradient-text mb-3" data-translate="whatsNext.valueProp">
                         Ready to Deliver More Saved Revenue This Quarter
                     </h3>
-                    <p class="body-text text-gray-300 mb-4 max-w-2xl mx-auto">
+                    <p class="body-text text-gray-300 mb-4 max-w-2xl mx-auto" data-translate="whatsNext.valuePropDesc">
                         Without the pain or high cost of a platform swap. Let's scale this proven intelligence immediately.
                     </p>
                     <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-                        <a data-section="live-demo" class="cursor-pointer bg-gradient-to-r from-primary-orange to-orange-600 hover:from-orange-600 hover:to-primary-orange text-dark-bg font-bold px-6 py-2.5 rounded-lg text-base transition-all duration-300 glow-orange hover:scale-105">
+                        <a data-section="live-demo" class="cursor-pointer bg-gradient-to-r from-primary-orange to-orange-600 hover:from-orange-600 hover:to-primary-orange text-dark-bg font-bold px-6 py-2.5 rounded-lg text-base transition-all duration-300 glow-orange hover:scale-105" data-translate="whatsNext.reviewDemo">
                             Review Live Demo
                         </a>
-                        <button class="bg-dark-bg/50 backdrop-blur-sm border-2 border-primary-orange/50 hover:border-primary-orange text-primary-orange hover:text-dark-bg hover:bg-primary-orange font-bold px-6 py-2.5 rounded-lg text-base transition-all duration-300 hover:scale-105">
+                        <button class="bg-dark-bg/50 backdrop-blur-sm border-2 border-primary-orange/50 hover:border-primary-orange text-primary-orange hover:text-dark-bg hover:bg-primary-orange font-bold px-6 py-2.5 rounded-lg text-base transition-all duration-300 hover:scale-105" data-translate="whatsNext.contactUs">
                             Contact Us
                         </button>
                     </div>
@@ -1728,25 +1733,25 @@
                 </div>
                 <span class="text-xl font-bold text-light-text">AI Prediction Engine</span>
             </div>
-            <p class="text-gray-400 mb-4">Stop Guessing. Start Knowing.</p>
-            <p class="text-sm text-gray-500">© 2025 AI Prediction Engine. Churn Intelligence Platform.</p>
+            <p class="text-gray-400 mb-4" data-translate="footer.tagline">Stop Guessing. Start Knowing.</p>
+            <p class="text-sm text-gray-500" data-translate="footer.copyright">© 2025 AI Prediction Engine. Churn Intelligence Platform.</p>
         </div>
     </footer>
 
     <!-- Modal for Engage Customer Action -->
     <div id="action-modal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center p-4 z-50">
         <div class="bg-dark-card p-6 md:p-8 rounded-xl max-w-lg w-full border-2 border-primary-orange shadow-2xl">
-            <h3 class="text-2xl font-bold text-primary-orange mb-4">Intervention Triggered!</h3>
+            <h3 class="text-2xl font-bold text-primary-orange mb-4" data-translate="modal.interventionTriggered">Intervention Triggered!</h3>
             <p class="text-light-text mb-4">
-                You have initiated a targeted intervention for: <span id="modal-customer-id" class="font-mono bg-primary-orange/20 px-2 py-0.5 rounded text-sm"></span>
+                <span data-translate="modal.interventionDesc">You have initiated a targeted intervention for:</span> <span id="modal-customer-id" class="font-mono bg-primary-orange/20 px-2 py-0.5 rounded text-sm"></span>
             </p>
             <div id="modal-details" class="space-y-2 text-gray-300 mb-6">
                 <!-- Details injected here -->
             </div>
-            <p class="text-sm text-gray-400">
-                In a production system, this would trigger an automated offer email or create a high-priority task in the $\text{CSM}$'s $\text{CRM}$ queue.
+            <p class="text-sm text-gray-400" data-translate="modal.interventionNote">
+                In a production system, this would trigger an automated offer email or create a high-priority task in the CSM's CRM queue.
             </p>
-            <button onclick="closeModal()" class="mt-6 w-full bg-primary-orange hover:bg-orange-600 text-dark-bg font-semibold py-3 rounded-lg transition duration-200 shadow-md">
+            <button onclick="closeModal()" class="mt-6 w-full bg-primary-orange hover:bg-orange-600 text-dark-bg font-semibold py-3 rounded-lg transition duration-200 shadow-md" data-translate="modal.acknowledgeClose">
                 Acknowledge & Close
             </button>
         </div>
@@ -1917,12 +1922,84 @@
                     identifies: "Identifies root causes with precision",
                     delivers: "Delivers single-action recommendations",
                     nextStep: "→ Next Step: Full CRM Integration",
-                    future: "→ Future: Real-Time Webhook Delivery"
+                    nextStepDesc: "Fund the full two-way API synchronization with your CRM.",
+                    future: "→ Future: Real-Time Webhook Delivery",
+                    realtimeDelivery: "Real-time delivery",
+                    realtimeDeliveryDesc: "- Instant CRM tasks",
+                    autoOffers: "Auto offers",
+                    autoOffersDesc: "- Trigger instantly",
+                    zeroDisruption: "Zero disruption",
+                    zeroDisruptionDesc: "- Familiar tools",
+                    valueProp: "Ready to Deliver More Saved Revenue This Quarter",
+                    valuePropDesc: "Without the pain or high cost of a platform swap. Let's scale this proven intelligence immediately.",
+                    reviewDemo: "Review Live Demo",
+                    contactUs: "Contact Us"
                 },
                 // Glossary Section
                 glossary: {
                     title: "Glossary & Definitions",
-                    subtitle: "Clear definitions for all key terms and thresholds used across the dashboard."
+                    subtitle: "Clear definitions for all key terms and thresholds used across the dashboard.",
+                    arr: {
+                        title: "ARR",
+                        description: "Annual Recurring Revenue — the yearly value of a customer's subscription.",
+                        howScored: "How it's scored (10%)",
+                        howScoredDesc: "each customer's ARR is scaled linearly between the dataset's min and max ARR, then mapped to 0–100.",
+                        whyMatters: "Why it matters",
+                        whyMattersDesc: "lower ARR customers are more price‑sensitive and generally at slightly higher churn risk in this model.",
+                        effect: "Effect",
+                        effectDesc: "higher ARR → lower contribution to risk (after scaling); lower ARR → higher contribution.",
+                        example: "Example: if dataset ARR ranges $3k–$25k, a $7k ARR maps near 20–30 on the 0–100 scale before weighting (10%)."
+                    },
+                    riskTiers: {
+                        title: "Risk Tiers",
+                        highRisk: "High Risk",
+                        mediumRisk: "Medium Risk",
+                        lowRisk: "Low Risk",
+                        usedIn: "Used in filters, badges, and visual bands."
+                    },
+                    supportTickets: {
+                        title: "Support Tickets (90 days)",
+                        description: "Count of tickets in the last 90 days — higher values typically increase risk.",
+                        howScored: "How it's scored (50%)",
+                        howScoredDesc: "tickets are divided by the max (50) → 0–100 risk. More tickets → higher score.",
+                        whyMatters: "Why it matters",
+                        whyMattersDesc: "frequent issues or unresolved pain points are strong churn predictors.",
+                        effect: "Effect",
+                        effectDesc: "doubling tickets roughly doubles this factor's risk contribution (up to cap).",
+                        example: "Example: 25 tickets → 25/50 = 0.5 → 50/100, weighted at 50% → contributes ~25 points to total risk."
+                    },
+                    productUsage: {
+                        title: "Product Usage Score",
+                        description: "0.0–1.0 index for feature engagement and frequency. Lower usage increases risk.",
+                        howScored: "How it's scored (25%)",
+                        howScoredDesc: "risk uses (1 − usage) × 100 → 0–100. Lower usage → higher risk.",
+                        whyMatters: "Why it matters",
+                        whyMattersDesc: "disengagement precedes churn; consistent feature use is a retention signal.",
+                        effect: "Effect",
+                        effectDesc: "usage 0.20 → risk 80 (pre‑weight); usage 0.80 → risk 20.",
+                        example: "Example: usage 0.35 → (1 − 0.35) × 100 = 65, then × 25% weight → ~16 points to total risk."
+                    },
+                    contractEnd: {
+                        title: "Contract End Proximity",
+                        description: "Closer renewal dates raise risk: < 30 days (max), 30–90 (high), > 90 (scaled).",
+                        howScored: "How it's scored (15%)",
+                        howScoredDesc: "<30d → 100; 30–90d → 80; >90d → declines from 60 to 0 as distance increases.",
+                        whyMatters: "Why it matters",
+                        whyMattersDesc: "churn decisions cluster near renewal; urgency increases as end date approaches.",
+                        effect: "Effect",
+                        effectDesc: "very near renewals can add up to 15 points to total risk by themselves.",
+                        example: "Example: 14 days to end → 100 × 15% weight → +15 risk; 180 days → ~40 × 15% → +6."
+                    },
+                    riskFormula: {
+                        title: "Risk Score Formula",
+                        description: "Weighted blend of normalized factors (0–100 each), then clamped to 0–100:",
+                        arrWeight: "ARR (10%): linear min–max scaling across dataset.",
+                        ticketsWeight: "Support Tickets (50%): tickets ÷ 50 cap → 0–100.",
+                        usageWeight: "Product Usage (25%): (1 − usage) × 100.",
+                        contractWeight: "Contract End Proximity (15%): tiered mapping (100/80/≤60→0).",
+                        finalScore: "Final score = sum of weighted factors; used for tiering, sorting, and recommendations."
+                    },
+                    definitionsDrive: "These definitions drive filters, visuals, and recommendations across the app."
                 },
                 // Risk Trends Section
                 riskTrends: {
@@ -1931,7 +2008,68 @@
                     selectCustomer: "Select Customer",
                     highRisk: "High > 80%",
                     mediumRisk: "Medium 50–80%",
-                    lowRisk: "Low < 50%"
+                    lowRisk: "Low < 50%",
+                    time12m: "−12m",
+                    time6m: "−6m",
+                    timeNow: "Now",
+                    vizGuide: "Visualization Guide:",
+                    worseningTrend: "🔴 Worsening trend (rising risk)",
+                    improvingTrend: "🟢 Improving trend (falling risk)",
+                    highRiskPoints: "High risk data points (≥80%)",
+                    lowRiskPoints: "Low risk data points (<60%)",
+                    actionRequired: "⚠️ Action Required:",
+                    actionRequiredDesc: "Customers with worsening trends (🔴) need immediate intervention. Prioritize those with rising risk scores over time.",
+                    trendsVolatility: "Trends show realistic volatility - some customers are actively getting worse while others improve, forcing prioritization."
+                },
+                // Customer Dashboard Section
+                dashboard: {
+                    title: "Customer Dashboard",
+                    subtitle: "Comprehensive view of all customers with ARR filtering",
+                    filtersSearch: "🔍 Filters & Search",
+                    searchCustomers: "🔍 Search Customers:",
+                    searchPlaceholder: "Search by Customer Name or Account Manager...",
+                    minimumARR: "💰 Minimum ARR",
+                    riskTier: "⚠️ Risk Tier (per Glossary)",
+                    contractEndDate: "📅 Contract End Date (MM/DD/YYYY)",
+                    all: "All",
+                    resetFilters: "🔄 Reset All Filters",
+                    customerName: "Customer Name",
+                    riskScore: "Risk Score",
+                    accountManager: "Account Manager",
+                    arr: "ARR",
+                    lastActivity: "Last Activity",
+                    status: "Status",
+                    sortByName: "Sort by name",
+                    sortByRisk: "Sort by risk",
+                    sortByDate: "Sort by last activity"
+                },
+                // Modal Section
+                modal: {
+                    customerDetails: "Customer Details",
+                    close: "Close",
+                    closeModal: "Close modal",
+                    closeDetailModal: "Close detail modal",
+                    manualActionLog: "Manual Action Log",
+                    actionLogPlaceholder: "Log your intervention (e.g., 'Called John to offer training session')",
+                    saveNote: "💾 Save Note",
+                    noteSaved: "✓ Note saved successfully",
+                    acknowledgeClose: "Acknowledge & Close",
+                    interventionTriggered: "Intervention Triggered!",
+                    interventionDesc: "You have initiated a targeted intervention for:",
+                    interventionNote: "In a production system, this would trigger an automated offer email or create a high-priority task in the CSM's CRM queue.",
+                    arrLabel: "ARR:",
+                    riskScoreLabel: "Risk Score:",
+                    rootCauseLabel: "Root Cause:",
+                    keyDriverLabel: "Key Driver:",
+                    singleActionRecommendation: "Single-Action Recommendation",
+                    diagnosis: "📊 Diagnosis:",
+                    additionalContext: "Additional Context:",
+                    definedTiers: "Defined tiers: High > 80%, Medium 50–80%, Low < 50%."
+                },
+                // Footer Section
+                footer: {
+                    tagline: "Stop Guessing. Start Knowing.",
+                    copyright: "© 2025 AI Prediction Engine. Churn Intelligence Platform."
                 },
                 // Common
                 common: {
@@ -2039,12 +2177,84 @@
                     identifies: "Identifie les causes racines avec précision",
                     delivers: "Délivre des recommandations d'action unique",
                     nextStep: "→ Prochaine Étape : Intégration CRM Complète",
-                    future: "→ Avenir : Livraison Webhook en Temps Réel"
+                    nextStepDesc: "Financer la synchronisation API bidirectionnelle complète avec votre CRM.",
+                    future: "→ Avenir : Livraison Webhook en Temps Réel",
+                    realtimeDelivery: "Livraison en temps réel",
+                    realtimeDeliveryDesc: "- Tâches CRM instantanées",
+                    autoOffers: "Offres automatiques",
+                    autoOffersDesc: "- Déclencher instantanément",
+                    zeroDisruption: "Zéro perturbation",
+                    zeroDisruptionDesc: "- Outils familiers",
+                    valueProp: "Prêt à Livrer Plus de Revenus Sauvegardés Ce Trimestre",
+                    valuePropDesc: "Sans la douleur ou le coût élevé d'un changement de plateforme. Mettons à l'échelle cette intelligence prouvée immédiatement.",
+                    reviewDemo: "Examiner la Démo en Direct",
+                    contactUs: "Nous Contacter"
                 },
                 // Glossary Section
                 glossary: {
                     title: "Glossaire et Définitions",
-                    subtitle: "Définitions claires de tous les termes clés et seuils utilisés dans le tableau de bord."
+                    subtitle: "Définitions claires de tous les termes clés et seuils utilisés dans le tableau de bord.",
+                    arr: {
+                        title: "CA",
+                        description: "Chiffre d'Affaires Récurrent Annuel — la valeur annuelle de l'abonnement d'un client.",
+                        howScored: "Comment c'est noté (10%)",
+                        howScoredDesc: "le CA de chaque client est mis à l'échelle linéairement entre le min et le max du jeu de données, puis mappé sur 0–100.",
+                        whyMatters: "Pourquoi c'est important",
+                        whyMattersDesc: "les clients à faible CA sont plus sensibles aux prix et généralement à un risque d'attrition légèrement plus élevé dans ce modèle.",
+                        effect: "Effet",
+                        effectDesc: "CA plus élevé → contribution plus faible au risque (après mise à l'échelle) ; CA plus faible → contribution plus élevée.",
+                        example: "Exemple : si le CA du jeu de données varie entre 3k€ et 25k€, un CA de 7k€ correspond à environ 20–30 sur l'échelle 0–100 avant pondération (10%)."
+                    },
+                    riskTiers: {
+                        title: "Niveaux de Risque",
+                        highRisk: "Risque Élevé",
+                        mediumRisk: "Risque Moyen",
+                        lowRisk: "Risque Faible",
+                        usedIn: "Utilisé dans les filtres, badges et bandes visuelles."
+                    },
+                    supportTickets: {
+                        title: "Tickets de Support (90 jours)",
+                        description: "Nombre de tickets au cours des 90 derniers jours — des valeurs plus élevées augmentent généralement le risque.",
+                        howScored: "Comment c'est noté (50%)",
+                        howScoredDesc: "les tickets sont divisés par le maximum (50) → risque 0–100. Plus de tickets → score plus élevé.",
+                        whyMatters: "Pourquoi c'est important",
+                        whyMattersDesc: "les problèmes fréquents ou les points de douleur non résolus sont de forts prédicteurs d'attrition.",
+                        effect: "Effet",
+                        effectDesc: "doubler les tickets double approximativement la contribution au risque de ce facteur (jusqu'à la limite).",
+                        example: "Exemple : 25 tickets → 25/50 = 0,5 → 50/100, pondéré à 50% → contribue ~25 points au risque total."
+                    },
+                    productUsage: {
+                        title: "Score d'Utilisation du Produit",
+                        description: "Index 0,0–1,0 pour l'engagement et la fréquence des fonctionnalités. Une utilisation plus faible augmente le risque.",
+                        howScored: "Comment c'est noté (25%)",
+                        howScoredDesc: "le risque utilise (1 − utilisation) × 100 → 0–100. Utilisation plus faible → risque plus élevé.",
+                        whyMatters: "Pourquoi c'est important",
+                        whyMattersDesc: "le désengagement précède l'attrition ; une utilisation constante des fonctionnalités est un signal de rétention.",
+                        effect: "Effet",
+                        effectDesc: "utilisation 0,20 → risque 80 (avant pondération) ; utilisation 0,80 → risque 20.",
+                        example: "Exemple : utilisation 0,35 → (1 − 0,35) × 100 = 65, puis × 25% de pondération → ~16 points au risque total."
+                    },
+                    contractEnd: {
+                        title: "Proximité de Fin de Contrat",
+                        description: "Les dates de renouvellement plus proches augmentent le risque : < 30 jours (max), 30–90 (élevé), > 90 (mis à l'échelle).",
+                        howScored: "Comment c'est noté (15%)",
+                        howScoredDesc: "<30j → 100 ; 30–90j → 80 ; >90j → diminue de 60 à 0 à mesure que la distance augmente.",
+                        whyMatters: "Pourquoi c'est important",
+                        whyMattersDesc: "les décisions d'attrition se regroupent près du renouvellement ; l'urgence augmente à l'approche de la date de fin.",
+                        effect: "Effet",
+                        effectDesc: "les renouvellements très proches peuvent ajouter jusqu'à 15 points au risque total par eux-mêmes.",
+                        example: "Exemple : 14 jours jusqu'à la fin → 100 × 15% de pondération → +15 risque ; 180 jours → ~40 × 15% → +6."
+                    },
+                    riskFormula: {
+                        title: "Formule du Score de Risque",
+                        description: "Mélange pondéré de facteurs normalisés (0–100 chacun), puis limité à 0–100 :",
+                        arrWeight: "CA (10%) : mise à l'échelle linéaire min–max sur le jeu de données.",
+                        ticketsWeight: "Tickets de Support (50%) : tickets ÷ limite de 50 → 0–100.",
+                        usageWeight: "Utilisation du Produit (25%) : (1 − utilisation) × 100.",
+                        contractWeight: "Proximité de Fin de Contrat (15%) : mappage par niveaux (100/80/≤60→0).",
+                        finalScore: "Score final = somme des facteurs pondérés ; utilisé pour le classement, le tri et les recommandations."
+                    },
+                    definitionsDrive: "Ces définitions déterminent les filtres, visuels et recommandations dans toute l'application."
                 },
                 // Risk Trends Section
                 riskTrends: {
@@ -2053,7 +2263,68 @@
                     selectCustomer: "Sélectionner un Client",
                     highRisk: "Élevé > 80%",
                     mediumRisk: "Moyen 50–80%",
-                    lowRisk: "Faible < 50%"
+                    lowRisk: "Faible < 50%",
+                    time12m: "−12m",
+                    time6m: "−6m",
+                    timeNow: "Maintenant",
+                    vizGuide: "Guide de Visualisation :",
+                    worseningTrend: "🔴 Tendance à la détérioration (risque en hausse)",
+                    improvingTrend: "🟢 Tendance à l'amélioration (risque en baisse)",
+                    highRiskPoints: "Points de données à risque élevé (≥80%)",
+                    lowRiskPoints: "Points de données à risque faible (<60%)",
+                    actionRequired: "⚠️ Action Requise :",
+                    actionRequiredDesc: "Les clients avec des tendances à la détérioration (🔴) nécessitent une intervention immédiate. Priorisez ceux dont les scores de risque augmentent au fil du temps.",
+                    trendsVolatility: "Les tendances montrent une volatilité réaliste - certains clients s'aggravent activement tandis que d'autres s'améliorent, forçant la priorisation."
+                },
+                // Customer Dashboard Section
+                dashboard: {
+                    title: "Tableau de Bord Client",
+                    subtitle: "Vue complète de tous les clients avec filtrage par CA",
+                    filtersSearch: "🔍 Filtres et Recherche",
+                    searchCustomers: "🔍 Rechercher des Clients :",
+                    searchPlaceholder: "Rechercher par Nom de Client ou Responsable de Compte...",
+                    minimumARR: "💰 CA Minimum",
+                    riskTier: "⚠️ Niveau de Risque (selon Glossaire)",
+                    contractEndDate: "📅 Date de Fin de Contrat (JJ/MM/AAAA)",
+                    all: "Tous",
+                    resetFilters: "🔄 Réinitialiser tous les Filtres",
+                    customerName: "Nom du Client",
+                    riskScore: "Score de Risque",
+                    accountManager: "Responsable de Compte",
+                    arr: "CA",
+                    lastActivity: "Dernière Activité",
+                    status: "Statut",
+                    sortByName: "Trier par nom",
+                    sortByRisk: "Trier par risque",
+                    sortByDate: "Trier par dernière activité"
+                },
+                // Modal Section
+                modal: {
+                    customerDetails: "Détails du Client",
+                    close: "Fermer",
+                    closeModal: "Fermer la fenêtre",
+                    closeDetailModal: "Fermer les détails",
+                    manualActionLog: "Journal d'Actions Manuel",
+                    actionLogPlaceholder: "Enregistrez votre intervention (ex: 'Appelé John pour proposer une session de formation')",
+                    saveNote: "💾 Enregistrer la Note",
+                    noteSaved: "✓ Note enregistrée avec succès",
+                    acknowledgeClose: "Accepter et Fermer",
+                    interventionTriggered: "Intervention Déclenchée !",
+                    interventionDesc: "Vous avez initié une intervention ciblée pour :",
+                    interventionNote: "Dans un système de production, cela déclencherait un e-mail d'offre automatisé ou créerait une tâche haute priorité dans la file d'attente CRM du CSM.",
+                    arrLabel: "CA :",
+                    riskScoreLabel: "Score de Risque :",
+                    rootCauseLabel: "Cause Racine :",
+                    keyDriverLabel: "Facteur Clé :",
+                    singleActionRecommendation: "Recommandation d'Action Unique",
+                    diagnosis: "📊 Diagnostic :",
+                    additionalContext: "Contexte Supplémentaire :",
+                    definedTiers: "Niveaux définis : Élevé > 80%, Moyen 50–80%, Faible < 50%."
+                },
+                // Footer Section
+                footer: {
+                    tagline: "Arrêtez de Deviner. Commencez à Savoir.",
+                    copyright: "© 2025 Moteur de Prédiction IA. Plateforme d'Intelligence d'Attrition."
                 },
                 // Common
                 common: {
@@ -2161,12 +2432,84 @@
                     identifies: "Identifica causas raíz con precisión",
                     delivers: "Entrega recomendaciones de acción única",
                     nextStep: "→ Próximo Paso: Integración Completa de CRM",
-                    future: "→ Futuro: Entrega Webhook en Tiempo Real"
+                    nextStepDesc: "Financiar la sincronización completa de API bidireccional con su CRM.",
+                    future: "→ Futuro: Entrega Webhook en Tiempo Real",
+                    realtimeDelivery: "Entrega en tiempo real",
+                    realtimeDeliveryDesc: "- Tareas CRM instantáneas",
+                    autoOffers: "Ofertas automáticas",
+                    autoOffersDesc: "- Disparar instantáneamente",
+                    zeroDisruption: "Cero interrupción",
+                    zeroDisruptionDesc: "- Herramientas familiares",
+                    valueProp: "Listo para Entregar Más Ingresos Ahorrados Este Trimestre",
+                    valuePropDesc: "Sin el dolor o el alto costo de un cambio de plataforma. Escalemos esta inteligencia probada inmediatamente.",
+                    reviewDemo: "Revisar Demostración en Vivo",
+                    contactUs: "Contáctenos"
                 },
                 // Glossary Section
                 glossary: {
                     title: "Glosario y Definiciones",
-                    subtitle: "Definiciones claras de todos los términos clave y umbrales utilizados en el panel."
+                    subtitle: "Definiciones claras de todos los términos clave y umbrales utilizados en el panel.",
+                    arr: {
+                        title: "ARR",
+                        description: "Ingresos Recurrentes Anuales — el valor anual de la suscripción de un cliente.",
+                        howScored: "Cómo se puntúa (10%)",
+                        howScoredDesc: "el ARR de cada cliente se escala linealmente entre el mínimo y máximo del conjunto de datos, luego se mapea a 0–100.",
+                        whyMatters: "Por qué importa",
+                        whyMattersDesc: "los clientes con ARR más bajo son más sensibles al precio y generalmente tienen un riesgo de pérdida ligeramente mayor en este modelo.",
+                        effect: "Efecto",
+                        effectDesc: "ARR más alto → contribución más baja al riesgo (después del escalado) ; ARR más bajo → contribución más alta.",
+                        example: "Ejemplo: si el ARR del conjunto de datos varía entre $3k y $25k, un ARR de $7k se mapea cerca de 20–30 en la escala 0–100 antes de la ponderación (10%)."
+                    },
+                    riskTiers: {
+                        title: "Niveles de Riesgo",
+                        highRisk: "Alto Riesgo",
+                        mediumRisk: "Riesgo Medio",
+                        lowRisk: "Bajo Riesgo",
+                        usedIn: "Utilizado en filtros, insignias y bandas visuales."
+                    },
+                    supportTickets: {
+                        title: "Tickets de Soporte (90 días)",
+                        description: "Cantidad de tickets en los últimos 90 días — valores más altos típicamente aumentan el riesgo.",
+                        howScored: "Cómo se puntúa (50%)",
+                        howScoredDesc: "los tickets se dividen por el máximo (50) → riesgo 0–100. Más tickets → puntuación más alta.",
+                        whyMatters: "Por qué importa",
+                        whyMattersDesc: "los problemas frecuentes o puntos de dolor no resueltos son fuertes predictores de pérdida.",
+                        effect: "Efecto",
+                        effectDesc: "duplicar los tickets duplica aproximadamente la contribución al riesgo de este factor (hasta el límite).",
+                        example: "Ejemplo: 25 tickets → 25/50 = 0,5 → 50/100, ponderado al 50% → contribuye ~25 puntos al riesgo total."
+                    },
+                    productUsage: {
+                        title: "Puntaje de Uso del Producto",
+                        description: "Índice 0,0–1,0 para el compromiso y frecuencia de características. Un uso más bajo aumenta el riesgo.",
+                        howScored: "Cómo se puntúa (25%)",
+                        howScoredDesc: "el riesgo usa (1 − uso) × 100 → 0–100. Uso más bajo → riesgo más alto.",
+                        whyMatters: "Por qué importa",
+                        whyMattersDesc: "el desvinculación precede a la pérdida ; el uso constante de características es una señal de retención.",
+                        effect: "Efecto",
+                        effectDesc: "uso 0,20 → riesgo 80 (antes de ponderación) ; uso 0,80 → riesgo 20.",
+                        example: "Ejemplo: uso 0,35 → (1 − 0,35) × 100 = 65, luego × 25% de ponderación → ~16 puntos al riesgo total."
+                    },
+                    contractEnd: {
+                        title: "Proximidad de Fin de Contrato",
+                        description: "Las fechas de renovación más cercanas aumentan el riesgo : < 30 días (máx.), 30–90 (alto), > 90 (escalado).",
+                        howScored: "Cómo se puntúa (15%)",
+                        howScoredDesc: "<30d → 100 ; 30–90d → 80 ; >90d → disminuye de 60 a 0 a medida que aumenta la distancia.",
+                        whyMatters: "Por qué importa",
+                        whyMattersDesc: "las decisiones de pérdida se agrupan cerca de la renovación ; la urgencia aumenta a medida que se acerca la fecha de fin.",
+                        effect: "Efecto",
+                        effectDesc: "las renovaciones muy cercanas pueden agregar hasta 15 puntos al riesgo total por sí mismas.",
+                        example: "Ejemplo: 14 días hasta el fin → 100 × 15% de ponderación → +15 riesgo ; 180 días → ~40 × 15% → +6."
+                    },
+                    riskFormula: {
+                        title: "Fórmula del Puntaje de Riesgo",
+                        description: "Mezcla ponderada de factores normalizados (0–100 cada uno), luego limitada a 0–100 :",
+                        arrWeight: "ARR (10%) : escalado lineal min–max en el conjunto de datos.",
+                        ticketsWeight: "Tickets de Soporte (50%) : tickets ÷ límite de 50 → 0–100.",
+                        usageWeight: "Uso del Producto (25%) : (1 − uso) × 100.",
+                        contractWeight: "Proximidad de Fin de Contrato (15%) : mapeo por niveles (100/80/≤60→0).",
+                        finalScore: "Puntuación final = suma de factores ponderados ; utilizado para clasificación, ordenamiento y recomendaciones."
+                    },
+                    definitionsDrive: "Estas definiciones impulsan filtros, visuales y recomendaciones en toda la aplicación."
                 },
                 // Risk Trends Section
                 riskTrends: {
@@ -2175,7 +2518,68 @@
                     selectCustomer: "Seleccionar Cliente",
                     highRisk: "Alto > 80%",
                     mediumRisk: "Medio 50–80%",
-                    lowRisk: "Bajo < 50%"
+                    lowRisk: "Bajo < 50%",
+                    time12m: "−12m",
+                    time6m: "−6m",
+                    timeNow: "Ahora",
+                    vizGuide: "Guía de Visualización :",
+                    worseningTrend: "🔴 Tendencia empeorando (riesgo en aumento)",
+                    improvingTrend: "🟢 Tendencia mejorando (riesgo cayendo)",
+                    highRiskPoints: "Puntos de datos de alto riesgo (≥80%)",
+                    lowRiskPoints: "Puntos de datos de bajo riesgo (<60%)",
+                    actionRequired: "⚠️ Acción Requerida :",
+                    actionRequiredDesc: "Los clientes con tendencias empeorando (🔴) necesitan intervención inmediata. Priorice aquellos con puntajes de riesgo en aumento a lo largo del tiempo.",
+                    trendsVolatility: "Las tendencias muestran volatilidad realista - algunos clientes empeoran activamente mientras otros mejoran, forzando la priorización."
+                },
+                // Customer Dashboard Section
+                dashboard: {
+                    title: "Panel de Clientes",
+                    subtitle: "Vista completa de todos los clientes con filtrado por ARR",
+                    filtersSearch: "🔍 Filtros y Búsqueda",
+                    searchCustomers: "🔍 Buscar Clientes:",
+                    searchPlaceholder: "Buscar por Nombre de Cliente o Gerente de Cuenta...",
+                    minimumARR: "💰 ARR Mínimo",
+                    riskTier: "⚠️ Nivel de Riesgo (según Glosario)",
+                    contractEndDate: "📅 Fecha de Fin de Contrato (MM/DD/AAAA)",
+                    all: "Todos",
+                    resetFilters: "🔄 Restablecer Todos los Filtros",
+                    customerName: "Nombre del Cliente",
+                    riskScore: "Puntaje de Riesgo",
+                    accountManager: "Gerente de Cuenta",
+                    arr: "ARR",
+                    lastActivity: "Última Actividad",
+                    status: "Estado",
+                    sortByName: "Ordenar por nombre",
+                    sortByRisk: "Ordenar por riesgo",
+                    sortByDate: "Ordenar por última actividad"
+                },
+                // Modal Section
+                modal: {
+                    customerDetails: "Detalles del Cliente",
+                    close: "Cerrar",
+                    closeModal: "Cerrar ventana",
+                    closeDetailModal: "Cerrar detalles",
+                    manualActionLog: "Registro Manual de Acciones",
+                    actionLogPlaceholder: "Registre su intervención (ej: 'Llamé a Juan para ofrecer sesión de capacitación')",
+                    saveNote: "💾 Guardar Nota",
+                    noteSaved: "✓ Nota guardada exitosamente",
+                    acknowledgeClose: "Reconocer y Cerrar",
+                    interventionTriggered: "¡Intervención Activada!",
+                    interventionDesc: "Ha iniciado una intervención dirigida para :",
+                    interventionNote: "En un sistema de producción, esto activaría un correo electrónico de oferta automatizada o crearía una tarea de alta prioridad en la cola CRM del CSM.",
+                    arrLabel: "ARR :",
+                    riskScoreLabel: "Puntaje de Riesgo :",
+                    rootCauseLabel: "Causa Raíz :",
+                    keyDriverLabel: "Factor Clave :",
+                    singleActionRecommendation: "Recomendación de Acción Única",
+                    diagnosis: "📊 Diagnóstico :",
+                    additionalContext: "Contexto Adicional :",
+                    definedTiers: "Niveles definidos : Alto > 80%, Medio 50–80%, Bajo < 50%."
+                },
+                // Footer Section
+                footer: {
+                    tagline: "Deje de Adivinar. Comience a Saber.",
+                    copyright: "© 2025 Motor de Predicción IA. Plataforma de Inteligencia de Pérdida."
                 },
                 // Common
                 common: {
@@ -2249,10 +2653,11 @@
                     if (element.type === 'submit' || element.type === 'button') {
                         element.value = translation;
                     } else {
+                        // For inputs with data-translate attribute, update placeholder
                         element.placeholder = translation;
                     }
-                } else if (element.hasAttribute('aria-label')) {
-                    element.setAttribute('aria-label', translation);
+                } else if (element.tagName === 'OPTION') {
+                    element.textContent = translation;
                 } else {
                     // For elements with inner HTML (like hero-subtitle), preserve HTML structure
                     if (key === 'hero.subtitle' && element.innerHTML) {
@@ -2267,6 +2672,13 @@
                         element.textContent = translation;
                     }
                 }
+            });
+            
+            // Handle aria-label translations
+            document.querySelectorAll('[data-translate-aria-label]').forEach(element => {
+                const key = element.getAttribute('data-translate-aria-label');
+                const translation = t(key);
+                element.setAttribute('aria-label', translation);
             });
             
             // Update HTML lang attribute
