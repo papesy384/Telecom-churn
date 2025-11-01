@@ -1005,9 +1005,9 @@
     <section id="glossary" class="spa-section section-container bg-dark-bg">
         <div class="content-section">
             <div class="section-header">
-                <h2 class="section-title font-extrabold text-light-text">Glossary & Definitions</h2>
+                <h2 class="section-title font-extrabold text-light-text" data-translate="glossary.title">Glossary & Definitions</h2>
                 <div class="divider"></div>
-                <p class="body-text text-gray-300">Clear definitions for all key terms and thresholds used across the dashboard.</p>
+                <p class="body-text text-gray-300" data-translate="glossary.subtitle">Clear definitions for all key terms and thresholds used across the dashboard.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -1112,21 +1112,21 @@
     <section id="risk-trends" class="spa-section section-container bg-dark-card">
         <div class="content-section">
             <div class="section-header">
-                <h2 class="section-title font-extrabold text-light-text">Risk Trend (Last 12 Months)</h2>
+                <h2 class="section-title font-extrabold text-light-text" data-translate="riskTrends.title">Risk Trend (Last 12 Months)</h2>
                 <div class="divider"></div>
-                <p class="body-text text-gray-300">Explore each customer's risk evolution with clear bands and labels.</p>
+                <p class="body-text text-gray-300" data-translate="riskTrends.subtitle">Explore each customer's risk evolution with clear bands and labels.</p>
             </div>
 
             <div class="bg-dark-bg border border-gray-700 rounded-xl p-4">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
                     <div>
-                        <label for="risk-trend-customer" class="block text-sm font-semibold text-light-text mb-2">Select Customer</label>
+                        <label for="risk-trend-customer" class="block text-sm font-semibold text-light-text mb-2" data-translate="riskTrends.selectCustomer">Select Customer</label>
                         <select id="risk-trend-customer" class="w-full px-3 py-2 bg-dark-card border border-gray-700 rounded-lg text-light-text" onchange="renderRiskTrendChart()"></select>
                     </div>
                     <div class="md:col-span-2 text-xs text-gray-400 md:text-right">
-                        <span class="inline-block px-2 py-1 rounded bg-red-500/20 border border-red-500/40 text-red-300 mr-2">High &gt; 80%</span>
-                        <span class="inline-block px-2 py-1 rounded bg-orange-500/20 border border-orange-500/40 text-orange-300 mr-2">Medium 50–80%</span>
-                        <span class="inline-block px-2 py-1 rounded bg-green-500/20 border border-green-500/40 text-green-300">Low &lt; 50%</span>
+                        <span class="inline-block px-2 py-1 rounded bg-red-500/20 border border-red-500/40 text-red-300 mr-2" data-translate="riskTrends.highRisk">High > 80%</span>
+                        <span class="inline-block px-2 py-1 rounded bg-orange-500/20 border border-orange-500/40 text-orange-300 mr-2" data-translate="riskTrends.mediumRisk">Medium 50–80%</span>
+                        <span class="inline-block px-2 py-1 rounded bg-green-500/20 border border-green-500/40 text-green-300" data-translate="riskTrends.lowRisk">Low < 50%</span>
                     </div>
                 </div>
 
@@ -1172,35 +1172,35 @@
     <section id="problem" class="spa-section section-container bg-dark-bg">
         <div class="content-section">
             <div class="section-header">
-                <h2 class="section-title font-extrabold text-light-text">The Problem</h2>
+                <h2 class="section-title font-extrabold text-light-text" data-translate="problem.title">The Problem</h2>
                 <div class="divider"></div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 compact-gap items-center">
                 <!-- Left: Problem Description -->
                 <div class="space-y-2">
-                    <h3 class="section-subtitle font-bold text-primary-orange">Stop Guessing</h3>
-                    <p class="body-text text-gray-300 leading-relaxed">
-                        Other customer tools are <span class="text-red-400 font-semibold">complex</span> and deliver <span class="text-red-400 font-semibold">vague metrics</span>, forcing your support team to simply <span class="text-red-400 font-semibold">guess</span> the right solution.
+                    <h3 class="section-subtitle font-bold text-primary-orange" data-translate="problem.subtitle">Stop Guessing</h3>
+                    <p class="body-text text-gray-300 leading-relaxed" data-translate="problem.description">
+                        Other customer tools are complex and deliver vague metrics, forcing your support team to simply guess the right solution.
                     </p>
                     <div class="space-y-1.5 pt-2">
                         <div class="flex items-start space-x-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                             </svg>
-                            <p class="body-text text-gray-300"><span class="font-semibold">High retention costs</span> from ineffective interventions</p>
+                            <p class="body-text text-gray-300"><span class="font-semibold" data-translate="problem.cost">High retention costs</span> <span data-translate="problem.costDesc">from ineffective interventions</span></p>
                         </div>
                         <div class="flex items-start space-x-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                             </svg>
-                            <p class="body-text text-gray-300"><span class="font-semibold">Low save rates</span> from generic discounts</p>
+                            <p class="body-text text-gray-300"><span class="font-semibold" data-translate="problem.lowSave">Low save rates</span> <span data-translate="problem.lowSaveDesc">from generic discounts</span></p>
                         </div>
                         <div class="flex items-start space-x-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                             </svg>
-                            <p class="body-text text-gray-300"><span class="font-semibold">Wasted resources</span> on wrong solutions</p>
+                            <p class="body-text text-gray-300"><span class="font-semibold" data-translate="problem.wasted">Wasted resources</span> <span data-translate="problem.wastedDesc">on wrong solutions</span></p>
                         </div>
                     </div>
                 </div>
@@ -1210,11 +1210,11 @@
                     <div class="p-5 bg-gradient-to-br from-dark-card to-dark-bg rounded-xl border-2 border-red-400/50 shadow-2xl card-hover">
                         <div class="text-center space-y-3">
                             <div class="text-5xl float-animation">😖</div>
-                            <h4 class="section-subtitle font-bold text-light-text">High Noise, Low Signal</h4>
+                            <h4 class="section-subtitle font-bold text-light-text" data-translate="problem.noiseTitle">High Noise, Low Signal</h4>
                             <div class="space-y-2.5 text-left">
                                 <div class="p-3 bg-red-900/20 rounded-lg border border-red-400/30 backdrop-blur-sm">
-                                    <p class="text-xs text-gray-400 uppercase tracking-wide">Generic Recommendation:</p>
-                                    <p class="body-text text-red-400 font-bold mt-1">"Give 20% discount to all at-risk"</p>
+                                    <p class="text-xs text-gray-400 uppercase tracking-wide" data-translate="problem.genericRec">Generic Recommendation:</p>
+                                    <p class="body-text text-red-400 font-bold mt-1" data-translate="problem.genericAction">"Give 20% discount to all at-risk"</p>
                                 </div>
                                 <div class="text-center text-red-400">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-6 h-6 mx-auto">
@@ -1222,7 +1222,7 @@
                                     </svg>
                                 </div>
                                 <div class="p-3 bg-red-900/30 rounded-lg border-2 border-red-400/50 text-center backdrop-blur-sm">
-                                    <p class="body-text text-red-400 font-black">Wasted Money + Lost Customer</p>
+                                    <p class="body-text text-red-400 font-black" data-translate="problem.result">Wasted Money + Lost Customer</p>
                                 </div>
                             </div>
                         </div>
@@ -1236,7 +1236,7 @@
     <section id="solution" class="spa-section section-container bg-dark-card">
         <div class="content-section">
             <div class="section-header">
-                <h2 class="section-title font-extrabold text-light-text">Our Solution</h2>
+                <h2 class="section-title font-extrabold text-light-text" data-translate="solution.title">Our Solution</h2>
                 <div class="divider"></div>
             </div>
 
@@ -1246,11 +1246,11 @@
                     <div class="p-5 bg-gradient-to-br from-dark-bg to-dark-card rounded-xl border-2 border-primary-orange shadow-2xl card-hover glow-orange">
                         <div class="text-center space-y-3">
                             <div class="text-5xl float-animation" style="animation-delay: 0.3s;">🎯</div>
-                            <h4 class="section-subtitle font-bold text-light-text">High Signal, Low Noise</h4>
+                            <h4 class="section-subtitle font-bold text-light-text" data-translate="solution.signalTitle">High Signal, Low Noise</h4>
                             <div class="space-y-2.5 text-left">
                                 <div class="p-3 bg-primary-orange/20 rounded-lg border border-primary-orange/50 backdrop-blur-sm">
-                                    <p class="text-xs text-gray-400 uppercase tracking-wide">AI-Powered:</p>
-                                    <p class="body-text text-primary-orange font-bold mt-1">"90% Risk | Service Quality"</p>
+                                    <p class="text-xs text-gray-400 uppercase tracking-wide" data-translate="solution.aiPowered">AI-Powered:</p>
+                                    <p class="body-text text-primary-orange font-bold mt-1" data-translate="solution.aiExample">"90% Risk | Service Quality"</p>
                                 </div>
                                 <div class="text-center text-primary-orange">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-6 h-6 mx-auto">
@@ -1258,7 +1258,7 @@
                                     </svg>
                                 </div>
                                 <div class="p-3 bg-green-900/30 rounded-lg border-2 border-green-400/50 text-center backdrop-blur-sm">
-                                    <p class="body-text text-green-400 font-black">Send Network Credit</p>
+                                    <p class="body-text text-green-400 font-black" data-translate="solution.actionExample">Send Network Credit</p>
                                 </div>
                             </div>
                         </div>
@@ -1267,33 +1267,33 @@
 
                 <!-- Right: Solution Description -->
                 <div class="space-y-2 order-1 lg:order-2">
-                    <h3 class="section-subtitle font-bold text-primary-orange">Start Knowing</h3>
-                    <p class="body-text text-gray-300 leading-relaxed">
-                        A dedicated <span class="text-primary-orange font-semibold">AI Prediction Engine</span> designed to give you the <span class="text-primary-orange font-semibold">highest signal</span> with the <span class="text-primary-orange font-semibold">lowest noise</span>.
+                    <h3 class="section-subtitle font-bold text-primary-orange" data-translate="solution.subtitle">Start Knowing</h3>
+                    <p class="body-text text-gray-300 leading-relaxed" data-translate="solution.description">
+                        A dedicated AI Prediction Engine designed to give you the highest signal with the lowest noise.
                     </p>
                     <div class="space-y-1.5 pt-2">
                         <div class="flex items-start space-x-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                             </svg>
-                            <p class="body-text text-gray-300"><span class="font-semibold text-green-400">No platform swap</span> - plugs into existing CRM</p>
+                            <p class="body-text text-gray-300"><span class="font-semibold text-green-400" data-translate="solution.noSwap">No platform swap</span> <span data-translate="solution.noSwapDesc">- plugs into existing CRM</span></p>
                         </div>
                         <div class="flex items-start space-x-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                             </svg>
-                            <p class="body-text text-gray-300"><span class="font-semibold text-green-400">Immediate value</span> - single action recommendations</p>
+                            <p class="body-text text-gray-300"><span class="font-semibold text-green-400" data-translate="solution.immediate">Immediate value</span> <span data-translate="solution.immediateDesc">- single action recommendations</span></p>
                         </div>
                         <div class="flex items-start space-x-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                             </svg>
-                            <p class="body-text text-gray-300"><span class="font-semibold text-green-400">Maximum retention</span> - targeted interventions only</p>
+                            <p class="body-text text-gray-300"><span class="font-semibold text-green-400" data-translate="solution.maxRetention">Maximum retention</span> <span data-translate="solution.maxRetentionDesc">- targeted interventions only</span></p>
                         </div>
                     </div>
 
                     <div class="pt-2">
-                        <a data-section="live-demo" class="cursor-pointer inline-block bg-primary-orange hover:bg-orange-600 text-dark-bg font-bold px-5 py-2.5 rounded-lg transition duration-200 text-sm">
+                        <a data-section="live-demo" class="cursor-pointer inline-block bg-primary-orange hover:bg-orange-600 text-dark-bg font-bold px-5 py-2.5 rounded-lg transition duration-200 text-sm" data-translate="solution.seeAction">
                             See It In Action →
                         </a>
                     </div>
@@ -1512,9 +1512,9 @@
     <section id="how-it-works" class="spa-section section-container bg-dark-card">
         <div class="content-section">
             <div class="section-header">
-                <h2 class="section-title font-extrabold text-light-text">How It Works</h2>
+                <h2 class="section-title font-extrabold text-light-text" data-translate="howItWorks.title">How It Works</h2>
                 <div class="divider"></div>
-                <p class="body-text text-gray-300">AI Prediction Engine integrates in three simple steps.</p>
+                <p class="body-text text-gray-300" data-translate="howItWorks.subtitle">AI Prediction Engine integrates in three simple steps.</p>
             </div>
 
             <!-- Step-by-Step Process -->
@@ -1525,24 +1525,24 @@
                         <div class="flex items-center justify-center w-14 h-14 bg-gradient-to-br from-primary-orange to-orange-600 rounded-full text-dark-bg text-xl font-black shadow-lg glow-orange">1</div>
                     </div>
                     <div class="flex-1 bg-gradient-to-br from-dark-bg to-dark-card p-4 rounded-xl border-2 border-primary-orange/30 hover:border-primary-orange shadow-lg backdrop-blur-sm">
-                        <h3 class="text-xl font-bold text-light-text mb-2">AI Analyzes Customer Data</h3>
-                        <p class="body-text text-gray-300 mb-3">The model computes a Risk Score from these four metrics only:</p>
+                        <h3 class="text-xl font-bold text-light-text mb-2" data-translate="howItWorks.step1Title">AI Analyzes Customer Data</h3>
+                        <p class="body-text text-gray-300 mb-3" data-translate="howItWorks.step1Desc">The model computes a Risk Score from these four metrics only:</p>
                         <div class="grid grid-cols-2 gap-3">
                             <div class="flex items-center space-x-2 text-sm text-gray-300">
                                 <div class="w-2 h-2 bg-primary-orange rounded-full"></div>
-                                <span>ARR (Annual Recurring Revenue)</span>
+                                <span data-translate="howItWorks.arrMetric">ARR (Annual Recurring Revenue)</span>
                             </div>
                             <div class="flex items-center space-x-2 text-sm text-gray-300">
                                 <div class="w-2 h-2 bg-primary-orange rounded-full"></div>
-                                <span>Support Tickets (last 90 days)</span>
+                                <span data-translate="howItWorks.ticketsMetric">Support Tickets (last 90 days)</span>
                             </div>
                             <div class="flex items-center space-x-2 text-sm text-gray-300">
                                 <div class="w-2 h-2 bg-primary-orange rounded-full"></div>
-                                <span>Product Usage Score (0.0–1.0)</span>
+                                <span data-translate="howItWorks.usageMetric">Product Usage Score (0.0–1.0)</span>
                             </div>
                             <div class="flex items-center space-x-2 text-sm text-gray-300">
                                 <div class="w-2 h-2 bg-primary-orange rounded-full"></div>
-                                <span>Contract End Proximity (days to renewal)</span>
+                                <span data-translate="howItWorks.contractMetric">Contract End Proximity (days to renewal)</span>
                             </div>
                         </div>
                     </div>
@@ -1554,20 +1554,20 @@
                         <div class="flex items-center justify-center w-14 h-14 bg-gradient-to-br from-primary-orange to-orange-600 rounded-full text-dark-bg text-xl font-black shadow-lg glow-orange">2</div>
                     </div>
                     <div class="flex-1 bg-gradient-to-br from-dark-bg to-dark-card p-4 rounded-xl border-2 border-primary-orange/30 hover:border-primary-orange shadow-lg backdrop-blur-sm">
-                        <h3 class="text-xl font-bold text-light-text mb-2">Predicts Churn with 92% Accuracy</h3>
-                        <p class="body-text text-gray-300 mb-3">Assigns precise <span class="text-primary-orange font-semibold">Risk Score</span> and identifies <span class="text-primary-orange font-semibold">Root Cause</span>.</p>
+                        <h3 class="text-xl font-bold text-light-text mb-2" data-translate="howItWorks.step2Title">Predicts Churn with 92% Accuracy</h3>
+                        <p class="body-text text-gray-300 mb-3" data-translate="howItWorks.step2Desc">Assigns precise Risk Score and identifies Root Cause.</p>
                         <div class="grid grid-cols-3 gap-3">
                             <div class="p-3 bg-red-900/20 rounded-lg border border-red-400/30 text-center">
-                                <div class="text-red-400 font-bold text-sm mb-1">Service Quality</div>
-                                <div class="text-xs text-gray-400">Network Issues</div>
+                                <div class="text-red-400 font-bold text-sm mb-1" data-translate="howItWorks.serviceQuality">Service Quality</div>
+                                <div class="text-xs text-gray-400" data-translate="howItWorks.networkIssues">Network Issues</div>
                             </div>
                             <div class="p-3 bg-primary-orange/20 rounded-lg border border-primary-orange/50 text-center">
-                                <div class="text-primary-orange font-bold text-sm mb-1">Cost Sensitivity</div>
-                                <div class="text-xs text-gray-400">Pricing Concerns</div>
+                                <div class="text-primary-orange font-bold text-sm mb-1" data-translate="howItWorks.costSensitivity">Cost Sensitivity</div>
+                                <div class="text-xs text-gray-400" data-translate="howItWorks.pricingConcerns">Pricing Concerns</div>
                             </div>
                             <div class="p-3 bg-blue-900/20 rounded-lg border border-blue-400/30 text-center">
-                                <div class="text-blue-400 font-bold text-sm mb-1">Product Disengagement</div>
-                                <div class="text-xs text-gray-400">Low Usage</div>
+                                <div class="text-blue-400 font-bold text-sm mb-1" data-translate="howItWorks.disengagement">Product Disengagement</div>
+                                <div class="text-xs text-gray-400" data-translate="howItWorks.lowUsage">Low Usage</div>
                             </div>
                         </div>
                     </div>
@@ -1579,15 +1579,15 @@
                         <div class="flex items-center justify-center w-14 h-14 bg-gradient-to-br from-primary-orange to-orange-600 rounded-full text-dark-bg text-xl font-black shadow-lg glow-orange">3</div>
                     </div>
                     <div class="flex-1 bg-gradient-to-br from-dark-bg to-dark-card p-4 rounded-xl border-2 border-primary-orange/30 hover:border-primary-orange shadow-lg backdrop-blur-sm">
-                        <h3 class="text-xl font-bold text-light-text mb-2">Delivers Single-Action Recommendation</h3>
-                        <p class="body-text text-gray-300 mb-2">CSMs receive one clear action. No guesswork. Just targeted intervention.</p>
+                        <h3 class="text-xl font-bold text-light-text mb-2" data-translate="howItWorks.step3Title">Delivers Single-Action Recommendation</h3>
+                        <p class="body-text text-gray-300 mb-2" data-translate="howItWorks.step3Desc">CSMs receive one clear action. No guesswork. Just targeted intervention.</p>
                         <div class="bg-green-900/20 p-3 rounded-lg border-2 border-green-400/50 backdrop-blur-sm">
                             <div class="flex items-center space-x-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-8 h-8 text-green-400 flex-shrink-0 float-animation">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                 </svg>
                                 <div>
-                                    <div class="text-green-400 font-bold body-text">Action: Send Network Credit</div>
+                                    <div class="text-green-400 font-bold body-text" data-translate="howItWorks.actionExample2">Action: Send Network Credit</div>
                                     <div class="text-gray-400 text-sm">C16 | 90% Risk</div>
                                 </div>
                             </div>
@@ -1598,8 +1598,8 @@
 
             <!-- Key Benefit Highlight -->
             <div class="mt-4 p-4 bg-gradient-to-r from-primary-orange/10 via-primary-orange/20 to-primary-orange/10 border-2 border-primary-orange rounded-xl text-center shadow-lg card-hover">
-                <h3 class="text-xl font-bold text-primary-orange mb-2">Maximum Retention. Minimal Overhead.</h3>
-                <p class="body-text text-gray-300">We plug intelligence into your existing tools. Immediate and simple.</p>
+                <h3 class="text-xl font-bold text-primary-orange mb-2" data-translate="howItWorks.benefitTitle">Maximum Retention. Minimal Overhead.</h3>
+                <p class="body-text text-gray-300" data-translate="howItWorks.benefitDesc">We plug intelligence into your existing tools. Immediate and simple.</p>
             </div>
         </div>
     </section>
@@ -1608,7 +1608,7 @@
     <section id="scaling" class="spa-section section-container bg-dark-bg">
         <div class="content-section">
             <div class="section-header">
-                <h2 class="section-title font-extrabold text-light-text">What's Next: Scaling</h2>
+                <h2 class="section-title font-extrabold text-light-text" data-translate="whatsNext.title">What's Next: Scaling</h2>
                 <div class="divider"></div>
             </div>
 
@@ -1621,27 +1621,27 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                             </svg>
                         </div>
-                        <h3 class="text-base font-bold text-green-400">✓ MVP Validation Complete</h3>
+                        <h3 class="text-base font-bold text-green-400" data-translate="whatsNext.mvpComplete">✓ MVP Validation Complete</h3>
                     </div>
-                    <p class="body-text text-gray-300 mb-2">Proven value of targeted, prescriptive action:</p>
+                    <p class="body-text text-gray-300 mb-2" data-translate="whatsNext.provenValue">Proven value of targeted, prescriptive action:</p>
                     <ul class="space-y-1">
                         <li class="flex items-start space-x-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-primary-orange flex-shrink-0 mt-0.5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                             </svg>
-                            <span class="body-text text-gray-300">Achieves <span class="text-primary-orange font-semibold">92% accuracy</span> on 15 customers</span>
+                            <span class="body-text text-gray-300"><span data-translate="whatsNext.achieves">Achieves</span> <span class="text-primary-orange font-semibold" data-translate="whatsNext.accuracyText">92% accuracy</span> <span data-translate="whatsNext.onCustomers">on 15 customers</span></span>
                         </li>
                         <li class="flex items-start space-x-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-primary-orange flex-shrink-0 mt-0.5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                             </svg>
-                            <span class="body-text text-gray-300">Identifies root causes with precision</span>
+                            <span class="body-text text-gray-300" data-translate="whatsNext.identifies">Identifies root causes with precision</span>
                         </li>
                         <li class="flex items-start space-x-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-primary-orange flex-shrink-0 mt-0.5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                             </svg>
-                            <span class="body-text text-gray-300">Delivers single-action recommendations</span>
+                            <span class="body-text text-gray-300" data-translate="whatsNext.delivers">Delivers single-action recommendations</span>
                         </li>
                     </ul>
                 </div>
@@ -1654,7 +1654,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
                             </svg>
                         </div>
-                        <h3 class="text-sm font-bold text-primary-orange">→ Next Step: Full CRM Integration</h3>
+                        <h3 class="text-sm font-bold text-primary-orange" data-translate="whatsNext.nextStep">→ Next Step: Full CRM Integration</h3>
                     </div>
                     
                     <p class="body-text text-gray-300 mb-3">
@@ -1849,6 +1849,90 @@
                     seeDemo: "See Live Demo",
                     howItWorksBtn: "How It Works"
                 },
+                // Problem Section
+                problem: {
+                    title: "The Problem",
+                    subtitle: "Stop Guessing",
+                    description: "Other customer tools are complex and deliver vague metrics, forcing your support team to simply guess the right solution.",
+                    cost: "High retention costs",
+                    costDesc: "from ineffective interventions",
+                    lowSave: "Low save rates",
+                    lowSaveDesc: "from generic discounts",
+                    wasted: "Wasted resources",
+                    wastedDesc: "on wrong solutions",
+                    noiseTitle: "High Noise, Low Signal",
+                    genericRec: "Generic Recommendation:",
+                    genericAction: "Give 20% discount to all at-risk",
+                    result: "Wasted Money + Lost Customer"
+                },
+                // Solution Section
+                solution: {
+                    title: "Our Solution",
+                    subtitle: "Start Knowing",
+                    description: "A dedicated AI Prediction Engine designed to give you the highest signal with the lowest noise.",
+                    signalTitle: "High Signal, Low Noise",
+                    aiPowered: "AI-Powered:",
+                    aiExample: "90% Risk | Service Quality",
+                    actionExample: "Send Network Credit",
+                    noSwap: "No platform swap",
+                    noSwapDesc: "- plugs into existing CRM",
+                    immediate: "Immediate value",
+                    immediateDesc: "- single action recommendations",
+                    maxRetention: "Maximum retention",
+                    maxRetentionDesc: "- targeted interventions only",
+                    seeAction: "See It In Action →"
+                },
+                // How It Works Section
+                howItWorks: {
+                    title: "How It Works",
+                    subtitle: "AI Prediction Engine integrates in three simple steps.",
+                    step1Title: "AI Analyzes Customer Data",
+                    step1Desc: "The model computes a Risk Score from these four metrics only:",
+                    arrMetric: "ARR (Annual Recurring Revenue)",
+                    ticketsMetric: "Support Tickets (last 90 days)",
+                    usageMetric: "Product Usage Score (0.0–1.0)",
+                    contractMetric: "Contract End Proximity (days to renewal)",
+                    step2Title: "Predicts Churn with 92% Accuracy",
+                    step2Desc: "Assigns precise Risk Score and identifies Root Cause.",
+                    serviceQuality: "Service Quality",
+                    networkIssues: "Network Issues",
+                    costSensitivity: "Cost Sensitivity",
+                    pricingConcerns: "Pricing Concerns",
+                    disengagement: "Product Disengagement",
+                    lowUsage: "Low Usage",
+                    step3Title: "Delivers Single-Action Recommendation",
+                    step3Desc: "CSMs receive one clear action. No guesswork. Just targeted intervention.",
+                    actionExample2: "Action: Send Network Credit",
+                    benefitTitle: "Maximum Retention. Minimal Overhead.",
+                    benefitDesc: "We plug intelligence into your existing tools. Immediate and simple."
+                },
+                // What's Next Section
+                whatsNext: {
+                    title: "What's Next: Scaling",
+                    mvpComplete: "✓ MVP Validation Complete",
+                    provenValue: "Proven value of targeted, prescriptive action:",
+                    achieves: "Achieves",
+                    accuracyText: "92% accuracy",
+                    onCustomers: "on 15 customers",
+                    identifies: "Identifies root causes with precision",
+                    delivers: "Delivers single-action recommendations",
+                    nextStep: "→ Next Step: Full CRM Integration",
+                    future: "→ Future: Real-Time Webhook Delivery"
+                },
+                // Glossary Section
+                glossary: {
+                    title: "Glossary & Definitions",
+                    subtitle: "Clear definitions for all key terms and thresholds used across the dashboard."
+                },
+                // Risk Trends Section
+                riskTrends: {
+                    title: "Risk Trend (Last 12 Months)",
+                    subtitle: "Explore each customer's risk evolution with clear bands and labels.",
+                    selectCustomer: "Select Customer",
+                    highRisk: "High > 80%",
+                    mediumRisk: "Medium 50–80%",
+                    lowRisk: "Low < 50%"
+                },
                 // Common
                 common: {
                     accuracy: "Accuracy",
@@ -1887,6 +1971,91 @@
                     seeDemo: "Voir la démo en direct",
                     howItWorksBtn: "Comment ça marche"
                 },
+                // Problem Section
+                problem: {
+                    title: "Le Problème",
+                    subtitle: "Arrêtez de Deviner",
+                    description: "Les autres outils clients sont complexes et fournissent des métriques vagues, forçant votre équipe de support à simplement deviner la bonne solution.",
+                    cost: "Coûts de rétention élevés",
+                    costDesc: "d'interventions inefficaces",
+                    lowSave: "Faibles taux de sauvegarde",
+                    lowSaveDesc: "des remises génériques",
+                    wasted: "Ressources gaspillées",
+                    wastedDesc: "sur de mauvaises solutions",
+                    noiseTitle: "Bruit Élevé, Signal Faible",
+                    genericRec: "Recommandation Générique :",
+                    genericAction: "Donner 20% de remise à tous les clients à risque",
+                    result: "Argent Gaspillé + Client Perdu"
+                },
+                // Solution Section
+                solution: {
+                    title: "Notre Solution",
+                    subtitle: "Commencez à Savoir",
+                    description: "Un moteur de prédiction IA dédié conçu pour vous donner le signal le plus élevé avec le bruit le plus faible.",
+                    signalTitle: "Signal Élevé, Bruit Faible",
+                    aiPowered: "Alimenté par IA :",
+                    aiExample: "90% Risque | Qualité du Service",
+                    actionExample: "Envoyer un Crédit Réseau",
+                    noSwap: "Pas d'échange de plateforme",
+                    noSwapDesc: "- s'intègre dans votre CRM existant",
+                    immediate: "Valeur immédiate",
+                    immediateDesc: "- recommandations d'action unique",
+                    maxRetention: "Rétention maximale",
+                    maxRetentionDesc: "- interventions ciblées uniquement",
+                    seeAction: "Voir en Action →"
+                },
+                // How It Works Section
+                howItWorks: {
+                    title: "Comment ça Marche",
+                    subtitle: "Le moteur de prédiction IA s'intègre en trois étapes simples.",
+                    step1Title: "L'IA Analyse les Données Client",
+                    step1Desc: "Le modèle calcule un Score de Risque à partir de ces quatre métriques uniquement :",
+                    arrMetric: "CA (Chiffre d'Affaires Récurrent Annuel)",
+                    ticketsMetric: "Tickets de Support (90 derniers jours)",
+                    usageMetric: "Score d'Utilisation du Produit (0.0–1.0)",
+                    contractMetric: "Proximité de Fin de Contrat (jours avant renouvellement)",
+                    step2Title: "Prédit l'Attrition avec 92% de Précision",
+                    step2Desc: "Attribue un Score de Risque précis et identifie la Cause Racine.",
+                    serviceQuality: "Qualité du Service",
+                    networkIssues: "Problèmes Réseau",
+                    costSensitivity: "Sensibilité au Coût",
+                    pricingConcerns: "Préoccupations de Prix",
+                    disengagement: "Désengagement Produit",
+                    lowUsage: "Faible Utilisation",
+                    step3Title: "Délivre une Recommandation d'Action Unique",
+                    step3Desc: "Les CSM reçoivent une action claire. Pas de suppositions. Juste une intervention ciblée.",
+                    actionExample2: "Action : Envoyer un Crédit Réseau",
+                    benefitTitle: "Rétention Maximale. Surcharge Minimale.",
+                    benefitDesc: "Nous branchons l'intelligence dans vos outils existants. Immédiat et simple."
+                },
+                // What's Next Section
+                whatsNext: {
+                    title: "Prochaines Étapes : Mise à l'Échelle",
+                    mvpComplete: "✓ Validation MVP Terminée",
+                    provenValue: "Valeur prouvée d'une action ciblée et prescriptive :",
+                    achieves: "Atteint",
+                    accuracyText: "92% de précision",
+                    onCustomers: "sur 15 clients",
+                    identifies: "Identifie les causes racines avec précision",
+                    delivers: "Délivre des recommandations d'action unique",
+                    nextStep: "→ Prochaine Étape : Intégration CRM Complète",
+                    future: "→ Avenir : Livraison Webhook en Temps Réel"
+                },
+                // Glossary Section
+                glossary: {
+                    title: "Glossaire et Définitions",
+                    subtitle: "Définitions claires de tous les termes clés et seuils utilisés dans le tableau de bord."
+                },
+                // Risk Trends Section
+                riskTrends: {
+                    title: "Tendance des Risques (12 Derniers Mois)",
+                    subtitle: "Explorez l'évolution des risques de chaque client avec des bandes et étiquettes claires.",
+                    selectCustomer: "Sélectionner un Client",
+                    highRisk: "Élevé > 80%",
+                    mediumRisk: "Moyen 50–80%",
+                    lowRisk: "Faible < 50%"
+                },
+                // Common
                 common: {
                     accuracy: "Précision",
                     precision: "Précision",
@@ -1924,6 +2093,91 @@
                     seeDemo: "Ver demostración en vivo",
                     howItWorksBtn: "Cómo funciona"
                 },
+                // Problem Section
+                problem: {
+                    title: "El Problema",
+                    subtitle: "Deje de Adivinar",
+                    description: "Otras herramientas de clientes son complejas y proporcionan métricas vagas, forzando a su equipo de soporte a simplemente adivinar la solución correcta.",
+                    cost: "Altos costos de retención",
+                    costDesc: "por intervenciones ineficaces",
+                    lowSave: "Bajas tasas de salvamento",
+                    lowSaveDesc: "por descuentos genéricos",
+                    wasted: "Recursos desperdiciados",
+                    wastedDesc: "en soluciones incorrectas",
+                    noiseTitle: "Alto Ruido, Baja Señal",
+                    genericRec: "Recomendación Genérica:",
+                    genericAction: "Dar 20% de descuento a todos los de riesgo",
+                    result: "Dinero Desperdiciado + Cliente Perdido"
+                },
+                // Solution Section
+                solution: {
+                    title: "Nuestra Solución",
+                    subtitle: "Comience a Saber",
+                    description: "Un motor de predicción IA dedicado diseñado para darle la señal más alta con el ruido más bajo.",
+                    signalTitle: "Alta Señal, Bajo Ruido",
+                    aiPowered: "Alimentado por IA:",
+                    aiExample: "90% Riesgo | Calidad del Servicio",
+                    actionExample: "Enviar Crédito de Red",
+                    noSwap: "Sin intercambio de plataforma",
+                    noSwapDesc: "- se conecta a su CRM existente",
+                    immediate: "Valor inmediato",
+                    immediateDesc: "- recomendaciones de acción única",
+                    maxRetention: "Retención máxima",
+                    maxRetentionDesc: "- solo intervenciones dirigidas",
+                    seeAction: "Ver en Acción →"
+                },
+                // How It Works Section
+                howItWorks: {
+                    title: "Cómo Funciona",
+                    subtitle: "El motor de predicción IA se integra en tres pasos simples.",
+                    step1Title: "La IA Analiza los Datos del Cliente",
+                    step1Desc: "El modelo calcula un Puntaje de Riesgo solo a partir de estas cuatro métricas:",
+                    arrMetric: "ARR (Ingresos Recurrentes Anuales)",
+                    ticketsMetric: "Tickets de Soporte (últimos 90 días)",
+                    usageMetric: "Puntaje de Uso del Producto (0.0–1.0)",
+                    contractMetric: "Proximidad de Fin de Contrato (días hasta renovación)",
+                    step2Title: "Predice la Pérdida con 92% de Precisión",
+                    step2Desc: "Asigna un Puntaje de Riesgo preciso e identifica la Causa Raíz.",
+                    serviceQuality: "Calidad del Servicio",
+                    networkIssues: "Problemas de Red",
+                    costSensitivity: "Sensibilidad al Costo",
+                    pricingConcerns: "Preocupaciones de Precio",
+                    disengagement: "Desvinculación del Producto",
+                    lowUsage: "Bajo Uso",
+                    step3Title: "Entrega Recomendación de Acción Única",
+                    step3Desc: "Los CSM reciben una acción clara. Sin adivinanzas. Solo intervención dirigida.",
+                    actionExample2: "Acción: Enviar Crédito de Red",
+                    benefitTitle: "Retención Máxima. Sobrecarga Mínima.",
+                    benefitDesc: "Conectamos inteligencia a sus herramientas existentes. Inmediato y simple."
+                },
+                // What's Next Section
+                whatsNext: {
+                    title: "Próximos Pasos: Escalado",
+                    mvpComplete: "✓ Validación MVP Completa",
+                    provenValue: "Valor probado de acción dirigida y prescriptiva:",
+                    achieves: "Logra",
+                    accuracyText: "92% de precisión",
+                    onCustomers: "en 15 clientes",
+                    identifies: "Identifica causas raíz con precisión",
+                    delivers: "Entrega recomendaciones de acción única",
+                    nextStep: "→ Próximo Paso: Integración Completa de CRM",
+                    future: "→ Futuro: Entrega Webhook en Tiempo Real"
+                },
+                // Glossary Section
+                glossary: {
+                    title: "Glosario y Definiciones",
+                    subtitle: "Definiciones claras de todos los términos clave y umbrales utilizados en el panel."
+                },
+                // Risk Trends Section
+                riskTrends: {
+                    title: "Tendencia de Riesgo (Últimos 12 Meses)",
+                    subtitle: "Explore la evolución del riesgo de cada cliente con bandas y etiquetas claras.",
+                    selectCustomer: "Seleccionar Cliente",
+                    highRisk: "Alto > 80%",
+                    mediumRisk: "Medio 50–80%",
+                    lowRisk: "Bajo < 50%"
+                },
+                // Common
                 common: {
                     accuracy: "Precisión",
                     precision: "Precisión",
