@@ -2054,7 +2054,28 @@
                     singleActionRecommendation: "Single-Action Recommendation",
                     diagnosis: "📊 Diagnosis:",
                     additionalContext: "Additional Context:",
-                    definedTiers: "Defined tiers: High > 80%, Medium 50–80%, Low < 50%."
+                    definedTiers: "Defined tiers: High > 80%, Medium 50–80%, Low < 50%.",
+                    driverInactivity: "Inactivity on Key Feature",
+                    driverLowAPI: "Low API Usage",
+                    driverSupportSpike: "Support ticket spike",
+                    driverBilling: "Billing issue",
+                    driverContractRenewal: "Contract renewal approaching",
+                    driverFeatureDecline: "Feature adoption decline",
+                    driverCompetitor: "Competitor evaluation",
+                    driverUsageChange: "Usage pattern change",
+                    driverTeamExpansion: "Team expansion",
+                    driverSupportResponse: "Support response time",
+                    driverFeatureBacklog: "Feature request backlog",
+                    driverIntegrationComplexity: "Integration complexity",
+                    driverPlatformMigration: "Platform migration",
+                    driverMobileDecline: "Mobile app usage decline",
+                    driverModelPerformance: "Model performance issues",
+                    driverSeasonalUsage: "Seasonal usage patterns",
+                    driverIntegrationUpdates: "Integration updates",
+                    driverRegulatory: "Regulatory compliance",
+                    driverAudit: "Audit requirements",
+                    driverDataRetention: "Data retention policies",
+                    driverIoT: "IoT integration challenges"
                 },
                 // Footer Section
                 footer: {
@@ -2372,7 +2393,28 @@
                     singleActionRecommendation: "Recommandation d'Action Unique",
                     diagnosis: "📊 Diagnostic :",
                     additionalContext: "Contexte Supplémentaire :",
-                    definedTiers: "Niveaux définis : Élevé > 80%, Moyen 50–80%, Faible < 50%."
+                    definedTiers: "Niveaux définis : Élevé > 80%, Moyen 50–80%, Faible < 50%.",
+                    driverInactivity: "Inactivité sur Fonctionnalité Clé",
+                    driverLowAPI: "Faible Utilisation API",
+                    driverSupportSpike: "Pic de tickets support",
+                    driverBilling: "Problème de facturation",
+                    driverContractRenewal: "Renouvellement de contrat approchant",
+                    driverFeatureDecline: "Déclin d'adoption de fonctionnalités",
+                    driverCompetitor: "Évaluation concurrente",
+                    driverUsageChange: "Changement de modèle d'utilisation",
+                    driverTeamExpansion: "Expansion d'équipe",
+                    driverSupportResponse: "Temps de réponse support",
+                    driverFeatureBacklog: "Arriéré de demandes de fonctionnalités",
+                    driverIntegrationComplexity: "Complexité d'intégration",
+                    driverPlatformMigration: "Migration de plateforme",
+                    driverMobileDecline: "Déclin d'utilisation application mobile",
+                    driverModelPerformance: "Problèmes de performance modèle",
+                    driverSeasonalUsage: "Modèles d'utilisation saisonniers",
+                    driverIntegrationUpdates: "Mises à jour d'intégration",
+                    driverRegulatory: "Conformité réglementaire",
+                    driverAudit: "Exigences d'audit",
+                    driverDataRetention: "Politiques de rétention des données",
+                    driverIoT: "Défis d'intégration IoT"
                 },
                 // Footer Section
                 footer: {
@@ -2690,7 +2732,28 @@
                     singleActionRecommendation: "Recomendación de Acción Única",
                     diagnosis: "📊 Diagnóstico :",
                     additionalContext: "Contexto Adicional :",
-                    definedTiers: "Niveles definidos : Alto > 80%, Medio 50–80%, Bajo < 50%."
+                    definedTiers: "Niveles definidos : Alto > 80%, Medio 50–80%, Bajo < 50%.",
+                    driverInactivity: "Inactividad en Función Clave",
+                    driverLowAPI: "Bajo Uso de API",
+                    driverSupportSpike: "Pico de tickets de soporte",
+                    driverBilling: "Problema de facturación",
+                    driverContractRenewal: "Renovación de contrato próxima",
+                    driverFeatureDecline: "Declive de adopción de funciones",
+                    driverCompetitor: "Evaluación de competencia",
+                    driverUsageChange: "Cambio en patrón de uso",
+                    driverTeamExpansion: "Expansión de equipo",
+                    driverSupportResponse: "Tiempo de respuesta de soporte",
+                    driverFeatureBacklog: "Acumulación de solicitudes de funciones",
+                    driverIntegrationComplexity: "Complejidad de integración",
+                    driverPlatformMigration: "Migración de plataforma",
+                    driverMobileDecline: "Declive de uso de aplicación móvil",
+                    driverModelPerformance: "Problemas de rendimiento del modelo",
+                    driverSeasonalUsage: "Patrones de uso estacionales",
+                    driverIntegrationUpdates: "Actualizaciones de integración",
+                    driverRegulatory: "Cumplimiento regulatorio",
+                    driverAudit: "Requisitos de auditoría",
+                    driverDataRetention: "Políticas de retención de datos",
+                    driverIoT: "Desafíos de integración IoT"
                 },
                 // Footer Section
                 footer: {
@@ -4187,10 +4250,10 @@
                 const riskColor = customer.calculatedRiskScore >= 80 ? 'text-red-400' : customer.calculatedRiskScore >= 60 ? 'text-orange-400' : 'text-green-400';
                 const borderColor = customer.calculatedRiskScore >= 80 ? 'border-red-500/30' : customer.calculatedRiskScore >= 60 ? 'border-orange-500/30' : 'border-green-500/30';
                 
-                // Separate actionable from ignored drivers
+                // Separate actionable from ignored drivers with translation
                 const topDrivers = customer.topDrivers.slice(0, 2);
-                const actionableDrivers = topDrivers.filter(d => d.includes('[Actionable]')).map(d => d.replace(' [Actionable]', ''));
-                const otherDrivers = topDrivers.filter(d => !d.includes('[Actionable]') && !d.includes('[Ignore]')).map(d => d.replace(' [Ignore]', ''));
+                const actionableDrivers = topDrivers.filter(d => d.includes('[Actionable]')).map(d => translateDriverName(d));
+                const otherDrivers = topDrivers.filter(d => !d.includes('[Actionable]') && !d.includes('[Ignore]')).map(d => translateDriverName(d));
                 
                 return `
                     <div 
@@ -4408,6 +4471,41 @@
 
         // Batch actions removed per request
         
+        // Translate driver names function
+        function translateDriverName(driverName) {
+            // Remove markers like [Actionable] or [Ignore]
+            const cleanName = driverName.replace(/\s*\[Actionable\]/g, '').replace(/\s*\[Ignore\]/g, '').trim();
+            
+            // Map driver names to translation keys
+            const driverMap = {
+                'Inactivity on Key Feature': 'modal.driverInactivity',
+                'Low API Usage': 'modal.driverLowAPI',
+                'Support ticket spike': 'modal.driverSupportSpike',
+                'Billing issue': 'modal.driverBilling',
+                'Contract renewal approaching': 'modal.driverContractRenewal',
+                'Feature adoption decline': 'modal.driverFeatureDecline',
+                'Competitor evaluation': 'modal.driverCompetitor',
+                'Usage pattern change': 'modal.driverUsageChange',
+                'Team expansion': 'modal.driverTeamExpansion',
+                'Support response time': 'modal.driverSupportResponse',
+                'Feature request backlog': 'modal.driverFeatureBacklog',
+                'Integration complexity': 'modal.driverIntegrationComplexity',
+                'Platform migration': 'modal.driverPlatformMigration',
+                'Mobile app usage decline': 'modal.driverMobileDecline',
+                'Model performance issues': 'modal.driverModelPerformance',
+                'Seasonal usage patterns': 'modal.driverSeasonalUsage',
+                'Integration updates': 'modal.driverIntegrationUpdates',
+                'Regulatory compliance': 'modal.driverRegulatory',
+                'Audit requirements': 'modal.driverAudit',
+                'Data retention policies': 'modal.driverDataRetention',
+                'IoT integration challenges': 'modal.driverIoT'
+            };
+            
+            // Return translated name or original if not found
+            const translationKey = driverMap[cleanName];
+            return translationKey ? t(translationKey) : cleanName;
+        }
+        
         window.showCustomerDetail = function(customerId) {
             selectedCustomerId = customerId;
             const customer = customerData.find(c => c.Customer_ID === customerId);
@@ -4415,10 +4513,10 @@
             
             document.getElementById('modalTitle').textContent = customer.Customer_Name;
             
-            // Separate actionable from ignored drivers
+            // Separate actionable from ignored drivers with translation
             const topDrivers = customer.topDrivers.slice(0, 2);
-            const actionableDrivers = topDrivers.filter(d => d.includes('[Actionable]')).map(d => d.replace(' [Actionable]', ''));
-            const otherDrivers = topDrivers.filter(d => !d.includes('[Actionable]') && !d.includes('[Ignore]')).map(d => d.replace(' [Ignore]', ''));
+            const actionableDrivers = topDrivers.filter(d => d.includes('[Actionable]')).map(d => translateDriverName(d));
+            const otherDrivers = topDrivers.filter(d => !d.includes('[Actionable]') && !d.includes('[Ignore]')).map(d => translateDriverName(d));
             
             // Generate single-action recommendation
             const recommendation = generateSingleActionRecommendation(customer);
