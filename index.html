@@ -876,7 +876,7 @@
                 </div>
 
                 <!-- Desktop Navigation -->
-                <nav class="hidden md:flex items-center space-x-8" role="navigation" aria-label="Main navigation">
+                <nav class="hidden md:flex items-center space-x-8" role="navigation" data-translate-aria-label="dynamic.mainNavigation" aria-label="Main navigation">
                     <a data-section="home" class="nav-link text-sm font-medium text-gray-300 pb-1 active" aria-current="page" tabindex="0" data-translate="nav.home">Home</a>
                     <a data-section="problem" class="nav-link text-sm font-medium text-gray-300 pb-1" tabindex="0" data-translate="nav.problem">Problem</a>
                     <a data-section="solution" class="nav-link text-sm font-medium text-gray-300 pb-1" tabindex="0" data-translate="nav.solution">Solution</a>
@@ -890,7 +890,7 @@
 
                 <!-- Language Switcher -->
                 <div class="hidden md:flex items-center space-x-2 mr-4 relative">
-                    <button id="lang-switcher-btn" class="flex items-center space-x-1 text-sm font-medium text-gray-300 hover:text-primary-orange transition-colors px-2 py-1 rounded" aria-label="Change language" aria-haspopup="true" aria-expanded="false">
+                    <button id="lang-switcher-btn" class="flex items-center space-x-1 text-sm font-medium text-gray-300 hover:text-primary-orange transition-colors px-2 py-1 rounded" data-translate-aria-label="dynamic.changeLanguage" aria-label="Change language" aria-haspopup="true" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m-16.432 0A8.959 8.959 0 0 1 3 12c0-.778.099-1.533.284-2.253m16.432 0A11.953 11.953 0 0 1 12 13.5c-2.998 0-5.74-1.1-7.843-2.918" />
                         </svg>
@@ -916,7 +916,7 @@
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <button id="mobile-menu-btn" class="md:hidden text-light-text" aria-label="Toggle mobile menu" aria-expanded="false" tabindex="0">
+                <button id="mobile-menu-btn" class="md:hidden text-light-text" data-translate-aria-label="dynamic.toggleMobileMenu" aria-label="Toggle mobile menu" aria-expanded="false" tabindex="0">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                     </svg>
@@ -1327,7 +1327,7 @@
                     rows="3"
                     data-translate="modal.actionLogPlaceholder"
                     placeholder="Log your intervention (e.g., 'Called John to offer training session')"
-                    aria-label="Action log input"
+                    data-translate-aria-label="dynamic.actionLogInput" aria-label="Action log input"
                 ></textarea>
                 <div class="flex items-center justify-between mt-3">
                     <button 
@@ -1404,7 +1404,7 @@
                         <div>
                             <label for="arr-filter" class="block text-sm font-semibold text-light-text mb-2" data-translate="dashboard.minimumARR">
                                 💰 Minimum ARR
-                                <span class="ml-1 text-xs text-gray-400 cursor-help" title="ARR = Annual Recurring Revenue. Filters customers whose ARR is at least this amount.">ⓘ</span>
+                                <span class="ml-1 text-xs text-gray-400 cursor-help" data-translate-title="dynamic.arrTooltip" title="ARR = Annual Recurring Revenue. Filters customers whose ARR is at least this amount.">ⓘ</span>
                             </label>
                             <div class="relative">
                                 <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary-orange font-bold">$</span>
@@ -1428,7 +1428,7 @@
                         <div>
                             <label for="risk-tier-filter" class="block text-sm font-semibold text-light-text mb-2" data-translate="dashboard.riskTier">
                                 ⚠️ Risk Tier (per Glossary)
-                                <span class="ml-1 text-xs text-gray-400 cursor-help" title="High > 80%, Medium 50–80%, Low < 50%.">ⓘ</span>
+                                <span class="ml-1 text-xs text-gray-400 cursor-help" data-translate-title="dashboard.riskTierTooltip" title="High > 80%, Medium 50–80%, Low < 50%.">ⓘ</span>
                             </label>
                             <select 
                                 id="risk-tier-filter" 
@@ -1447,7 +1447,7 @@
                         <div>
                             <label for="contract-month-filter" class="block text-sm font-semibold text-light-text mb-2" data-translate="dashboard.contractEndDate">
                                 📅 Contract End Date (MM/DD/YYYY)
-                                <span class="ml-1 text-xs text-gray-400 cursor-help" title="Filter customers whose contract end date matches the selected day.">ⓘ</span>
+                                <span class="ml-1 text-xs text-gray-400 cursor-help" data-translate-title="dashboard.contractTooltip" title="Filter customers whose contract end date matches the selected day.">ⓘ</span>
                             </label>
             <input 
                 type="date" 
@@ -1479,24 +1479,24 @@
                 
                 <div class="overflow-y-auto" style="max-height: calc(100vh - 300px);">
                     <div class="overflow-x-auto">
-                    <table class="w-full" aria-label="Customer table">
+                    <table class="w-full" data-translate-aria-label="dynamic.customerTable" aria-label="Customer table">
                         <thead class="bg-dark-bg">
                             <tr>
                                 
                                 <th class="px-4 py-3 text-left text-sm font-semibold text-light-text cursor-pointer hover:bg-gray-700 transition-colors" onclick="sortCustomers('name')">
-                                    <span data-translate="dashboard.customerName">Customer Name</span> <span id="sort-indicator-name" class="text-primary-orange" data-translate="dashboard.sortByName" title="Sort by name">↓</span>
+                                    <span data-translate="dashboard.customerName">Customer Name</span> <span id="sort-indicator-name" class="text-primary-orange" data-translate="dashboard.sortByName" data-translate-title="dashboard.sortByName" title="Sort by name">↓</span>
                                 </th>
                                 <th class="px-4 py-3 text-left text-sm font-semibold text-light-text cursor-pointer hover:bg-gray-700 transition-colors" onclick="sortCustomers('risk')">
-                                    <span data-translate="dashboard.riskScore">Risk Score</span> <span id="sort-indicator-risk" class="text-primary-orange" data-translate="dashboard.sortByRisk" title="Sort by risk">↓</span>
+                                    <span data-translate="dashboard.riskScore">Risk Score</span> <span id="sort-indicator-risk" class="text-primary-orange" data-translate="dashboard.sortByRisk" data-translate-title="dashboard.sortByRisk" title="Sort by risk">↓</span>
                                 </th>
                                 <th class="px-4 py-3 text-left text-sm font-semibold text-light-text">
-                                    <span data-translate="dashboard.accountManager">Account Manager</span> <span class="ml-1 text-xs text-gray-400 cursor-help" title="Assigned CSM or owner">ⓘ</span>
+                                    <span data-translate="dashboard.accountManager">Account Manager</span> <span class="ml-1 text-xs text-gray-400 cursor-help" data-translate-title="dashboard.accountManagerTooltip" title="Assigned CSM or owner">ⓘ</span>
                                 </th>
                                 <th class="px-4 py-3 text-left text-sm font-semibold text-light-text">
-                                    <span data-translate="dashboard.arr">ARR</span> <span class="ml-1 text-xs text-gray-400 cursor-help" title="Annual Recurring Revenue">ⓘ</span>
+                                    <span data-translate="dashboard.arr">ARR</span> <span class="ml-1 text-xs text-gray-400 cursor-help" data-translate-title="dashboard.arrTooltip" title="Annual Recurring Revenue">ⓘ</span>
                                 </th>
                                 <th class="px-4 py-3 text-left text-sm font-semibold text-light-text cursor-pointer hover:bg-gray-700 transition-colors" onclick="sortCustomers('date')">
-                                    <span data-translate="dashboard.lastActivity">Last Activity</span> <span id="sort-indicator-date" class="text-primary-orange" data-translate="dashboard.sortByDate" title="Sort by last activity">↓</span>
+                                    <span data-translate="dashboard.lastActivity">Last Activity</span> <span id="sort-indicator-date" class="text-primary-orange" data-translate="dashboard.sortByDate" data-translate-title="dashboard.sortByDate" title="Sort by last activity">↓</span>
                                 </th>
                                 <th class="px-4 py-3 text-left text-sm font-semibold text-light-text">
                                     <span data-translate="dashboard.status">Status</span>
@@ -1668,12 +1668,12 @@
 
                     <div class="grid grid-cols-2 gap-2 mb-3">
                         <div class="bg-dark-card p-2 rounded">
-                            <h4 class="text-xs font-bold text-light-text mb-0.5">Current (PoC)</h4>
-                            <p class="text-xs text-gray-400">Manual view</p>
+                            <h4 class="text-xs font-bold text-light-text mb-0.5" data-translate="dynamic.currentPoC">Current (PoC)</h4>
+                            <p class="text-xs text-gray-400" data-translate="dynamic.manualView">Manual view</p>
                         </div>
                         <div class="bg-dark-bg p-2 rounded border border-primary-orange">
-                            <h4 class="text-xs font-bold text-primary-orange mb-0.5">Future</h4>
-                            <p class="text-xs text-gray-300">Auto-push tasks</p>
+                            <h4 class="text-xs font-bold text-primary-orange mb-0.5" data-translate="whatsNext.futureLabel">Future</h4>
+                            <p class="text-xs text-gray-300" data-translate="whatsNext.autoPushTasks">Auto-push tasks</p>
                         </div>
                     </div>
 
@@ -1924,6 +1924,8 @@
                     nextStep: "→ Next Step: Full CRM Integration",
                     nextStepDesc: "Fund the full two-way API synchronization with your CRM.",
                     future: "→ Future: Real-Time Webhook Delivery",
+                    futureLabel: "Future",
+                    autoPushTasks: "Auto-push tasks",
                     realtimeDelivery: "Real-time delivery",
                     realtimeDeliveryDesc: "- Instant CRM tasks",
                     autoOffers: "Auto offers",
@@ -2041,7 +2043,11 @@
                     status: "Status",
                     sortByName: "Sort by name",
                     sortByRisk: "Sort by risk",
-                    sortByDate: "Sort by last activity"
+                    sortByDate: "Sort by last activity",
+                    riskTierTooltip: "High > 80%, Medium 50–80%, Low < 50%.",
+                    contractTooltip: "Filter customers whose contract end date matches the selected day.",
+                    accountManagerTooltip: "Assigned CSM or owner",
+                    arrTooltip: "Annual Recurring Revenue"
                 },
                 // Modal Section
                 modal: {
@@ -2082,7 +2088,64 @@
                     viewDetails: "View Details",
                     highRisk: "High Risk",
                     mediumRisk: "Medium Risk",
-                    lowRisk: "Low Risk"
+                    lowRisk: "Low Risk",
+                    na: "N/A",
+                    unassigned: "Unassigned"
+                },
+                // Dynamic Content
+                dynamic: {
+                    churnRiskScore: "Churn Risk Score",
+                    arrValue: "ARR Value",
+                    contractEnds: "Contract Ends",
+                    timeline12Months: "Timeline (12 months)",
+                    usageScore: "Usage Score",
+                    riskTrend12Months: "Risk trend (last 12 months)",
+                    noHighValueCustomers: "No high-value customers currently flagged for immediate triage. Check the table below for all high-risk customers.",
+                    noRootCauseData: "No root cause data available",
+                    hypotheticalNetARRSaved: "Hypothetical Net ARR Saved",
+                    customersRetained: "Customers Retained",
+                    totalInterventionCost: "Total Intervention Cost",
+                    noActionsLogged: "No actions logged yet",
+                    confirmClearHistory: "Are you sure you want to clear all action history?",
+                    currentPoC: "Current (PoC)",
+                    manualView: "Manual view",
+                    callFailureRate: "Call Failure Rate",
+                    pricingPageViews: "Pricing Page Views",
+                    daysSinceLogin: "Days Since Login",
+                    days90: "90 days",
+                    triageTitle: "Triage: Top High-Value Churn Risks",
+                    customers: "customers",
+                    changeLanguage: "Change language",
+                    toggleMobileMenu: "Toggle mobile menu",
+                    totalARR: "Total ARR",
+                    avgRisk: "Avg Risk",
+                    allHighRiskCustomers: "All High-Risk Customers",
+                    found: "found",
+                    noHighRiskDetected: "No high-risk customers detected.",
+                    arrTooltip: "ARR = Annual Recurring Revenue. Filters customers whose ARR is at least this amount.",
+                    statusHigh: "HIGH",
+                    statusMed: "MED",
+                    statusLow: "LOW",
+                    riskScoreMax: "/100",
+                    openDetailsFor: "Open details for",
+                    na: "NA",
+                    mainNavigation: "Main navigation",
+                    actionLogInput: "Action log input",
+                    customerTable: "Customer table",
+                    riskTrendChart: "Risk trend last 12 months",
+                    customerCard: "Customer {name}, Risk Score {score}%",
+                    recMonitorDefault: "Monitor this customer closely for any emerging risk signals.",
+                    recMonitorStable: "Monitor this customer closely. Current drivers suggest stable usage patterns.",
+                    recInactivity: "Offer a free 1-on-1 feature adoption session to demonstrate key features and provide personalized training.",
+                    recLowAPI: "Schedule API consultation call to understand integration challenges and provide developer resources.",
+                    recBilling: "Contact finance team directly to resolve billing concerns and offer flexible payment options.",
+                    recSupportSpike: "Escalate to senior support engineer and schedule proactive check-in call to address root cause.",
+                    recContractRenewal: "Initiate renewal conversation 90 days early with value demonstration showing ROI and usage analytics.",
+                    recFeatureDecline: "Send personalized feature adoption report with specific recommendations and schedule product demo focusing on unused features.",
+                    recDefault: "Schedule immediate executive check-in call to discuss current challenges and customize success plan.",
+                    logged: "Logged",
+                    noAction: "No action",
+                    endsLabel: "Ends:"
                 }
             },
             fr: {
@@ -2179,6 +2242,8 @@
                     nextStep: "→ Prochaine Étape : Intégration CRM Complète",
                     nextStepDesc: "Financer la synchronisation API bidirectionnelle complète avec votre CRM.",
                     future: "→ Avenir : Livraison Webhook en Temps Réel",
+                    futureLabel: "Avenir",
+                    autoPushTasks: "Tâches en push automatique",
                     realtimeDelivery: "Livraison en temps réel",
                     realtimeDeliveryDesc: "- Tâches CRM instantanées",
                     autoOffers: "Offres automatiques",
@@ -2296,7 +2361,11 @@
                     status: "Statut",
                     sortByName: "Trier par nom",
                     sortByRisk: "Trier par risque",
-                    sortByDate: "Trier par dernière activité"
+                    sortByDate: "Trier par dernière activité",
+                    riskTierTooltip: "Élevé > 80%, Moyen 50–80%, Faible < 50%.",
+                    contractTooltip: "Filtrer les clients dont la date de fin de contrat correspond au jour sélectionné.",
+                    accountManagerTooltip: "CSM ou propriétaire assigné",
+                    arrTooltip: "Chiffre d'Affaires Récurrent Annuel"
                 },
                 // Modal Section
                 modal: {
@@ -2337,7 +2406,64 @@
                     viewDetails: "Voir les détails",
                     highRisk: "Risque élevé",
                     mediumRisk: "Risque moyen",
-                    lowRisk: "Risque faible"
+                    lowRisk: "Risque faible",
+                    na: "N/A",
+                    unassigned: "Non assigné"
+                },
+                // Dynamic Content
+                dynamic: {
+                    churnRiskScore: "Score de Risque d'Attrition",
+                    arrValue: "Valeur CA",
+                    contractEnds: "Fin de Contrat",
+                    timeline12Months: "Chronologie (12 mois)",
+                    usageScore: "Score d'Utilisation",
+                    riskTrend12Months: "Tendance de risque (12 derniers mois)",
+                    noHighValueCustomers: "Aucun client à haute valeur actuellement signalé pour triage immédiat. Vérifiez le tableau ci-dessous pour tous les clients à haut risque.",
+                    noRootCauseData: "Aucune donnée de cause racine disponible",
+                    hypotheticalNetARRSaved: "CA Net Hypothétique Sauvegardé",
+                    customersRetained: "Clients Retenus",
+                    totalInterventionCost: "Coût Total d'Intervention",
+                    noActionsLogged: "Aucune action enregistrée",
+                    confirmClearHistory: "Êtes-vous sûr de vouloir effacer tout l'historique des actions ?",
+                    currentPoC: "Actuel (PoC)",
+                    manualView: "Vue manuelle",
+                    callFailureRate: "Taux d'Échec d'Appel",
+                    pricingPageViews: "Vues de Page de Tarification",
+                    daysSinceLogin: "Jours Depuis la Dernière Connexion",
+                    days90: "90 jours",
+                    triageTitle: "Triage : Principaux Risques d'Attrition à Haute Valeur",
+                    customers: "clients",
+                    changeLanguage: "Changer la langue",
+                    toggleMobileMenu: "Basculer le menu mobile",
+                    totalARR: "CA Total",
+                    avgRisk: "Risque Moyen",
+                    allHighRiskCustomers: "Tous les Clients à Haut Risque",
+                    found: "trouvé",
+                    noHighRiskDetected: "Aucun client à haut risque détecté.",
+                    arrTooltip: "CA = Chiffre d'Affaires Récurrent Annuel. Filtre les clients dont le CA est au moins ce montant.",
+                    statusHigh: "ÉLEVÉ",
+                    statusMed: "MOYEN",
+                    statusLow: "FAIBLE",
+                    riskScoreMax: "/100",
+                    openDetailsFor: "Ouvrir les détails pour",
+                    na: "N/A",
+                    mainNavigation: "Navigation principale",
+                    actionLogInput: "Saisie de journal d'actions",
+                    customerTable: "Tableau des clients",
+                    riskTrendChart: "Tendance de risque (12 derniers mois)",
+                    customerCard: "Client {name}, Score de Risque {score}%",
+                    recMonitorDefault: "Surveiller ce client de près pour tout signal de risque émergent.",
+                    recMonitorStable: "Surveiller ce client de près. Les facteurs actuels suggèrent des schémas d'utilisation stables.",
+                    recInactivity: "Offrir une session d'adoption de fonctionnalités gratuite en tête-à-tête pour démontrer les fonctionnalités clés et fournir une formation personnalisée.",
+                    recLowAPI: "Planifier un appel de consultation API pour comprendre les défis d'intégration et fournir des ressources pour développeurs.",
+                    recBilling: "Contacter directement l'équipe financière pour résoudre les préoccupations de facturation et offrir des options de paiement flexibles.",
+                    recSupportSpike: "Escalader vers un ingénieur support senior et planifier un appel de suivi proactif pour résoudre la cause racine.",
+                    recContractRenewal: "Initier une conversation de renouvellement 90 jours à l'avance avec une démonstration de valeur montrant le ROI et les analyses d'utilisation.",
+                    recFeatureDecline: "Envoyer un rapport d'adoption de fonctionnalités personnalisé avec des recommandations spécifiques et planifier une démo produit axée sur les fonctionnalités non utilisées.",
+                    recDefault: "Planifier immédiatement un appel de suivi exécutif pour discuter des défis actuels et personnaliser le plan de succès.",
+                    logged: "Enregistré",
+                    noAction: "Aucune action",
+                    endsLabel: "Se termine :"
                 }
             },
             es: {
@@ -2434,6 +2560,8 @@
                     nextStep: "→ Próximo Paso: Integración Completa de CRM",
                     nextStepDesc: "Financiar la sincronización completa de API bidireccional con su CRM.",
                     future: "→ Futuro: Entrega Webhook en Tiempo Real",
+                    futureLabel: "Futuro",
+                    autoPushTasks: "Tareas de envío automático",
                     realtimeDelivery: "Entrega en tiempo real",
                     realtimeDeliveryDesc: "- Tareas CRM instantáneas",
                     autoOffers: "Ofertas automáticas",
@@ -2551,7 +2679,11 @@
                     status: "Estado",
                     sortByName: "Ordenar por nombre",
                     sortByRisk: "Ordenar por riesgo",
-                    sortByDate: "Ordenar por última actividad"
+                    sortByDate: "Ordenar por última actividad",
+                    riskTierTooltip: "Alto > 80%, Medio 50–80%, Bajo < 50%.",
+                    contractTooltip: "Filtrar clientes cuya fecha de fin de contrato coincida con el día seleccionado.",
+                    accountManagerTooltip: "CSM o propietario asignado",
+                    arrTooltip: "Ingresos Recurrentes Anuales"
                 },
                 // Modal Section
                 modal: {
@@ -2592,7 +2724,64 @@
                     viewDetails: "Ver detalles",
                     highRisk: "Alto riesgo",
                     mediumRisk: "Riesgo medio",
-                    lowRisk: "Bajo riesgo"
+                    lowRisk: "Bajo riesgo",
+                    na: "N/A",
+                    unassigned: "Sin asignar"
+                },
+                // Dynamic Content
+                dynamic: {
+                    churnRiskScore: "Puntaje de Riesgo de Pérdida",
+                    arrValue: "Valor ARR",
+                    contractEnds: "Fin de Contrato",
+                    timeline12Months: "Cronología (12 meses)",
+                    usageScore: "Puntaje de Uso",
+                    riskTrend12Months: "Tendencia de riesgo (últimos 12 meses)",
+                    noHighValueCustomers: "No hay clientes de alto valor actualmente marcados para triaje inmediato. Consulte la tabla a continuación para todos los clientes de alto riesgo.",
+                    noRootCauseData: "No hay datos de causa raíz disponibles",
+                    hypotheticalNetARRSaved: "ARR Neto Hipotético Ahorrado",
+                    customersRetained: "Clientes Retenidos",
+                    totalInterventionCost: "Costo Total de Intervención",
+                    noActionsLogged: "No hay acciones registradas aún",
+                    confirmClearHistory: "¿Está seguro de que desea borrar todo el historial de acciones?",
+                    currentPoC: "Actual (PoC)",
+                    manualView: "Vista manual",
+                    callFailureRate: "Tasa de Fallo de Llamada",
+                    pricingPageViews: "Vistas de Página de Precios",
+                    daysSinceLogin: "Días Desde Último Inicio de Sesión",
+                    days90: "90 días",
+                    triageTitle: "Triage: Principales Riesgos de Pérdida de Alto Valor",
+                    customers: "clientes",
+                    changeLanguage: "Cambiar idioma",
+                    toggleMobileMenu: "Alternar menú móvil",
+                    totalARR: "ARR Total",
+                    avgRisk: "Riesgo Promedio",
+                    allHighRiskCustomers: "Todos los Clientes de Alto Riesgo",
+                    found: "encontrado",
+                    noHighRiskDetected: "No se detectaron clientes de alto riesgo.",
+                    arrTooltip: "ARR = Ingresos Recurrentes Anuales. Filtra clientes cuyo ARR es al menos esta cantidad.",
+                    statusHigh: "ALTO",
+                    statusMed: "MEDIO",
+                    statusLow: "BAJO",
+                    riskScoreMax: "/100",
+                    openDetailsFor: "Abrir detalles para",
+                    na: "N/A",
+                    mainNavigation: "Navegación principal",
+                    actionLogInput: "Entrada de registro de acciones",
+                    customerTable: "Tabla de clientes",
+                    riskTrendChart: "Tendencia de riesgo (últimos 12 meses)",
+                    customerCard: "Cliente {name}, Puntaje de Riesgo {score}%",
+                    recMonitorDefault: "Monitorear este cliente de cerca para cualquier señal de riesgo emergente.",
+                    recMonitorStable: "Monitorear este cliente de cerca. Los factores actuales sugieren patrones de uso estables.",
+                    recInactivity: "Ofrecer una sesión gratuita de adopción de funciones uno a uno para demostrar funciones clave y proporcionar capacitación personalizada.",
+                    recLowAPI: "Programar una llamada de consulta de API para comprender los desafíos de integración y proporcionar recursos para desarrolladores.",
+                    recBilling: "Contactar directamente al equipo de finanzas para resolver preocupaciones de facturación y ofrecer opciones de pago flexibles.",
+                    recSupportSpike: "Escalar a un ingeniero de soporte senior y programar una llamada de seguimiento proactiva para abordar la causa raíz.",
+                    recContractRenewal: "Iniciar una conversación de renovación 90 días antes con una demostración de valor mostrando ROI y análisis de uso.",
+                    recFeatureDecline: "Enviar un informe personalizado de adopción de funciones con recomendaciones específicas y programar una demostración de producto enfocada en funciones no utilizadas.",
+                    recDefault: "Programar inmediatamente una llamada de seguimiento ejecutivo para discutir los desafíos actuales y personalizar el plan de éxito.",
+                    logged: "Registrado",
+                    noAction: "Sin acción",
+                    endsLabel: "Termina:"
                 }
             }
         };
@@ -2679,6 +2868,13 @@
                 const key = element.getAttribute('data-translate-aria-label');
                 const translation = t(key);
                 element.setAttribute('aria-label', translation);
+            });
+            
+            // Handle title attribute translations
+            document.querySelectorAll('[data-translate-title]').forEach(element => {
+                const key = element.getAttribute('data-translate-title');
+                const translation = t(key);
+                element.setAttribute('title', translation);
             });
             
             // Update HTML lang attribute
@@ -2833,32 +3029,32 @@
          */
         function generateSingleActionRecommendation(customer) {
             if (!customer || !customer.topDrivers) {
-                return 'Monitor this customer closely for any emerging risk signals.';
+                return t('dynamic.recMonitorDefault');
             }
             
             const actionableDrivers = customer.topDrivers.filter(d => d.includes('[Actionable]'));
             
             if (actionableDrivers.length === 0) {
-                return 'Monitor this customer closely. Current drivers suggest stable usage patterns.';
+                return t('dynamic.recMonitorStable');
             }
             
             const primaryDriver = actionableDrivers[0].replace(' [Actionable]', '');
             
             // Generate specific recommendations based on actionable drivers
             if (primaryDriver.includes('Inactivity on Key Feature')) {
-                return 'Offer a free 1-on-1 feature adoption session to demonstrate key features and provide personalized training.';
+                return t('dynamic.recInactivity');
             } else if (primaryDriver.includes('Low API Usage')) {
-                return 'Schedule API consultation call to understand integration challenges and provide developer resources.';
+                return t('dynamic.recLowAPI');
             } else if (primaryDriver.includes('Billing issue')) {
-                return 'Contact finance team directly to resolve billing concerns and offer flexible payment options.';
+                return t('dynamic.recBilling');
             } else if (primaryDriver.includes('Support ticket spike')) {
-                return 'Escalate to senior support engineer and schedule proactive check-in call to address root cause.';
+                return t('dynamic.recSupportSpike');
             } else if (primaryDriver.includes('Contract renewal approaching')) {
-                return 'Initiate renewal conversation 90 days early with value demonstration showing ROI and usage analytics.';
+                return t('dynamic.recContractRenewal');
             } else if (primaryDriver.includes('Feature adoption decline')) {
-                return 'Send personalized feature adoption report with specific recommendations and schedule product demo focusing on unused features.';
+                return t('dynamic.recFeatureDecline');
             } else {
-                return 'Schedule immediate executive check-in call to discuss current challenges and customize success plan.';
+                return t('dynamic.recDefault');
             }
         }
 
@@ -2972,7 +3168,7 @@
                 <svg width="100%" height="${h}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
                     <polyline points="${points}" fill="none" stroke="#F97316" stroke-width="2" />
                 </svg>
-                <div class="text-[10px] text-gray-600 mt-1">Risk trend (last 12 months)</div>
+                <div class="text-[10px] text-gray-600 mt-1">${t('dynamic.riskTrend12Months')}</div>
             `;
         }
 
@@ -3043,10 +3239,10 @@
                 const riskScore = riskFactors.supportTickets + riskFactors.lowUsage + riskFactors.contractEnding + riskFactors.highRisk;
                 const trendSeed = parseInt(customer.Customer_ID.replace(/\D/g, '')) % 10;
                 
-                if (riskScore >= 3) return { direction: 'worsening', label: '🔴 Worsening' };
-                else if (riskScore >= 2) return trendSeed < 7 ? { direction: 'worsening', label: '🔴 Worsening' } : { direction: 'improving', label: '🟢 Improving' };
-                else if (riskScore >= 1) return trendSeed < 5 ? { direction: 'worsening', label: '🔴 Worsening' } : { direction: 'improving', label: '🟢 Improving' };
-                else return trendSeed < 2 ? { direction: 'worsening', label: '🔴 Worsening' } : { direction: 'improving', label: '🟢 Improving' };
+                if (riskScore >= 3) return { direction: 'worsening', label: t('riskTrends.worseningTrend') };
+                else if (riskScore >= 2) return trendSeed < 7 ? { direction: 'worsening', label: t('riskTrends.worseningTrend') } : { direction: 'improving', label: t('riskTrends.improvingTrend') };
+                else if (riskScore >= 1) return trendSeed < 5 ? { direction: 'worsening', label: t('riskTrends.worseningTrend') } : { direction: 'improving', label: t('riskTrends.improvingTrend') };
+                else return trendSeed < 2 ? { direction: 'worsening', label: t('riskTrends.worseningTrend') } : { direction: 'improving', label: t('riskTrends.improvingTrend') };
             };
             
             const trendInfo = determineTrendDisplay(customer);
@@ -3125,7 +3321,7 @@
             const medY = yScale(50);
 
             el.innerHTML = `
-                <svg width="100%" height="${h}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" role="img" aria-label="Risk trend last 12 months">
+                <svg width="100%" height="${h}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" role="img" aria-label="${t('dynamic.riskTrendChart')}">
                     <rect x="${padL}" y="${padT}" width="${innerW}" height="${innerH}" fill="#111827" stroke="#374151" />
                     <rect x="${padL}" y="${padT}" width="${innerW}" height="${highY - padT}" fill="rgba(220,38,38,0.15)" />
                     <rect x="${padL}" y="${highY}" width="${innerW}" height="${medY - highY}" fill="rgba(245,158,11,0.15)" />
@@ -3549,11 +3745,11 @@
             // Update the section title with the count
             const tableTitle = document.getElementById('high-risk-table-title');
             if (tableTitle) {
-                tableTitle.innerHTML = `📊 All High-Risk Customers <span class="text-primary-orange">(${allHighRisk.length} found)</span>`;
+                tableTitle.innerHTML = `📊 ${t('dynamic.allHighRiskCustomers')} <span class="text-primary-orange">(${allHighRisk.length} ${t('dynamic.found')})</span>`;
             }
             
             if (allHighRisk.length === 0) {
-                const emptyRow = '<tr><td colspan="9" class="text-center py-10 text-gray-500">No high-risk customers detected.</td></tr>';
+                const emptyRow = `<tr><td colspan="9" class="text-center py-10 text-gray-500">${t('dynamic.noHighRiskDetected')}</td></tr>`;
                 if (tbody) tbody.innerHTML = emptyRow;
                 if (tbodyCustomers) tbodyCustomers.innerHTML = emptyRow;
                 return;
@@ -3595,11 +3791,11 @@
             // Update the triage list title with the count
             const triageTitle = document.getElementById('triage-list-title');
             if (triageTitle) {
-                triageTitle.innerHTML = `🚨 Triage: Top High-Value Churn Risks <span class="text-light-text">(<span class="text-primary-orange font-black">${actionableTriageList.length}</span> customers)</span>`;
+                triageTitle.innerHTML = `🚨 ${t('dynamic.triageTitle')} <span class="text-light-text">(<span class="text-primary-orange font-black">${actionableTriageList.length}</span> ${t('dynamic.customers')})</span>`;
             }
             
             if (actionableTriageList.length === 0) {
-                container.innerHTML = '<p class="text-center text-gray-500 pt-10">No high-value customers currently flagged for immediate triage. Check the table below for all high-risk customers.</p>';
+                container.innerHTML = `<p class="text-center text-gray-500 pt-10">${t('dynamic.noHighValueCustomers')}</p>`;
                 return;
             }
 
@@ -3617,7 +3813,7 @@
                         <div class="flex items-center space-x-3 w-full md:w-auto mb-2 md:mb-0">
                             <div class="text-center">
                                 <span class="text-xl font-extrabold text-primary-orange">${customer.riskScore}%</span>
-                                <p class="text-xs text-gray-400">Risk</p>
+                                <p class="text-xs text-gray-400">${t('common.risk')}</p>
                             </div>
                             <div class="text-center">
                                 <span class="px-2 py-0.5 text-xs font-bold rounded-full ${tagClass}">${customer.rootCauseTag}</span>
@@ -3628,7 +3824,7 @@
                         <div class="ml-0 md:ml-auto w-full md:w-auto">
                             <button onclick="openModal('${customer.Customer_ID}')" 
                                 class="w-full md:w-auto bg-primary-orange hover:bg-orange-600 text-dark-bg font-semibold py-1.5 px-3 rounded-lg text-sm transition duration-200">
-                                Engage
+                                ${t('common.engage')}
                             </button>
                         </div>
                     </div>
@@ -3675,17 +3871,17 @@
             const html = `
                 <div class="text-center">
                     <p class="text-6xl font-extrabold text-primary-orange mb-2">${formatCurrency(netSavings).replace('$', '$ ')}</p>
-                    <p class="text-xl font-medium text-light-text">Hypothetical Net ARR Saved</p>
+                    <p class="text-xl font-medium text-light-text">${t('dynamic.hypotheticalNetARRSaved')}</p>
                 </div>
                 
                 <div class="grid grid-cols-2 gap-4 text-center mt-6">
                     <div>
                         <p class="text-2xl font-bold text-green-400">${Math.round(truePositives * ROI_CONFIG.SIMULATED_SAVE_RATE)}</p>
-                        <p class="text-sm text-gray-400">Customers Retained</p>
+                        <p class="text-sm text-gray-400">${t('dynamic.customersRetained')}</p>
                     </div>
                     <div>
                         <p class="text-2xl font-bold text-red-400">${formatCurrency(totalCost)}</p>
-                        <p class="text-sm text-gray-400">Total Intervention Cost</p>
+                        <p class="text-sm text-gray-400">${t('dynamic.totalInterventionCost')}</p>
                     </div>
                 </div>
             `;
@@ -3707,7 +3903,7 @@
             
             // Fallback if no data
             if (!currentCauseDistribution || currentCauseDistribution.length === 0) {
-                container.innerHTML = '<p class="text-center text-gray-500">No root cause data available</p>';
+                container.innerHTML = `<p class="text-center text-gray-500">${t('dynamic.noRootCauseData')}</p>`;
                 return;
             }
             
@@ -3794,12 +3990,12 @@
             const tagClass = getTagClass(customer.rootCauseTag);
             
             const detailsHtml = `
-                <p><strong>ARR:</strong> ${formatCurrency(customer.ARR)}</p>
-                <p><strong>Risk Score:</strong> <span class="text-primary-orange font-bold">${customer.riskScore}%</span></p>
-                <p><strong>Root Cause:</strong> <span class="px-2 py-0.5 rounded ${tagClass} font-bold">${customer.rootCauseTag}</span></p>
-                <p><strong>Key Driver:</strong> ${customer.rootCauseTag === 'Service Quality' ? `Call Failure Rate: ${(customer.Call_Failure_Rate * 100).toFixed(1)}%` : 
-                                                customer.rootCauseTag === 'Cost Sensitivity' ? `Pricing Page Views: ${customer.Recent_Pricing_Page_Views}` : 
-                                                `Days Since Login: ${customer.Days_Since_Last_Login}`}</p>
+                <p><strong>${t('modal.arrLabel')}</strong> ${formatCurrency(customer.ARR)}</p>
+                <p><strong>${t('modal.riskScoreLabel')}</strong> <span class="text-primary-orange font-bold">${customer.riskScore}%</span></p>
+                <p><strong>${t('modal.rootCauseLabel')}</strong> <span class="px-2 py-0.5 rounded ${tagClass} font-bold">${customer.rootCauseTag}</span></p>
+                <p><strong>${t('modal.keyDriverLabel')}</strong> ${customer.rootCauseTag === 'Service Quality' ? `${t('dynamic.callFailureRate')}: ${(customer.Call_Failure_Rate * 100).toFixed(1)}%` : 
+                                                customer.rootCauseTag === 'Cost Sensitivity' ? `${t('dynamic.pricingPageViews')}: ${customer.Recent_Pricing_Page_Views}` : 
+                                                `${t('dynamic.daysSinceLogin')}: ${customer.Days_Since_Last_Login}`}</p>
             `;
             document.getElementById('modal-details').innerHTML = detailsHtml;
 
@@ -3977,15 +4173,15 @@
                 statsContainer.innerHTML = `
                     <div class="bg-gradient-to-br from-red-900/20 to-red-800/10 border border-red-500/30 rounded-lg p-3 text-center">
                         <div class="text-2xl font-black text-red-400 mb-1">${highRiskCount}</div>
-                        <div class="text-xs text-gray-400">High Risk</div>
+                        <div class="text-xs text-gray-400">${t('common.highRisk')}</div>
                     </div>
                     <div class="bg-gradient-to-br from-orange-900/20 to-orange-800/10 border border-orange-500/30 rounded-lg p-3 text-center">
                         <div class="text-2xl font-black text-orange-400 mb-1">$${(totalARR / 1000).toFixed(0)}K</div>
-                        <div class="text-xs text-gray-400">Total ARR</div>
+                        <div class="text-xs text-gray-400">${t('dynamic.totalARR')}</div>
                     </div>
                     <div class="bg-gradient-to-br from-primary-orange/20 to-orange-600/10 border border-primary-orange/30 rounded-lg p-3 text-center">
                         <div class="text-2xl font-black text-primary-orange mb-1">${Math.round(avgRiskScore)}</div>
-                        <div class="text-xs text-gray-400">Avg Risk</div>
+                        <div class="text-xs text-gray-400">${t('dynamic.avgRisk')}</div>
                     </div>
                 `;
             }
@@ -4008,7 +4204,7 @@
                         tabindex="0"
                         onclick="showCustomerDetail('${customer.Customer_ID}')"
                         onkeydown="handleCustomerCardKeydown(event, '${customer.Customer_ID}', ${index})"
-                        aria-label="Customer ${customer.Customer_Name}, Risk Score ${Math.round(customer.calculatedRiskScore)}%"
+                        aria-label="${t('dynamic.customerCard', { name: customer.Customer_Name, score: Math.round(customer.calculatedRiskScore) })}"
                     >
                         <!-- Header Row: Name, Risk Badge, ARR -->
                         <div class="flex justify-between items-start gap-3 mb-1.5">
@@ -4037,11 +4233,11 @@
                         <!-- Status Indicator -->
                         <div class="flex items-center justify-between text-xs">
                             ${logEntry ? `
-                                <span class="text-orange-400 font-semibold text-xs">📝 Logged</span>
+                                <span class="text-orange-400 font-semibold text-xs">📝 ${t('dynamic.logged')}</span>
                             ` : `
-                                <span class="text-gray-500 text-xs">No action</span>
+                                <span class="text-gray-500 text-xs">${t('dynamic.noAction')}</span>
                             `}
-                            <span class="text-gray-600 text-xs">Ends: ${customer.contractEndDateMMDDYYYY || 'N/A'}</span>
+                            <span class="text-gray-600 text-xs">${t('dynamic.endsLabel')} ${customer.contractEndDateMMDDYYYY || t('dynamic.na')}</span>
                         </div>
                     </div>
                 `;
@@ -4125,7 +4321,7 @@
                 // Get first actionable driver for quick scan
                 const actionableDriver = customer.topDrivers.find(d => d.includes('[Actionable]'));
                 const hasActionable = !!actionableDriver;
-                const initials = (customer.accountManager || 'NA').split(' ').map(w => w[0]).slice(0,2).join('').toUpperCase();
+                const initials = (customer.accountManager || t('dynamic.na')).split(' ').map(w => w[0]).slice(0,2).join('').toUpperCase();
                 
                 return `
                     <tr class="border-b border-gray-700 hover:bg-gray-700/30 transition-colors">
@@ -4134,7 +4330,7 @@
                             <div class="flex items-start gap-2">
                                 ${hasActionable ? '<span class="text-green-400 text-lg">⚡</span>' : ''}
                                 <div>
-                                    <button class="font-semibold text-light-text text-left hover:underline" onclick="showCustomerDetail('${customer.Customer_ID}')" aria-label="Open details for ${customer.Customer_Name}">${customer.Customer_Name}</button>
+                                    <button class="font-semibold text-light-text text-left hover:underline" onclick="showCustomerDetail('${customer.Customer_ID}')" aria-label="${t('dynamic.openDetailsFor')} ${customer.Customer_Name}">${customer.Customer_Name}</button>
                                     <div class="text-xs text-gray-400 font-mono">${customer.Customer_ID}</div>
                                 </div>
                             </div>
@@ -4142,7 +4338,7 @@
                         <td class="px-4 py-4">
                             <div class="flex items-center gap-2">
                                 <span class="text-2xl font-black ${riskColor}">${Math.round(customer.calculatedRiskScore)}</span>
-                                <span class="text-xs text-gray-500">/100</span>
+                                <span class="text-xs text-gray-500">${t('dynamic.riskScoreMax')}</span>
                             </div>
                         </td>
                         <td class="px-4 py-4 text-gray-300 text-sm hidden md:table-cell">
@@ -4156,7 +4352,7 @@
                         <td class="px-4 py-4">
                             <div class="flex flex-col gap-1">
                                 <span class="px-3 py-1 rounded-full text-xs font-bold border ${statusColor}">
-                                    ${customer.calculatedRiskScore >= 80 ? 'HIGH' : customer.calculatedRiskScore >= 60 ? 'MED' : 'LOW'}
+                                    ${customer.calculatedRiskScore >= 80 ? t('dynamic.statusHigh') : customer.calculatedRiskScore >= 60 ? t('dynamic.statusMed') : t('dynamic.statusLow')}
                                 </span>
                                 ${logEntry ? `<span class="text-xs text-orange-400">📝</span>` : ''}
                             </div>
@@ -4236,33 +4432,33 @@
                 <div class="space-y-4">
                     <!-- Risk Score Badge -->
                     <div class="text-center p-4 bg-gray-50 rounded-lg">
-                        <p class="text-sm font-semibold text-gray-600 mb-2">Churn Risk Score</p>
+                        <p class="text-sm font-semibold text-gray-600 mb-2">${t('dynamic.churnRiskScore')}</p>
                         <p class="text-5xl font-black ${customer.calculatedRiskScore >= 80 ? 'text-red-600' : customer.calculatedRiskScore >= 60 ? 'text-orange-600' : 'text-green-600'}">${Math.round(customer.calculatedRiskScore)}%</p>
                     </div>
                     
                     <!-- Critical Info Grid -->
                     <div class="grid grid-cols-2 gap-3">
                         <div class="bg-gray-50 p-3 rounded-lg">
-                            <p class="text-xs text-gray-600 mb-1">Account Manager</p>
-                            <p class="font-bold text-gray-900">${customer.accountManager || 'Unassigned'}</p>
+                            <p class="text-xs text-gray-600 mb-1">${t('dashboard.accountManager')}</p>
+                            <p class="font-bold text-gray-900">${customer.accountManager || t('common.unassigned')}</p>
                         </div>
                         <div class="bg-gray-50 p-3 rounded-lg">
-                            <p class="text-xs text-gray-600 mb-1">ARR Value</p>
+                            <p class="text-xs text-gray-600 mb-1">${t('dynamic.arrValue')}</p>
                             <p class="font-bold text-gray-900">$${(customer.ARR / 1000).toFixed(0)}K</p>
                         </div>
                         <div class="bg-gray-50 p-3 rounded-lg">
-                            <p class="text-xs text-gray-600 mb-1">Support Tickets</p>
-                            <p class="font-bold text-gray-900">${customer.supportTicketsLast90Days} (90 days)</p>
+                            <p class="text-xs text-gray-600 mb-1">${t('howItWorks.ticketsMetric')}</p>
+                            <p class="font-bold text-gray-900">${customer.supportTicketsLast90Days} (${t('dynamic.days90')})</p>
                         </div>
                         <div class="bg-gray-50 p-3 rounded-lg">
-                            <p class="text-xs text-gray-600 mb-1">Contract Ends</p>
-                            <p class="font-bold text-gray-900">${customer.contractEndDateMMDDYYYY || 'N/A'}</p>
+                            <p class="text-xs text-gray-600 mb-1">${t('dynamic.contractEnds')}</p>
+                            <p class="font-bold text-gray-900">${customer.contractEndDateMMDDYYYY || t('common.na')}</p>
                         </div>
                     </div>
                     
                     <!-- 12-Month Timeline Tracker -->
                     <div class="bg-gray-50 p-3 rounded-lg">
-                        <p class="text-sm font-semibold text-gray-700 mb-2">Timeline (12 months)</p>
+                        <p class="text-sm font-semibold text-gray-700 mb-2">${t('dynamic.timeline12Months')}</p>
                         <div id="timeline-risk" class="mb-2"></div>
                         <div class="grid grid-cols-2 gap-2 text-xs text-gray-700">
                             <div id="timeline-usage"></div>
@@ -4276,7 +4472,7 @@
                             <div class="flex items-start gap-2 mb-2">
                                 <span class="text-primary-orange text-2xl">🎯</span>
                                 <div>
-                                    <p class="text-sm font-bold text-primary-orange mb-1">Single-Action Recommendation</p>
+                                    <p class="text-sm font-bold text-primary-orange mb-1">${t('modal.singleActionRecommendation')}</p>
                                     <p class="text-sm font-bold text-gray-800">${recommendation}</p>
                                 </div>
                             </div>
@@ -4287,7 +4483,7 @@
                     <!-- Action Required Drivers -->
                     ${actionableDrivers.length > 0 ? `
                         <div class="bg-green-50 border-2 border-green-200 p-3 rounded-lg">
-                            <p class="text-sm font-bold text-green-700 mb-2">📊 Diagnosis:</p>
+                            <p class="text-sm font-bold text-green-700 mb-2">${t('modal.diagnosis')}</p>
                             ${actionableDrivers.map(driver => `
                                 <p class="text-sm text-green-800">• ${driver}</p>
                             `).join('')}
@@ -4297,7 +4493,7 @@
                     <!-- Other Context -->
                     ${otherDrivers.length > 0 ? `
                         <div class="bg-gray-50 p-3 rounded-lg">
-                            <p class="text-sm font-semibold text-gray-700 mb-2">Additional Context:</p>
+                            <p class="text-sm font-semibold text-gray-700 mb-2">${t('modal.additionalContext')}</p>
                             ${otherDrivers.map(driver => `
                                 <p class="text-sm text-gray-600">• ${driver}</p>
                             `).join('')}
@@ -4316,8 +4512,8 @@
             try {
                 const history = generateCustomerHistory(customer);
                 renderRiskSparkline('timeline-risk', history.riskScores);
-                renderMiniBars('timeline-usage', 'Usage Score', history.usageScores, 1);
-                renderMiniBars('timeline-tickets', 'Support Tickets', history.tickets, 50);
+                renderMiniBars('timeline-usage', t('dynamic.usageScore'), history.usageScores, 1);
+                renderMiniBars('timeline-tickets', t('howItWorks.ticketsMetric'), history.tickets, 50);
             } catch (e) {
                 console.warn('Timeline render failed:', e);
             }
@@ -4375,7 +4571,7 @@
             const logs = Object.entries(actionLogs).filter(([_, text]) => text.trim());
             
             if (logs.length === 0) {
-                historyContainer.innerHTML = '<p class="text-sm text-gray-500 text-center py-4">No actions logged yet</p>';
+                historyContainer.innerHTML = `<p class="text-sm text-gray-500 text-center py-4">${t('dynamic.noActionsLogged')}</p>`;
                 return;
             }
             
@@ -4395,7 +4591,7 @@
         }
         
         function clearActionHistory() {
-            if (!confirm('Are you sure you want to clear all action history?')) return;
+            if (!confirm(t('dynamic.confirmClearHistory'))) return;
             actionLogs = {};
             localStorage.setItem('csm-action-logs', JSON.stringify(actionLogs));
             updateActionHistory();
