@@ -979,7 +979,7 @@
             <!-- Value Proposition - Single Paragraph - Centered -->
             <div class="max-w-3xl mx-auto mb-10">
                 <p class="text-lg md:text-xl text-gray-300 leading-relaxed text-center">
-                    <span id="hero-subtitle" data-translate="hero.subtitle">Our AI predicts—with <span class="text-primary-orange font-bold" id="hero-accuracy">92% accuracy</span>—the exact reason high-value subscribers are about to leave, before they churn. Take targeted action in real time, stop losses in their tracks, and unlock millions in saved revenue.</span>
+                    <span id="hero-subtitle" data-translate="hero.subtitle">Our AI predicts—with <span class="text-primary-orange font-bold" id="hero-accuracy">92%</span>—the exact reason high-value subscribers are about to leave, before they churn. Take targeted action in real time, stop losses in their tracks, and unlock millions in saved revenue.</span>
                 </p>
             </div>
 
@@ -1850,7 +1850,7 @@
                 hero: {
                     title: "Keep Your Most Valuable Customers,",
                     titleAccent: "Boost Your Revenue — Instantly.",
-                    subtitle: "Our AI predicts—with {accuracy} accuracy—the exact reason high-value subscribers are about to leave, before they churn. Take targeted action in real time, stop losses in their tracks, and unlock millions in saved revenue.",
+                    subtitle: "Our AI predicts—with {accuracy}—the exact reason high-value subscribers are about to leave, before they churn. Take targeted action in real time, stop losses in their tracks, and unlock millions in saved revenue.",
                     seeDemo: "See Live Demo",
                     howItWorksBtn: "How It Works"
                 },
@@ -2826,14 +2826,24 @@
         function applyTranslations() {
             document.querySelectorAll('[data-translate]').forEach(element => {
                 const key = element.getAttribute('data-translate');
-                let params = {};
                 
                 // Special handling for hero subtitle with accuracy placeholder
+                let params = {};
                 if (key === 'hero.subtitle') {
+                    // Get accuracy value from existing element or use default
                     const accuracyEl = document.getElementById('hero-accuracy');
+                    let accuracyValue = '92%';
                     if (accuracyEl) {
-                        params = { accuracy: accuracyEl.textContent || '92%' };
+                        // Extract just the number and % if it says "92% accuracy"
+                        const text = accuracyEl.textContent.trim();
+                        const match = text.match(/(\d+%)/);
+                        if (match) {
+                            accuracyValue = match[1];
+                        } else {
+                            accuracyValue = text.replace(' accuracy', '').replace(' accuracy', ''); // Remove "accuracy" if present
+                        }
                     }
+                    params = { accuracy: accuracyValue };
                 }
                 
                 const translation = t(key, params);
@@ -2849,14 +2859,15 @@
                     element.textContent = translation;
                 } else {
                     // For elements with inner HTML (like hero-subtitle), preserve HTML structure
-                    if (key === 'hero.subtitle' && element.innerHTML) {
-                        const accuracySpan = element.querySelector('#hero-accuracy');
-                        if (accuracySpan) {
-                            const accuracy = accuracySpan.textContent || '92%';
-                            element.innerHTML = translation.replace('{accuracy}', `<span class="text-primary-orange font-bold" id="hero-accuracy">${accuracy}</span>`);
-                        } else {
-                            element.textContent = translation;
-                        }
+                    if (key === 'hero.subtitle') {
+                        // Get accuracy value (default to 92%)
+                        const accuracyValue = params.accuracy || '92%';
+                        // The t() function already replaced {accuracy} with the value, so now wrap it in styled span
+                        // Replace the accuracy value with styled version
+                        const styledAccuracy = `<span class="text-primary-orange font-bold" id="hero-accuracy">${accuracyValue}</span>`;
+                        // Replace the accuracy value (already inserted by t()) with styled version
+                        const translatedHTML = translation.replace(accuracyValue, styledAccuracy);
+                        element.innerHTML = translatedHTML;
                     } else {
                         element.textContent = translation;
                     }
